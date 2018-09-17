@@ -64,7 +64,7 @@ public class Test {
 		// testInverseNumberTheoreticTransformIP ();
 		// testInverseNumberTheoreticTransformIIIP ();
 		// testComponentWisePolynomialMultiplicationIIIP ();
-		testPolynomialMultiplicationIIISize ();
+		// testPolynomialMultiplicationIIISize ();
 		// testPolynomialMultiplicationIIIP ();
 		// testPolynomialAdditionIIIP ();
 		// testPolynomialSubtractionIIISize ();
@@ -1156,29 +1156,34 @@ public class Test {
 		long[]	A			= new long[Parameter.N_III_P * Parameter.K_III_P];
 		
 		Polynomial.polynomialUniform (
-				A,
-				seed, 0,
+				A, seed, 0,
 				Parameter.N_III_P, Parameter.K_III_P, Parameter.Q_III_P, Parameter.Q_INVERSE_III_P, Parameter.Q_LOGARITHM_III_P,
 				Parameter.GENERATOR_A_III_P, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_III_P
 		);
 		
-		for (short k = 0; k < Parameter.K_III_P; k++) {
+		for (int k = 0; k < Parameter.K_III_P; k++) {
 			
 			System.out.printf ("SAMPLE %d\n\n", (k + 1));
 			
-			for (short i = 0; i < Parameter.N_III_P; i++) {
+			for (int i = 0; i < Parameter.N_III_P; i++) {
+				
+				if (i % 8 == 0) {
+					
+					System.out.printf ("LINE %3d\t", (i / 8 + 1));
+					
+				}
 				
 				System.out.printf ("%08X\t", A[i]);
 				
 				if (i % 8 == 7) {
 					
-					System.out.printf ("LINE %3d\n", (i / 8 + 1));
+					System.out.println ();
 					
 				}
 				
 			}
 			
-			System.out.printf ("\n");
+			System.out.println ();
 			
 		}
 		
