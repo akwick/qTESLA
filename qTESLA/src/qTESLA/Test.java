@@ -153,7 +153,7 @@ public class Test {
 		
 		CommonFunction.store16 (newByteArray, 4, shortNumber);
 		
-		for (short i = 0; i < Short.SIZE / Byte.SIZE; i++) {
+		for (int i = 0; i < Short.SIZE / Byte.SIZE; i++) {
 			
 			System.out.printf ("%02X\t", newByteArray[i + 4]);
 			
@@ -173,7 +173,7 @@ public class Test {
 		
 		CommonFunction.store32 (newByteArray, 4, integerNumber);
 		
-		for (short i = 0; i < Integer.SIZE / Byte.SIZE; i++) {
+		for (int i = 0; i < Integer.SIZE / Byte.SIZE; i++) {
 			
 			System.out.printf ("%02X\t", newByteArray[i + 4]);
 			
@@ -193,7 +193,7 @@ public class Test {
 		
 		CommonFunction.store64 (newByteArray, 0, longNumber);
 		
-		for (short i = 0; i < Long.SIZE / Byte.SIZE; i++) {
+		for (int i = 0; i < Long.SIZE / Byte.SIZE; i++) {
 			
 			System.out.printf ("%02X\t", newByteArray[i]);
 			
@@ -2050,45 +2050,34 @@ public class Test {
 //		
 //		System.out.println ("Test for Hash Function in QTESLA for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 //		
-//		byte[] message	= new byte[Parameter.N_III_SIZE * Long.SIZE / Byte.SIZE];
-//		byte[] output	= new byte[Polynomial.C_BYTE];
+//		byte[] message	= new byte[2097152];
+//		byte[] output	= new byte[Polynomial.HASH];
+//		long[] V		= new long[Parameter.N_III_SIZE];
 //		
-//		for (short i = 0; i < Parameter.N_III_SIZE; i++) {
+//		for (int i = 0; i < 2097152; i++) {
 //			
-//			function.store64 (message, i * Long.SIZE / Byte.SIZE, PolynomialHeuristic.ZETA_INVERSE_III_SIZE[i]);
+//			message[i] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i % Parameter.N_III_SIZE] & 0xFFL);
 //			
 //		}
 //		
-//		System.out.println ("Message\n");
+//		System.arraycopy (PolynomialHeuristic.ZETA_III_SIZE, 0, V, 0, Parameter.N_III_SIZE);
 //		
-//		for (short i = 0; i < Parameter.N_III_SIZE * Long.SIZE / Byte.SIZE; i++) {
-//			
-//			System.out.printf ("%02X\t", message[i]);
-//			
-//			if (i % 16 == 15) {
-//				
-//				System.out.printf ("LINE %3d\n", (i / 16 + 1));
-//				
-//			}
-//			
-//		}
-//		
-//		System.out.printf ("\nSignature\n\n");
+//		System.out.printf ("Hash Value\n\n");
 //		
 //		QTESLA.hashFunction (
-//				output, (short) 0,
-//				PolynomialHeuristic.ZETA_III_SIZE,
-//				message, 0, Parameter.N_III_SIZE * Long.SIZE / Byte.SIZE,
+//				
+//				output, 0, V, message, 0, 2097152,
 //				Parameter.N_III_SIZE, Parameter.D_III_SIZE, Parameter.Q_III_SIZE
+//				
 //		);
 //		
-//		for (short i = 0; i < Polynomial.C_BYTE; i++) {
+//		for (int i = 0; i < Polynomial.HASH; i++) {
 //			
-//			System.out.printf ("%02X", output[i]);
+//			System.out.printf ("%02X ", output[i]);
 //			
 //		}
 //		
-//		System.out.printf ("\n");
+//		System.out.println ();
 //		
 //	}
 	
@@ -2099,55 +2088,37 @@ public class Test {
 //		System.out.println ("Test for Hash Function in QTESLA for Provably-Secure qTESLA Security Category-3\n");
 //		
 //		long[] V		= new long[Parameter.N_III_P * Parameter.K_III_P];
-//		byte[] message	= new byte[Parameter.N_III_P * Long.SIZE / Byte.SIZE];
-//		byte[] output	= new byte[Polynomial.C_BYTE];
+//		byte[] message	= new byte[2097152];
+//		byte[] output	= new byte[Polynomial.HASH];
 //		
-//		for (short i = 0; i < Parameter.N_III_P; i++) {
+//		for (int i = 0; i < 2097152; i++) {
 //			
-//			function.store64 (message, i * Long.SIZE / Byte.SIZE, PolynomialProvablySecure.ZETA_INVERSE_III_P[i]);
+//			message[i] = (byte) (PolynomialProvablySecure.ZETA_III_P[i % Parameter.N_III_P] & 0xFFL);
 //			
 //		}
 //		
-//		System.out.println ("Message\n");
-//		
-//		for (short i = 0; i < Parameter.N_III_P * Long.SIZE / Byte.SIZE; i++) {
+//		for (int k = 0; k < Parameter.K_III_P; k++) {
 //			
-//			System.out.printf ("%02X\t", message[i]);
-//			
-//			if (i % 16 == 15) {
-//				
-//				System.out.printf ("LINE %4d\n", (i / 16 + 1));
-//				
-//			}
+//			System.arraycopy (PolynomialProvablySecure.ZETA_III_P, 0, V, Parameter.N_III_P * k, Parameter.N_III_P);
 //			
 //		}
 //		
-//		System.out.printf ("\nSignature\n\n");
-//		
-//		for (short k = 0; k < Parameter.K_III_P; k++) {
-//			
-//			for (short i = 0; i < Parameter.N_III_P; i++) {
-//				
-//				V[Parameter.N_III_P * k + i] = PolynomialProvablySecure.ZETA_III_P[i];
-//				
-//			}
-//			
-//		}
+//		System.out.println ("\nHash Value\n\n");
 //		
 //		QTESLA.hashFunction (
-//				output, (short) 0,
-//				V,
-//				message, 0, Parameter.N_III_P * Long.SIZE / Byte.SIZE,
+//				
+//				output, 0, V, message, 0, 2097152,
 //				Parameter.N_III_P, Parameter.K_III_P, Parameter.D_III_P, Parameter.Q_III_P
+//		
 //		);
 //		
-//		for (short i = 0; i < Polynomial.C_BYTE; i++) {
+//		for (int i = 0; i < Polynomial.HASH; i++) {
 //			
-//			System.out.printf ("%02X", output[i]);
+//			System.out.printf ("%02X ", output[i]);
 //			
 //		}
 //		
-//		System.out.printf ("\n");
+//		System.out.println ();
 //		
 //	}
 	

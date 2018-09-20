@@ -829,7 +829,8 @@ public class QTESLA {
 			mask	= (q / 2 - V[i]) >> 63;
 			V[i]	= ((V[i] - q) & mask) | (V[i] & (~ mask));
 			cL		= V[i] & ((1 << d) - 1);
-			mask	= ((cL - (1 << d)) & mask) | (cL & (~ mask));
+			mask	= ((1 << (d - 1)) - cL) >> 63;
+			cL		= ((cL - (1 << d)) & mask) | (cL & (~ mask));
 			T[i]	= (byte) ((V[i] - cL) >> d);
 			
 		}
@@ -842,7 +843,7 @@ public class QTESLA {
 		
 		}
 		
-		if (q == Parameter.Q_III_SIZE || q == Parameter.B_III_SPEED) {
+		if (q == Parameter.Q_III_SIZE || q == Parameter.Q_III_SPEED) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (output, outputOffset, Polynomial.HASH, T, 0, messageLength + n);
 			
