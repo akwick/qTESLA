@@ -1064,7 +1064,7 @@ public class QTESLA {
 		
 	}
 	
-	/*******************************************************************************************************************************************************************************************
+	/********************************************************************************************************************************************************************************************************
 	 * Description:	Performs Sparse Polynomial Multiplication for A Value Needed During Message Signification for Heuristic qTESLA Security Category-1 and Category-3 (Option for Size or Speed)
 	 * 
 	 * @param		product				Product of Two Polynomials
@@ -1076,8 +1076,8 @@ public class QTESLA {
 	 * @param		w					Number of Non-Zero Entries of Output Elements of Encryption
 	 * 
 	 * @return		none
-	 ********************************************************************************************************************************************************************************************/
-	private static void sparsePolynomialMultiplication16 (long[] product, final byte[] privateKey, int privateKeyOffset, final int[] positionList, final short[] signList, int n, int w) {
+	 ********************************************************************************************************************************************************************************************************/
+	private static void sparsePolynomialMultiplication16 (long[] product, int productOffset, final byte[] privateKey, int privateKeyOffset, final int[] positionList, final short[] signList, int n, int w) {
 		
 		int position;
 		
@@ -1089,14 +1089,16 @@ public class QTESLA {
 			
 			for (int j = 0; j < position; j++) {
 				
-				product[j] -= signList[i] * CommonFunction.load16 (privateKey, privateKeyOffset + Short.SIZE / Byte.SIZE * (n + j - position));
+				product[productOffset + j] -= signList[i] * CommonFunction.load16 (privateKey, privateKeyOffset + Short.SIZE / Byte.SIZE * (n + j - position));
+				product[productOffset + j] &= 0xFFFFFFFFL;
 				
 			}
 			
 			for (int j = position; j < n; j++) {
 				
-				product[j] += signList[i] * CommonFunction.load16 (privateKey, privateKeyOffset + Short.SIZE / Byte.SIZE * (j - position));
-						
+				product[productOffset + j] += signList[i] * CommonFunction.load16 (privateKey, privateKeyOffset + Short.SIZE / Byte.SIZE * (j - position));
+				product[productOffset + j] &= 0xFFFFFFFFL;
+				
 			}
 			
 		}
@@ -1130,12 +1132,14 @@ public class QTESLA {
 			for (int j = 0; j < position; j++) {
 				
 				product[productOffset + j] -= signList[i] * privateKey[privateKeyOffset + n + j - position];
+				product[productOffset + j] &= 0xFFFFFFFFL;
 				
 			}
 			
 			for (int j = position; j < n; j++) {
 				
 				product[productOffset + j] += signList[i] * privateKey[privateKeyOffset + j - position];
+				product[productOffset + j] &= 0xFFFFFFFFL;
 						
 			}
 			
@@ -1764,7 +1768,7 @@ public class QTESLA {
 			/* Generate C = EncodeC (C') Where C' is the Hashing of V Together with Message */
 			Sample.encodeC (positionList, signList, C, 0, n, w);
 			
-			sparsePolynomialMultiplication16 (SC, privateKey, 0, positionList, signList, n, w);
+			sparsePolynomialMultiplication16 (SC, 0, privateKey, 0, positionList, signList, n, w);
 			
 			/* Z = Y + EC Modulo Q */
 			Polynomial.polynomialAddition(Z, 0, Y, 0, SC, 0, n);
@@ -1776,7 +1780,7 @@ public class QTESLA {
 				
 			}
 			
-			sparsePolynomialMultiplication16 (EC, privateKey, n * Short.SIZE / Byte.SIZE, positionList, signList, n, w);
+			sparsePolynomialMultiplication16 (EC, 0, privateKey, n * Short.SIZE / Byte.SIZE, positionList, signList, n, w);
 			
 			/* V = V - EC modulo Q */
 			Polynomial.polynomialSubtraction (V, 0, V, 0, EC, 0, n, q, barrettMultiplication, barrettDivision);

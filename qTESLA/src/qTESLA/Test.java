@@ -1825,30 +1825,42 @@ public class Test {
 //		
 //		System.out.println ("Test for Sparse Polynomial Multiplication of 16-Bit in QTESLA for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 //		
-//		short[] positionList	= new short[Parameter.W_III_SIZE];
-//		short[] signList		= new short[Parameter.W_III_SIZE];
-//		byte[] secretKey		= new byte[Parameter.N_III_SIZE];
-//		long[] product			= new long[Parameter.N_III_SIZE];
+//		int[] positionList	= new int[Parameter.W_III_SIZE];
+//		short[] signList	= new short[Parameter.W_III_SIZE];
+//		byte[] secretKey	= new byte[Polynomial.PRIVATE_KEY_III_SIZE];
+//		long[] product		= new long[Parameter.N_III_SIZE];
 //		
-//		sample.encodeC (positionList, signList, seed, (short) 0, Parameter.N_III_SIZE, Parameter.W_III_SIZE);
+//		Sample.encodeC (positionList, signList, seed, 0, Parameter.N_III_SIZE, Parameter.W_III_SIZE);
 //		
 //		System.out.println ("Position List\n");
 //		
-//		for (short i = 0; i < Parameter.W_III_SIZE; i++) {
+//		for (int i = 0; i < Parameter.W_III_SIZE; i++) {
 //			
-//			System.out.printf ("%4d\t", positionList[i]);
+//			if (i % 16 == 0) {
+//				
+//				System.out.printf ("LINE %d\t", (i / 16 + 1));
+//			
+//			}
+//			
+//			System.out.printf ("%03X ", positionList[i]);
 //		
-//			if (i % 8 == 7) {
+//			if (i % 16 == 15) {
 //			
-//				System.out.printf ("LINE %d\n", (i / 8 + 1));
+//				System.out.println ();
 //			
 //			}
 //		
 //		}
 //	
-//		System.out.println ("\nSignature List\n");
+//		System.out.println ("\nSign List\n");
 //		
-//		for (short i = 0; i < Parameter.W_III_SIZE; i++) {
+//		for (int i = 0; i < Parameter.W_III_SIZE; i++) {
+//			
+//			if (i % 16 == 0) {
+//				
+//				System.out.printf ("LINE %d\t", (i / 16 + 1));
+//			
+//			}
 //			
 //			if (signList[i] > 0) {
 //		
@@ -1856,11 +1868,11 @@ public class Test {
 //				
 //			}
 //			
-//			System.out.printf ("%d\t", signList[i]);
+//			System.out.printf ("%d ", signList[i]);
 //			
-//			if (i % 8 == 7) {
+//			if (i % 16 == 15) {
 //			
-//				System.out.printf ("LINE %d\n", (i / 8 + 1));
+//				System.out.println ();
 //			
 //			}
 //		
@@ -1868,27 +1880,33 @@ public class Test {
 //		
 //		System.out.println ("\nDisplay Product\n");
 //		
-//		for (short i = 0; i < Parameter.N_III_SIZE; i++) {
+//		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_SIZE; i++) {
 //			
-//			secretKey[i] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i] & 0xFFL);
+//			secretKey[i] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i % Parameter.N_III_SIZE] & 0xFFL);
 //			
 //		}
 //		
-//		QTESLA.sparsePolynomialMultiplication16 (product, secretKey, (short) 0, positionList, signList, Parameter.N_III_SIZE, Parameter.W_III_SIZE);
+//		QTESLA.sparsePolynomialMultiplication16 (product, 0, secretKey, 0, positionList, signList, Parameter.N_III_SIZE, Parameter.W_III_SIZE);
 //		
-//		for (short i = 0; i < Parameter.N_III_SIZE; i++) {
+//		for (int i = 0; i < Parameter.N_III_SIZE; i++) {
+//			
+//			if (i % 4 == 0) {
+//				
+//				System.out.printf ("LINE %3d\t", (i / 4 + 1));
+//				
+//			}
 //			
 //			System.out.printf ("%016X\t", product[i]);
 //			
 //			if (i % 4 == 3) {
 //				
-//				System.out.printf ("LINE %3d\n", (i / 4 + 1));
+//				System.out.println ();
 //				
 //			}
 //		
 //		}
 //		
-//		System.out.printf ("\n");
+//		System.out.println ();
 //		
 //	}
 	
@@ -1898,30 +1916,42 @@ public class Test {
 //		
 //		System.out.println ("Test for Sparse Polynomial Multiplication of 8-Bit in QTESLA for Provably-Secure qTESLA Security Category-3\n");
 //		
-//		short[] positionList	= new short[Parameter.W_III_P];
-//		short[] signList		= new short[Parameter.W_III_P];
-//		byte[] secretKey		= new byte[Parameter.N_III_P];
-//		long[] product			= new long[Parameter.N_III_P];
+//		int[] positionList	= new int[Parameter.W_III_P];
+//		short[] signList	= new short[Parameter.W_III_P];
+//		byte[] secretKey	= new byte[Polynomial.PRIVATE_KEY_III_P];
+//		long[] product		= new long[Parameter.N_III_P];
 //		
-//		sample.encodeC (positionList, signList, seed, (short) 0, Parameter.N_III_P, Parameter.W_III_P);
+//		Sample.encodeC (positionList, signList, seed, 0, Parameter.N_III_P, Parameter.W_III_P);
 //		
 //		System.out.println ("Position List\n");
 //		
-//		for (short i = 0; i < Parameter.W_III_P; i++) {
+//		for (int i = 0; i < Parameter.W_III_P; i++) {
 //			
-//			System.out.printf ("%4d\t", positionList[i]);
+//			if (i % 20 == 0) {
+//				
+//				System.out.printf ("LINE %d\t", (i / 20 + 1));
+//			
+//			}
+//			
+//			System.out.printf ("%03X ", positionList[i]);
 //		
-//			if (i % 8 == 7) {
+//			if (i % 20 == 19) {
 //			
-//				System.out.printf ("LINE %d\n", (i / 8 + 1));
+//				System.out.println ();
 //			
 //			}
 //		
 //		}
 //	
-//		System.out.println ("\nSignature List\n");
+//		System.out.println ("\nSign List\n");
 //		
-//		for (short i = 0; i < Parameter.W_III_P; i++) {
+//		for (int i = 0; i < Parameter.W_III_P; i++) {
+//			
+//			if (i % 20 == 0) {
+//				
+//				System.out.printf ("LINE %d\t", (i / 20 + 1));
+//			
+//			}
 //			
 //			if (signList[i] > 0) {
 //		
@@ -1929,11 +1959,11 @@ public class Test {
 //				
 //			}
 //			
-//			System.out.printf ("%d\t", signList[i]);
+//			System.out.printf ("%d ", signList[i]);
 //			
-//			if (i % 8 == 7) {
+//			if (i % 20 == 19) {
 //			
-//				System.out.printf ("LINE %d\n", (i / 8 + 1));
+//				System.out.println ();
 //			
 //			}
 //		
@@ -1941,27 +1971,33 @@ public class Test {
 //		
 //		System.out.println ("\nDisplay Product\n");
 //		
-//		for (short i = 0; i < Parameter.N_III_P; i++) {
+//		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_P; i++) {
 //			
-//			secretKey[i] = (byte) (PolynomialProvablySecure.ZETA_III_P[i] & 0xFFL);
+//			secretKey[i] = (byte) (PolynomialProvablySecure.ZETA_III_P[i % Parameter.N_III_P] & 0xFFL);
 //			
 //		}
 //		
-//		QTESLA.sparsePolynomialMultiplication8 (product, secretKey, (short) 0, positionList, signList, Parameter.N_III_P, Parameter.W_III_P);
+//		QTESLA.sparsePolynomialMultiplication8 (product, 0, secretKey, 0, positionList, signList, Parameter.N_III_P, Parameter.W_III_P);
 //		
-//		for (short i = 0; i < Parameter.N_III_P; i++) {
+//		for (int i = 0; i < Parameter.N_III_P; i++) {
+//			
+//			if (i % 4 == 0) {
+//				
+//				System.out.printf ("LINE %3d\t", (i / 4 + 1));
+//				
+//			}
 //			
 //			System.out.printf ("%016X\t", product[i]);
 //			
 //			if (i % 4 == 3) {
 //				
-//				System.out.printf ("LINE %3d\n", (i / 4 + 1));
+//				System.out.println ();
 //				
 //			}
 //		
 //		}
 //		
-//		System.out.printf ("\n");
+//		System.out.println ();
 //		
 //	}
 	
@@ -1971,30 +2007,42 @@ public class Test {
 //		
 //		System.out.println ("Test for Sparse Polynomial Multiplication of 32-Bit in QTESLA for Provably-Secure qTESLA Security Category-3\n");
 //		
-//		short[] positionList	= new short[Parameter.W_III_P];
-//		short[] signList		= new short[Parameter.W_III_P];
-//		int[] publicKey			= new int[Parameter.N_III_P];
-//		long[] product			= new long[Parameter.N_III_P];
+//		int[] positionList	= new int[Parameter.W_III_P];
+//		short[] signList	= new short[Parameter.W_III_P];
+//		int[] publicKey		= new int[Polynomial.PUBLIC_KEY_III_P];
+//		long[] product		= new long[Parameter.N_III_P];
 //		
-//		sample.encodeC (positionList, signList, seed, (short) 0, Parameter.N_III_P, Parameter.W_III_P);
+//		Sample.encodeC (positionList, signList, seed, 0, Parameter.N_III_P, Parameter.W_III_P);
 //		
 //		System.out.println ("Position List\n");
 //		
-//		for (short i = 0; i < Parameter.W_III_P; i++) {
+//		for (int i = 0; i < Parameter.W_III_P; i++) {
 //			
-//			System.out.printf ("%4d\t", positionList[i]);
+//			if (i % 20 == 0) {
+//				
+//				System.out.printf ("LINE %d\t", (i / 20 + 1));
+//			
+//			}
+//			
+//			System.out.printf ("%03X ", positionList[i]);
 //		
-//			if (i % 8 == 7) {
+//			if (i % 20 == 19) {
 //			
-//				System.out.printf ("LINE %d\n", (i / 8 + 1));
+//				System.out.println ();
 //			
 //			}
 //		
 //		}
 //	
-//		System.out.println ("\nSignature List\n");
+//		System.out.println ("\nSign List\n");
 //		
-//		for (short i = 0; i < Parameter.W_III_P; i++) {
+//		for (int i = 0; i < Parameter.W_III_P; i++) {
+//			
+//			if (i % 20 == 0) {
+//				
+//				System.out.printf ("LINE %d\t", (i / 20 + 1));
+//			
+//			}
 //			
 //			if (signList[i] > 0) {
 //		
@@ -2002,11 +2050,11 @@ public class Test {
 //				
 //			}
 //			
-//			System.out.printf ("%d\t", signList[i]);
+//			System.out.printf ("%d ", signList[i]);
 //			
-//			if (i % 8 == 7) {
+//			if (i % 20 == 19) {
 //			
-//				System.out.printf ("LINE %d\n", (i / 8 + 1));
+//				System.out.println ();
 //			
 //			}
 //		
@@ -2014,33 +2062,39 @@ public class Test {
 //		
 //		System.out.println ("\nDisplay Product\n");
 //		
-//		for (short i = 0; i < Parameter.N_III_P; i++) {
+//		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_P; i++) {
 //			
-//			publicKey[i] = (int) (PolynomialProvablySecure.ZETA_III_P[i] & 0xFFFFFFFFL);
+//			publicKey[i] = (int) (PolynomialProvablySecure.ZETA_III_P[i % Parameter.N_III_P] & 0xFFFFFFFFL);
 //			
 //		}
 //		
 //		QTESLA.sparsePolynomialMultiplication32 (
-//				product,
-//				publicKey, (short) 0,
-//				positionList, signList,
+//				
+//				product, 0, publicKey, 0, positionList, signList,
 //				Parameter.N_III_P, Parameter.W_III_P, Parameter.Q_III_P,
 //				Parameter.BARRETT_MULTIPLICATION_III_P, Parameter.BARRETT_DIVISION_III_P
+//		
 //		);
 //		
-//		for (short i = 0; i < Parameter.N_III_P; i++) {
+//		for (int i = 0; i < Parameter.N_III_P; i++) {
+//			
+//			if (i % 4 == 0) {
+//				
+//				System.out.printf ("LINE %3d\t", (i / 4 + 1));
+//				
+//			}
 //			
 //			System.out.printf ("%016X\t", product[i]);
 //			
 //			if (i % 4 == 3) {
 //				
-//				System.out.printf ("LINE %3d\n", (i / 4 + 1));
+//				System.out.println ();
 //				
 //			}
 //		
 //		}
 //		
-//		System.out.printf ("\n");
+//		System.out.println ();
 //		
 //	}
 	
