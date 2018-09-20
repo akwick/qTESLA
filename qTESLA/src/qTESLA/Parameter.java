@@ -10,7 +10,7 @@ public final class Parameter {
 	/** 
 	 * Dimension, (Dimension - 1) is the Polynomial Degree for Provably-Secure qTESLA Security Category-1
 	 */
-	public static final int N_I_P			= 1024;
+	public static final int N_I_P		= 1024;
 	
 	/** 
 	 * Dimension, (Dimension - 1) is the Polynomial Degree for Heuristic qTESLA Security Category-3 (Option for Size)

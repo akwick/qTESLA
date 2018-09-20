@@ -1,13 +1,7 @@
 package qTESLA;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.ShortBufferException;
 
 public class Test {
 	
@@ -34,7 +28,7 @@ public class Test {
 			
 	};
 	
-	public static void main (String[] args) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
+	public static void main (String[] args) {
 		
 		// testMemoryCopy ();
 		// testMemoryEquivalence ();
@@ -70,8 +64,6 @@ public class Test {
 		// testPolynomialSubtractionIIISize ();
 		// testPolynomialSubtractionIIIP ();
 		// testPolynomialUniformIIIP ();
-		
-		// testRandomByte ();
 		
 		// testAbsoluteValue ();
 		// testTestRejectionIIIP ();
@@ -1225,7 +1217,7 @@ public class Test {
 //		
 //		System.out.println ("Test for Testing V in QTESLA for Provably-Secure qTESLA Security Category-3\n");
 //		
-//		System.out.printf ("%B\n\n", QTESLA.testV (PolynomialProvablySecure.ZETA_III_P, Parameter.N_III_P, Parameter.D_III_P, Parameter.Q_III_P, Parameter.REJECTION_III_P));
+//		System.out.printf ("%B\n\n", QTESLA.testV (PolynomialProvablySecure.ZETA_III_P, 0, Parameter.N_III_P, Parameter.D_III_P, Parameter.Q_III_P, Parameter.REJECTION_III_P));
 //		
 //	}
 	
@@ -1235,71 +1227,17 @@ public class Test {
 //		
 //		System.out.println ("Test for Checking Error Polynomial in QTESLA\n");
 //		
-//		long[] errorPolynomial		= new long[Parameter.N_III_P];
-//		byte[] randomnessExtended	= new byte[Polynomial.SEED_BYTE * 4];
-//		
-//		System.out.println ("Test for Secure Hash Algorithm KECCAK 256 in Federal Information Processing Standard 202\n");
-//		
-//		fips.secureHashAlgorithmKECCAK256 (
-//				randomnessExtended, (short) 0, (short) (Polynomial.SEED_BYTE * 4), seed, 0, Polynomial.RANDOM_BYTE
-//		);
-//		
-//		for (short i = 0; i < randomnessExtended.length; i++) {
-//			
-//			System.out.printf ("%02X\t", randomnessExtended[i]);
-//			
-//			if (i % 16 == 15) {
-//				
-//				System.out.printf ("LINE %d\n", (i / 16 + 1));
-//				
-//			}
-//			
-//		}
-//		
-//		System.out.printf ("\n");
-//		
-//		sample.polynomialGaussSamplerIII (
-//				errorPolynomial, randomnessExtended, (short) 0, 63, Parameter.N_III_P, Parameter.XI_III_P, Sample.EXPONENTIAL_DISTRIBUTION_P
-//		);
-//		
-//		System.out.printf ("%B\n\n", QTESLA.checkPolynomial (errorPolynomial, (short) 0, Parameter.KEY_GENERATOR_BOUND_E_III_P, Parameter.N_III_P, Parameter.W_III_P));
+//		System.out.printf ("%B\n\n", QTESLA.checkPolynomial (PolynomialProvablySecure.ZETA_III_P, 0, Parameter.KEY_GENERATOR_BOUND_E_III_P, Parameter.N_III_P, Parameter.W_III_P));
 //		
 //	}
 	
-	/* Test for Checking Secret Polynomial in QTESLA for Provably-Secure qTESLA Security Category-3 */
-	
+//	/* Test for Checking Secret Polynomial in QTESLA for Provably-Secure qTESLA Security Category-3 */
+//	
 //	public static void testCheckSecretPolynomialIIIP () {
 //		
 //		System.out.println ("Test for Checking Secret Polynomial in QTESLA\n");
-//		
-//		long[] secretPolynomial		= new long[Parameter.N_III_P];
-//		byte[] randomnessExtended	= new byte[Polynomial.SEED_BYTE * 4];
-//		
-//		System.out.println ("Test for Secure Hash Algorithm KECCAK 256 in Federal Information Processing Standard 202\n");
-//		
-//		fips.secureHashAlgorithmKECCAK256 (
-//				randomnessExtended, (short) 0, (short) (Polynomial.SEED_BYTE * 4), seed, 0, Polynomial.RANDOM_BYTE
-//		);
-//		
-//		for (short i = 0; i < randomnessExtended.length; i++) {
-//			
-//			System.out.printf ("%02X\t", randomnessExtended[i]);
-//			
-//			if (i % 16 == 15) {
 //				
-//				System.out.printf ("LINE %d\n", (i / 16 + 1));
-//				
-//			}
-//			
-//		}
-//		
-//		System.out.printf ("\n");
-//		
-//		sample.polynomialGaussSamplerIII (
-//				secretPolynomial, randomnessExtended, (short) 0, 63, Parameter.N_III_P, Parameter.XI_III_P, Sample.EXPONENTIAL_DISTRIBUTION_P
-//		);
-//		
-//		System.out.printf ("%B\n\n", QTESLA.checkPolynomial (secretPolynomial, (short) 0, Parameter.KEY_GENERATOR_BOUND_S_III_P, Parameter.N_III_P, Parameter.W_III_P));
+//		System.out.printf ("%B\n\n", QTESLA.checkPolynomial (PolynomialProvablySecure.ZETA_III_P, 0, Parameter.KEY_GENERATOR_BOUND_S_III_P, Parameter.N_III_P, Parameter.W_III_P));
 //		
 //	}
 	
@@ -1309,26 +1247,29 @@ public class Test {
 //		
 //		System.out.println ("Test for Encoding Public Key in QTESLA for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 //		
-//		byte[] randomnessExtended	= new byte[Polynomial.SEED_BYTE * 4];
-//		byte[] publicKey			= new byte[Parameter.N_III_SIZE * Parameter.Q_LOGARITHM_III_SIZE / Integer.SIZE];
+//		byte[] publicKey = new byte[Polynomial.PUBLIC_KEY_III_SIZE];
 //		
-//		fips.secureHashAlgorithmKECCAK256 (randomnessExtended, (short) 0, (short) (Polynomial.SEED_BYTE * 4), seed, 0, Polynomial.RANDOM_BYTE);
+//		QTESLA.encodePublicKey (publicKey, PolynomialHeuristic.ZETA_III_SIZE, seed, 0, Parameter.N_III_SIZE, Parameter.Q_LOGARITHM_III_SIZE);
 //		
-//		QTESLA.encodePublicKey (publicKey, PolynomialHeuristic.ZETA_III_SIZE, randomnessExtended, Polynomial.SEED_BYTE * 2, Parameter.N_III_SIZE, Parameter.Q_LOGARITHM_III_SIZE);
-//		
-//		for (short i = 0; i < Parameter.N_III_SIZE * Parameter.Q_LOGARITHM_III_SIZE / Integer.SIZE; i++) {
+//		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_SIZE; i++) {
 //			
-//			System.out.printf ("%02X\t", publicKey[i]);
-//			
-//			if (i % 16 == 15) {
+//			if (i % 32 == 0) {
 //				
-//				System.out.printf ("LINE %2d\n", (i / 16 + 1));
+//				System.out.printf ("LINE %2d\t\t", (i / 32 + 1));
+//				
+//			}
+//			
+//			System.out.printf ("%02X ", publicKey[i]);
+//			
+//			if (i % 32 == 31) {
+//				
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.printf ("\n"); 
+//		System.out.println (); 
 //		
 //	}
 	
@@ -1338,26 +1279,29 @@ public class Test {
 //		
 //		System.out.println ("Test for Encoding Public Key in QTESLA for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 //		
-//		byte[] randomnessExtended	= new byte[Polynomial.SEED_BYTE * 4];
-//		byte[] publicKey			= new byte[Parameter.N_III_SPEED * Parameter.Q_LOGARITHM_III_SPEED / Integer.SIZE];
+//		byte[] publicKey = new byte[Polynomial.PUBLIC_KEY_III_SPEED];
 //		
-//		fips.secureHashAlgorithmKECCAK256 (randomnessExtended, (short) 0, (short) (Polynomial.SEED_BYTE * 4), seed, 0, Polynomial.RANDOM_BYTE);
+//		QTESLA.encodePublicKeyIIISpeed (publicKey, PolynomialHeuristic.ZETA_III_SPEED, seed, 0);
 //		
-//		QTESLA.encodePublicKeyIIISpeed (publicKey, PolynomialHeuristic.ZETA_III_SPEED, randomnessExtended, Polynomial.SEED_BYTE * 2);
-//		
-//		for (short i = 0; i < Parameter.N_III_SPEED * Parameter.Q_LOGARITHM_III_SPEED / Integer.SIZE; i++) {
+//		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_SPEED; i++) {
 //			
-//			System.out.printf ("%02X\t", publicKey[i]);
-//			
-//			if (i % 16 == 15) {
+//			if (i % 32 == 0) {
 //				
-//				System.out.printf ("LINE %2d\n", (i / 16 + 1));
+//				System.out.printf ("LINE %2d\t\t", (i / 32 + 1));
+//				
+//			}
+//			
+//			System.out.printf ("%02X ", publicKey[i]);
+//			
+//			if (i % 32 == 31) {
+//				
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.printf ("\n"); 
+//		System.out.println (); 
 //		
 //	}
 	
@@ -1367,33 +1311,36 @@ public class Test {
 //		
 //		System.out.println ("Test for Encoding Public Key in QTESLA for Provably-Secure qTESLA Security Category-1\n");
 //		
-//		byte[] randomnessExtended	= new byte[Polynomial.SEED_BYTE * 4];
 //		long[] T					= new long[Parameter.N_I_P * Parameter.K_I_P];
-//		byte[] publicKey			= new byte[Parameter.N_I_P * Parameter.K_I_P * Parameter.Q_LOGARITHM_I_P / Integer.SIZE];
+//		byte[] publicKey			= new byte[Polynomial.PUBLIC_KEY_I_P];
 //		
-//		for (short k = 0; k < Parameter.K_I_P; k++) {
+//		for (int k = 0; k < Parameter.K_I_P; k++) {
 //		
-//			function.memoryCopy(T, Parameter.N_I_P * k, PolynomialProvablySecure.ZETA_I_P, 0, Parameter.N_I_P);
+//			System.arraycopy (PolynomialProvablySecure.ZETA_I_P, 0, T, Parameter.N_I_P * k, Parameter.N_I_P);
 //		
 //		}
 //		
-//		fips.secureHashAlgorithmKECCAK128 (randomnessExtended, (short) 0, (short) (Polynomial.SEED_BYTE * 4), seed, 0, Polynomial.RANDOM_BYTE);
+//		QTESLA.encodePublicKeyIP (publicKey, T, seed, 0);
 //		
-//		QTESLA.encodePublicKeyIP (publicKey, T, randomnessExtended, Polynomial.SEED_BYTE * 2);
-//		
-//		for (short i = 0; i < Parameter.N_I_P * Parameter.K_I_P * Parameter.Q_LOGARITHM_I_P / Integer.SIZE; i++) {
+//		for (int i = 0; i < Polynomial.PUBLIC_KEY_I_P; i++) {
 //			
-//			System.out.printf ("%02X\t", publicKey[i]);
-//			
-//			if (i % 16 == 15) {
+//			if (i % 32 == 0) {
 //				
-//				System.out.printf ("LINE %3d\n", (i / 16 + 1));
+//				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+//				
+//			}
+//			
+//			System.out.printf ("%02X ", publicKey[i]);
+//			
+//			if (i % 32 == 31) {
+//				
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.printf ("\n"); 
+//		System.out.println (); 
 //		
 //	}
 	
@@ -1403,33 +1350,36 @@ public class Test {
 //		
 //		System.out.println ("Test for Encoding Public Key in QTESLA for Provably-Secure qTESLA Security Category-3\n");
 //		
-//		byte[] randomnessExtended	= new byte[Polynomial.SEED_BYTE * 4];
 //		long[] T					= new long[Parameter.N_III_P * Parameter.K_III_P];
-//		byte[] publicKey			= new byte[Parameter.N_III_P * Parameter.K_III_P * Parameter.Q_LOGARITHM_III_P / Integer.SIZE];
+//		byte[] publicKey			= new byte[Polynomial.PUBLIC_KEY_III_P];
 //		
-//		for (short k = 0; k < Parameter.K_III_P; k++) {
+//		for (int k = 0; k < Parameter.K_III_P; k++) {
 //		
-//			function.memoryCopy (T, Parameter.N_III_P * k, PolynomialProvablySecure.ZETA_III_P, 0, Parameter.N_III_P);
+//			System.arraycopy (PolynomialProvablySecure.ZETA_III_P, 0, T, Parameter.N_III_P * k, Parameter.N_III_P);
 //		
 //		}
 //		
-//		fips.secureHashAlgorithmKECCAK256 (randomnessExtended, (short) 0, (short) (Polynomial.SEED_BYTE * 4), seed, 0, Polynomial.RANDOM_BYTE);
+//		QTESLA.encodePublicKeyIIIP (publicKey, T, seed, 0);
 //		
-//		QTESLA.encodePublicKeyIP (publicKey, T, randomnessExtended, Polynomial.SEED_BYTE * 2);
-//		
-//		for (short i = 0; i < Parameter.N_III_P * Parameter.K_III_P * Parameter.Q_LOGARITHM_III_P / Integer.SIZE; i++) {
+//		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_P; i++) {
 //			
-//			System.out.printf ("%02X\t", publicKey[i]);
-//			
-//			if (i % 16 == 15) {
+//			if (i % 32 == 0) {
 //				
-//				System.out.printf ("LINE %3d\n", (i / 16 + 1));
+//				System.out.printf ("LINE %4d\t", (i / 32 + 1));
+//				
+//			}
+//			
+//			System.out.printf ("%02X ", publicKey[i]);
+//			
+//			if (i % 32 == 31) {
+//				
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.printf ("\n"); 
+//		System.out.println (); 
 //		
 //	}
 	
@@ -1439,34 +1389,45 @@ public class Test {
 //		
 //		System.out.println ("Test for Decoding Public Key in QTESLA for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 //		
-//		byte[] publicKeyInput	= new byte[Parameter.Q_LOGARITHM_III_SIZE * Integer.SIZE * 4];
+//		byte[] publicKeyInput	= new byte[Polynomial.PUBLIC_KEY_III_SIZE];
 //		int[] publicKey			= new int[Parameter.N_III_SIZE];
+//		byte[] seedA			= new byte[Polynomial.SEED];
 //		
-//		for (short j = 0; j < 4; j++) {
-//		
-//			for (short i = 0; i < Parameter.Q_LOGARITHM_III_SIZE * Integer.SIZE; i++) {
+//		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_SIZE; i++) {
 //			
-//				publicKeyInput[i + Parameter.Q_LOGARITHM_III_SIZE * Integer.SIZE * j] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i] & 0xFFL);
-//			
-//			}
+//			publicKeyInput[i] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i % Parameter.N_III_SIZE] & 0xFFL);
 //		
 //		}
 //		
-//		QTESLA.decodePublicKey (publicKey, seed, 0, publicKeyInput, Parameter.N_III_SIZE, Parameter.Q_LOGARITHM_III_SIZE);
+//		QTESLA.decodePublicKey (publicKey, seedA, 0, publicKeyInput, Parameter.N_III_SIZE, Parameter.Q_LOGARITHM_III_SIZE);
+//
+//		System.out.println ("Public Key in Integer\n");
 //		
-//		for (short i = 0; i < Parameter.N_III_SIZE; i++) {
+//		for (int i = 0; i < Parameter.N_III_SIZE; i++) {
+//			
+//			if (i % 16 == 0) {
+//				
+//				System.out.printf ("LINE %2d\t", (i / 16 + 1));
+//				
+//			}
 //			
 //			System.out.printf ("%06X\t", publicKey[i]);
 //			
 //			if (i % 16 == 15) {
 //				
-//				System.out.printf ("LINE %2d\n", (i / 16 + 1));
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.printf ("\n");
+//		System.out.println ("\nSeed\n");
+//	
+//		for (int i = 0; i < Polynomial.SEED; i++) {
+//	
+//			System.out.printf ("%02X ", seedA[i]);
+//	
+//		}
 //		
 //	}
 	
@@ -1476,34 +1437,45 @@ public class Test {
 //		
 //		System.out.println ("Test for Decoding Public Key in QTESLA for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 //		
-//		byte[] publicKeyInput	= new byte[Parameter.Q_LOGARITHM_III_SPEED * Integer.SIZE * 4];
+//		byte[] publicKeyInput	= new byte[Polynomial.PUBLIC_KEY_III_SPEED];
 //		int[] publicKey			= new int[Parameter.N_III_SPEED];
+//		byte[] seedA			= new byte[Polynomial.SEED];
 //		
-//		for (short j = 0; j < 4; j++) {
+//		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_SPEED; i++) {
 //		
-//			for (short i = 0; i < Parameter.Q_LOGARITHM_III_SPEED * Integer.SIZE; i++) {
+//			publicKeyInput[i] = (byte) (PolynomialHeuristic.ZETA_III_SPEED[i % Parameter.N_III_SPEED] & 0xFFL);
 //			
-//				publicKeyInput[i + Parameter.Q_LOGARITHM_III_SPEED * Integer.SIZE * j] = (byte) (PolynomialHeuristic.ZETA_III_SPEED[i] & 0xFFL);
-//			
-//			}
-//		
 //		}
 //		
-//		QTESLA.decodePublicKeyIIISpeed (publicKey, seed, 0, publicKeyInput);
+//		QTESLA.decodePublicKeyIIISpeed (publicKey, seedA, 0, publicKeyInput);
+//
+//		System.out.println ("Public Key in Integer\n");
 //		
-//		for (short i = 0; i < Parameter.N_III_SPEED; i++) {
+//		for (int i = 0; i < Parameter.N_III_SPEED; i++) {
+//			
+//			if (i % 16 == 0) {
+//				
+//				System.out.printf ("LINE %2d\t", (i / 16 + 1));
+//				
+//			}
 //			
 //			System.out.printf ("%06X\t", publicKey[i]);
 //			
 //			if (i % 16 == 15) {
 //				
-//				System.out.printf ("LINE %2d\n", (i / 16 + 1));
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.printf ("\n");
+//		System.out.println ("\nSeed\n");
+//		
+//		for (int i = 0; i < Polynomial.SEED; i++) {
+//		
+//			System.out.printf ("%02X ", seedA[i]);
+//		
+//		}
 //		
 //	}
 	
@@ -1513,38 +1485,45 @@ public class Test {
 //		
 //		System.out.println ("Test for Decoding Public Key in QTESLA for Provably-Secure qTESLA Security Category-1\n");
 //		
-//		byte[] publicKeyInput	= new byte[Parameter.Q_LOGARITHM_I_P * Integer.SIZE * Parameter.K_I_P * 4];
+//		byte[] publicKeyInput	= new byte[Polynomial.PUBLIC_KEY_I_P];
 //		int[] publicKey			= new int[Parameter.N_I_P * Parameter.K_I_P];
+//		byte[] seedA			= new byte[Polynomial.SEED];
 //		
-//		for (short j = 0; j < 4; j++) {
-//		
-//			for (short k = 0; k < Parameter.K_I_P; k++) {
-//		
-//				for (short i = 0; i < Parameter.Q_LOGARITHM_I_P * Integer.SIZE; i++) {
+//		for (int i = 0; i < Polynomial.PUBLIC_KEY_I_P; i++) {
 //			
-//					publicKeyInput[i + Parameter.Q_LOGARITHM_I_P * Integer.SIZE * k + Parameter.Q_LOGARITHM_I_P * Integer.SIZE * Parameter.K_I_P * j] = (byte) (PolynomialProvablySecure.ZETA_I_P[i] & 0xFFL);
-//			
-//				}
-//		
-//			}
+//			publicKeyInput[i] = (byte) (PolynomialProvablySecure.ZETA_I_P[i % Parameter.N_I_P] & 0xFFL);
 //		
 //		}
 //		
-//		QTESLA.decodePublicKeyIP (publicKey, seed, 0, publicKeyInput);
+//		QTESLA.decodePublicKeyIP (publicKey, seedA, 0, publicKeyInput);
 //		
-//		for (short i = 0; i < Parameter.N_I_P * Parameter.K_I_P; i++) {
+//		System.out.println ("Public Key in Integer\n");
+//		
+//		for (int i = 0; i < Parameter.N_I_P * Parameter.K_I_P; i++) {
+//			
+//			if (i % 8 == 0) {
+//				
+//				System.out.printf ("LINE %3d\t", (i / 8 + 1));
+//				
+//			}
 //			
 //			System.out.printf ("%08X\t", publicKey[i]);
 //			
 //			if (i % 8 == 7) {
 //				
-//				System.out.printf ("LINE %3d\n", (i / 8 + 1));
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.printf ("\n");
+//		System.out.println ("\nSeed\n");
+//		
+//		for (int i = 0; i < Polynomial.SEED; i++) {
+//			
+//			System.out.printf ("%02X ", seedA[i]);
+//			
+//		}
 //		
 //	}
 	
@@ -1554,38 +1533,43 @@ public class Test {
 //		
 //		System.out.println ("Test for Decoding Public Key in QTESLA for Provably-Secure qTESLA Security Category-3\n");
 //		
-//		byte[] publicKeyInput	= new byte[Parameter.Q_LOGARITHM_III_P * Integer.SIZE * Parameter.K_III_P * 8];
+//		byte[] publicKeyInput	= new byte[Polynomial.PUBLIC_KEY_III_P];
 //		int[] publicKey			= new int[Parameter.N_III_P * Parameter.K_III_P];
+//		byte[] seedA			= new byte[Polynomial.SEED];
 //		
-//		for (short j = 0; j < 8; j++) {
+//		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_P; i++) {
 //		
-//			for (short k = 0; k < Parameter.K_III_P; k++) {
-//		
-//				for (short i = 0; i < Parameter.Q_LOGARITHM_III_P * Integer.SIZE; i++) {
+//			publicKeyInput[i] = (byte) (PolynomialProvablySecure.ZETA_III_P[i % Parameter.N_III_P] & 0xFFL);
 //			
-//					publicKeyInput[i + Parameter.Q_LOGARITHM_III_P * Integer.SIZE * k + Parameter.Q_LOGARITHM_III_P * Integer.SIZE * Parameter.K_III_P * j] = (byte) (PolynomialProvablySecure.ZETA_III_P[i] & 0xFFL);
-//			
-//				}
-//		
-//			}
-//		
 //		}
 //		
-//		QTESLA.decodePublicKeyIIIP (publicKey, seed, 0, publicKeyInput);
+//		QTESLA.decodePublicKeyIIIP (publicKey, seedA, 0, publicKeyInput);
 //		
 //		for (short i = 0; i < Parameter.N_III_P * Parameter.K_III_P; i++) {
+//			
+//			if (i % 8 == 0) {
+//				
+//				System.out.printf ("LINE %4d\t", (i / 8 + 1));
+//				
+//			}
 //			
 //			System.out.printf ("%08X\t", publicKey[i]);
 //			
 //			if (i % 8 == 7) {
 //				
-//				System.out.printf ("LINE %4d\n", (i / 8 + 1));
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.printf ("\n");
+//		System.out.println ("\nSeed\n");
+//		
+//		for (int i = 0; i < Polynomial.SEED; i++) {
+//			
+//			System.out.printf ("%02X ", seedA[i]);
+//			
+//		}
 //		
 //	}
 	
@@ -1595,26 +1579,29 @@ public class Test {
 //		
 //		System.out.println ("Test for Encoding Signature in QTESLA for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 //		
-//		long[] Z			= new long[Parameter.N_III_SIZE];
-//		byte[] signature	= new byte[Parameter.N_III_SIZE * Parameter.D_III_SIZE / Byte.SIZE + Polynomial.C_BYTE];
+//		byte[] signature	= new byte[Polynomial.SIGNATURE_III_SIZE];
 //		
-//		function.memoryCopy (Z, 0, PolynomialHeuristic.ZETA_III_SIZE, 0, Parameter.N_III_SIZE);
+//		QTESLA.encodeSignature (signature, 0, seed, 0, PolynomialHeuristic.ZETA_III_SIZE, Parameter.N_III_SIZE, Parameter.D_III_SIZE);
 //		
-//		QTESLA.encodeSignature (signature, 0, seed, (short) 0, Z, Parameter.N_III_SIZE, Parameter.D_III_SIZE);
-//		
-//		for (short i = 0; i < Parameter.N_III_SIZE * Parameter.D_III_SIZE / Byte.SIZE + Polynomial.C_BYTE; i++) {
+//		for (int i = 0; i < Polynomial.SIGNATURE_III_SIZE; i++) {
 //			
-//			System.out.printf ("%02X\t", signature[i]);
-//			
-//			if (i % 16 == 15) {
+//			if (i % 32 == 0) {
 //				
-//				System.out.printf ("LINE %3d\n", (i / 16 + 1));
+//				System.out.printf ("LINE %2d\t", (i / 32 + 1));
+//				
+//			}
+//			
+//			System.out.printf ("%02X ", signature[i]);
+//			
+//			if (i % 32 == 31) {
+//				
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.printf ("\n");
+//		System.out.println ();
 //		
 //	}
 	
@@ -1624,26 +1611,29 @@ public class Test {
 //		
 //		System.out.println ("Test for Encoding Signature in QTESLA for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 //		
-//		long[] Z			= new long[Parameter.N_III_SPEED];
-//		byte[] signature	= new byte[Parameter.N_III_SPEED * Parameter.D_III_SPEED / Byte.SIZE + Polynomial.C_BYTE];
+//		byte[] signature	= new byte[Polynomial.SIGNATURE_III_SPEED];
 //		
-//		function.memoryCopy (Z, 0, PolynomialHeuristic.ZETA_III_SPEED, 0, Parameter.N_III_SPEED);
+//		QTESLA.encodeSignatureIIISpeedIP (signature, 0, seed, 0, PolynomialHeuristic.ZETA_III_SPEED, Parameter.N_III_SPEED, Parameter.D_III_SPEED);
 //		
-//		QTESLA.encodeSignatureIIISpeedIP (signature, 0, seed, (short) 0, Z, Parameter.N_III_SPEED, Parameter.D_III_SPEED);
-//		
-//		for (short i = 0; i < Parameter.N_III_SPEED * Parameter.D_III_SPEED / Byte.SIZE + Polynomial.C_BYTE; i++) {
+//		for (int i = 0; i < Polynomial.SIGNATURE_III_SPEED; i++) {
 //			
-//			System.out.printf ("%02X\t", signature[i]);
-//			
-//			if (i % 16 == 15) {
+//			if (i % 32 == 0) {
 //				
-//				System.out.printf ("LINE %3d\n", (i / 16 + 1));
+//				System.out.printf ("LINE %2d\t", (i / 32 + 1));
+//				
+//			}
+//			
+//			System.out.printf ("%02X ", signature[i]);
+//			
+//			if (i % 32 == 31) {
+//				
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.printf ("\n");
+//		System.out.println ();
 //		
 //	}
 	
@@ -1653,26 +1643,29 @@ public class Test {
 //		
 //		System.out.println ("Test for Encoding Signature in QTESLA for Provably-Secure qTESLA Security Category-3\n");
 //		
-//		long[] Z			= new long[Parameter.N_III_P];
-//		byte[] signature	= new byte[Parameter.N_III_P * Parameter.D_III_P / Byte.SIZE + Polynomial.C_BYTE];
+//		byte[] signature	= new byte[Polynomial.SIGNATURE_III_P];
 //		
-//		function.memoryCopy (Z, 0, PolynomialProvablySecure.ZETA_III_P, 0, Parameter.N_III_P);
+//		QTESLA.encodeSignature (signature, 0, seed, 0, PolynomialProvablySecure.ZETA_III_P);
 //		
-//		QTESLA.encodeSignature (signature, 0, seed, (short) 0, Z);
-//		
-//		for (short i = 0; i < Parameter.N_III_P * Parameter.D_III_P / Byte.SIZE + Polynomial.C_BYTE; i++) {
+//		for (short i = 0; i < Polynomial.SIGNATURE_III_P; i++) {
 //			
-//			System.out.printf ("%02X\t", signature[i]);
-//			
-//			if (i % 16 == 15) {
+//			if (i % 32 == 0) {
 //				
-//				System.out.printf ("LINE %3d\n", (i / 16 + 1));
+//				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+//				
+//			}
+//			
+//			System.out.printf ("%02X ", signature[i]);
+//			
+//			if (i % 32 == 31) {
+//				
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.printf ("\n");
+//		System.out.println ();
 //		
 //	}
 	
@@ -1683,56 +1676,46 @@ public class Test {
 //		System.out.println ("Test for Decoding Signature in QTESLA for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 //		
 //		long[] Z			= new long[Parameter.N_III_SIZE];
-//		byte[] C			= new byte[Polynomial.C_BYTE];
-//		byte[] signature	= new byte[Parameter.N_III_SIZE * Parameter.D_III_SIZE / Byte.SIZE + Polynomial.C_BYTE];
+//		byte[] C			= new byte[Polynomial.HASH];
+//		byte[] signature	= new byte[Polynomial.SIGNATURE_III_SIZE];
 //		
-//		for (short j = 0; j < Integer.SIZE / Byte.SIZE; j++) {
-//			
-//			for (short i = 0; i < Parameter.N_III_SIZE * Parameter.D_III_SIZE / Integer.SIZE; i++) {
+//		for (int i = 0; i < Polynomial.SIGNATURE_III_SIZE; i++) {
 //				
-//				signature[i + Parameter.N_III_SIZE * Parameter.D_III_SIZE / Integer.SIZE * j] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i] & 0xFFL);
-//				
-//			}
+//			signature[i] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i % Parameter.N_III_SIZE] & 0xFFL);
 //			
-//		}
-//		
-//		for (short i = 0; i < Polynomial.C_BYTE; i++) {
-//			
-//			signature[i + Parameter.N_III_SIZE * Parameter.D_III_SIZE / Byte.SIZE] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i] & 0xFFL);
-//		
 //		}
 //		
 //		QTESLA.decodeSignature (C, Z, signature, 0, Parameter.N_III_SIZE, Parameter.D_III_SIZE);
 //		
-//		System.out.println ("Display C\n");
+//		System.out.println ("\nDisplay C\n");
 //		
-//		for (short i = 0; i < Polynomial.C_BYTE; i++) {
+//		for (int i = 0; i < Polynomial.HASH; i++) {
 //			
-//			System.out.printf ("%02X\t", C[i]);
+//			System.out.printf ("%02X ", C[i]);
 //			
-//			if (i % 16 == 15) {
+//		}
+//		
+//		System.out.println ("\n\nDisplay Z\n");
+//		
+//		for (int i = 0; i < Parameter.N_III_SIZE; i++) {
+//			
+//			if (i % 4 == 0) {
 //				
-//				System.out.printf ("LINE %d\n", (i / 16 + 1));
+//				System.out.printf ("LINE %3d\t", (i / 4 + 1));
+//				
+//			}
+//			
+//			System.out.printf ("%016X\t", Z[i]);
+//			
+//			if (i % 4 == 3) {
+//				
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.println ("\nDisplay Z\n");
-//		
-//		for (short i = 0; i < Parameter.N_III_SIZE; i++) {
-//			
-//			System.out.printf ("%06X\t", Z[i]);
-//			
-//			if (i % 16 == 15) {
-//				
-//				System.out.printf ("LINE %2d\n", (i / 16 + 1));
-//				
-//			}
-//			
-//		}
-//		
-//		System.out.printf ("\n");
+//		System.out.println ();
 //		
 //	}
 	
@@ -1743,56 +1726,46 @@ public class Test {
 //		System.out.println ("Test for Decoding Signature in QTESLA for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 //		
 //		long[] Z			= new long[Parameter.N_III_SPEED];
-//		byte[] C			= new byte[Polynomial.C_BYTE];
-//		byte[] signature	= new byte[Parameter.N_III_SPEED * Parameter.D_III_SPEED / Byte.SIZE + Polynomial.C_BYTE];
+//		byte[] C			= new byte[Polynomial.HASH];
+//		byte[] signature	= new byte[Polynomial.SIGNATURE_III_SPEED];
 //		
-//		for (short j = 0; j < Integer.SIZE / Byte.SIZE; j++) {
+//		for (int i = 0; i < Polynomial.SIGNATURE_III_SPEED; i++) {
+//
+//			signature[i] = (byte) (PolynomialHeuristic.ZETA_III_SPEED[i % Parameter.N_III_SPEED] & 0xFFL);
 //			
-//			for (short i = 0; i < Parameter.N_III_SPEED * Parameter.D_III_SPEED / Integer.SIZE; i++) {
-//				
-//				signature[i + Parameter.N_III_SPEED * Parameter.D_III_SPEED / Integer.SIZE * j] = (byte) (PolynomialHeuristic.ZETA_III_SPEED[i] & 0xFFL);
-//				
-//			}
-//			
-//		}
-//		
-//		for (short i = 0; i < Polynomial.C_BYTE; i++) {
-//			
-//			signature[i + Parameter.N_III_SPEED * Parameter.D_III_SPEED / Byte.SIZE] = (byte) (PolynomialHeuristic.ZETA_III_SPEED[i] & 0xFFL);
-//		
 //		}
 //		
 //		QTESLA.decodeSignatureIIISpeedIP (C, Z, signature, 0, Parameter.N_III_SPEED, Parameter.D_III_SPEED);
 //		
-//		System.out.println ("Display C\n");
+//		System.out.println ("\nDisplay C\n");
 //		
-//		for (short i = 0; i < Polynomial.C_BYTE; i++) {
+//		for (int i = 0; i < Polynomial.HASH; i++) {
 //			
-//			System.out.printf ("%02X\t", C[i]);
-//			
-//			if (i % 16 == 15) {
-//				
-//				System.out.printf ("LINE %d\n", (i / 16 + 1));
-//				
-//			}
+//			System.out.printf ("%02X ", C[i]);
 //			
 //		}
 //		
-//		System.out.println ("\nDisplay Z\n");
+//		System.out.println ("\n\nDisplay Z\n");
 //		
-//		for (short i = 0; i < Parameter.N_III_SPEED; i++) {
+//		for (int i = 0; i < Parameter.N_III_SIZE; i++) {
+//		
+//			if (i % 4 == 0) {
 //			
-//			System.out.printf ("%06X\t", Z[i]);
+//				System.out.printf ("LINE %3d\t", (i / 4 + 1));
 //			
-//			if (i % 16 == 15) {
-//				
-//				System.out.printf ("LINE %2d\n", (i / 16 + 1));
-//				
 //			}
-//			
-//		}
 //		
-//		System.out.printf ("\n");
+//			System.out.printf ("%016X\t", Z[i]);
+//		
+//			if (i % 4 == 3) {
+//			
+//				System.out.println ();
+//			
+//			}
+//		
+//		}
+//	
+//		System.out.println ();
 //		
 //	}
 	
@@ -1803,56 +1776,46 @@ public class Test {
 //		System.out.println ("Test for Decoding Signature in QTESLA for Provably-Secure qTESLA Security Category-3\n");
 //		
 //		long[] Z			= new long[Parameter.N_III_P];
-//		byte[] C			= new byte[Polynomial.C_BYTE];
-//		byte[] signature	= new byte[Parameter.N_III_P * Parameter.D_III_P / Byte.SIZE + Polynomial.C_BYTE];
+//		byte[] C			= new byte[Polynomial.HASH];
+//		byte[] signature	= new byte[Polynomial.SIGNATURE_III_P];
 //		
-//		for (short j = 0; j < Integer.SIZE / Byte.SIZE; j++) {
-//			
-//			for (short i = 0; i < Parameter.N_III_P * Parameter.D_III_P / Integer.SIZE; i++) {
-//				
-//				signature[i + Parameter.N_III_P * Parameter.D_III_P / Integer.SIZE * j] = (byte) (PolynomialProvablySecure.ZETA_III_P[i] & 0xFFL);
-//				
-//			}
-//			
-//		}
+//		for (int i = 0; i < Polynomial.SIGNATURE_III_P; i++) {
 //		
-//		for (short i = 0; i < Polynomial.C_BYTE; i++) {
+//			signature[i] = (byte) (PolynomialProvablySecure.ZETA_III_P[i % Parameter.N_III_P] & 0xFFL);
 //			
-//			signature[i + Parameter.N_III_P * Parameter.D_III_P / Byte.SIZE] = (byte) (PolynomialProvablySecure.ZETA_III_P[i] & 0xFFL);
-//		
 //		}
 //		
 //		QTESLA.decodeSignature (C, Z, signature, 0);
 //		
-//		System.out.println ("Display C\n");
+//		System.out.println ("\nDisplay C\n");
 //		
-//		for (short i = 0; i < Polynomial.C_BYTE; i++) {
+//		for (int i = 0; i < Polynomial.HASH; i++) {
 //			
-//			System.out.printf ("%02X\t", C[i]);
+//			System.out.printf ("%02X ", C[i]);
 //			
-//			if (i % 16 == 15) {
+//		}
+//		
+//		System.out.println ("\n\nDisplay Z\n");
+//		
+//		for (int i = 0; i < Parameter.N_III_P; i++) {
+//			
+//			if (i % 4 == 0) {
 //				
-//				System.out.printf ("LINE %d\n", (i / 16 + 1));
+//				System.out.printf ("LINE %3d\t", (i / 4 + 1));
+//				
+//			}
+//			
+//			System.out.printf ("%016X\t", Z[i]);
+//			
+//			if (i % 4 == 3) {
+//				
+//				System.out.println ();
 //				
 //			}
 //			
 //		}
 //		
-//		System.out.println ("\nDisplay Z\n");
-//		
-//		for (short i = 0; i < Parameter.N_III_P; i++) {
-//			
-//			System.out.printf ("%06X\t", Z[i]);
-//			
-//			if (i % 16 == 15) {
-//				
-//				System.out.printf ("LINE %3d\n", (i / 16 + 1));
-//				
-//			}
-//			
-//		}
-//		
-//		System.out.printf ("\n");
+//		System.out.println ();
 //		
 //	}
 	
