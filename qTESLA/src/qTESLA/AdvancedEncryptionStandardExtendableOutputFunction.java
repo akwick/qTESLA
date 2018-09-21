@@ -12,9 +12,9 @@ public class AdvancedEncryptionStandardExtendableOutputFunction {
 	
 	public AdvancedEncryptionStandardExtendableOutputFunction () {
 		
-		this.buffer = new byte[16];
-		this.key = new byte[32];
-		this.plaintext = new byte[16];
+		this.buffer		= new byte[16];
+		this.key		= new byte[32];
+		this.plaintext	= new byte[16];
 		
 	}
 	
@@ -48,7 +48,7 @@ public class AdvancedEncryptionStandardExtendableOutputFunction {
 		
 	}
 	
-	/**********************************************************************************************
+	/*****************************************************************************
 	 * Description:	Set A Part of Buffer to "character"
 	 * 
 	 * @param		offset		Starting Point of the Buffer
@@ -56,7 +56,7 @@ public class AdvancedEncryptionStandardExtendableOutputFunction {
 	 * @param		character	Content to be Set
 	 * 
 	 * @return		none
-	 **********************************************************************************************/
+	 *****************************************************************************/
 	public void setBuffer (int bufferOffset, int length, byte character) {
 		
 		Arrays.fill (this.buffer, bufferOffset, bufferOffset + length, character);
@@ -69,7 +69,7 @@ public class AdvancedEncryptionStandardExtendableOutputFunction {
 		
 	}
 	
-	/**********************************************************************************************
+	/*****************************************************************************
 	 * Description:	Copy A Part of the Source Key to A Part of the Destination Key
 	 * 
 	 * @param		key			Source Key
@@ -77,10 +77,10 @@ public class AdvancedEncryptionStandardExtendableOutputFunction {
 	 * @param		length		Length of the Part to be Copied
 	 * 
 	 * @return		none
-	 **********************************************************************************************/
-	public void setKey (byte[] key, short keyOffset, short length) {
+	 *****************************************************************************/
+	public void setKey (byte[] key, int keyOffset, int length) {
 		
-		System.arraycopy (this.key, keyOffset, plaintext, keyOffset, length);
+		System.arraycopy (key, keyOffset, this.key, keyOffset, length);
 		
 	}
 	
@@ -90,7 +90,7 @@ public class AdvancedEncryptionStandardExtendableOutputFunction {
 		
 	}
 	
-	/**********************************************************************************************
+	/**************************************************************************************
 	 * Description:	Set A Part of Plaintext to "character"
 	 * 
 	 * @param		offset		Starting Point of the Plaintext
@@ -98,14 +98,14 @@ public class AdvancedEncryptionStandardExtendableOutputFunction {
 	 * @param		character	Content to be Set
 	 * 
 	 * @return		none
-	 **********************************************************************************************/
+	 **************************************************************************************/
 	public void setPlaintext (int plaintextOffset, int length, byte character) {
 		
 		Arrays.fill (this.plaintext, plaintextOffset, plaintextOffset + length, character);
 		
 	}
 	
-	/*************************************************************************************************
+	/******************************************************************************************
 	 * Description:	Copy A Part of the Source Plaintext to A Part of the Destination Plaintext
 	 * 
 	 * @param		key			Source Plaintext
@@ -113,35 +113,35 @@ public class AdvancedEncryptionStandardExtendableOutputFunction {
 	 * @param		length		Length of the Part to be Copied
 	 * 
 	 * @return		none
-	 *************************************************************************************************/
-	public void setPlaintext (byte[] plaintext, short plaintextOffset, short length) {
+	 ******************************************************************************************/
+	public void setPlaintext (byte[] plaintext, int plaintextOffset, int length) {
 		
-		System.arraycopy (this.plaintext, plaintextOffset, plaintext, plaintextOffset, length);
+		System.arraycopy (plaintext, plaintextOffset, this.plaintext, plaintextOffset, length);
 		
 	}
 	
-	/**********************************************************************************************
+	/***************************************************************
 	 * Description:	Get An Element of Plaintext with A Certain Index
 	 * 
 	 * @param		index
 	 * 
 	 * @return		The (index + 1)-th Element of Plaintext
-	 **********************************************************************************************/
-	public byte getPlaintextElement (short index) {
+	 ***************************************************************/
+	public byte getPlaintextElement (int index) {
 		
 		return this.plaintext[index];
 		
 	}
 	
-	/**********************************************************************************************
+	/******************************************************************************
 	 * Description:	Set An Element of Plaintext with A Certain Index to "character"
 	 * 
 	 * @param		index
 	 * @param		character	Content to be Set
 	 * 
 	 * @return		none
-	 **********************************************************************************************/
-	public void setPlaintextElement (short index, byte character) {
+	 ******************************************************************************/
+	public void setPlaintextElement (int index, byte character) {
 		
 		this.plaintext[index] = character;
 		

@@ -1,7 +1,14 @@
 package qTESLA;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.ShortBufferException;
 
 public class Test {
 	
@@ -40,7 +47,7 @@ public class Test {
 			
 	};
 	
-	public static void main (String[] args) {
+	public static void main (String[] args) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		// testMemoryCopy ();
 		// testMemoryEquivalence ();
@@ -52,6 +59,8 @@ public class Test {
 		// testStoreLongNumber ();
 		
 		// testFederalInformationProcessingStandard202 ();
+		
+		// testRandomByte ();
 		
 		// testModulus7 ();
 		// testBernoulli ();
@@ -104,7 +113,7 @@ public class Test {
 		// testSparsePolynomialMultiplication32 ();
 		// testHashFunctionIIISize ();
 		// testHashFunctionIIIP ();
-		// testGenerateKeyPairSigningVerifyingIIISize ();
+		testGenerateKeyPairSigningVerifyingIIISize ();
 		// testGenerateKeyPairSigningVerifyingIIIP ();
 		
 	}
@@ -504,6 +513,35 @@ public class Test {
 			}
 			
 		}
+		
+	}
+	
+	/* Test for Random Byte in Random Number Generator */
+	
+	public static void testRandomByte () throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
+		
+		RandomNumberGenerator rng = new RandomNumberGenerator ();
+		byte[] randomness = new byte[Polynomial.RANDOM];
+		
+		System.out.println ("Test for Random Byte in Random Number Generator\n");
+		
+		for (int n = 0; n < 100; n++) {
+			
+			System.out.printf ("Round %3d\t", n + 1);
+			
+			rng.randomByte (randomness, 0, Polynomial.RANDOM);
+			
+			for (int i = 0; i < Polynomial.RANDOM; i++) {
+			
+				System.out.printf ("%02X ", randomness[i]);
+			
+			}
+			
+			System.out.println();
+		
+		}
+		
+		System.out.println();
 		
 	}
 	
@@ -2270,7 +2308,9 @@ public class Test {
 	
 	/* Test for Generation of the Key Pair, Signing and Verifying for Heuristic qTESLA Security Category-3 (Option for Size) */
 	
-	public static void testGenerateKeyPairSigningVerifyingIIISize () {
+	public static void testGenerateKeyPairSigningVerifyingIIISize ()
+			
+			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		System.out.println ("Test for Generation of the Key Pair for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 		
@@ -2283,11 +2323,17 @@ public class Test {
 		
 		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_SIZE; i++) {
 			
-			System.out.printf ("%02X\t", publicKey[i]);
-			
-			if (i % 16 == 15) {
+			if (i % 32 == 0) {
 				
-				System.out.printf ("LINE %3d\n", (i / 16 + 1));
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", publicKey[i]);
+			
+			if (i % 32 == 31) {
+				
+				System.out.println ();
 			
 			}
 			
@@ -2297,11 +2343,17 @@ public class Test {
 		
 		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_SIZE; i++) {
 			
-			System.out.printf ("%02X\t", privateKey[i]);
-			
-			if (i % 16 == 15) {
+			if (i % 32 == 0) {
 				
-				System.out.printf ("LINE %3d\n", (i / 16 + 1));
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", privateKey[i]);
+			
+			if (i % 32 == 31) {
+				
+				System.out.println ();
 			
 			}
 			
@@ -2324,17 +2376,23 @@ public class Test {
 		
 			for (int i = 0; i < 59; i++) {
 			
-				System.out.printf ("%02X\t", messageInput[i]);
+				if (i % 32 == 0) {
+					
+					System.out.printf ("LINE %d\t", (i / 32 + 1));
 			
-				if (i % 16 == 15) {
+				}
 				
-					System.out.printf ("LINE %d\n", (i / 16 + 1));
+				System.out.printf ("%02X ", messageInput[i]);
+			
+				if (i % 32 == 31 || i == 58) {
+				
+					System.out.println ();
 			
 				}
 			
 			}
 		
-			System.out.println ("\n\nSignature:\n");
+			System.out.println ("\nSignature:\n");
 		
 			QTESLA.signingIIISize (signature, 0, signatureLength, messageInput, 0, 59, privateKey, secureRandom);
 		
@@ -2399,7 +2457,9 @@ public class Test {
 	
 	/* Test for Generation of the Key Pair, Signing and Verifying for Provably-Secure qTESLA Security Category-3 */
 	
-	public static void testGenerateKeyPairSigningVerifyingIIIP () {
+	public static void testGenerateKeyPairSigningVerifyingIIIP ()
+	
+			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		System.out.println ("Test for Generation of the Key Pair for Provably-Secure qTESLA Security Category-3\n");
 		

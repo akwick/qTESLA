@@ -12,10 +12,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class RandomNumberGenerator {
 	
-	public static final short RANDOM_NUMBER_GENERATOR_SUCCESS = 0;
-	public static final short RANDOM_NUMBER_GENERATOR_BAD_MAXIMUM_LENGTH = -1;
-	public static final short RANDOM_NUMBER_GENERATOR_BAD_OUTPUT_BUFFER = -2;
-	public static final short RANDOM_NUMBER_GENERATOR_BAD_REQUEST_LENGTH = -3;
+	public static final int RANDOM_NUMBER_GENERATOR_SUCCESS				= 0;
+	public static final int RANDOM_NUMBER_GENERATOR_BAD_MAXIMUM_LENGTH	= -1;
+	public static final int RANDOM_NUMBER_GENERATOR_BAD_OUTPUT_BUFFER	= -2;
+	public static final int RANDOM_NUMBER_GENERATOR_BAD_REQUEST_LENGTH	= -3;
 	
 	private AdvancedEncryptionStandard256CounterDeterministicRandomBitGenerator drbgse;
 	
@@ -25,38 +25,40 @@ public class RandomNumberGenerator {
 		
 	}
 	
-	/***************************************************************************************************************************************************************
-	 * Description:	Advanced-Encryption-Standard-256-application in Electronic Code Book mode
+	/************************************************************************************************************************************************************
+	 * Description:	Advanced-Encryption-Standard-256-Application in Electronic Code Book Mode
 	 * 
-	 * @param		key:			256-bit Advanced-Encryption-Standard key
-	 * @param		plaintext:		128-bit plaintext value
-	 * @param		ciphertext:		128-bit ciphertext value
+	 * @param		key:			256-Bit Advanced-Encryption-Standard Key
+	 * @param		plaintext:		128-Bit Plaintext Value
+	 * @param		ciphertext:		128-Bit Ciphertext Value
 	 * 
 	 * @return		none
-	 ***************************************************************************************************************************************************************/
-	private void advancedEncryptionStandard256ElectronicCodeBook (byte[] key, byte[] plaintext, byte[] ciphertext, short ciphertextOffset)
-				throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException  {
+	 ************************************************************************************************************************************************************/
+	private void advancedEncryptionStandard256ElectronicCodeBook (byte[] key, byte[] plaintext, byte[] ciphertext, int ciphertextOffset)
+				
+			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException  {
 		
 		Cipher cipher = Cipher.getInstance ("AES/ECB/PKCS5Padding");
 		
 		cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, "AES"));
 		
-		cipher.doFinal (plaintext, 0, plaintext.length, ciphertext, ciphertextOffset);
+		cipher.update (plaintext, 0, 16, ciphertext, ciphertextOffset);
 		
 	}
 	
 	private void advancedEncryptionStandard256CounterDeterministicRandomBitGeneratorUpdate (byte[] providedData, byte[] key, byte[] value)
-					throws	BadPaddingException, InvalidKeyException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
+					
+			throws	BadPaddingException, InvalidKeyException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		byte[] temporary = new byte[48];
 		
-		for (short i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			
-			for (short j = 15; j >= 0; j--) {
+			for (int j = 15; j >= 0; j--) {
 				
-				if (value[j] ==  0xFF) {
+				if (value[j] == (byte) 0xFF) {
 					
-					value[j] = 0x00;
+					value[j] = (byte) 0x00;
 					
 				} else {
 					
@@ -68,13 +70,13 @@ public class RandomNumberGenerator {
 				
 			}
 			
-			advancedEncryptionStandard256ElectronicCodeBook (key, value, temporary, (short) (16 * i));
+			advancedEncryptionStandard256ElectronicCodeBook (key, value, temporary, 16 * i);
 			
 		}
 		
 		if (providedData != null) {
 			
-			for (short i = 0; i < 48; i++) {
+			for (int i = 0; i < 48; i++) {
 				
 				temporary[i] ^= providedData[i];
 				
@@ -97,32 +99,34 @@ public class RandomNumberGenerator {
 	 * 
 	 * @return		RANDOM_NUMBER_GENERATOR_SUCCESS
 	 ***************************************************************************************************************************************************************/
-	public short initiateSeedExpander (
+	public int initiateSeedExpander (
 			
 			AdvancedEncryptionStandardExtendableOutputFunction stateOfSeedExpander,
 			byte[] seed,
 			byte[] diversifier,
-			long maximumLength) {
+			long maximumLength
+	
+	) {
 		
-		if (maximumLength > 0xFFFFFFFFFL) {
+		if (maximumLength >= 0x100000000L) {
 			
 			return RANDOM_NUMBER_GENERATOR_BAD_MAXIMUM_LENGTH;
 			
 		}
 		
 		stateOfSeedExpander.setRemainingLength (maximumLength);
-		stateOfSeedExpander.setKey (seed, (short) 0, (short) 32);
-		stateOfSeedExpander.setPlaintext (diversifier, (short) 0, (short) 8);
-		stateOfSeedExpander.setPlaintextElement ((short) 11, (byte) (maximumLength % 256));
-		maximumLength >>= Byte.SIZE;
-		stateOfSeedExpander.setPlaintextElement ((short) 10, (byte) (maximumLength % 256));
-		maximumLength >>= Byte.SIZE;
-		stateOfSeedExpander.setPlaintextElement ((short) 9, (byte) (maximumLength % 256));
-		maximumLength >>= Byte.SIZE;
-		stateOfSeedExpander.setPlaintextElement ((short) 8, (byte) (maximumLength % 256));
-		stateOfSeedExpander.setPlaintext ((short) 12, (short) 4, (byte) 0x0);
-		stateOfSeedExpander.setBufferPosition ((short) 16);
-		stateOfSeedExpander.setBuffer ((short) 0, (short) 16, (byte) 0x0);
+		stateOfSeedExpander.setKey (seed, 0, 32);
+		stateOfSeedExpander.setPlaintext (diversifier, 0, 8);
+		stateOfSeedExpander.setPlaintextElement (11, (byte) (maximumLength & 0xFFL));
+		maximumLength >>>= Byte.SIZE;
+		stateOfSeedExpander.setPlaintextElement (10, (byte) (maximumLength & 0xFFL));
+		maximumLength >>>= Byte.SIZE;
+		stateOfSeedExpander.setPlaintextElement (9,	 (byte) (maximumLength & 0xFFL));
+		maximumLength >>>= Byte.SIZE;
+		stateOfSeedExpander.setPlaintextElement (8,	 (byte) (maximumLength & 0xFFL));
+		stateOfSeedExpander.setPlaintext (12, 4, (byte) 0x00);
+		stateOfSeedExpander.setBufferPosition (16);
+		stateOfSeedExpander.setBuffer (0, 16, (byte) 0x00);
 		
 		return RANDOM_NUMBER_GENERATOR_SUCCESS;
 		
@@ -139,7 +143,7 @@ public class RandomNumberGenerator {
 	 * 				RANDOM_NUMBER_GENERATOR_BAD_OUTPUT_BUFFER
 	 * 				RANDOM_NUMBER_GENERATOR_BAD_REQUEST_LENGTH
 	 ***************************************************************************************************************************************************************/
-	public short seedExpander (AdvancedEncryptionStandardExtendableOutputFunction stateOfSeedExpander, byte[] extendableOutputFunctionData, long numberOfByteToReturn)
+	public short seedExpander (AdvancedEncryptionStandardExtendableOutputFunction stateOfSeedExpander, byte[] extendableOutputFunctionData, int numberOfByteToReturn)
 				 
 				 throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
@@ -164,42 +168,49 @@ public class RandomNumberGenerator {
 			if (numberOfByteToReturn <= (16 - stateOfSeedExpander.getBufferPosition())) {
 				
 				System.arraycopy (
-						extendableOutputFunctionData, offset,
-						stateOfSeedExpander.getBuffer(), stateOfSeedExpander.getBufferPosition(),
-						(int) numberOfByteToReturn
+						
+						stateOfSeedExpander.getBuffer(),	stateOfSeedExpander.getBufferPosition(),
+						extendableOutputFunctionData,		offset,
+						numberOfByteToReturn
+				
 				);
 				
-				stateOfSeedExpander.setBufferPosition ((int) (stateOfSeedExpander.getBufferPosition() + numberOfByteToReturn));
+				stateOfSeedExpander.setBufferPosition (stateOfSeedExpander.getBufferPosition() + numberOfByteToReturn);
 				
 				return RANDOM_NUMBER_GENERATOR_SUCCESS;
 				
 			}
 			
 			System.arraycopy (
-					stateOfSeedExpander.getBuffer(), stateOfSeedExpander.getBufferPosition(),
-					extendableOutputFunctionData, offset,
+					
+					stateOfSeedExpander.getBuffer(),	stateOfSeedExpander.getBufferPosition(),
+					extendableOutputFunctionData,		offset,
 					16 - stateOfSeedExpander.getBufferPosition()
+			
 			);
 			
-			numberOfByteToReturn -= 16 - stateOfSeedExpander.getBufferPosition();
-			offset += 16 - stateOfSeedExpander.getBufferPosition();
+			numberOfByteToReturn	-= 16 - stateOfSeedExpander.getBufferPosition();
+			offset					+= 16 - stateOfSeedExpander.getBufferPosition();
 			
 			advancedEncryptionStandard256ElectronicCodeBook (
+					
 					stateOfSeedExpander.getKey(), stateOfSeedExpander.getPlaintext(), stateOfSeedExpander.getBuffer(), (short) 0
+			
 			);
 			
-			stateOfSeedExpander.setBufferPosition ((short) 0);
+			stateOfSeedExpander.setBufferPosition (0);
 			
 			/* Increment the counter */
-			for (short i = 15; i >= 12; i--) {
+			for (int i = 15; i >= 12; i--) {
 				
 				if (stateOfSeedExpander.getPlaintextElement (i) == 0xFF) {
 					
-					stateOfSeedExpander.setPlaintextElement (i, (byte) 0x0);
+					stateOfSeedExpander.setPlaintextElement (i, (byte) 0x00);
 					
 				} else {
 					
-					stateOfSeedExpander.setPlaintextElement(i, (byte) (stateOfSeedExpander.getPlaintextElement(i) + 1));
+					stateOfSeedExpander.setPlaintextElement (i, (byte) (stateOfSeedExpander.getPlaintextElement(i) + 1));
+					
 					break;
 					
 				}
@@ -212,7 +223,7 @@ public class RandomNumberGenerator {
 		
 	}
 	
-	public void initiateRandomByte (byte[] entropyInput, byte[] personalizationString, short securityStrength)
+	public void initiateRandomByte (byte[] entropyInput, byte[] personalizationString, int securityStrength)
 				
 				throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
@@ -222,7 +233,7 @@ public class RandomNumberGenerator {
 		
 		if (personalizationString != null) {
 			
-			for (short i = 0; i < 48; i++) {
+			for (int i = 0; i < 48; i++) {
 				
 				seedMaterial[i] ^= personalizationString[i];
 				
@@ -230,30 +241,29 @@ public class RandomNumberGenerator {
 			
 		}
 		
-		this.drbgse.setKey (0, 32, (byte) 0x0);
-		
-		this.drbgse.setValue (0, 16, (byte) 0x0);
+		this.drbgse.setKey		(0, 32, (byte) 0x00);
+		this.drbgse.setValue	(0, 16, (byte) 0x00);
 		
 		advancedEncryptionStandard256CounterDeterministicRandomBitGeneratorUpdate (seedMaterial, this.drbgse.getKey(), this.drbgse.getValue());
 		
-		this.drbgse.setReseedCounter ((short) 1);
+		this.drbgse.setReseedCounter (1);
 		
 	}
 	
-	public short randomByte (byte[] extendableOutputFunctionData, int extendableOutputFunctionDataOffset, int numberOfByteToReturn)
+	public int randomByte (byte[] extendableOutputFunctionData, int extendableOutputFunctionDataOffset, int numberOfByteToReturn)
 				
 				 throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
-		byte[] block	= new byte[16];
-		short i			= 0;
+		byte[] block = new byte[16];
+		int i		 = 0;
 		
 		while (numberOfByteToReturn > 0) {
 			
-			for (short j = 15; j >= 0; j--) {
+			for (int j = 15; j >= 0; j--) {
 				
-				if (this.drbgse.getValueElement ((short) j) == 0xFF) {
+				if (this.drbgse.getValueElement (j) == (byte) 0xFF) {
 					
-					this.drbgse.setValueElement ((short) j, (byte) 0x0);
+					this.drbgse.setValueElement (j, (byte) 0x00);
 					
 				} else {
 					
@@ -265,11 +275,11 @@ public class RandomNumberGenerator {
 				
 			}
 			
-			advancedEncryptionStandard256ElectronicCodeBook (this.drbgse.getKey(), this.drbgse.getValue(), block, (short) 0);
+			advancedEncryptionStandard256ElectronicCodeBook (this.drbgse.getKey(), this.drbgse.getValue(), block, 0);
 			
 			if (numberOfByteToReturn > 15) {
 				
-				System.arraycopy (extendableOutputFunctionData, extendableOutputFunctionDataOffset + i, block, 0, 16);
+				System.arraycopy (block, 0, extendableOutputFunctionData, extendableOutputFunctionDataOffset + i, 16);
 				i += 16;
 				numberOfByteToReturn -= 16;
 				
@@ -284,7 +294,7 @@ public class RandomNumberGenerator {
 		
 		advancedEncryptionStandard256CounterDeterministicRandomBitGeneratorUpdate (null, this.drbgse.getKey(), this.drbgse.getValue());
 		
-		this.drbgse.setReseedCounter ((short) (this.drbgse.getReseedCounter() + 1));
+		this.drbgse.setReseedCounter (this.drbgse.getReseedCounter() + 1);
 		
 		return RANDOM_NUMBER_GENERATOR_SUCCESS;
 		

@@ -1,10 +1,20 @@
 package qTESLA;
 
 import java.util.Arrays;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.ShortBufferException;
+
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 public class QTESLA {
 
+	private static RandomNumberGenerator rng = new RandomNumberGenerator ();
+	
 	/********************************************************************************************************************************************
 	 * Description:	Pack Private Key for Heuristic qTESLA Security Category-1 and Category-3 (Option for Size or Speed)
 	 * 
@@ -1243,7 +1253,9 @@ public class QTESLA {
 			byte[] publicKey, byte[] privateKey, SecureRandom secureRandom,
 			int n, int w, int q, long qInverse, int qLogarithm, int generatorA, int inverseNumberTheoreticTransform, double xi,
 			long[] zeta,
-			int errorBound, int secretBound) {
+			int errorBound, int secretBound)
+					
+			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		/* Initialize Domain Separator for Error Polynomial and Secret Polynomial */
 		int nonce = 0;
@@ -1251,7 +1263,7 @@ public class QTESLA {
 		byte[] randomness			= new byte[Polynomial.RANDOM];
 		
 		/* Extend Random Bytes to Seed Generation of Error Polynomial and Secret Polynomial */
-		byte[] randomnessExtended		= new byte[Polynomial.SEED * 4];
+		byte[] randomnessExtended	= new byte[Polynomial.SEED * 4];
 		
 		long[] secretPolynomial	= new long[n];
 		long[] errorPolynomial	= new long[n];
@@ -1259,8 +1271,8 @@ public class QTESLA {
 		long[] T				= new long[n];
 		
 		/* Get randomnessExtended <- seedErrorPolynomial, seedSecretPolynomial, seedA, seedY */
-		// this.rng.randomByte (randomness, (short) 0, Polynomial.RANDOM);
-		secureRandom.nextBytes (randomness);
+		rng.randomByte (randomness, 0, Polynomial.RANDOM);
+		// secureRandom.nextBytes (randomness);
 		
 		if (q == Parameter.Q_I) { 
 			
@@ -1383,15 +1395,19 @@ public class QTESLA {
 	 * @throws		NoSuchPaddingException
 	 * @throws		ShortBufferException
 	 ****************************************************************************************************************************************************************/
-	public static int generateKeyPairI (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom) {
+	public static int generateKeyPairI (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom)
+			
+			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		return generateKeyPair (
+				
 				publicKey, privateKey, secureRandom,
 				Parameter.N_I, Parameter.W_I, Parameter.Q_I, Parameter.Q_INVERSE_I, Parameter.Q_LOGARITHM_I,
 				Parameter.GENERATOR_A_I, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_I,
 				Parameter.XI_I,
 				PolynomialHeuristic.ZETA_I,
 				Parameter.KEY_GENERATOR_BOUND_E_I, Parameter.KEY_GENERATOR_BOUND_S_I
+		
 		);
 		
 	}
@@ -1412,15 +1428,19 @@ public class QTESLA {
 	 * @throws		NoSuchPaddingException
 	 * @throws		ShortBufferException
 	 ****************************************************************************************************************************************************************/
-	public static int generateKeyPairIIISize (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom) {
+	public static int generateKeyPairIIISize (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom)
+
+			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		return generateKeyPair (
+				
 				publicKey, privateKey, secureRandom,
 				Parameter.N_III_SIZE, Parameter.W_III_SIZE, Parameter.Q_III_SIZE, Parameter.Q_INVERSE_III_SIZE, Parameter.Q_LOGARITHM_III_SIZE,
 				Parameter.GENERATOR_A_III_SIZE, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_III_SIZE,
 				Parameter.XI_III_SIZE,
 				PolynomialHeuristic.ZETA_III_SIZE,
 				Parameter.KEY_GENERATOR_BOUND_E_III_SIZE, Parameter.KEY_GENERATOR_BOUND_S_III_SIZE
+		
 		);
 		
 	}
@@ -1442,15 +1462,19 @@ public class QTESLA {
 	 * @throws		NoSuchPaddingException
 	 * @throws		ShortBufferException
 	 ****************************************************************************************************************************************************************/
-	public static int generateKeyPairIIISpeed (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom) {
+	public static int generateKeyPairIIISpeed (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom)
+			
+			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		return generateKeyPair (
+				
 				publicKey, privateKey, secureRandom,
 				Parameter.N_III_SPEED, Parameter.W_III_SPEED, Parameter.Q_III_SPEED, Parameter.Q_INVERSE_III_SPEED, Parameter.Q_LOGARITHM_III_SPEED,
 				Parameter.GENERATOR_A_III_SPEED, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_III_SPEED,
 				Parameter.XI_III_SPEED,
 				PolynomialHeuristic.ZETA_III_SPEED,
 				Parameter.KEY_GENERATOR_BOUND_E_III_SPEED, Parameter.KEY_GENERATOR_BOUND_S_III_SPEED
+		
 		);
 		
 	}
@@ -1476,6 +1500,13 @@ public class QTESLA {
 	 * @param		secretBound							Bound in Checking Secret Polynomial	
 	 * 
 	 * @return		0									Successful Execution
+	 * 
+	 * @throws		BadPaddingException 
+	 * @throws		IllegalBlockSizeException 
+	 * @throws		InvalidKeyException
+	 * @throws		NoSuchAlgorithmException 
+	 * @throws		NoSuchPaddingException
+	 * @throws		ShortBufferException
 	 *******************************************************************************************************************************************************/
 	private static int generateKeyPair (
 			
@@ -1484,7 +1515,7 @@ public class QTESLA {
 			long[] zeta,
 			int errorBound, int secretBound
 			
-	) {
+	) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		/* Initialize Domain Separator for Error Polynomial and Secret Polynomial */
 		int nonce = 0;
@@ -1503,8 +1534,8 @@ public class QTESLA {
 		long[] T										= new long[n * k];
 		
 		/* Get randomnessExtended <- seedErrorPolynomial, seedSecretPolynomial, seedA, seedY */
-		// this.rng.randomByte (randomness, (short) 0, Polynomial.RANDOM);
-		secureRandom.nextBytes (randomness);
+		rng.randomByte (randomness, 0, Polynomial.RANDOM);
+		// secureRandom.nextBytes (randomness);
 		
 		if (q == Parameter.Q_I_P) {
 			
@@ -1628,16 +1659,27 @@ public class QTESLA {
 	 * @param		secureRandom						Source of Randomness	
 	 * 
 	 * @return		0									Successful Execution
+	 * 
+	 * @throws		BadPaddingException 
+	 * @throws		IllegalBlockSizeException 
+	 * @throws		InvalidKeyException
+	 * @throws		NoSuchAlgorithmException 
+	 * @throws		NoSuchPaddingException
+	 * @throws		ShortBufferException
 	 ****************************************************************************************************************************************************************/
-	public static int generateKeyPairIP (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom) {
+	public static int generateKeyPairIP (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom)
+	
+			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		return generateKeyPair (
+				
 				publicKey, privateKey, secureRandom,
 				Parameter.N_I_P, Parameter.K_I_P, Parameter.W_I_P, Parameter.Q_I_P, Parameter.Q_INVERSE_I_P, Parameter.Q_LOGARITHM_I_P,
 				Parameter.GENERATOR_A_I_P, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_I_P,
 				Parameter.XI_I_P,
 				PolynomialProvablySecure.ZETA_I_P,
 				Parameter.KEY_GENERATOR_BOUND_E_I_P, Parameter.KEY_GENERATOR_BOUND_S_I_P
+				
 		);
 		
 	}
@@ -1650,16 +1692,27 @@ public class QTESLA {
 	 * @param		secureRandom						Source of Randomness	
 	 * 
 	 * @return		0									Successful Execution
+	 * 
+	 * @throws		BadPaddingException 
+	 * @throws		IllegalBlockSizeException 
+	 * @throws		InvalidKeyException
+	 * @throws		NoSuchAlgorithmException 
+	 * @throws		NoSuchPaddingException
+	 * @throws		ShortBufferException
 	 ****************************************************************************************************************************************************************/
-	public static int generateKeyPairIIIP (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom) {
+	public static int generateKeyPairIIIP (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom)
+	
+			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		return generateKeyPair (
+				
 				publicKey, privateKey, secureRandom,
 				Parameter.N_III_P, Parameter.K_III_P, Parameter.W_III_P, Parameter.Q_III_P, Parameter.Q_INVERSE_III_P, Parameter.Q_LOGARITHM_III_P,
 				Parameter.GENERATOR_A_III_P, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_III_P,
 				Parameter.XI_III_P,
 				PolynomialProvablySecure.ZETA_III_P,
 				Parameter.KEY_GENERATOR_BOUND_E_III_P, Parameter.KEY_GENERATOR_BOUND_S_III_P
+		
 		);
 		
 	}
@@ -1694,6 +1747,13 @@ public class QTESLA {
 	 * @param		zeta
 	 * 
 	 * @return		0									Successful Execution
+	 * 
+	 * @throws		BadPaddingException
+	 * @throws		IllegalBlockSizeException
+	 * @throws		InvalidKeyException
+	 * @throws		NoSuchAlgorithmException
+	 * @throws		NoSuchPaddingException 
+	 * @throws		ShortBufferException
 	 ******************************************************************************************************************************************************/
 	private static int signing (
 			
@@ -1705,12 +1765,12 @@ public class QTESLA {
 			int barrettMultiplication, int barrettDivision,
 			long[] zeta
 	
-	) {
+	) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		byte[] C						= new byte[Polynomial.HASH];
 		byte[] randomness				= new byte[Polynomial.SEED];
 		byte[] randomnessInput			= new byte[messageLength + Polynomial.RANDOM + Polynomial.SEED];
-		byte[] temporaryRandomnessInput	= new byte[Polynomial.RANDOM];
+		// byte[] temporaryRandomnessInput	= new byte[Polynomial.RANDOM];
 		int[] positionList				= new int[w];
 		short[] signList				= new short[w];
 		
@@ -1724,16 +1784,18 @@ public class QTESLA {
 		/* Domain Separator for Sampling Y */
 		int nonce = 0;
 		
-		// this.rng.randomByte (randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
-		secureRandom.nextBytes (temporaryRandomnessInput);
-		System.arraycopy (temporaryRandomnessInput, 0, randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
+		rng.randomByte (randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
+		// secureRandom.nextBytes (temporaryRandomnessInput);
+		// System.arraycopy (temporaryRandomnessInput, 0, randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
 		System.arraycopy (privateKey, privateKeySize - Polynomial.SEED, randomnessInput, 0, Polynomial.SEED);
 		System.arraycopy (message, messageOffset, randomnessInput, Polynomial.RANDOM + Polynomial.SEED, messageLength);
 		
 		if (q == Parameter.Q_I) {
 		
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
+					
 					randomness, 0, Polynomial.SEED, randomnessInput, 0, messageLength + Polynomial.RANDOM + Polynomial.SEED
+			
 			);
 		
 		}
@@ -1741,7 +1803,9 @@ public class QTESLA {
 		if (q == Parameter.Q_III_SIZE) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
+					
 					randomness, 0, Polynomial.SEED, randomnessInput, 0, messageLength + Polynomial.RANDOM + Polynomial.SEED
+			
 			);
 			
 		}
@@ -1749,13 +1813,17 @@ public class QTESLA {
 		if (q == Parameter.Q_III_SPEED) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
+					
 					randomness, 0, Polynomial.SEED, randomnessInput, 0, messageLength + Polynomial.RANDOM + Polynomial.SEED
+			
 			);
 			
 		}
 		
 		Polynomial.polynomialUniform (
+				
 				A, privateKey, privateKeySize - 2 * Polynomial.SEED, n, 1, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform
+		
 		);
 		
 		/* Loop Due to Possible Rejection */
@@ -1853,6 +1921,13 @@ public class QTESLA {
 	 * @param		secureRandom						Source of Randomness
 	 * 
 	 * @return		0									Successful Execution
+	 * 
+	 * @throws		BadPaddingException
+	 * @throws		IllegalBlockSizeException
+	 * @throws		InvalidKeyException
+	 * @throws		NoSuchAlgorithmException
+	 * @throws		NoSuchPaddingException 
+	 * @throws		ShortBufferException
 	 *****************************************************************************************************************************************************/
 	public static int signingI (
 			
@@ -1860,7 +1935,7 @@ public class QTESLA {
 			final byte[] message, int messageOffset, int messageLength,
 			final byte[] privateKey, SecureRandom secureRandom
 			
-	) {
+	) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		return signing (
 				
@@ -1891,6 +1966,13 @@ public class QTESLA {
 	 * @param		secureRandom						Source of Randomness
 	 * 
 	 * @return		0									Successful Execution
+	 * 
+	 * @throws		BadPaddingException
+	 * @throws		IllegalBlockSizeException
+	 * @throws		InvalidKeyException
+	 * @throws		NoSuchAlgorithmException
+	 * @throws		NoSuchPaddingException 
+	 * @throws		ShortBufferException
 	 *****************************************************************************************************************************************************/
 	public static int signingIIISize (
 			
@@ -1898,7 +1980,7 @@ public class QTESLA {
 			final byte[] message, int messageOffset, int messageLength,
 			final byte[] privateKey, SecureRandom secureRandom
 			
-	) {
+	) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		return signing (
 				
@@ -1929,6 +2011,13 @@ public class QTESLA {
 	 * @param		secureRandom						Source of Randomness
 	 * 
 	 * @return		0									Successful Execution
+	 * 
+	 * @throws		BadPaddingException
+	 * @throws		IllegalBlockSizeException
+	 * @throws		InvalidKeyException
+	 * @throws		NoSuchAlgorithmException
+	 * @throws		NoSuchPaddingException 
+	 * @throws		ShortBufferException
 	 ****************************************************************************************************************************************************/
 	public static int signingIIISpeed (
 			
@@ -1936,7 +2025,7 @@ public class QTESLA {
 			final byte[] message, int messageOffset, int messageLength,
 			final byte[] privateKey, SecureRandom secureRandom
 			
-	) {
+	) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		return signing (
 				
