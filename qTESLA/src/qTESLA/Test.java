@@ -21,10 +21,22 @@ public class Test {
 	
 	static byte[] seed = {
 			
-			(byte) 0x12, (byte) 0x23, (byte) 0x34, (byte) 0x45, (byte) 0x56, (byte) 0x67, (byte) 0x78, (byte) 0x89,
-			(byte) 0x9A, (byte) 0xAB, (byte) 0xBC, (byte) 0xCD, (byte) 0xDE, (byte) 0xEF, (byte) 0xF1, (byte) 0x13,
-			(byte) 0x24, (byte) 0x35, (byte) 0x46, (byte) 0x57, (byte) 0x68, (byte) 0x79, (byte) 0x8A, (byte) 0x9B,
-			(byte) 0xAC, (byte) 0xBD, (byte) 0xCE, (byte) 0xDF, (byte) 0xE1, (byte) 0xF2, (byte) 0x14, (byte) 0x25
+			(byte) 0x12, (byte) 0x23, (byte) 0x34, (byte) 0x45, (byte) 0x56, (byte) 0x67, (byte) 0x78, (byte) 0x89, // 1
+			(byte) 0x9A, (byte) 0xAB, (byte) 0xBC, (byte) 0xCD, (byte) 0xDE, (byte) 0xEF, (byte) 0xF1, (byte) 0x13, // 2
+			(byte) 0x24, (byte) 0x35, (byte) 0x46, (byte) 0x57, (byte) 0x68, (byte) 0x79, (byte) 0x8A, (byte) 0x9B, // 3
+			(byte) 0xAC, (byte) 0xBD, (byte) 0xCE, (byte) 0xDF, (byte) 0xE1, (byte) 0xF2, (byte) 0x14, (byte) 0x25, // 4
+			(byte) 0x36, (byte) 0x47, (byte) 0x58, (byte) 0x69, (byte) 0x7A, (byte) 0x8B, (byte) 0x9C, (byte) 0xAD, // 5
+			(byte) 0xBE, (byte) 0xCF, (byte) 0xD1, (byte) 0xE2, (byte) 0xF3, (byte) 0x15, (byte) 0x26, (byte) 0x37, // 6
+			(byte) 0x48, (byte) 0x59, (byte) 0x6A, (byte) 0x7B, (byte) 0x8C, (byte) 0x9D, (byte) 0xAE, (byte) 0xBF, // 7
+			(byte) 0xC1, (byte) 0xD2, (byte) 0xE3, (byte) 0xF4, (byte) 0x16, (byte) 0x27, (byte) 0x38, (byte) 0x49, // 8
+			(byte) 0x5A, (byte) 0x6B, (byte) 0x7C, (byte) 0x8D, (byte) 0x9E, (byte) 0xAF, (byte) 0xB1, (byte) 0xC2, // 9
+			(byte) 0xD3, (byte) 0xE4, (byte) 0xF5, (byte) 0x17, (byte) 0x28, (byte) 0x39, (byte) 0x4A, (byte) 0x5B, // 10
+			(byte) 0x6C, (byte) 0x7D, (byte) 0x8E, (byte) 0x9F, (byte) 0xA1, (byte) 0xB2, (byte) 0xC3, (byte) 0xD4, // 11
+			(byte) 0xE5, (byte) 0xF6, (byte) 0x18, (byte) 0x29, (byte) 0x3A, (byte) 0x4B, (byte) 0x5C, (byte) 0x6D, // 12
+			(byte) 0x7E, (byte) 0x8F, (byte) 0x91, (byte) 0xA2, (byte) 0xB3, (byte) 0xC4, (byte) 0xD5, (byte) 0xE6, // 13
+			(byte) 0xF7, (byte) 0x19, (byte) 0x2A, (byte) 0x3B, (byte) 0x4C, (byte) 0x5D, (byte) 0x6E, (byte) 0x7F, // 14
+			(byte) 0x81, (byte) 0x92, (byte) 0xA3, (byte) 0xB4, (byte) 0xC5, (byte) 0xD6, (byte) 0xE7, (byte) 0xF8, // 15
+			(byte) 0x1A, (byte) 0x2B, (byte) 0x3C, (byte) 0x4D, (byte) 0x5E, (byte) 0x6F, (byte) 0x71, (byte) 0x82, // 16
 			
 	};
 	
@@ -71,6 +83,8 @@ public class Test {
 		// testTestVIIIP ();
 		// testCheckErrorPolynomialIIIP ();
 		// testCheckSecretPolynomialIIIP ();
+		// testPackPrivateKeyIIISize ();
+		// testPackPrivateKeyIIIP();
 		// testEncodePublicKeyIIISize ();
 		// testEncodePublicKeyIIISpeed ();
 		// testEncodePublicKeyIP ();
@@ -1238,6 +1252,84 @@ public class Test {
 //		System.out.println ("Test for Checking Secret Polynomial in QTESLA\n");
 //				
 //		System.out.printf ("%B\n\n", QTESLA.checkPolynomial (PolynomialProvablySecure.ZETA_III_P, 0, Parameter.KEY_GENERATOR_BOUND_S_III_P, Parameter.N_III_P, Parameter.W_III_P));
+//		
+//	}
+	
+	/* Test for Packing Private Key for Heuristic qTESLA Security Category-3 (Option for Size) */
+	
+//	public static void testPackPrivateKeyIIISize() {
+//		
+//		byte[] privateKey = new byte[Polynomial.PRIVATE_KEY_III_SIZE];
+//		
+//		System.out.println ("Test for Packing Private Key in QTESLA for Heuristic qTESLA Security Category-3 (Option for Size)\n");	
+//	
+//		QTESLA.packPrivateKey (privateKey, PolynomialHeuristic.ZETA_III_SIZE, PolynomialHeuristic.ZETA_INVERSE_III_SIZE, seed, 0, Parameter.N_III_SIZE);
+//		
+//		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_SIZE; i++) {
+//			
+//			if (i % 32 == 0) {
+//				
+//				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+//				
+//			}
+//			
+//			System.out.printf ("%02X ", privateKey[i]);
+//			
+//			if (i % 32 == 31) {
+//				
+//				System.out.println ();
+//				
+//			}
+//			
+//		}
+//		
+//		System.out.println ();
+//		
+//	}
+	
+	/* Test for Packing Private Key for Heuristic qTESLA Security Category-3 (Option for Size) */
+	
+//	public static void testPackPrivateKeyIIIP() {
+//		
+//		byte[] privateKey		= new byte[Polynomial.PRIVATE_KEY_III_P];
+//		long[] secretPolynomial	= new long[Parameter.N_III_P];
+//		long[] errorPolynomial	= new long[Parameter.N_III_P * Parameter.K_III_P];
+//		
+//		System.out.println ("Test for Packing Private Key in QTESLA for Provably-Secure qTESLA Security Category-3\n");
+//		
+//		System.arraycopy (PolynomialProvablySecure.ZETA_III_P, 0, secretPolynomial, 0, Parameter.N_III_P);
+//		
+//		for (int i = 0; i < Parameter.K_III_P; i++) {
+//			
+//			System.arraycopy (PolynomialProvablySecure.ZETA_INVERSE_III_P, 0, errorPolynomial, Parameter.N_III_P * i, Parameter.N_III_P);
+//			
+//		}
+//		
+//		QTESLA.packPrivateKey (
+//				
+//				privateKey, secretPolynomial, errorPolynomial, seed, 0, Parameter.N_III_P, Parameter.K_III_P
+//		
+//		);
+//		
+//		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_P; i++) {
+//			
+//			if (i % 32 == 0) {
+//				
+//				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+//				
+//			}
+//			
+//			System.out.printf ("%02X ", privateKey[i]);
+//			
+//			if (i % 32 == 31) {
+//				
+//				System.out.println ();
+//				
+//			}
+//			
+//		}
+//		
+//		System.out.println ();
 //		
 //	}
 	

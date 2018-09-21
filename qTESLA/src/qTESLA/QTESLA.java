@@ -31,7 +31,7 @@ public class QTESLA {
 		
 		}
 		
-		System.arraycopy (seed, seedOffset, privateKey, n * Short.SIZE / Byte.SIZE * 2, Polynomial.RANDOM * 2);
+		System.arraycopy (seed, seedOffset, privateKey, n * Short.SIZE / Byte.SIZE * 2, Polynomial.SEED * 2);
 		
 	}
 	
@@ -1331,7 +1331,9 @@ public class QTESLA {
 		
 		/* Generate Uniform Polynomial A */
 		Polynomial.polynomialUniform (
+				
 				A, randomnessExtended, Polynomial.SEED * 2, n, 1, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform
+		
 		);
 			
 		/* Compute the Public Key T = A * secretPolynomial + errorPolynomial */
@@ -1576,7 +1578,9 @@ public class QTESLA {
 		
 		/* Generate Uniform Polynomial A */
 		Polynomial.polynomialUniform (
+				
 				A, randomnessExtended, Polynomial.SEED * (k + 1), n, k, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform
+		
 		);
 			
 		Polynomial.polynomialNumberTheoreticTransform (secretPolynomialNumberTheoreticTransform, secretPolynomial, n);
