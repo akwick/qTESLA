@@ -55,27 +55,27 @@ public final class Parameter {
 	/**
 	 * Modulus for Heuristic qTESLA Security Category-1
 	 */
-	public static final int Q_I			= 4205569;
+	public static final int Q_I						= 4205569;
 	
 	/**
 	 * Modulus for Provably-Secure qTESLA Security Category-1
 	 */
-	public static final int Q_I_P		= 485978113;
+	public static final int Q_I_P					= 485978113;
 	
 	/**
 	 * Modulus for Heuristic qTESLA Security Category-3 (Option for Size)
 	 */
-	public static final int Q_III_SIZE	= 4206593;
+	public static final int Q_III_SIZE				= 4206593;
 	
 	/**
 	 * Modulus for Heuristic qTESLA Security Category-3 (Option for Speed)
 	 */
-	public static final int Q_III_SPEED	= 8404993;
+	public static final int Q_III_SPEED				= 8404993;
 	
 	/**
 	 * Modulus for Provably-Secure qTESLA Security Category-3
 	 */
-	public static final int Q_III_P		= 1129725953;
+	public static final int Q_III_P					= 1129725953;
 	
 	/**
 	 * Q <= 2 ^ Q_LOGARITHM for Heuristic qTESLA Security Category-1
@@ -349,7 +349,7 @@ public final class Parameter {
 	/**
 	 * XI = SIGMA * SQUARE_ROOT (2 * LOGARITHM (2) / LOGARITHM (e)) for Provably-Secure qTESLA Security Category-3
 	 */
-	public static final double XI_III_P		= 10.0080;
+	public static final double XI_III_P		= 10;
 	
 	public static final int BARRETT_MULTIPLICATION_I			= 1021;
 	public static final int BARRETT_MULTIPLICATION_I_P			= 1;

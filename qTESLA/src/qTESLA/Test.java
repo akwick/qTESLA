@@ -66,6 +66,7 @@ public class Test {
 		// testBernoulli ();
 		// testSampleYIIIP ();
 		// testPolynomialGaussSamplerI();
+		// testPolynomialGaussSamplerIIISize();
 		// testPolynomialGaussSamplerIIIP();
 		// testEncodeC ();
 		
@@ -113,8 +114,8 @@ public class Test {
 		// testSparsePolynomialMultiplication32 ();
 		// testHashFunctionIIISize ();
 		// testHashFunctionIIIP ();
-		testGenerateKeyPairSigningVerifyingIIISize ();
-		// testGenerateKeyPairSigningVerifyingIIIP ();
+		// testGenerateKeyPairSigningVerifyingIIISize ();
+		testGenerateKeyPairSigningVerifyingIIIP ();
 		
 	}
 	
@@ -603,15 +604,68 @@ public class Test {
 		
 		System.out.println ("Test for Polynomial Gauss Sampler in Sample for Heuristic qTESLA Security Category-1\n");
 		
-		long[]	data		= new long[Parameter.N_I];
+		long[] data	= new long[Parameter.N_I];
 		
 		Sample.polynomialGaussSamplerI (data, 0, seed, 0, 128, Parameter.N_I, Parameter.XI_I, Sample.EXPONENTIAL_DISTRIBUTION_I);
 		
-		for (short i = 0; i < Parameter.N_I; i++) {
+		for (int i = 0; i < Parameter.N_I; i++) {
 			
 			if (i % 4 == 0) {
 				
-				System.out.printf ("LINE %3d\n", (i / 4 + 1));
+				System.out.printf ("LINE %3d\t", (i / 4 + 1));
+				
+			}
+			
+			System.out.printf ("%016X\t", data[i]);
+			
+			if (i % 4 == 3) {
+				
+				System.out.println ();
+				
+			}
+			
+		}
+		
+		System.out.printf ("\n");
+		
+	}
+	
+/* Test for Polynomial Gauss Sampler in Sample for Heuristic qTESLA Security Category-3 (Option for Size) */
+	
+	public static void testPolynomialGaussSamplerIIISize () {
+		
+		System.out.println ("Test for Polynomial Gauss Sampler in Sample for Heuristic qTESLA Security Category-3 (Option for Size)\n");
+		
+		long[] data			= new long[Parameter.N_III_SIZE];
+		
+		byte[] seedExtended	= {
+				
+				(byte) 0xFC, (byte) 0xAA, (byte) 0x2D, (byte) 0x9F, (byte) 0xE9, (byte) 0xDB, (byte) 0xC2, (byte) 0x36, 
+				(byte) 0x68, (byte) 0x5E, (byte) 0x88, (byte) 0x19, (byte) 0x84, (byte) 0x0C, (byte) 0x46, (byte) 0x5F, 
+				(byte) 0xD4, (byte) 0x5C, (byte) 0x49, (byte) 0xDD, (byte) 0xC1, (byte) 0xF9, (byte) 0xAF, (byte) 0x50, 
+				(byte) 0x06, (byte) 0xB6, (byte) 0x29, (byte) 0x2C, (byte) 0xCC, (byte) 0x55, (byte) 0xC3, (byte) 0xD3, 
+				(byte) 0x42, (byte) 0xC5, (byte) 0x1A, (byte) 0x06, (byte) 0xBC, (byte) 0x4D, (byte) 0x39, (byte) 0x93, 
+				(byte) 0x5B, (byte) 0x09, (byte) 0x94, (byte) 0x4C, (byte) 0xBF, (byte) 0xE1, (byte) 0x8C, (byte) 0xB8, 
+				(byte) 0x4F, (byte) 0x5F, (byte) 0x20, (byte) 0x4F, (byte) 0x17, (byte) 0xC0, (byte) 0x67, (byte) 0xDB, 
+				(byte) 0xFB, (byte) 0xE0, (byte) 0x04, (byte) 0xB0, (byte) 0x2C, (byte) 0xC0, (byte) 0xA9, (byte) 0xBD, 
+				(byte) 0xF7, (byte) 0x1D, (byte) 0x0D, (byte) 0x50, (byte) 0xD0, (byte) 0xB5, (byte) 0x5A, (byte) 0xA4, 
+				(byte) 0x48, (byte) 0xDE, (byte) 0xE9, (byte) 0xA2, (byte) 0xE8, (byte) 0x31, (byte) 0x9D, (byte) 0x71, 
+				(byte) 0x21, (byte) 0x42, (byte) 0xFE, (byte) 0x26, (byte) 0x9F, (byte) 0x11, (byte) 0xEF, (byte) 0x69, 
+				(byte) 0xF3, (byte) 0x97, (byte) 0x3D, (byte) 0xB7, (byte) 0x4E, (byte) 0xF9, (byte) 0xF0, (byte) 0xEC, 
+				(byte) 0x8D, (byte) 0xBC, (byte) 0x30, (byte) 0xB9, (byte) 0x18, (byte) 0xDD, (byte) 0x28, (byte) 0xA7, 
+				(byte) 0x27, (byte) 0x08, (byte) 0x80, (byte) 0x9C, (byte) 0x89, (byte) 0x72, (byte) 0xB6, (byte) 0xD0, 
+				(byte) 0x42, (byte) 0x47, (byte) 0xD2, (byte) 0xFC, (byte) 0xFA, (byte) 0x94, (byte) 0xB2, (byte) 0xAC, 
+				(byte) 0xA0, (byte) 0x24, (byte) 0x29, (byte) 0x95, (byte) 0x8A, (byte) 0x16, (byte) 0x2B, (byte) 0x09
+				
+		};
+		
+		Sample.polynomialGaussSamplerIII (data, 0, seedExtended, 0, 128, Parameter.N_III_SIZE, Parameter.XI_III_SIZE, Sample.EXPONENTIAL_DISTRIBUTION_III_SIZE);
+		
+		for (int i = 0; i < Parameter.N_III_SIZE; i++) {
+			
+			if (i % 4 == 0) {
+				
+				System.out.printf ("LINE %3d\t", (i / 4 + 1));
 				
 			}
 			
@@ -635,7 +689,7 @@ public class Test {
 		
 		System.out.println ("Test for Polynomial Gauss Sampler in Sample for Provably-Secure qTESLA Security Category-3\n");
 		
-		long[]	data		= new long[Parameter.N_III_P];
+		long[] data	= new long[Parameter.N_III_P];
 		
 		Sample.polynomialGaussSamplerIII (data, 0, seed, 0, 256, Parameter.N_III_P, Parameter.XI_III_P, Sample.EXPONENTIAL_DISTRIBUTION_P);
 		
@@ -643,7 +697,7 @@ public class Test {
 			
 			if (i % 4 == 0) {
 				
-				System.out.printf ("LINE %3d\n", (i / 4 + 1));
+				System.out.printf ("LINE %3d\t", (i / 4 + 1));
 				
 			}
 			
@@ -2472,11 +2526,17 @@ public class Test {
 		
 		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_P; i++) {
 			
-			System.out.printf ("%02X\t", publicKey[i]);
-			
-			if (i % 16 == 15) {
+			if (i % 32 == 0) {
 				
-				System.out.printf ("LINE %4d\n", (i / 16 + 1));
+				System.out.printf ("LINE %4d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", publicKey[i]);
+			
+			if (i % 32 == 31) {
+				
+				System.out.println ();
 			
 			}
 			
@@ -2486,11 +2546,17 @@ public class Test {
 		
 		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_P; i++) {
 			
-			System.out.printf ("%02X\t", privateKey[i]);
-			
-			if (i % 16 == 15) {
+			if (i % 32 == 0) {
 				
-				System.out.printf ("LINE %3d\n", (i / 16 + 1));
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", privateKey[i]);
+			
+			if (i % 32 == 31) {
+				
+				System.out.println ();
 			
 			}
 			

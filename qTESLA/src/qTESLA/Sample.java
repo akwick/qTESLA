@@ -456,7 +456,7 @@ public class Sample {
 			do {
 				
 				randomBit = CommonFunction.load64 (seedExpander, (j++) * Long.SIZE / Byte.SIZE);
-				bitRemained = 64L;
+				bitRemained = 64;
 				
 				do {
 					
@@ -503,7 +503,7 @@ public class Sample {
 							if (bitRemained < 6) {
 							
 								randomBit = CommonFunction.load64 (seedExpander, (j++) * Long.SIZE / Byte.SIZE);
-								bitRemained = 64L;
+								bitRemained = 64;
 							
 							}
 						
@@ -511,12 +511,12 @@ public class Sample {
 							randomBit >>= 6;
 							bitRemained -= 6;
 						
-						} while (z == 63L);
+						} while (z == 63);
 					
 						if (bitRemained < 2) {
 						
 							randomBit = CommonFunction.load64 (seedExpander, (j++) * Long.SIZE / Byte.SIZE);
-							bitRemained = 64L;
+							bitRemained = 64;
 						
 						}
 					
@@ -541,7 +541,7 @@ public class Sample {
 				/* Put Last Random Bits into Sign Bit */
 				randomBit <<= (64 - bitRemained);
 				
-				if (bitRemained == 0L) {
+				if (bitRemained == 0) {
 					
 					randomBit = CommonFunction.load64 (seedExpander, (j++) * Long.SIZE / Byte.SIZE);
 					bitRemained = 64;
@@ -604,7 +604,9 @@ public class Sample {
 		long buffer;
 		
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
+				
 				seedExpander, 0, n * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Polynomial.RANDOM
+		
 		);
 		
 		for (index = 0; index < n; index++) {
@@ -612,7 +614,9 @@ public class Sample {
 			if (j + 46 > n) {
 
 				FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
+						
 						seedExpander, 0, n * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Polynomial.RANDOM
+				
 				);
 				
 				j = 0;
@@ -622,7 +626,7 @@ public class Sample {
 			do {
 				
 				randomBit = CommonFunction.load64 (seedExpander, (j++) * Long.SIZE / Byte.SIZE);
-				bitRemained = 64L;
+				bitRemained = 64;
 				
 				do {
 					
@@ -635,7 +639,7 @@ public class Sample {
 					
 						if (bitRemained <= 64 - 6) {
 						
-							randomBit = (randomBit << 6) ^ ((r >>> 58) & 63L);
+							randomBit = (randomBit << 6) ^ ((r >>> 58) & 63);
 							bitRemained += 6;
 						
 						}
@@ -654,12 +658,12 @@ public class Sample {
 					
 						c 		= t - CUMULATIVE_DISTRIBUTION_TABLE_III[i][2];
 						
-						long b	= ((c & CUMULATIVE_DISTRIBUTION_TABLE_III[i][2] & 1L) + (CUMULATIVE_DISTRIBUTION_TABLE_III[i][2] >> 1) + (c >>> 1)) >>> 63;
+						long b	= ((c & CUMULATIVE_DISTRIBUTION_TABLE_III[i][2] & 1L) + (CUMULATIVE_DISTRIBUTION_TABLE_III[i][2] >> 1) + (c >> 1)) >> 63;
 						
 						/* Least significant Bits of All CUMULATIVE_DISTRIBUTION_TABLE[i][1] are Zero: Overflow Cannot Occur at This Point */
 						c		= s - (CUMULATIVE_DISTRIBUTION_TABLE_III[i][1] + b);
 						
-						b		= (((c & b) & 1L) + (CUMULATIVE_DISTRIBUTION_TABLE_III[i][1] >> 1) + (c >>> 1)) >>> 63;
+						b		= (((c & b) & 1L) + (CUMULATIVE_DISTRIBUTION_TABLE_III[i][1] >> 1) + (c >>> 1)) >> 63;
 						
 						/* Least significant Bits of All CUMULATIVE_DISTRIBUTION_TABLE[i][0] are Zero: Overflow Cannot Occur at This Point */
 						c		= r - (CUMULATIVE_DISTRIBUTION_TABLE_III[i][0] + b);
@@ -676,7 +680,7 @@ public class Sample {
 							if (bitRemained < 6) {
 							
 								randomBit = CommonFunction.load64 (seedExpander, (j++) * Long.SIZE / Byte.SIZE);
-								bitRemained = 64L;
+								bitRemained = 64;
 							
 							}
 						
@@ -684,12 +688,12 @@ public class Sample {
 							randomBit >>= 6;
 							bitRemained -= 6;
 						
-						} while (z == 63L);
+						} while (z == 63);
 					
 						if (bitRemained < 2) {
 						
 							randomBit = CommonFunction.load64 (seedExpander, (j++) * Long.SIZE / Byte.SIZE);
-							bitRemained = 64L;
+							bitRemained = 64;
 						
 						}
 					
@@ -717,7 +721,7 @@ public class Sample {
 				if (bitRemained == 0) {
 					
 					randomBit = CommonFunction.load64 (seedExpander, (j++) * Long.SIZE / Byte.SIZE);
-					bitRemained = 64L;
+					bitRemained = 64;
 					
 				}
 				
@@ -725,12 +729,12 @@ public class Sample {
 				randomBit <<= 1;
 				bitRemained--;
 				
-			} while ((k | (sign & 1L)) == 0L);
+			} while ((k | (sign & 1L)) == 0);
 			
 			if (bitRemained == 0) {
 				
 				randomBit = CommonFunction.load64 (seedExpander, (j++) * Long.SIZE / Byte.SIZE);
-				bitRemained = 64L;
+				bitRemained = 64;
 				
 			}
 			

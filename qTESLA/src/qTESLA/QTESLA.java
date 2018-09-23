@@ -1323,19 +1323,19 @@ public class QTESLA {
 			
 			if (q == Parameter.Q_I) {
 				
-				Sample.polynomialGaussSamplerI (secretPolynomial, 0, randomnessExtended, 0, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_I);
+				Sample.polynomialGaussSamplerI (secretPolynomial, 0, randomnessExtended, Polynomial.SEED, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_I);
 				
 			}
 			
 			if (q == Parameter.Q_III_SIZE) {
 				
-				Sample.polynomialGaussSamplerIII (secretPolynomial, 0, randomnessExtended, 0, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_III_SIZE);
+				Sample.polynomialGaussSamplerIII (secretPolynomial, 0, randomnessExtended, Polynomial.SEED, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_III_SIZE);
 				
 			}
 			
 			if (q == Parameter.Q_III_SPEED) {
 				
-				Sample.polynomialGaussSamplerIII (secretPolynomial, 0, randomnessExtended, 0, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_III_SPEED);
+				Sample.polynomialGaussSamplerIII (secretPolynomial, 0, randomnessExtended, Polynomial.SEED, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_III_SPEED);
 				
 			}
 			
@@ -1525,7 +1525,7 @@ public class QTESLA {
 		byte[] randomness			= new byte[Polynomial.RANDOM];
 		
 		/* Extend Random Bytes to Seed Generation of Error Polynomial and Secret Polynomial */
-		byte[] randomnessExtended		= new byte[Polynomial.SEED * (k + 3)];
+		byte[] randomnessExtended	= new byte[Polynomial.SEED * (k + 3)];
 		
 		long[] secretPolynomial							= new long[n];
 		long[] secretPolynomialNumberTheoreticTransform	= new long[n];
@@ -1540,7 +1540,9 @@ public class QTESLA {
 		if (q == Parameter.Q_I_P) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
+					
 					randomnessExtended, 0, Polynomial.SEED * (k + 3), randomness, 0, Polynomial.RANDOM
+			
 			);
 			
 		}
@@ -1548,7 +1550,9 @@ public class QTESLA {
 		if (q == Parameter.Q_III_P) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
+					
 					randomnessExtended, 0, Polynomial.SEED * (k + 3), randomness, 0, Polynomial.RANDOM
+			
 			);
 			
 		}
@@ -1565,7 +1569,9 @@ public class QTESLA {
 				if (q == Parameter.Q_I_P) {
 					
 					Sample.polynomialGaussSamplerI (
+							
 							errorPolynomial, n * i, randomnessExtended, Polynomial.SEED * i, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_P
+					
 					);
 				
 				}
@@ -1573,7 +1579,9 @@ public class QTESLA {
 				if (q == Parameter.Q_III_P) {
 					
 					Sample.polynomialGaussSamplerIII (
+							
 							errorPolynomial, n * i, randomnessExtended, Polynomial.SEED * i, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_P
+					
 					);
 					
 				}
@@ -1607,12 +1615,16 @@ public class QTESLA {
 			
 		} while (checkPolynomial (secretPolynomial, 0, secretBound, n, w) == true);
 		
+		System.out.println ();
+		
 		/* Generate Uniform Polynomial A */
 		Polynomial.polynomialUniform (
 				
 				A, randomnessExtended, Polynomial.SEED * (k + 1), n, k, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform
 		
 		);
+		
+		System.out.println ();
 			
 		Polynomial.polynomialNumberTheoreticTransform (secretPolynomialNumberTheoreticTransform, secretPolynomial, n);
 		
