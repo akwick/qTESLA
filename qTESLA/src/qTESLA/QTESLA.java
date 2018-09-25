@@ -636,98 +636,98 @@ public class QTESLA {
 		
 	}
 	
-	/************************************************************************************************************************
+	/******************************************************************************************************************************
 	 * Description:	Decode Signature for Heuristic qTESLA Security Category-1 and Category-3 (Option for Size)
-	 ************************************************************************************************************************/
+	 ******************************************************************************************************************************/
 	private static void decodeSignature (byte[] C, long[] Z, final byte[] signature, int signatureOffset, int n, int d) {
 		
 		int j = 0;
 		
 		for (int i = 0; i < n; i += Integer.SIZE) {
 			
-			Z[i +  0] =	 (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  0)) << 11) >> 11;
+			Z[i +  0] =	 (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  0)) <<  11) >>> 11;
 			
 			Z[i +  1] =	((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  0)) >>> 21) |
-						 (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  1)) <<  22) >> 11);
+						 (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  1)) <<  22) >>> 11);
 			
-			Z[i +  2] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  1)) <<   1) >> 11;
+			Z[i +  2] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  1)) <<   1) >>> 11;
 			
 			Z[i +  3] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  1)) >>> 31) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  2)) <<  12) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  2)) <<  12) >>> 11);
 			
 			Z[i +  4] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  2)) >>> 20) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  3)) <<  23) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  3)) <<  23) >>> 11);
 			
-			Z[i +  5] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  3)) <<   2) >> 11;
+			Z[i +  5] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  3)) <<   2) >>> 11;
 			
 			Z[i +  6] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  3)) >>> 30) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  4)) <<  13) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  4)) <<  13) >>> 11);
 			
 			Z[i +  7] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  4)) >>> 19) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  5)) <<  24) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  5)) <<  24) >>> 11);
 			
-			Z[i +  8] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  5)) <<   3) >> 11;
+			Z[i +  8] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  5)) <<   3) >>> 11;
 			
 			Z[i +  9] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  5)) >>> 29) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  6)) <<  14) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  6)) <<  14) >>> 11);
 			
 			Z[i + 10] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  6)) >>> 18) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  7)) <<  25) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  7)) <<  25) >>> 11);
 			
-			Z[i + 11] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  7)) <<   4) >> 11;
+			Z[i + 11] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  7)) <<   4) >>> 11;
 			
 			Z[i + 12] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  7)) >>> 28) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  8)) <<  15) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  8)) <<  15) >>> 11);
 			
 			Z[i + 13] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  8)) >>> 17) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  9)) <<  26) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  9)) <<  26) >>> 11);
 			
-			Z[i + 14] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  9)) <<   5) >> 11;
+			Z[i + 14] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  9)) <<   5) >>> 11;
 			
 			Z[i + 15] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  9)) >>> 27) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 10)) <<  16) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 10)) <<  16) >>> 11);
 			
 			Z[i + 16] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 10)) >>> 16) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 11)) <<  27) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 11)) <<  27) >>> 11);
 			
-			Z[i + 17] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 11)) <<   6) >> 11;
+			Z[i + 17] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 11)) <<   6) >>> 11;
 			
 			Z[i + 18] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 11)) >>> 26) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 12)) <<  17) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 12)) <<  17) >>> 11);
 			
 			Z[i + 19] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 12)) >>> 15) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 13)) <<  28) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 13)) <<  28) >>> 11);
 			
-			Z[i + 20] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 13)) <<   7) >> 11;
+			Z[i + 20] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 13)) <<   7) >>> 11;
 			
 			Z[i + 21] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 13)) >>> 25) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 14)) <<  18) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 14)) <<  18) >>> 11);
 			
 			Z[i + 22] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 14)) >>> 14) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 15)) <<  29) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 15)) <<  29) >>> 11);
 			
-			Z[i + 23] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 15)) <<   8) >> 11;
+			Z[i + 23] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 15)) <<   8) >>> 11;
 			
 			Z[i + 24] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 15)) >>> 24) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 16)) <<  19) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 16)) <<  19) >>> 11);
 			
 			Z[i + 25] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 16)) >>> 13) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 17)) <<  30) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 17)) <<  30) >>> 11);
 			
-			Z[i + 26] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 17)) <<   9) >> 11;
+			Z[i + 26] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 17)) <<   9) >>> 11;
 			
 			Z[i + 27] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 17)) >>> 23) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 18)) <<  20) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 18)) <<  20) >>> 11);
 			
 			Z[i + 28] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 18)) >>> 12) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 19)) <<  31) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 19)) <<  31) >>> 11);
 			
-			Z[i + 29] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 19)) <<  10) >> 11;
+			Z[i + 29] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 19)) <<  10) >>> 11;
 			
 			Z[i + 30] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 19)) >>> 22) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 20)) <<  21) >> 11);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 20)) <<  21) >>> 11);
 			
-			Z[i + 31] =   CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 20)) >>  11;
+			Z[i + 31] =   CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 20)) >>> 11;
 			
 			j += d;
 			
@@ -747,47 +747,47 @@ public class QTESLA {
 		
 		for (int i = 0; i < n; i += Integer.SIZE / 2) {
 			
-			Z[i +  0] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  0)) <<  10) >> 10;
+			Z[i +  0] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  0)) <<  10) >>> 10;
 			
 			Z[i +  1] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  0)) >>> 22) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  1)) <<  20) >> 10);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  1)) <<  20) >>> 10);
 			
 			Z[i +  2] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  1)) >>> 12) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  2)) <<  30) >> 10);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  2)) <<  30) >>> 10);
 			
-			Z[i +  3] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  2)) <<   8) >> 10;
+			Z[i +  3] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  2)) <<   8) >>> 10;
 			
 			Z[i +  4] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  2)) >>> 24) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  3)) <<  18) >> 10);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  3)) <<  18) >>> 10);
 			
 			Z[i +  5] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  3)) >>> 14) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  4)) <<  28) >> 10);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  4)) <<  28) >>> 10);
 			
-			Z[i +  6] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  4)) <<   6) >> 10;
+			Z[i +  6] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  4)) <<   6) >>> 10;
 			
 			Z[i +  7] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  4)) >>> 26) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  5)) <<  16) >> 10);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  5)) <<  16) >>> 10);
 			
 			Z[i +  8] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  5)) >>> 16) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  6)) <<  26) >> 10);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  6)) <<  26) >>> 10);
 			
-			Z[i +  9] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  6)) <<   4) >> 10;
+			Z[i +  9] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  6)) <<   4) >>> 10;
 			
 			Z[i + 10] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  6)) >>> 28) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  7)) <<  14) >> 10);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  7)) <<  14) >>> 10);
 			
 			Z[i + 11] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  7)) >>> 18) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  8)) <<  24) >> 10);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  8)) <<  24) >>> 10);
 			
-			Z[i + 12] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  8)) <<   2) >> 10;
+			Z[i + 12] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  8)) <<   2) >>> 10;
 			
 			Z[i + 13] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  8)) >>> 30) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  9)) <<  12) >> 10);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  9)) <<  12) >>> 10);
 			
 			Z[i + 14] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j +  9)) >>> 20) |
-						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 10)) <<  22) >> 10);
+						((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 10)) <<  22) >>> 10);
 			
-			Z[i + 15] =   CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 10)) >>  10;
+			Z[i + 15] =   CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 10)) >>> 10;
 			
 			j += d / 2;
 			
@@ -806,15 +806,15 @@ public class QTESLA {
 		
 		for (int i = 0; i < Parameter.N_III_P; i += Byte.SIZE / 2) {
 			
-			Z[i + 0] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 0)) <<   8) >>  8;
+			Z[i + 0] =  (CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 0)) <<   8) >>>  8;
 			
 			Z[i + 1] = ((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 0)) >>> 24) & ((1 <<  8) - 1)) |
-					   ((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 1)) <<  16) >>  8);
+					   ((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 1)) <<  16) >>>  8);
 			
 			Z[i + 2] = ((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 1)) >>> 16) & ((1 << 16) - 1)) |
-					   ((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 2)) <<  24) >>  8);
+					   ((CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 2)) <<  24) >>>  8);
 			
-			Z[i + 3] =   CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 2)) >>  8;
+			Z[i + 3] =   CommonFunction.load32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (j + 2)) >>>  8;
 			
 			j += Byte.SIZE / 2 - 1;
 			
@@ -1100,14 +1100,12 @@ public class QTESLA {
 			for (int j = 0; j < position; j++) {
 				
 				product[productOffset + j] -= signList[i] * CommonFunction.load16 (privateKey, privateKeyOffset + Short.SIZE / Byte.SIZE * (n + j - position));
-				product[productOffset + j] &= 0xFFFFFFFFL;
 				
 			}
 			
 			for (int j = position; j < n; j++) {
 				
 				product[productOffset + j] += signList[i] * CommonFunction.load16 (privateKey, privateKeyOffset + Short.SIZE / Byte.SIZE * (j - position));
-				product[productOffset + j] &= 0xFFFFFFFFL;
 				
 			}
 			
@@ -1142,14 +1140,12 @@ public class QTESLA {
 			for (int j = 0; j < position; j++) {
 				
 				product[productOffset + j] -= signList[i] * privateKey[privateKeyOffset + n + j - position];
-				product[productOffset + j] &= 0xFFFFFFFFL;
 				
 			}
 			
 			for (int j = position; j < n; j++) {
 				
 				product[productOffset + j] += signList[i] * privateKey[privateKeyOffset + j - position];
-				product[productOffset + j] &= 0xFFFFFFFFL;
 						
 			}
 			
@@ -1311,7 +1307,6 @@ public class QTESLA {
 				
 			}
 			
-			
 		} while (checkPolynomial (errorPolynomial, 0, errorBound, n, w) == true);
 		
 		/* 
@@ -1347,7 +1342,7 @@ public class QTESLA {
 				A, randomnessExtended, Polynomial.SEED * 2, n, 1, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform
 		
 		);
-			
+		
 		/* Compute the Public Key T = A * secretPolynomial + errorPolynomial */
 		Polynomial.polynomialMultiplication (T, 0, A, 0, secretPolynomial, 0, n, q, qInverse, zeta);
 		
@@ -1600,7 +1595,9 @@ public class QTESLA {
 			if (q == Parameter.Q_I_P) {
 				
 				Sample.polynomialGaussSamplerI (
+						
 						secretPolynomial, 0, randomnessExtended, Polynomial.SEED * k, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_P
+				
 				);
 			
 			}
@@ -1608,14 +1605,14 @@ public class QTESLA {
 			if (q == Parameter.Q_III_P) {
 				
 				Sample.polynomialGaussSamplerIII (
+						
 						secretPolynomial, 0, randomnessExtended, Polynomial.SEED * k, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_P
+				
 				);
 				
 			}
 			
 		} while (checkPolynomial (secretPolynomial, 0, secretBound, n, w) == true);
-		
-		System.out.println ();
 		
 		/* Generate Uniform Polynomial A */
 		Polynomial.polynomialUniform (
@@ -1623,8 +1620,6 @@ public class QTESLA {
 				A, randomnessExtended, Polynomial.SEED * (k + 1), n, k, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform
 		
 		);
-		
-		System.out.println ();
 			
 		Polynomial.polynomialNumberTheoreticTransform (secretPolynomialNumberTheoreticTransform, secretPolynomial, n);
 		
@@ -1797,6 +1792,7 @@ public class QTESLA {
 		int nonce = 0;
 		
 		rng.randomByte (randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
+		
 		// secureRandom.nextBytes (temporaryRandomnessInput);
 		// System.arraycopy (temporaryRandomnessInput, 0, randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
 		System.arraycopy (privateKey, privateKeySize - Polynomial.SEED, randomnessInput, 0, Polynomial.SEED);
@@ -2084,6 +2080,13 @@ public class QTESLA {
 	 * @param		barrettDivision
 	 * 
 	 * @return		0									Successful Execution
+	 * 
+	 * @throws		BadPaddingException
+	 * @throws		IllegalBlockSizeException
+	 * @throws		InvalidKeyException
+	 * @throws		NoSuchAlgorithmException
+	 * @throws		NoSuchPaddingException
+	 * @throws		ShortBufferException
 	 *****************************************************************************************************************************************************/
 	private static int signing (
 			
@@ -2094,12 +2097,12 @@ public class QTESLA {
 			int generatorA, int inverseNumberTheoreticTransform, int privateKeySize,
 			int barrettMultiplication, int barrettDivision
 	
-	) {
+	) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		byte[] C						= new byte[Polynomial.HASH];
 		byte[] randomness				= new byte[Polynomial.SEED];
 		byte[] randomnessInput			= new byte[messageLength + Polynomial.RANDOM + Polynomial.SEED];
-		byte[] temporaryRandomnessInput	= new byte[Polynomial.RANDOM];
+		// byte[] temporaryRandomnessInput	= new byte[Polynomial.RANDOM];
 		int[] positionList				= new int[w];
 		short[] signList				= new short[w];
 		
@@ -2116,16 +2119,18 @@ public class QTESLA {
 		/* Domain Separator for Sampling Y */
 		int nonce = 0;
 		
-		// this.rng.randomByte (randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
-		secureRandom.nextBytes (temporaryRandomnessInput);
-		System.arraycopy (temporaryRandomnessInput, 0, randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
+		rng.randomByte (randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
+		// secureRandom.nextBytes (temporaryRandomnessInput);
+		// System.arraycopy (temporaryRandomnessInput, 0, randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
 		System.arraycopy (privateKey, privateKeySize - Polynomial.SEED, randomnessInput, 0, Polynomial.SEED);
 		System.arraycopy (message, messageOffset, randomnessInput, Polynomial.RANDOM + Polynomial.SEED, messageLength);
 		
 		if (q == Parameter.Q_I_P) {
 		
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
+					
 					randomness, 0, Polynomial.SEED, randomnessInput, 0, messageLength + Polynomial.RANDOM + Polynomial.SEED
+			
 			);
 		
 		}
@@ -2133,13 +2138,17 @@ public class QTESLA {
 		if (q == Parameter.Q_III_P) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
+					
 					randomness, 0, Polynomial.SEED, randomnessInput, 0, messageLength + Polynomial.RANDOM + Polynomial.SEED
+			
 			);
 			
 		}
 		
 		Polynomial.polynomialUniform (
+				
 				A, privateKey, privateKeySize - 2 * Polynomial.SEED, n, k, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform
+		
 		);
 		
 		/* Loop Due to Possible Rejection */
@@ -2151,7 +2160,7 @@ public class QTESLA {
 			Polynomial.polynomialNumberTheoreticTransform (numberTheoreticTransformY, Y, n);
 			
 			/* V_i = A_i * Y Modulo Q for All i */
-			for (short i = 0; i < k; i++) {
+			for (int i = 0; i < k; i++) {
 				
 				Polynomial.polynomialMultiplication (V, n * i, A, n * i, numberTheoreticTransformY, 0, n, q, qInverse);
 				
@@ -2174,7 +2183,7 @@ public class QTESLA {
 				
 			}
 			
-			for (short i = 0; i < k; i++) {
+			for (int i = 0; i < k; i++) {
 				
 				sparsePolynomialMultiplication8 (EC, n * i, privateKey, n * (i + 1), positionList, signList, n, w);
 				
@@ -2206,7 +2215,7 @@ public class QTESLA {
 				signatureLength[0] = messageLength + Polynomial.SIGNATURE_I_P;
 				
 				/* Pack Signature */
-				encodeSignatureIIISpeedIP (signature, messageLength, C, 0, Z, n, d);
+				encodeSignatureIIISpeedIP (signature, 0, C, 0, Z, n, d);
 				
 			}
 			
@@ -2219,7 +2228,7 @@ public class QTESLA {
 				signatureLength[0] = messageLength + Polynomial.SIGNATURE_III_P;
 				
 				/* Pack Signature */
-				encodeSignature (signature, messageLength, C, 0, Z);
+				encodeSignature (signature, 0, C, 0, Z);
 				
 			}
 			
@@ -2242,6 +2251,13 @@ public class QTESLA {
 	 * @param		secureRandom						Source of Randomness
 	 * 
 	 * @return		0									Successful Execution
+	 * 
+	 * @throws		BadPaddingException
+	 * @throws		IllegalBlockSizeException
+	 * @throws		InvalidKeyException
+	 * @throws		NoSuchAlgorithmException
+	 * @throws		NoSuchPaddingException
+	 * @throws		ShortBufferException
 	 *****************************************************************************************************************************************************/
 	public static int signingIP (
 			
@@ -2249,7 +2265,7 @@ public class QTESLA {
 			final byte[] message, int messageOffset, int messageLength,
 			final byte[] privateKey, SecureRandom secureRandom
 			
-	) {
+	) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		return signing (
 				
@@ -2279,6 +2295,13 @@ public class QTESLA {
 	 * @param		secureRandom						Source of Randomness
 	 * 
 	 * @return		0									Successful Execution
+	 * 
+	 * @throws		BadPaddingException
+	 * @throws		IllegalBlockSizeException
+	 * @throws		InvalidKeyException
+	 * @throws		NoSuchAlgorithmException
+	 * @throws		NoSuchPaddingException
+	 * @throws		ShortBufferException
 	 **********************************************************************************************************************************************/
 	public static int signingIIIP (
 			
@@ -2286,7 +2309,7 @@ public class QTESLA {
 			final byte[] message, int messageOffset, int messageLength,
 			final byte[] privateKey, SecureRandom secureRandom
 			
-	) {
+	) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		return signing (
 				
@@ -2641,7 +2664,7 @@ public class QTESLA {
 		Polynomial.polynomialNumberTheoreticTransform (numberTheoreticTransformZ, Z, n);
 		
 		/* W_i = A_i * Z_i - TC_i for All i */
-		for (short i = 0; i < k; i++) {
+		for (int i = 0; i < k; i++) {
 			
 			Polynomial.polynomialMultiplication (W, n * i, A, n * i, numberTheoreticTransformZ, 0, n, q, qInverse);	
 			

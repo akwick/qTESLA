@@ -313,13 +313,29 @@ public abstract class QTESLASignature extends SignatureSpi {
 		
 		if (this.securityCategory == PROVABLY_SECURE_I) {
 			
-			QTESLA.signingIP (this.signature, this.signatureOffset, this.signatureLength, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
+			try {
+				
+				QTESLA.signingIP (this.signature, this.signatureOffset, this.signatureLength, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
+			
+			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
+					| NoSuchPaddingException | ShortBufferException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 		
 		if (this.securityCategory == PROVABLY_SECURE_III) {
 			
-			QTESLA.signingIIIP (this.signature, this.signatureOffset, this.signatureLength, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
+			try {
+				
+				QTESLA.signingIIIP (this.signature, this.signatureOffset, this.signatureLength, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
+			
+			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
+					| NoSuchPaddingException | ShortBufferException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 		

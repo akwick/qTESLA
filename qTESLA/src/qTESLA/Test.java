@@ -47,6 +47,22 @@ public class Test {
 			
 	};
 	
+	public static byte[] hexadecimalStringToByteArray (String string) {
+		
+		byte[] byteArray = new byte[string.length() / 2];
+		
+		for (int i = 0; i < byteArray.length; i++) {
+			
+			int index		= i * 2;
+			int value		= Integer.parseInt(string.substring (index, index + 2), 16);
+			byteArray[i]	= (byte) value;
+			
+		}
+		
+		return byteArray;
+		
+	}
+	
 	public static void main (String[] args) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		// testMemoryCopy ();
@@ -114,8 +130,8 @@ public class Test {
 		// testSparsePolynomialMultiplication32 ();
 		// testHashFunctionIIISize ();
 		// testHashFunctionIIIP ();
-		// testGenerateKeyPairSigningVerifyingIIISize ();
-		testGenerateKeyPairSigningVerifyingIIIP ();
+		testGenerateKeyPairSigningVerifyingIIISize ();
+		// testGenerateKeyPairSigningVerifyingIIIP ();
 		
 	}
 	
@@ -2417,95 +2433,97 @@ public class Test {
 		
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
-		byte[] signature = new byte[Polynomial.SIGNATURE_III_SIZE + 59];
-		byte[] messageInput = new byte[59];
+		byte[] signature = new byte[Polynomial.SIGNATURE_III_SIZE + 66];
+		byte[] messageInput = new byte[66];
+		String messageString =
+				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
-		for (int round = 0; round < 5; round++) {
+		messageInput = hexadecimalStringToByteArray (messageString);
 		
-			System.out.println("Round " + (round + 1) + "\n");
+		System.out.println ("Message:\n");
+		
+		for (int i = 0; i < 66; i++) {
 			
-			secureRandom.nextBytes(messageInput);
-		
-			System.out.println ("Message:\n");
-		
-			for (int i = 0; i < 59; i++) {
-			
-				if (i % 32 == 0) {
+			if (i % 32 == 0) {
 					
-					System.out.printf ("LINE %d\t", (i / 32 + 1));
-			
-				}
-				
-				System.out.printf ("%02X ", messageInput[i]);
-			
-				if (i % 32 == 31 || i == 58) {
-				
-					System.out.println ();
-			
-				}
+				System.out.printf ("LINE %d\t", (i / 32 + 1));
 			
 			}
-		
-			System.out.println ("\nSignature:\n");
-		
-			QTESLA.signingIIISize (signature, 0, signatureLength, messageInput, 0, 59, privateKey, secureRandom);
-		
-			for (int i = 0; i < signature.length; i++) {
-			
-				System.out.printf ("%02X\t", signature[i]);
-			
-				if (i % 16 == 15) {
 				
-					System.out.printf ("LINE %d\n", (i / 16 + 1));
+			System.out.printf ("%02X ", messageInput[i]);
 			
-				}
-			
-			}
-		
-			System.out.printf ("\n\nThe Length of Signature is %d and the Length of Signature Package is %d\n\n", signature.length, signatureLength[0]);
-		
-			int valid;
-			int response;
-			byte[] messageOutput = new byte[Polynomial.SIGNATURE_III_SIZE + 59];
-		
-			System.out.println ("Test for Verifying for Heuristic qTESLA Security Category-3 (Option for Size)\n");
-		
-			valid = QTESLA.verifyingIIISize(messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
-		
-			if (valid != 0) {
-			
-				System.out.println ("Signature Verification Failed with " + valid + "\n");
-			
-			} else if (messageLength[0] != 59) {
-			
-				System.out.println ("Verifying Returned BAD Message Length with " + messageLength[0] + " Bytes\n");
-			
-			}
-		
-			for (short i = 0; i < messageLength[0]; i++) {
-			
-				if (messageInput[i] != messageOutput[i]) {
+			if (i % 32 == 31 || i == 65) {
 				
-					System.out.println ("Verifying Returned BAD Message Value with Message Input " + messageInput[i] + "and Message Output " + messageOutput[i] + "\n");
-					break;
-				
-				}
+				System.out.println ();
 			
 			}
-		
-			signature[secureRandom.nextInt(32) % (Polynomial.SIGNATURE_III_SIZE + 59)] ^= 1;
-		
-			response = QTESLA.verifyingIIISize (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
-		
-			if (response == 0) {
 			
-				System.out.println ("Corrupted Signature Verified with " + response + "\n");
-			
-			}
-		
-			System.out.println ("Signature Tests Passed\n");
-		
 		}
+		
+		System.out.println ("\nSignature:\n");
+		
+		QTESLA.signingIIISize (signature, 0, signatureLength, messageInput, 0, 66, privateKey, secureRandom);
+		
+		for (int i = 0; i < signature.length; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+		
+			}
+			
+			System.out.printf ("%02X ", signature[i]);
+			
+			if (i % 32 == 31 || i == signature.length - 1) {
+				
+				System.out.println ();
+		
+			}
+			
+		}
+		
+		System.out.printf ("\nThe Length of Signature is %d and the Length of Signature Package is %d\n\n", signature.length, signatureLength[0]);
+		
+		int valid;
+		int response;
+		byte[] messageOutput = new byte[Polynomial.SIGNATURE_III_SIZE + 66];
+		
+		System.out.println ("Test for Verifying for Heuristic qTESLA Security Category-3 (Option for Size)\n");
+		
+		valid = QTESLA.verifyingIIISize (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
+		
+		if (valid != 0) {
+			
+			System.out.println ("Signature Verification Failed with " + valid + "\n");
+			
+		} else if (messageLength[0] != 66) {
+			
+			System.out.println ("Verifying Returned BAD Message Length with " + messageLength[0] + " Bytes\n");
+			
+		}
+		
+		for (int i = 0; i < messageLength[0]; i++) {
+			
+			if (messageInput[i] != messageOutput[i]) {
+				
+				System.out.println ("Verifying Returned BAD Message Value with Message Input " + messageInput[i] + "and Message Output " + messageOutput[i] + "\n");
+				break;
+				
+			}
+			
+		}
+		
+		signature[secureRandom.nextInt(32) % (Polynomial.SIGNATURE_III_SIZE + 66)] ^= 1;
+		
+		response = QTESLA.verifyingIIISize (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
+		
+		if (response == 0) {
+			
+			System.out.println ("Corrupted Signature Verified with " + response + "\n");
+			
+		}
+		
+		System.out.println ("Signature Tests Passed\n");
 		
 	}
 	
@@ -2566,87 +2584,97 @@ public class Test {
 		
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
-		byte[] signature = new byte[Polynomial.SIGNATURE_III_P + 59];
-		byte[] messageInput = new byte[59];
+		byte[] signature = new byte[Polynomial.SIGNATURE_III_P + 66];
+		byte[] messageInput = new byte[66];
+		String messageString =
+				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
-		for (int round = 0; round < 5; round++) {
+		messageInput = hexadecimalStringToByteArray (messageString);
 		
-			secureRandom.nextBytes(messageInput);
+		System.out.println ("Message:\n");
 		
-			System.out.println ("Message:\n");
-		
-			for (int i = 0; i < 59; i++) {
+		for (int i = 0; i < 66; i++) {
 			
-				System.out.printf ("%02X\t", messageInput[i]);
-			
-				if (i % 16 == 15) {
+			if (i % 32 == 0) {
 				
-					System.out.printf ("LINE %d\n", (i / 16 + 1));
-			
-				}
-			
+				System.out.printf ("LINE %d\t", i / 32 + 1);
+					
 			}
-		
-			System.out.println ("\n\nSignature:\n");
-		
-			QTESLA.signingIIIP (signature, 0, signatureLength, messageInput, 0, 59, privateKey, secureRandom);
-		
-			for (int i = 0; i < signature.length; i++) {
 			
-				System.out.printf ("%02X\t", signature[i]);
+			System.out.printf ("%02X ", messageInput[i]);
 			
-				if (i % 16 == 15) {
+			if (i % 32 == 31 || i == 66) {
+					
+				System.out.println ();
+					
+			}
 				
-					System.out.printf ("LINE %d\n", (i / 16 + 1));
-			
-				}
-			
-			}
-		
-			System.out.printf ("\n\nThe Length of Signature is %d and the Length of Signature Package is %d\n\n", signature.length, signatureLength[0]);
-
-			int valid;
-			int response;
-			byte[] messageOutput = new byte[Polynomial.SIGNATURE_III_P + 59];
-		
-			System.out.println ("Test for Verifying for Provably-Secure qTESLA Security Category-3\n");
-		
-			valid = QTESLA.verifyingIIISize(messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
-		
-			if (valid != 0) {
-			
-				System.out.println ("Signature Verification Failed with " + valid + "\n");
-			
-			} else if (messageLength[0] != 59) {
-			
-				System.out.println ("Verifying Returned BAD Message Length with " + messageLength[0] + " Bytes\n");
-			
-			}
-		
-			for (short i = 0; i < messageLength[0]; i++) {
-			
-				if (messageInput[i] != messageOutput[i]) {
-				
-					System.out.println ("Verifying Returned BAD Message Value with Message Input " + messageInput[i] + "and Message Output " + messageOutput[i] + "\n");
-					break;
-				
-				}
-			
-			}
-		
-			signature[secureRandom.nextInt(32) % (Polynomial.SIGNATURE_III_P + 59)] ^= 1;
-		
-			response = QTESLA.verifyingIIIP (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
-		
-			if (response == 0) {
-			
-				System.out.println ("Corrupted Signature Verified with " + response + "\n");
-			
-			}
-		
-			System.out.println ("Signature Tests " + (round + 1) + " Passed\n");
-		
 		}
+		
+		System.out.println ("\n\nSignature:\n");
+		
+		QTESLA.signingIIIP (signature, 0, signatureLength, messageInput, 0, 66, privateKey, secureRandom);
+		
+		for (int i = 0; i < signature.length; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", signature[i]);
+			
+			if (i % 32 == 31 || i == signature.length - 1) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
+		
+		System.out.printf ("\nThe Length of Signature is %d and the Length of Signature Package is %d\n\n", signature.length, signatureLength[0]);
+
+		int valid;
+		int response;
+		byte[] messageOutput = new byte[Polynomial.SIGNATURE_III_P + 66];
+		
+		System.out.println ("Test for Verifying for Provably-Secure qTESLA Security Category-3\n");
+		
+		valid = QTESLA.verifyingIIISize(messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
+		
+		if (valid != 0) {
+			
+			System.out.println ("Signature Verification Failed with " + valid + "\n");
+			
+		} else if (messageLength[0] != 66) {
+			
+			System.out.println ("Verifying Returned BAD Message Length with " + messageLength[0] + " Bytes\n");
+			
+		}
+		
+		for (short i = 0; i < messageLength[0]; i++) {
+			
+			if (messageInput[i] != messageOutput[i]) {
+				
+				System.out.println ("Verifying Returned BAD Message Value with Message Input " + messageInput[i] + "and Message Output " + messageOutput[i] + "\n");
+				break;
+				
+			}
+			
+		}
+		
+		signature[secureRandom.nextInt(32) % (Polynomial.SIGNATURE_III_P + 66)] ^= 1;
+		
+		response = QTESLA.verifyingIIIP (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
+		
+		if (response == 0) {
+			
+			System.out.println ("Corrupted Signature Verified with " + response + "\n");
+			
+		}
+		
+		System.out.println ("Signature Test Passed\n");
 		
 	}
 
