@@ -130,8 +130,8 @@ public class Test {
 		// testSparsePolynomialMultiplication32 ();
 		// testHashFunctionIIISize ();
 		// testHashFunctionIIIP ();
-		testGenerateKeyPairSigningVerifyingIIISize ();
-		// testGenerateKeyPairSigningVerifyingIIIP ();
+		// testGenerateKeyPairSigningVerifyingIIISize ();
+		testGenerateKeyPairSigningVerifyingIIIP ();
 		
 	}
 	
@@ -2521,9 +2521,11 @@ public class Test {
 			
 			System.out.println ("Corrupted Signature Verified with " + response + "\n");
 			
-		}
+		} else {
+			
+			System.out.println ("Signature Tests Passed\n");
 		
-		System.out.println ("Signature Tests Passed\n");
+		}
 		
 	}
 	
@@ -2641,7 +2643,7 @@ public class Test {
 		
 		System.out.println ("Test for Verifying for Provably-Secure qTESLA Security Category-3\n");
 		
-		valid = QTESLA.verifyingIIISize(messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
+		valid = QTESLA.verifyingIIIP (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
 		
 		if (valid != 0) {
 			
@@ -2653,7 +2655,7 @@ public class Test {
 			
 		}
 		
-		for (short i = 0; i < messageLength[0]; i++) {
+		for (int i = 0; i < messageLength[0]; i++) {
 			
 			if (messageInput[i] != messageOutput[i]) {
 				
@@ -2672,10 +2674,11 @@ public class Test {
 			
 			System.out.println ("Corrupted Signature Verified with " + response + "\n");
 			
+		} else {
+		
+			System.out.println ("Signature Test Passed\n");
+		
 		}
-		
-		System.out.println ("Signature Test Passed\n");
-		
 	}
 
 }
