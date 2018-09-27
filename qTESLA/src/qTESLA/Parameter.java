@@ -344,7 +344,7 @@ public final class Parameter {
 	/**
 	 * XI = SIGMA * SQUARE_ROOT (2 * LOGARITHM (2) / LOGARITHM (e)) for Heuristic qTESLA Security Category-3 (Option for Speed)
 	 */
-	public static final double XI_III_SPEED	= 12.0096;
+	public static final double XI_III_SPEED	= 12;
 	
 	/**
 	 * XI = SIGMA * SQUARE_ROOT (2 * LOGARITHM (2) / LOGARITHM (e)) for Provably-Secure qTESLA Security Category-3

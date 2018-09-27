@@ -601,7 +601,6 @@ public class Sample {
 		long c;
 		long y;
 		long z;
-		long buffer;
 		
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
 				
@@ -639,7 +638,7 @@ public class Sample {
 					
 						if (bitRemained <= 64 - 6) {
 						
-							randomBit = (randomBit << 6) ^ ((r >>> 58) & 63);
+							randomBit = (randomBit << 6) ^ ((r >>> 58) & 63L);
 							bitRemained += 6;
 						
 						}
@@ -658,7 +657,7 @@ public class Sample {
 					
 						c 		= t - CUMULATIVE_DISTRIBUTION_TABLE_III[i][2];
 						
-						long b	= ((c & CUMULATIVE_DISTRIBUTION_TABLE_III[i][2] & 1L) + (CUMULATIVE_DISTRIBUTION_TABLE_III[i][2] >> 1) + (c >> 1)) >> 63;
+						long b	= ((c & CUMULATIVE_DISTRIBUTION_TABLE_III[i][2] & 1L) + (CUMULATIVE_DISTRIBUTION_TABLE_III[i][2] >> 1) + (c >>> 1)) >> 63;
 						
 						/* Least significant Bits of All CUMULATIVE_DISTRIBUTION_TABLE[i][1] are Zero: Overflow Cannot Occur at This Point */
 						c		= s - (CUMULATIVE_DISTRIBUTION_TABLE_III[i][1] + b);
@@ -667,9 +666,9 @@ public class Sample {
 						
 						/* Least significant Bits of All CUMULATIVE_DISTRIBUTION_TABLE[i][0] are Zero: Overflow Cannot Occur at This Point */
 						c		= r - (CUMULATIVE_DISTRIBUTION_TABLE_III[i][0] + b);
-					
+						
 						y += ~ (c >>> 63) & 1L;
-					
+						
 					}
 				
 					/* The Next Sampler Works Exclusively for xi <= 28 */
@@ -688,7 +687,7 @@ public class Sample {
 							randomBit >>= 6;
 							bitRemained -= 6;
 						
-						} while (z == 63);
+						} while (z == 63L);
 					
 						if (bitRemained < 2) {
 						
@@ -710,15 +709,13 @@ public class Sample {
 				
 					/* Sample A Bit from Bernoulli_{exp (- y * (y + 2 * k * x) / (2 * k^2 * SIGMA_2^2))} */
 					k = (long) (xi * y + z);
-					
-					buffer = CommonFunction.load64 (seedExpander, (j++) * Long.SIZE / Byte.SIZE);
 				
-				} while (bernoulli (buffer, z * ((k << 1) - z), exponentialDistribution) == 0);
+				} while (bernoulli (CommonFunction.load64 (seedExpander, (j++) * Long.SIZE / Byte.SIZE), z * ((k << 1) - z), exponentialDistribution) == 0);
 				
 				/* Put Last Random Bits into Sign Bit */
 				randomBit <<= (64 - bitRemained);
 				
-				if (bitRemained == 0) {
+				if (bitRemained == 0L) {
 					
 					randomBit = CommonFunction.load64 (seedExpander, (j++) * Long.SIZE / Byte.SIZE);
 					bitRemained = 64;

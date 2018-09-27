@@ -1050,7 +1050,7 @@ public class QTESLA {
 		
 		for (int i = 0; i < w; i++) {
 			
-			for (short j = 0; j < limit - 1; j++) {
+			for (int j = 0; j < limit - 1; j++) {
 				
 				mask		= (short) ((list[j + 1] - list[j]) >> 15);
 				temporary	= (short) ((list[j + 1] & mask) | (list[j] & (~ mask)));
