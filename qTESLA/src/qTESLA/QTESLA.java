@@ -858,7 +858,7 @@ public class QTESLA {
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (output, outputOffset, Polynomial.HASH, T, 0, messageLength + n);
 			
 		}
-	
+		
 	}
 	
 	/*****************************************************************************************************************************************************************************
@@ -1792,9 +1792,9 @@ public class QTESLA {
 		int nonce = 0;
 		
 		rng.randomByte (randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
-		
 		// secureRandom.nextBytes (temporaryRandomnessInput);
 		// System.arraycopy (temporaryRandomnessInput, 0, randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
+		
 		System.arraycopy (privateKey, privateKeySize - Polynomial.SEED, randomnessInput, 0, Polynomial.SEED);
 		System.arraycopy (message, messageOffset, randomnessInput, Polynomial.RANDOM + Polynomial.SEED, messageLength);
 		

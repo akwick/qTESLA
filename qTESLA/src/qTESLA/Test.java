@@ -130,8 +130,10 @@ public class Test {
 		// testSparsePolynomialMultiplication32 ();
 		// testHashFunctionIIISize ();
 		// testHashFunctionIIIP ();
-		testGenerateKeyPairSigningVerifyingIIISpeed ();
+		// testGenerateKeyPairSigningVerifyingI ();
+		// testGenerateKeyPairSigningVerifyingIIISpeed ();
 		// testGenerateKeyPairSigningVerifyingIIISize ();
+		testGenerateKeyPairSigningVerifyingIP ();
 		// testGenerateKeyPairSigningVerifyingIIIP ();
 		
 	}
@@ -2377,6 +2379,172 @@ public class Test {
 //		
 //	}
 	
+	/* Test for Generation of the Key Pair, Signing and Verifying for Heuristic qTESLA Security Category-1 */
+	
+	public static void testGenerateKeyPairSigningVerifyingI ()
+			
+			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
+		
+		System.out.println ("Test for Generation of the Key Pair for Heuristic qTESLA Security Category-1\n");
+		
+		byte[] publicKey	= new byte[Polynomial.PUBLIC_KEY_I];
+		byte[] privateKey	= new byte[Polynomial.PRIVATE_KEY_I];
+		
+		long startGeneratingKeyPairTimeNano	= System.nanoTime();
+		QTESLA.generateKeyPairI (publicKey, privateKey, secureRandom);
+		long endGeneratingKeyPairTimeNano	= System.nanoTime();
+		
+		System.out.println ("Public Key:\n");
+		
+		for (int i = 0; i < Polynomial.PUBLIC_KEY_I; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", publicKey[i]);
+			
+			if (i % 32 == 31) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
+		
+		System.out.println ("\nPrivate Key:\n");
+		
+		for (int i = 0; i < Polynomial.PRIVATE_KEY_I; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", privateKey[i]);
+			
+			if (i % 32 == 31) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
+		
+		System.out.println ("\nTest for Signing for Heuristic qTESLA Security Category-1\n");
+		
+		int[] signatureLength = new int[1];
+		int[] messageLength = new int[1];
+		byte[] signature = new byte[Polynomial.SIGNATURE_I + 66];
+		byte[] messageInput = new byte[66];
+		String messageString =
+				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
+		
+		messageInput = hexadecimalStringToByteArray (messageString);
+		
+		System.out.println ("Message:\n");
+		
+		for (int i = 0; i < 66; i++) {
+			
+			if (i % 32 == 0) {
+					
+				System.out.printf ("LINE %d\t", (i / 32 + 1));
+			
+			}
+				
+			System.out.printf ("%02X ", messageInput[i]);
+			
+			if (i % 32 == 31 || i == 65) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
+		
+		System.out.println ("\nSignature:\n");
+		
+		long startSigningTimeNano	= System.nanoTime();
+		QTESLA.signingI (signature, 0, signatureLength, messageInput, 0, 66, privateKey, secureRandom);
+		long endSigningTimeNano		= System.nanoTime();
+		
+		for (int i = 0; i < signature.length; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+		
+			}
+			
+			System.out.printf ("%02X ", signature[i]);
+			
+			if (i % 32 == 31 || i == signature.length - 1) {
+				
+				System.out.println ();
+		
+			}
+			
+		}
+		
+		System.out.printf ("\nThe Length of Signature is %d and the Length of Signature Package is %d\n\n", signature.length, signatureLength[0]);
+		
+		int valid;
+		int response;
+		byte[] messageOutput = new byte[Polynomial.SIGNATURE_I + 66];
+		
+		System.out.println ("Test for Verifying for Heuristic qTESLA Security Category-1\n");
+		
+		long startVerifyingTimeNano1	= System.nanoTime();
+		valid = QTESLA.verifyingI (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
+		long endVerifyingTimeNano1		= System.nanoTime();
+		
+		if (valid != 0) {
+			
+			System.out.println ("Signature Verification Failed with " + valid + "\n");
+			
+		} else if (messageLength[0] != 66) {
+			
+			System.out.println ("Verifying Returned BAD Message Length with " + messageLength[0] + " Bytes\n");
+			
+		}
+		
+		for (int i = 0; i < messageLength[0]; i++) {
+			
+			if (messageInput[i] != messageOutput[i]) {
+				
+				System.out.println ("Verifying Returned BAD Message Value with Message Input " + messageInput[i] + "and Message Output " + messageOutput[i] + "\n");
+				break;
+				
+			}
+			
+		}
+		
+		signature[secureRandom.nextInt(32) % (Polynomial.SIGNATURE_I + 66)] ^= 1;
+		
+		long startVerifyingTimeNano2	= System.nanoTime();
+		response = QTESLA.verifyingIIISpeed (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
+		long endVerifyingTimeNano2		= System.nanoTime();
+		
+		System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
+		System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
+		System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
+		System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
+		
+		if (response == 0) {
+			
+			System.out.println ("Corrupted Signature Verified with " + response + "\n");
+			
+		} else {
+			
+			System.out.println ("Signature Tests Passed\n");
+		
+		}
+		
+	}
+	
 	/* Test for Generation of the Key Pair, Signing and Verifying for Heuristic qTESLA Security Category-3 (Option for Speed) */
 	
 	public static void testGenerateKeyPairSigningVerifyingIIISpeed ()
@@ -2432,7 +2600,7 @@ public class Test {
 			
 		}
 		
-		System.out.println ("\nTest for Signing for Heuristic qTESLA Security Category-3 (Option for Size)\n");
+		System.out.println ("\nTest for Signing for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 		
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
@@ -2543,7 +2711,7 @@ public class Test {
 		
 	}
 	
-/* Test for Generation of the Key Pair, Signing and Verifying for Heuristic qTESLA Security Category-3 (Option for Size) */
+	/* Test for Generation of the Key Pair, Signing and Verifying for Heuristic qTESLA Security Category-3 (Option for Size) */
 	
 	public static void testGenerateKeyPairSigningVerifyingIIISize ()
 			
@@ -2708,6 +2876,172 @@ public class Test {
 		}
 		
 	}
+	
+	/* Test for Generation of the Key Pair, Signing and Verifying for Provably-Secure qTESLA Security Category-1 */
+	
+	public static void testGenerateKeyPairSigningVerifyingIP ()
+	
+			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
+		
+		System.out.println ("Test for Generation of the Key Pair for Provably-Secure qTESLA Security Category-1\n");
+		
+		byte[] publicKey	= new byte[Polynomial.PUBLIC_KEY_I_P];
+		byte[] privateKey	= new byte[Polynomial.PRIVATE_KEY_I_P];
+		
+		long startGeneratingKeyPairTimeNano	= System.nanoTime();
+		QTESLA.generateKeyPairIP (publicKey, privateKey, secureRandom);
+		long endGeneratingKeyPairTimeNano	= System.nanoTime();
+		
+		System.out.println ("Public Key:\n");
+		
+		for (int i = 0; i < Polynomial.PUBLIC_KEY_I_P; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %4d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", publicKey[i]);
+			
+			if (i % 32 == 31) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
+		
+		System.out.println ("\nPrivate Key:\n");
+		
+		for (int i = 0; i < Polynomial.PRIVATE_KEY_I_P; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", privateKey[i]);
+			
+			if (i % 32 == 31) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
+		
+		System.out.println ("\nTest for Signing for Provably-Secure qTESLA Security Category-1\n");
+		
+		int[] signatureLength = new int[1];
+		int[] messageLength = new int[1];
+		byte[] signature = new byte[Polynomial.SIGNATURE_I_P + 66];
+		byte[] messageInput = new byte[66];
+		String messageString =
+				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
+		
+		messageInput = hexadecimalStringToByteArray (messageString);
+		
+		System.out.println ("Message:\n");
+		
+		for (int i = 0; i < 66; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %d\t", i / 32 + 1);
+					
+			}
+			
+			System.out.printf ("%02X ", messageInput[i]);
+			
+			if (i % 32 == 31 || i == 66) {
+					
+				System.out.println ();
+					
+			}
+				
+		}
+		
+		System.out.println ("\n\nSignature:\n");
+		
+		long startSigningTimeNano	= System.nanoTime();
+		QTESLA.signingIP (signature, 0, signatureLength, messageInput, 0, 66, privateKey, secureRandom);
+		long endSigningTimeNano		= System.nanoTime();
+		
+		for (int i = 0; i < signature.length; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", signature[i]);
+			
+			if (i % 32 == 31 || i == signature.length - 1) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
+		
+		System.out.printf ("\nThe Length of Signature is %d and the Length of Signature Package is %d\n\n", signature.length, signatureLength[0]);
+
+		int valid;
+		int response;
+		byte[] messageOutput = new byte[Polynomial.SIGNATURE_I_P + 66];
+		
+		System.out.println ("Test for Verifying for Provably-Secure qTESLA Security Category-1\n");
+		
+		long startVerifyingTimeNano1	= System.nanoTime();
+		valid = QTESLA.verifyingIP (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
+		long endVerifyingTimeNano1		= System.nanoTime();
+		
+		if (valid != 0) {
+			
+			System.out.println ("Signature Verification Failed with " + valid + "\n");
+			
+		} else if (messageLength[0] != 66) {
+			
+			System.out.println ("Verifying Returned BAD Message Length with " + messageLength[0] + " Bytes\n");
+			
+		}
+		
+		for (int i = 0; i < messageLength[0]; i++) {
+			
+			if (messageInput[i] != messageOutput[i]) {
+				
+				System.out.println ("Verifying Returned BAD Message Value with Message Input " + messageInput[i] + "and Message Output " + messageOutput[i] + "\n");
+				break;
+				
+			}
+			
+		}
+		
+		signature[secureRandom.nextInt(32) % (Polynomial.SIGNATURE_I_P + 66)] ^= 1;
+		
+		long startVerifyingTimeNano2	= System.nanoTime();
+		response = QTESLA.verifyingIP (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
+		long endVerifyingTimeNano2		= System.nanoTime();
+		
+		System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
+		System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
+		System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
+		System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
+		
+		if (response == 0) {
+			
+			System.out.println ("Corrupted Signature Verified with " + response + "\n");
+			
+		} else {
+		
+			System.out.println ("Signature Test Passed\n");
+		
+		}
+	}
+
 	
 	/* Test for Generation of the Key Pair, Signing and Verifying for Provably-Secure qTESLA Security Category-3 */
 	
