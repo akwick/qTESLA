@@ -541,7 +541,7 @@ public class Test {
 	public static void testRandomByte () throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		RandomNumberGenerator rng = new RandomNumberGenerator ();
-		byte[] randomness = new byte[Polynomial.RANDOM];
+		byte[] randomness = new byte[48];
 		
 		System.out.println ("Test for Random Byte in Random Number Generator\n");
 		
@@ -549,9 +549,9 @@ public class Test {
 			
 			System.out.printf ("Round %3d\t", n + 1);
 			
-			rng.randomByte (randomness, 0, Polynomial.RANDOM);
+			rng.randomByte (randomness, 0, 48);
 			
-			for (int i = 0; i < Polynomial.RANDOM; i++) {
+			for (int i = 0; i < 48; i++) {
 			
 				System.out.printf ("%02X ", randomness[i]);
 			

@@ -213,7 +213,7 @@ public class Polynomial {
 			
 			for (jFirst = 0; jFirst < Parameter.N_III_P; jFirst = j + numberOfProblem) {
 				
-				long omega = source[jTwiddle++];
+				int omega = (int) source[jTwiddle++];
 				
 				for (j = jFirst; j < jFirst + numberOfProblem; j++) {
 					
