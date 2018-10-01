@@ -133,7 +133,7 @@ public class Test {
 		// testGenerateKeyPairSigningVerifyingI ();
 		// testGenerateKeyPairSigningVerifyingIIISpeed ();
 		// testGenerateKeyPairSigningVerifyingIIISize ();
-		testGenerateKeyPairSigningVerifyingIP ();
+		// testGenerateKeyPairSigningVerifyingIP ();
 		// testGenerateKeyPairSigningVerifyingIIIP ();
 		
 	}
