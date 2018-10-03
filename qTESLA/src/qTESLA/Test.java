@@ -47,22 +47,6 @@ public class Test {
 			
 	};
 	
-	public static byte[] hexadecimalStringToByteArray (String string) {
-		
-		byte[] byteArray = new byte[string.length() / 2];
-		
-		for (int i = 0; i < byteArray.length; i++) {
-			
-			int index		= i * 2;
-			int value		= Integer.parseInt(string.substring (index, index + 2), 16);
-			byteArray[i]	= (byte) value;
-			
-		}
-		
-		return byteArray;
-		
-	}
-	
 	public static void main (String[] args) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
 		// testMemoryCopy ();
@@ -2426,7 +2410,7 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
-		seed = hexadecimalStringToByteArray (seedString);
+		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
@@ -2482,7 +2466,7 @@ public class Test {
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
-		messageInput = hexadecimalStringToByteArray (messageString);
+		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
 		
 		System.out.println ("Message:\n");
 		
@@ -2597,7 +2581,7 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
-		seed = hexadecimalStringToByteArray (seedString);
+		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
@@ -2653,7 +2637,7 @@ public class Test {
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
-		messageInput = hexadecimalStringToByteArray (messageString);
+		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
 		
 		System.out.println ("Message:\n");
 		
@@ -2768,7 +2752,7 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
-		seed = hexadecimalStringToByteArray (seedString);
+		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
@@ -2824,7 +2808,7 @@ public class Test {
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
-		messageInput = hexadecimalStringToByteArray (messageString);
+		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
 		
 		System.out.println ("Message:\n");
 		
@@ -2939,7 +2923,7 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
-		seed = hexadecimalStringToByteArray (seedString);
+		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
@@ -2995,7 +2979,7 @@ public class Test {
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
-		messageInput = hexadecimalStringToByteArray (messageString);
+		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
 		
 		System.out.println ("Message:\n");
 		
@@ -3110,7 +3094,7 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
-		seed = hexadecimalStringToByteArray (seedString);
+		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
@@ -3166,7 +3150,7 @@ public class Test {
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
-		messageInput = hexadecimalStringToByteArray (messageString);
+		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
 		
 		System.out.println ("Message:\n");
 		
