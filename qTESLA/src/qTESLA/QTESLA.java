@@ -15,6 +15,12 @@ public class QTESLA {
 
 	private static RandomNumberGenerator rng = new RandomNumberGenerator ();
 	
+	public static RandomNumberGenerator getRandomNumberGenerator () {
+		
+		return rng;
+		
+	}
+	
 	/********************************************************************************************************************************************
 	 * Description:	Pack Private Key for Heuristic qTESLA Security Category-1 and Category-3 (Option for Size or Speed)
 	 * 

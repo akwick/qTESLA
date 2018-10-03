@@ -540,28 +540,62 @@ public class Test {
 	
 	public static void testRandomByte () throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
-		RandomNumberGenerator rng = new RandomNumberGenerator ();
-		byte[] randomness = new byte[48];
+		RandomNumberGenerator rng	= new RandomNumberGenerator ();
+		byte[] seed					= new byte[48];
+		byte[] entropyInput			= new byte[48];
+		byte[] message				= new byte[3300];
 		
-		System.out.println ("Test for Random Byte in Random Number Generator\n");
+		for (int i = 0; i < 48; i++) {
+			
+			entropyInput[i] = (byte) i;
+			
+		}
 		
-		for (int n = 0; n < 100; n++) {
+		Arrays.fill (message, (byte) 0);
+		
+		System.out.println ("Test for Random Byte in Random Number Generator");
+		
+		rng.initiateRandomByte (entropyInput, null, 256);
+		
+		for (int round = 0; round < 100; round++) {
 			
-			System.out.printf ("Round %3d\t", n + 1);
+			System.out.printf ("\nRound %3d\n\n\tSeed %3d\n\n\t", round + 1, round + 1);
 			
-			rng.randomByte (randomness, 0, 48);
+			rng.randomByte (seed, 0, 48);
 			
 			for (int i = 0; i < 48; i++) {
 			
-				System.out.printf ("%02X ", randomness[i]);
+				System.out.printf ("%02X", seed[i]);
 			
 			}
 			
-			System.out.println();
+			System.out.printf ("\n\n\tMessage %3d\n\n", round + 1);
+			
+			rng.randomByte (message, 0, 33 * (round + 1));
+			
+			for (int i = 0; i < 33 * (round + 1); i++) {
+				
+				if (i % 33 == 0) {
+					
+					System.out.printf ("\tLINE %3d\t", i / 33 + 1);
+					
+				}
+				
+				System.out.printf ("%02X", message[i]);
+				
+				if (i % 33 == 32) {
+					
+					System.out.println ();
+					
+				}
+				
+			}
+			
+			Arrays.fill (message, 33 * (round + 1), 3300, (byte) 0);
 		
 		}
 		
-		System.out.println();
+		System.out.println("\n");
 		
 	}
 	
@@ -2389,6 +2423,11 @@ public class Test {
 		
 		byte[] publicKey	= new byte[Polynomial.PUBLIC_KEY_I];
 		byte[] privateKey	= new byte[Polynomial.PRIVATE_KEY_I];
+		byte[] seed			= new byte[48];
+		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
+		
+		seed = hexadecimalStringToByteArray (seedString);
+		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
 		QTESLA.generateKeyPairI (publicKey, privateKey, secureRandom);
@@ -2555,6 +2594,11 @@ public class Test {
 		
 		byte[] publicKey	= new byte[Polynomial.PUBLIC_KEY_III_SPEED];
 		byte[] privateKey	= new byte[Polynomial.PRIVATE_KEY_III_SPEED];
+		byte[] seed			= new byte[48];
+		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
+		
+		seed = hexadecimalStringToByteArray (seedString);
+		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
 		QTESLA.generateKeyPairIIISpeed (publicKey, privateKey, secureRandom);
@@ -2721,6 +2765,11 @@ public class Test {
 		
 		byte[] publicKey	= new byte[Polynomial.PUBLIC_KEY_III_SIZE];
 		byte[] privateKey	= new byte[Polynomial.PRIVATE_KEY_III_SIZE];
+		byte[] seed			= new byte[48];
+		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
+		
+		seed = hexadecimalStringToByteArray (seedString);
+		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
 		QTESLA.generateKeyPairIIISize (publicKey, privateKey, secureRandom);
@@ -2887,6 +2936,11 @@ public class Test {
 		
 		byte[] publicKey	= new byte[Polynomial.PUBLIC_KEY_I_P];
 		byte[] privateKey	= new byte[Polynomial.PRIVATE_KEY_I_P];
+		byte[] seed			= new byte[48];
+		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
+		
+		seed = hexadecimalStringToByteArray (seedString);
+		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
 		QTESLA.generateKeyPairIP (publicKey, privateKey, secureRandom);
@@ -3053,6 +3107,11 @@ public class Test {
 		
 		byte[] publicKey	= new byte[Polynomial.PUBLIC_KEY_III_P];
 		byte[] privateKey	= new byte[Polynomial.PRIVATE_KEY_III_P];
+		byte[] seed			= new byte[48];
+		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
+		
+		seed = hexadecimalStringToByteArray (seedString);
+		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
 		QTESLA.generateKeyPairIIIP (publicKey, privateKey, secureRandom);
