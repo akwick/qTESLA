@@ -158,6 +158,12 @@ public final class Parameter {
 	 */
 	public static final int B_BIT_III_P		= 23;
 	
+	public static final int S_BIT_I			= 10;
+	public static final int S_BIT_I_P		= 8;
+	public static final int S_BIT_III_SIZE	= 8;
+	public static final int S_BIT_III_SPEED	= 9;
+	public static final int S_BIT_III_P		= 8;
+	
 	/**
 	 * Number of Ring-Learning-With-Errors Samples for Heuristic qTESLA Security Category-1
 	 */
@@ -186,27 +192,27 @@ public final class Parameter {
 	/** 
 	 * Number of Non-Zero Entries of Output Elements of Encryption for Heuristic qTESLA Security Category-1
 	 */
-	public static final int W_I			= 30;
+	public static final int H_I			= 30;
 	
 	/** 
 	 * Number of Non-Zero Entries of Output Elements of Encryption for Provably-Secure qTESLA Security Category-1
 	 */
-	public static final int W_I_P		= 25;
+	public static final int H_I_P		= 25;
 	
 	/** 
 	 * Number of Non-Zero Entries of Output Elements of Encryption for Heuristic qTESLA Security Category-3 (Option for Size)
 	 */
-	public static final int W_III_SIZE	= 48;
+	public static final int H_III_SIZE	= 48;
 	
 	/** 
 	 * Number of Non-Zero Entries of Output Elements of Encryption for Heuristic qTESLA Security Category-3 (Option for Speed)
 	 */
-	public static final int W_III_SPEED	= 48;
+	public static final int H_III_SPEED	= 48;
 	
 	/** 
 	 * Number of Non-Zero Entries of Output Elements of Encryption for Provably-Secure qTESLA Security Category-3
 	 */
-	public static final int W_III_P		= 40;
+	public static final int H_III_P		= 40;
 	
 	/** 
 	 * Number of Rounded Bits for Heuristic qTESLA Security Category-1
@@ -258,11 +264,11 @@ public final class Parameter {
 	 */
 	public static final int KEY_GENERATOR_BOUND_E_III_P		= 901;
 	
-	public static final int REJECTION_I			= 1586;
-	public static final int REJECTION_I_P		= 554;
-	public static final int REJECTION_III_SIZE	= 910;
-	public static final int REJECTION_III_SPEED	= 1147;
-	public static final int REJECTION_III_P		= 901;
+	public static final int REJECTION_I			= KEY_GENERATOR_BOUND_E_I;
+	public static final int REJECTION_I_P		= KEY_GENERATOR_BOUND_E_I_P;
+	public static final int REJECTION_III_SIZE	= KEY_GENERATOR_BOUND_E_III_SIZE;
+	public static final int REJECTION_III_SPEED	= KEY_GENERATOR_BOUND_E_III_SPEED;
+	public static final int REJECTION_III_P		= KEY_GENERATOR_BOUND_E_III_P;
 	
 	/** 
 	 * Bound in Checking Secret Polynomial for Heuristic qTESLA Security Category-1
@@ -289,16 +295,16 @@ public final class Parameter {
 	 */
 	public static final int KEY_GENERATOR_BOUND_S_III_P		= 901;
 	
-	public static final int U_I			= 1586;
-	public static final int U_I_P		= 554;
-	public static final int U_III_SIZE	= 910;
-	public static final int U_III_SPEED	= 1233;
-	public static final int U_III_P		= 901;
+	public static final int U_I			= KEY_GENERATOR_BOUND_S_I;
+	public static final int U_I_P		= KEY_GENERATOR_BOUND_S_I_P;
+	public static final int U_III_SIZE	= KEY_GENERATOR_BOUND_S_III_SIZE;
+	public static final int U_III_SPEED	= KEY_GENERATOR_BOUND_S_III_SPEED;
+	public static final int U_III_P		= KEY_GENERATOR_BOUND_S_III_P;
 	
 	/**
 	 * Standard Deviation of Centered Discrete Gaussian Distribution for Heuristic qTESLA Security Category-1
 	 */
-	public static final double SIGMA_I			= 23.78;
+	public static final double SIGMA_I			= 22.93;
 	
 	/**
 	 * Standard Deviation of Centered Discrete Gaussian Distribution for Provably-Secure qTESLA Security Category-1
@@ -308,7 +314,7 @@ public final class Parameter {
 	/**
 	 * Standard Deviation of Centered Discrete Gaussian Distribution for Heuristic qTESLA Security Category-3 (Option for Size)
 	 */
-	public static final double SIGMA_III_SIZE	= 8.49;
+	public static final double SIGMA_III_SIZE	= 7.64;
 	
 	/**
 	 * Standard Deviation of Centered Discrete Gaussian Distribution for Heuristic qTESLA Security Category-3 (Option for Speed)
@@ -320,16 +326,16 @@ public final class Parameter {
 	 */
 	public static final double SIGMA_III_P		= 8.5;
 	
-	public static final double SIGMA_E_I			= 23.78;
-	public static final double SIGMA_E_I_P			= 8.5;
-	public static final double SIGMA_E_III_SIZE		= 8.49;
-	public static final double SIGMA_E_III_SPEED	= 10.2;
-	public static final double SIGMA_E_III_P		= 8.5;
+	public static final double SIGMA_E_I			= SIGMA_I;
+	public static final double SIGMA_E_I_P			= SIGMA_I_P;
+	public static final double SIGMA_E_III_SIZE		= SIGMA_III_SIZE;
+	public static final double SIGMA_E_III_SPEED	= SIGMA_III_SPEED;
+	public static final double SIGMA_E_III_P		= SIGMA_III_P;
 	
 	/**
 	 * XI = SIGMA * SQUARE_ROOT (2 * LOGARITHM (2) / LOGARITHM (e)) for Heuristic qTESLA Security Category-1
 	 */
-	public static final double XI_I			= 27.9988;
+	public static final double XI_I			= 27;
 	
 	/**
 	 * XI = SIGMA * SQUARE_ROOT (2 * LOGARITHM (2) / LOGARITHM (e)) for Provably-Secure qTESLA Security Category-1
@@ -339,7 +345,7 @@ public final class Parameter {
 	/**
 	 * XI = SIGMA * SQUARE_ROOT (2 * LOGARITHM (2) / LOGARITHM (e)) for Heuristic qTESLA Security Category-3 (Option for Size)
 	 */
-	public static final double XI_III_SIZE	= 9.9962;
+	public static final double XI_III_SIZE	= 9;
 	
 	/**
 	 * XI = SIGMA * SQUARE_ROOT (2 * LOGARITHM (2) / LOGARITHM (e)) for Heuristic qTESLA Security Category-3 (Option for Speed)
@@ -398,5 +404,9 @@ public final class Parameter {
 	public static final int INVERSE_NUMBER_THEORETIC_TRANSFORM_III_SIZE		= 1217638;
 	public static final int INVERSE_NUMBER_THEORETIC_TRANSFORM_III_SPEED	= 237839;
 	public static final int INVERSE_NUMBER_THEORETIC_TRANSFORM_III_P		= 851423148;
+	
+	public static final int R_I			= 1081347;
+	public static final int R_III_SIZE	= 35843;
+	public static final int R_III_SPEED	= 15873;
 	
 }
