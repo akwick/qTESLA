@@ -1,11 +1,12 @@
 package qTESLA;
 
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.InvalidParameterException;
 import java.security.KeyPair;
 import java.security.KeyPairGeneratorSpi;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.AlgorithmParameterSpec;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -20,13 +21,6 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 	private String securityCategory;
 	
 	private SecureRandom secureRandom;
-	
-	public QTESLAKeyPairGenerator (String securityCategory) {
-		
-		this.securityCategory = securityCategory;
-		this.secureRandom = null;
-		
-	}
 	
 	@Override
 	public KeyPair generateKeyPair() {
@@ -130,6 +124,22 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 			
 		}
 			
+	}
+	
+	@Override
+	public void initialize (AlgorithmParameterSpec specification, SecureRandom random) throws InvalidAlgorithmParameterException {
+		
+		if (! (specification instanceof QTESLAParameterSpecification)) {
+			
+			throw new InvalidAlgorithmParameterException ("Parameters Do Not Belong To qTESLA");
+			
+		}
+		
+		QTESLAParameterSpecification qTESLAParameterSpecification = (QTESLAParameterSpecification) specification;
+		
+		this.securityCategory = qTESLAParameterSpecification.getSecurityCategory();
+		this.secureRandom = random;
+		
 	}
 	
 }

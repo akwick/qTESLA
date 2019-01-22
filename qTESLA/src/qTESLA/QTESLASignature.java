@@ -1,5 +1,6 @@
 package qTESLA;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.security.AlgorithmParameters;
 import java.security.InvalidAlgorithmParameterException;
@@ -18,29 +19,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.ShortBufferException;
 
 public abstract class QTESLASignature extends SignatureSpi {
-	
-	/**
-	 * Possible {@link #state} Value, Signifying That This {@code SignatureQTESLA} Object
-	 * Has Not Yet Been Initialized
-	 */
-	public final static int UNINITIALIZED	= 0;
-	
-	/**
-	 * Possible {@link #state} Value, Signifying That This {@code SignatureQTESLA} Object
-	 * Has Been Initialized For Signing
-	 */
-	public final static int SIGN			= 2;
-	
-	/**
-	 * Possible {@link #state} Value, Signifying That This {@code SignatureQTESLA} Object
-	 * Has Been Initialized For Verification
-	 */
-	public final static int VERIFY			= 3;
-	
-	/**
-	 * Current State of This Signature Object (UNITIALIZED / SIGN / VERIFY)
-	 */
-	private int state;
 	
 	/**
 	 * qTESLA Security Category
@@ -67,16 +45,9 @@ public abstract class QTESLASignature extends SignatureSpi {
 	private int messageOffset;
 	
 	private int[] messageLength;
-	
-	private byte[] signature;
-	
-	private int signatureOffset;
-	
-	private int[] signatureLength;
-	
+		
 	public QTESLASignature (String securityCategory) {
 		
-		this.state				= UNINITIALIZED;
 		this.securityCategory	= securityCategory;
 		this.setPublicKey (null);
 		this.setPrivateKey (null);
@@ -84,20 +55,7 @@ public abstract class QTESLASignature extends SignatureSpi {
 		this.setMessage (null);
 		this.setMessageOffset (0);
 		this.messageLength		= new int[1];
-		this.setSignatureOffset (0);
-		this.signatureLength	= new int[1];
 		
-	}
-	
-	public int getState () {
-		
-		return this.state;
-		
-	}
-	
-	public void setState (int state) {
-		
-		this.state = state;
 	}
 	
 	public String getSecurityCategory () {
@@ -156,19 +114,7 @@ public abstract class QTESLASignature extends SignatureSpi {
 
 	public void setMessage (byte[] message) {
 		
-		this.message = message;
-	
-	}
-	
-	public byte[] getSignature () {
-		
-		return signature;
-	
-	}
-
-	public void setSignature (byte[] signature) {
-		
-		this.signature = signature;
+		System.arraycopy (message, 0, this.message, 0, message.length);
 	
 	}
 	
@@ -192,38 +138,19 @@ public abstract class QTESLASignature extends SignatureSpi {
 
 	public void setMessageLength (int[] messageLength) {
 		
-		this.messageLength = messageLength;
-	
-	}
-	
-	public int getSignatureOffset() {
-		
-		return signatureOffset;
-	
-	}
-
-	public void setSignatureOffset(int signatureOffset) {
-		
-		this.signatureOffset = signatureOffset;
-	
-	}
-	
-	public int[] getSignatureLength() {
-		
-		return signatureLength;
-	
-	}
-
-	public void setSignatureLength(int[] signatureLength) {
-		
-		this.signatureLength = signatureLength;
+		System.arraycopy (messageLength, 0, this.messageLength, 0, messageLength.length);
 	
 	}
 	
 	protected void engineInitSign (PrivateKey privateKey, SecureRandom random) throws InvalidKeyException {
 		
+		if (!(privateKey instanceof QTESLAPrivateKey)) {
+			
+			throw new InvalidKeyException ("The Input Key Is Not A qTESLA Private Key");
+			
+		}
+		
 		this.setPrivateKey ((QTESLAPrivateKey) privateKey);
-		this.setPublicKey (null);
 		this.setSecureRandom (random);
 		
 	}
@@ -236,19 +163,26 @@ public abstract class QTESLASignature extends SignatureSpi {
 	
 	protected void engineInitVerify (PublicKey publicKey) throws InvalidKeyException {
 		
+		if (!(publicKey instanceof QTESLAPublicKey)) {
+			
+			throw new InvalidKeyException ("The Input Key Is Not A qTESLA Public Key");
+			
+		}
+		
 		this.setPublicKey ((QTESLAPublicKey) publicKey);
-		this.setPrivateKey (null);
-		this.setSecureRandom (null);
 		
 	}
 	
-	protected byte[] engineSign() throws SignatureException {
+	protected int engineSign(byte[] signature, int signatureOffset, int signatureLength) throws SignatureException {
+		
+		int[] lengthOfSignature	= new int[1];
+		lengthOfSignature[0]	= signatureLength;
 		
 		if (this.securityCategory == "heuristicQTESLASecurityCategoryI") {
 			
 			try {
 				
-				QTESLA.signingI (this.signature, this.signatureOffset, this.signatureLength, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
+				QTESLA.signingI (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
 					| NoSuchPaddingException | ShortBufferException exception) {
@@ -263,7 +197,7 @@ public abstract class QTESLASignature extends SignatureSpi {
 			
 			try {
 				
-				QTESLA.signingIIISize (this.signature, this.signatureOffset, this.signatureLength, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
+				QTESLA.signingIIISize (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
 					| NoSuchPaddingException | ShortBufferException exception) {
@@ -278,7 +212,7 @@ public abstract class QTESLASignature extends SignatureSpi {
 			
 			try {
 				
-				QTESLA.signingIIISpeed (this.signature, this.signatureOffset, this.signatureLength, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
+				QTESLA.signingIIISpeed (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
 					| NoSuchPaddingException | ShortBufferException exception) {
@@ -293,7 +227,7 @@ public abstract class QTESLASignature extends SignatureSpi {
 			
 			try {
 				
-				QTESLA.signingIP (this.signature, this.signatureOffset, this.signatureLength, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
+				QTESLA.signingIP (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
 					| NoSuchPaddingException | ShortBufferException exception) {
@@ -308,28 +242,24 @@ public abstract class QTESLASignature extends SignatureSpi {
 			
 			try {
 				
-				QTESLA.signingIIIP (this.signature, this.signatureOffset, this.signatureLength, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
+				QTESLA.signingIIIP (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+					| NoSuchPaddingException | ShortBufferException exception) {
+				
+				exception.printStackTrace();
+			
 			}
 			
 		}
 		
-		return this.signature;
+		return 0;
 		
 	}
 	
 	protected boolean engineVerify (byte[] signature, int signatureOffset, int signatureLength) throws SignatureException {
 		
-		int success = 1;
-		int[] length = new int[1];
-		length[0] = signatureLength;
-		
-		this.setSignatureOffset (signatureOffset);
-		this.setSignatureLength (length);
+		int success = 0;
 		
 		if (this.securityCategory == "heuristicQTESLASecurityCategoryI") {
 			
@@ -360,8 +290,6 @@ public abstract class QTESLASignature extends SignatureSpi {
 			success = QTESLA.verifyingIIIP (this.message, this.messageOffset, this.messageLength, signature, signatureOffset, signatureLength, this.publicKey.getEncoded());
 			
 		}
-		
-		System.arraycopy (signature, 0, this.signature, 0, signatureLength);
 		
 		if (success == 0) {
 			
@@ -411,9 +339,15 @@ public abstract class QTESLASignature extends SignatureSpi {
 		
 	}
 	
-	protected void engineUpdate (ByteBuffer input) {
+	protected void engineUpdate (byte[] data, int offset, int length) throws SignatureException {
 		
-		super.engineUpdate (input);
+		(new ByteArrayOutputStream()).write (data, offset, length);
+		
+	}
+	
+	protected void engineUpdate (ByteBuffer data) {
+		
+		super.engineUpdate (data);
 		
 	}
 	

@@ -1,5 +1,6 @@
 package qTESLA;
 
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -55,7 +56,7 @@ public class Test {
 	
 	public static void main (String[] args)
 			
-			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException
+			throws BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, NoSuchProviderException, ShortBufferException
 	
 	{
 		
@@ -147,7 +148,7 @@ public class Test {
 		// testGenerateKeyPairSigningVerifyingIIIP ();
 		
 		/* qTESLA Provider */
-		// testQTESLAProvider ();
+		testQTESLAProvider ();
 		
 	}
 	
@@ -3953,7 +3954,7 @@ public class Test {
 	
 	/* Test for qTESLA Provider */
 	
-	public static void testQTESLAProvider () throws NoSuchAlgorithmException, NoSuchProviderException {
+	public static void testQTESLAProvider () throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
 		
 		Security.addProvider (new QTESLAProvider ());
 		
@@ -3974,6 +3975,53 @@ public class Test {
 		}
 		
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance ("QTESLAKeyPairGenerator", "qTESLAProvider");
+		QTESLAParameterSpecification specification = new QTESLAParameterSpecification("heuristicQTESLASecurityCategoryI");
+		keyPairGenerator.initialize (specification, secureRandom);
+		KeyPair keyPair = keyPairGenerator.generateKeyPair();
+		QTESLAPrivateKey qTESLAPrivateKey = (QTESLAPrivateKey) keyPair.getPrivate();
+		QTESLAPublicKey qTESLAPublicKey = (QTESLAPublicKey) keyPair.getPublic();
+		byte[] privateKey = qTESLAPrivateKey.getEncoded();
+		byte[] publicKey = qTESLAPublicKey.getEncoded();
+		
+		System.out.println ("Private Key for Heuristic qTESLA Security Category 1\n");
+		
+		for (int i = 0; i < privateKey.length; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %2d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf("%02X ", privateKey[i]);
+			
+			if (i % 32 == 31 || i == privateKey.length - 1) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
+		
+		System.out.println("\nPublic Key for Heuristic qTESLA Security Category 1\n");
+		
+		for (int i = 0; i < publicKey.length; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %2d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf("%02X ", publicKey[i]);
+			
+			if (i % 32 == 31 || i == publicKey.length - 1) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
 		
 	}
 
