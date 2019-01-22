@@ -15,13 +15,13 @@ import javax.crypto.ShortBufferException;
 public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 
 	/**
-	 * qTESLA Security Category (From 4 To 8)
+	 * qTESLA Security Category
 	 */
-	private int securityCategory;
+	private String securityCategory;
 	
 	private SecureRandom secureRandom;
 	
-	public QTESLAKeyPairGenerator (int securityCategory) {
+	public QTESLAKeyPairGenerator (String securityCategory) {
 		
 		this.securityCategory = securityCategory;
 		this.secureRandom = null;
@@ -38,72 +38,73 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 		byte[] publicKey 	= qTESLAPublicKey.getEncoded();
 		this.secureRandom	= new SecureRandom();
 		
-		if (this.securityCategory == QTESLASignature.HEURISTIC_I) {
+		if (this.securityCategory == "heuristicQTESLASecurityCategoryI") {
 				
 			try {
 				
 				QTESLA.generateKeyPairI (publicKey, privateKey, secureRandom);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+					| NoSuchPaddingException | ShortBufferException exception) {
+				
+				exception.printStackTrace();
+			
 			}
 			
 		}
 		
-		if (this.securityCategory == QTESLASignature.HEURISTIC_III_SIZE) {
+		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
 			
 			try {
 				
 				QTESLA.generateKeyPairIIISize (publicKey, privateKey, secureRandom);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+					| NoSuchPaddingException | ShortBufferException exception) {
+				
+				exception.printStackTrace();
 			}
 			
 		}
 		
-		if (this.securityCategory == QTESLASignature.HEURISTIC_III_SPEED) {
+		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
 			
 			try {
 				
 				QTESLA.generateKeyPairIIISpeed (publicKey, privateKey, secureRandom);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+					| NoSuchPaddingException | ShortBufferException exception) {
+				
+				exception.printStackTrace();
 			}
 			
 		}
 		
-		if (this.securityCategory == QTESLASignature.PROVABLY_SECURE_I) {
+		if (this.securityCategory == "provablySecureQTESLASecurityCategoryI") {
 			
 			try {
 				
 				QTESLA.generateKeyPairIP (publicKey, privateKey, secureRandom);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+					| NoSuchPaddingException | ShortBufferException exception) {
+				
+				exception.printStackTrace();
 			}
 			
 		}
 		
-		if (this.securityCategory == QTESLASignature.PROVABLY_SECURE_III) {
+		if (this.securityCategory == "provablySecureQTESLASecurityCategoryIII") {
 			
 			try {
 				
 				QTESLA.generateKeyPairIIIP (publicKey, privateKey, secureRandom);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+					| NoSuchPaddingException | ShortBufferException exception) {
+				
+				exception.printStackTrace();
 			}
 			
 		}
@@ -115,21 +116,20 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 		
 	}
 
+	
 	@Override
-	public void initialize(int securityCategory, SecureRandom random) {
+	public void initialize(int keysize, SecureRandom random) {
 		
-		if (securityCategory != QTESLASignature.HEURISTIC_I &&
-			securityCategory != QTESLASignature.HEURISTIC_III_SIZE &&
-			securityCategory != QTESLASignature.HEURISTIC_III_SPEED &&
-			securityCategory != QTESLASignature.PROVABLY_SECURE_I &&
-			securityCategory != QTESLASignature.PROVABLY_SECURE_III) {
+		try {
+				
+			throw new InvalidKeyException("A Single Key Size is not Supported by qTESLA Algorithm");
 			
-			throw new InvalidParameterException ("Invalid Security Category");
+		} catch (InvalidKeyException exception) {
+				
+			exception.printStackTrace();
 			
 		}
-		
-		this.securityCategory = securityCategory;
-		
+			
 	}
 	
 }

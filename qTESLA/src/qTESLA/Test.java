@@ -1,8 +1,14 @@
 package qTESLA;
 
 import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.Provider;
+import java.security.Provider.Service;
 import java.security.SecureRandom;
+import java.security.Security;
 import java.util.Arrays;
 
 import javax.crypto.BadPaddingException;
@@ -44,10 +50,14 @@ public class Test {
 		(byte) 0xF7, (byte) 0x19, (byte) 0x2A, (byte) 0x3B, (byte) 0x4C, (byte) 0x5D, (byte) 0x6E, (byte) 0x7F, // 14
 		(byte) 0x81, (byte) 0x92, (byte) 0xA3, (byte) 0xB4, (byte) 0xC5, (byte) 0xD6, (byte) 0xE7, (byte) 0xF8, // 15
 		(byte) 0x1A, (byte) 0x2B, (byte) 0x3C, (byte) 0x4D, (byte) 0x5E, (byte) 0x6F, (byte) 0x71, (byte) 0x82, // 16
-			
+		
 	};
 	
-	public static void main (String[] args) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
+	public static void main (String[] args)
+			
+			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException
+	
+	{
 		
 		/* Common Function */
 		
@@ -128,13 +138,16 @@ public class Test {
 		// testDecodeSignatureIP ();
 		// testDecodeSignatureIIIP ();
 		
-		/* QTESLA */
+		/* qTESLA */
 		
 		// testGenerateKeyPairSigningVerifyingI ();
 		// testGenerateKeyPairSigningVerifyingIIISize ();
 		// testGenerateKeyPairSigningVerifyingIIISpeed ();
 		// testGenerateKeyPairSigningVerifyingIP ();
 		// testGenerateKeyPairSigningVerifyingIIIP ();
+		
+		/* qTESLA Provider */
+		// testQTESLAProvider ();
 		
 	}
 	
@@ -853,7 +866,7 @@ public class Test {
 		int[]	positionList	= new int[Parameter.H_III_P];
 		short[]	signList		= new short[Parameter.H_III_P];
 		
-		Sample.encodeC (positionList, signList, seed, 0, Parameter.N_III_P, Parameter.H_III_P);
+		QTESLA.encodeC (positionList, signList, seed, 0, Parameter.N_III_P, Parameter.H_III_P);
 		
 		System.out.println ("Position List\n");
 		
@@ -1428,7 +1441,7 @@ public class Test {
 		short[] secretKey	= new short[Polynomial.PRIVATE_KEY_I];
 		int[] product		= new int[Parameter.N_I];
 		
-		Sample.encodeC (positionList, signList, seed, 0, Parameter.N_I, Parameter.H_I);
+		QTESLA.encodeC (positionList, signList, seed, 0, Parameter.N_I, Parameter.H_I);
 		
 		System.out.println ("Position List\n");
 		
@@ -1519,7 +1532,7 @@ public class Test {
 		short[] secretKey	= new short[Polynomial.PRIVATE_KEY_III_SIZE];
 		int[] product		= new int[Parameter.N_III_SIZE];
 		
-		Sample.encodeC (positionList, signList, seed, 0, Parameter.N_III_SIZE, Parameter.H_III_SIZE);
+		QTESLA.encodeC (positionList, signList, seed, 0, Parameter.N_III_SIZE, Parameter.H_III_SIZE);
 		
 		System.out.println ("Position List\n");
 		
@@ -1610,7 +1623,7 @@ public class Test {
 		byte[] secretKey	= new byte[Polynomial.PRIVATE_KEY_III_P];
 		long[] product		= new long[Parameter.N_III_P];
 		
-		Sample.encodeC (positionList, signList, seed, 0, Parameter.N_III_P, Parameter.H_III_P);
+		QTESLA.encodeC (positionList, signList, seed, 0, Parameter.N_III_P, Parameter.H_III_P);
 		
 		System.out.println ("Position List\n");
 		
@@ -1701,7 +1714,7 @@ public class Test {
 		int[] publicKey		= new int[Polynomial.PUBLIC_KEY_III_SIZE];
 		int[] product		= new int[Parameter.N_III_SIZE];
 		
-		Sample.encodeC (positionList, signList, seed, 0, Parameter.N_III_SIZE, Parameter.H_III_SIZE);
+		QTESLA.encodeC (positionList, signList, seed, 0, Parameter.N_III_SIZE, Parameter.H_III_SIZE);
 		
 		System.out.println ("Position List\n");
 		
@@ -1792,7 +1805,7 @@ public class Test {
 		int[] publicKey		= new int[Polynomial.PUBLIC_KEY_III_P];
 		long[] product		= new long[Parameter.N_III_P];
 		
-		Sample.encodeC (positionList, signList, seed, 0, Parameter.N_III_P, Parameter.H_III_P);
+		QTESLA.encodeC (positionList, signList, seed, 0, Parameter.N_III_P, Parameter.H_III_P);
 		
 		System.out.println ("Position List\n");
 		
@@ -2979,7 +2992,16 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
+		int timeOfTest = 1000;
+		
+		double[] timeOfGeneratingKeyPair = new double[timeOfTest];
+		double[] timeOfSigning = new double[timeOfTest];
+		double[] timeOfVerifying = new double[timeOfTest];
+		
 		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
+		
+		for (int round = 0; round < timeOfTest; round++) {
+		
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime ();
@@ -3120,8 +3142,11 @@ public class Test {
 		response = QTESLA.verifyingIIISpeed (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
 		long endVerifyingTimeNano2		= System.nanoTime ();
 		
+		timeOfGeneratingKeyPair[round] = (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 3);
 		System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
+		timeOfSigning[round] = (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 3);
 		System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
+		timeOfVerifying[round] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 3);
 		System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
 		System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
 		
@@ -3134,6 +3159,17 @@ public class Test {
 			System.out.println ("Signature Tests Passed\n");
 		
 		}
+		
+		}
+		
+		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfGeneratingKeyPair), CommonFunction.averageNumber(timeOfGeneratingKeyPair));
+		
+		System.out.printf ("Signing Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfSigning), CommonFunction.averageNumber(timeOfSigning));
+		
+		System.out.printf ("Verification Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfVerifying), CommonFunction.averageNumber(timeOfVerifying));
 		
 	}
 	
@@ -3150,7 +3186,16 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
+		int timeOfTest = 1000;
+		
+		double[] timeOfGeneratingKeyPair = new double[timeOfTest];
+		double[] timeOfSigning = new double[timeOfTest];
+		double[] timeOfVerifying = new double[timeOfTest];
+		
 		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
+		
+		for (int round = 0; round < timeOfTest; round++) {
+		
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
@@ -3291,8 +3336,11 @@ public class Test {
 		response = QTESLA.verifyingIIISize (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
 		long endVerifyingTimeNano2		= System.nanoTime();
 		
+		timeOfGeneratingKeyPair[round] = (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 3);
 		System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
+		timeOfSigning[round] = (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 3);
 		System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
+		timeOfVerifying[round] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 3);
 		System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
 		System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
 		
@@ -3305,6 +3353,17 @@ public class Test {
 			System.out.println ("Signature Tests Passed\n");
 		
 		}
+		
+		}
+		
+		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfGeneratingKeyPair), CommonFunction.averageNumber(timeOfGeneratingKeyPair));
+		
+		System.out.printf ("Signing Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfSigning), CommonFunction.averageNumber(timeOfSigning));
+		
+		System.out.printf ("Verification Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfVerifying), CommonFunction.averageNumber(timeOfVerifying));
 		
 	}
 	
@@ -3321,7 +3380,16 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
+		int timeOfTest = 1000;
+		
+		double[] timeOfGeneratingKeyPair = new double[timeOfTest];
+		double[] timeOfSigning = new double[timeOfTest];
+		double[] timeOfVerifying = new double[timeOfTest];
+		
 		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
+		
+		for (int round = 0; round < timeOfTest; round++) {
+		
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
@@ -3462,8 +3530,11 @@ public class Test {
 		response = QTESLA.verifyingIIISpeed (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
 		long endVerifyingTimeNano2		= System.nanoTime();
 		
+		timeOfGeneratingKeyPair[round] = (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 3);
 		System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
+		timeOfSigning[round] = (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 3);
 		System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
+		timeOfVerifying[round] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 3);
 		System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
 		System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
 		
@@ -3476,6 +3547,17 @@ public class Test {
 			System.out.println ("Signature Tests Passed\n");
 		
 		}
+		
+		}
+		
+		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfGeneratingKeyPair), CommonFunction.averageNumber(timeOfGeneratingKeyPair));
+		
+		System.out.printf ("Signing Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfSigning), CommonFunction.averageNumber(timeOfSigning));
+		
+		System.out.printf ("Verification Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfVerifying), CommonFunction.averageNumber(timeOfVerifying));
 		
 	}
 	
@@ -3492,7 +3574,16 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
+		int timeOfTest = 1000;
+		
+		double[] timeOfGeneratingKeyPair = new double[timeOfTest];
+		double[] timeOfSigning = new double[timeOfTest];
+		double[] timeOfVerifying = new double[timeOfTest];
+		
 		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
+		
+		for (int round = 0; round < timeOfTest; round++) {
+		
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
@@ -3633,8 +3724,11 @@ public class Test {
 		response = QTESLA.verifyingIP (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
 		long endVerifyingTimeNano2		= System.nanoTime();
 		
+		timeOfGeneratingKeyPair[round] = (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 3);
 		System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
+		timeOfSigning[round] = (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 3);
 		System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
+		timeOfVerifying[round] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 3);
 		System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
 		System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
 		
@@ -3647,6 +3741,18 @@ public class Test {
 			System.out.println ("Signature Test Passed\n");
 		
 		}
+		
+		}
+		
+		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfGeneratingKeyPair), CommonFunction.averageNumber(timeOfGeneratingKeyPair));
+		
+		System.out.printf ("Signing Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfSigning), CommonFunction.averageNumber(timeOfSigning));
+		
+		System.out.printf ("Verification Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfVerifying), CommonFunction.averageNumber(timeOfVerifying));
+		
 	}
 
 	
@@ -3663,13 +3769,23 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
+		int timeOfTest = 1000;
+		
+		double[] timeOfGeneratingKeyPair = new double[timeOfTest];
+		double[] timeOfSigning = new double[timeOfTest];
+		double[] timeOfVerifying = new double[timeOfTest];
+		
 		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
+		
+		for (int round = 0; round < timeOfTest; round++) {
+		
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
 		QTESLA.generateKeyPairIIIP (publicKey, privateKey, secureRandom);
 		long endGeneratingKeyPairTimeNano	= System.nanoTime();
 		
+		/*
 		System.out.println ("Public Key:\n");
 		
 		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_P; i++) {
@@ -3711,7 +3827,7 @@ public class Test {
 		}
 		
 		System.out.println ("\nTest for Signing for Provably-Secure qTESLA Security Category-3\n");
-		
+		*/
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
 		byte[] signature = new byte[Polynomial.SIGNATURE_III_P + 66];
@@ -3720,7 +3836,7 @@ public class Test {
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
 		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
-		
+		/*
 		System.out.println ("Message:\n");
 		
 		for (int i = 0; i < 66; i++) {
@@ -3742,11 +3858,11 @@ public class Test {
 		}
 		
 		System.out.println ("\n\nSignature:\n");
-		
+		*/
 		long startSigningTimeNano	= System.nanoTime();
 		QTESLA.signingIIIP (signature, 0, signatureLength, messageInput, 0, 66, privateKey, secureRandom);
 		long endSigningTimeNano		= System.nanoTime();
-		
+		/*
 		for (int i = 0; i < signature.length; i++) {
 			
 			if (i % 32 == 0) {
@@ -3766,7 +3882,7 @@ public class Test {
 		}
 		
 		System.out.printf ("\nThe Length of Signature is %d and the Length of Signature Package is %d\n\n", signature.length, signatureLength[0]);
-
+		*/
 		int valid;
 		int response;
 		byte[] messageOutput = new byte[Polynomial.SIGNATURE_III_P + 66];
@@ -3804,8 +3920,11 @@ public class Test {
 		response = QTESLA.verifyingIIIP (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
 		long endVerifyingTimeNano2		= System.nanoTime();
 		
+		timeOfGeneratingKeyPair[round] = (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 3);
 		System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
+		timeOfSigning[round] = (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 3);
 		System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
+		timeOfVerifying[round] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 3);
 		System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
 		System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
 		
@@ -3818,6 +3937,44 @@ public class Test {
 			System.out.println ("Signature Test Passed\n");
 		
 		}
+		
+		}
+		
+		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfGeneratingKeyPair), CommonFunction.averageNumber(timeOfGeneratingKeyPair));
+		
+		System.out.printf ("Signing Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfSigning), CommonFunction.averageNumber(timeOfSigning));
+		
+		System.out.printf ("Verification Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
+				CommonFunction.medianNumber(timeOfVerifying), CommonFunction.averageNumber(timeOfVerifying));
+	
+	}
+	
+	/* Test for qTESLA Provider */
+	
+	public static void testQTESLAProvider () throws NoSuchAlgorithmException, NoSuchProviderException {
+		
+		Security.addProvider (new QTESLAProvider ());
+		
+		for (Provider provider: Security.getProviders()) {
+			
+			if (provider.getName().equals ("qTESLAProvider")) {
+				
+				System.out.println ("A Provider is Found: " + provider.getInfo() + "\n");
+				
+				for (Service service: provider.getServices()) {
+					
+					System.out.println ("Service: " + service);
+					
+				}
+				
+			}
+			
+		}
+		
+		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance ("QTESLAKeyPairGenerator", "qTESLAProvider");
+		
 	}
 
 }

@@ -1,5 +1,7 @@
 package qTESLA;
 
+import java.util.Arrays;
+
 public class CommonFunction {
 	
 	/***********************************************************************************
@@ -25,7 +27,7 @@ public class CommonFunction {
 		
 	}
 	
-	/****************************************************************************************************
+	/**********************************************************************************************************
 	 * Description:	Checks Whether the Two Parts of Arrays are Equal to Each Other
 	 * 
 	 * @param		left			Left Array
@@ -36,7 +38,7 @@ public class CommonFunction {
 	 * 
 	 * @return		true			Equal
 	 *				false			Different
-	 ****************************************************************************************************/
+	 ***********************************************************************************************************/
 	public static boolean memoryEqual (byte[] left, int leftOffset, byte[] right, int rightOffset, int length) {
 		
 		if ((leftOffset + length <= left.length) && (rightOffset + length <= right.length)) {
@@ -260,6 +262,74 @@ public class CommonFunction {
 			}
 			
 		}
+		
+	}
+	
+	/**************************************************************************************************************************************
+	 * Description:	Computes Absolute Value for for Heuristic qTESLA Security Category-1 and Security Category-3 (Option for Size or Speed)
+	 **************************************************************************************************************************************/
+	public static int absolute (int value) {
+		
+		return ((value >> 31) ^ value) - (value >> 31);
+		
+	}
+	
+	/*****************************************************************************************************************
+	 * Description:	Computes Absolute Value for for Provably-Secure qTESLA Security Category-1 and Security Category-3
+	 *****************************************************************************************************************/
+	public static long absolute (long value) {
+		
+		return ((value >> 63) ^ value) - (value >> 63);
+		
+	}
+	
+	/**********************************************************************************************************
+	 * Description:	Computes the Average Number of An Array
+	 * 
+	 * @param		array			Target Array
+	 * 
+	 * @return		average			Average Number of the Target Array
+	 ***********************************************************************************************************/
+	public static double averageNumber (double[] array) {
+		
+		double sum = 0.0;
+		
+		for (int i = 0; i < array.length; i++) {
+			
+			sum += array[i];
+			
+		}
+		
+		double average = sum / array.length;
+		
+		return average;
+		
+	}
+	
+	/**********************************************************************************************************
+	 * Description:	Computes the Median Number of An Array
+	 * 
+	 * @param		array			Target Array
+	 * 
+	 * @return		median			Median Number of the Target Array
+	 ***********************************************************************************************************/
+	public static double medianNumber (double[] array) {
+		
+		double median = 0.0;
+		
+		Arrays.sort(array);
+		
+		if (array.length % 2 == 0) {
+			
+			median = (array[array.length / 2 - 1] + array[array.length / 2]) / 2;
+			
+		} else {
+			
+			median = array[array.length / 2];
+			
+		}
+		
+		return median;
 		
 	}
 	

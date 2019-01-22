@@ -8,6 +8,7 @@ import javax.crypto.ShortBufferException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Arrays;
 
 public class QTESLA {
 
@@ -105,23 +106,83 @@ public class QTESLA {
 	
 	}
 	
-	/**************************************************************************************************************************************
-	 * Description:	Computes Absolute Value for for Heuristic qTESLA Security Category-1 and Security Category-3 (Option for Size or Speed)
-	 **************************************************************************************************************************************/
-	private static int absolute (int value) {
+	/*************************************************************************************************************************
+	 * Description:	Encoding of C' by Mapping the Output of the Hash Function H to An N-Element Vector with Entries {-1, 0, 1}
+	 * 
+	 * @param		postionList			{0, ..., n - 1} ^ h
+	 * @param		signList			{-1, +1} ^ h
+	 * @param		output				Result of the Hash Function H
+	 * @param		outputOffset		Starting Point of the Result of the Hash Function H
+	 * @param		n					Polynomial Degree
+	 * @param		h					Number of Non-Zero Entries of Output Elements of Encryption
+	 * 
+	 * @return		none
+	 *************************************************************************************************************************/
+	public static void encodeC (int[] positionList, short[] signList, byte[] output, int outputOffset, int n, int h) {
 		
-		return ((value >> 31) ^ value) - (value >> 31);
+		int count = 0;
+		int position;
+		short domainSeparator = 0;
+		short[] C = new short[n];
+		byte[] randomness = new byte[FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE];
+		
+		/* Use the Hash Value as Key to Generate Some Randomness */
+		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
+			randomness, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE,
+			domainSeparator++,
+			output, outputOffset, Polynomial.RANDOM
+		);
+		
+		/* Use Rejection Sampling to Determine Positions to be Set in the New Vector */
+		Arrays.fill (C, 0, n, (short) 0);
+		
+		/* Sample A Unique Position k times.
+		 * Use Two Bytes
+		 */
+		for (int i = 0; i < h;) {
+			
+			if (count > FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE - 3) {
+				
+				FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
+					randomness, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE,
+					domainSeparator++,
+					output, outputOffset, Polynomial.RANDOM
+				);
+				
+				count = 0;
+				
+			}
+			
+			position = (randomness[count] << 8) | (randomness[count + 1] & 0xFF);
+			position &= (n - 1);
+				
+			/* Position is between [0, n - 1] and Has not Been Set Yet
+			 * Determine Signature
+			 */
+			if (C[position] == 0) {
+				
+				if ((randomness[count + 2] & 1) == 1) {
+						
+					C[position] = -1;
+						
+				} else {
+						
+					C[position] = 1;
+						
+				}
+					
+				positionList[i] = position;
+				signList[i] = C[position];
+				i++;
+					
+			}
+			
+			count += 3;
+			
+		}
 		
 	}
-	
-	/*****************************************************************************************************************
-	 * Description:	Computes Absolute Value for for Provably-Secure qTESLA Security Category-1 and Security Category-3
-	 *****************************************************************************************************************/
-	private static long absolute (long value) {
-		
-		return ((value >> 63) ^ value) - (value >> 63);
-		
-	}
+
 	
 	/*********************************************************************************
 	 * Description:	Checks Bounds for Signature Vector Z During Signification.
@@ -143,7 +204,7 @@ public class QTESLA {
 		
 		for (int i = 0; i < n; i++) {
 			
-			if (absolute (Z[i]) > (b - u)) {
+			if (CommonFunction.absolute (Z[i]) > (b - u)) {
 				
 				return true;
 				
@@ -174,7 +235,7 @@ public class QTESLA {
 		
 		for (int i = 0; i < n; i++) {
 			
-			if (absolute (Z[i]) > (b - u)) {
+			if (CommonFunction.absolute (Z[i]) > (b - u)) {
 				
 				return true;
 				
@@ -272,11 +333,11 @@ public class QTESLA {
 			
 			mask  = (q / 2 - V[i]) >> 31;
 			right = ((V[i] - q) & mask) | (V[i] & (~ mask));
-			test1 = (~ (absolute (right) - (q / 2 - rejection))) >>> 31;
+			test1 = (~ (CommonFunction.absolute (right) - (q / 2 - rejection))) >>> 31;
 			left  = right;
 			right = (right + (1 << (d - 1)) - 1) >> d;
 			right = left - (right << d);
-			test2 = (~ (absolute (right) - ((1 << (d - 1)) - rejection))) >>> 31;
+			test2 = (~ (CommonFunction.absolute (right) - ((1 << (d - 1)) - rejection))) >>> 31;
 			
 			/* Two Tests Fail */
 			if ((test1 | test2) == 1) {
@@ -320,12 +381,12 @@ public class QTESLA {
 			
 			mask  = (q / 2 - V[vOffset + i]) >> 63;
 			right = ((V[vOffset + i] - q) & mask) | (V[vOffset + i] & (~ mask));
-			test1 = (~ (absolute (right) - (q / 2 - rejection))) >>> 63;
+			test1 = (~ (CommonFunction.absolute (right) - (q / 2 - rejection))) >>> 63;
 			
 			left  = right;
 			right = (int) ((right + (1 << (d - 1)) - 1) >> d);
 			right = left - (right << d);
-			test2 = (~ (absolute (right) - ((1 << (d - 1)) - rejection))) >>> 63;
+			test2 = (~ (CommonFunction.absolute (right) - ((1 << (d - 1)) - rejection))) >>> 63;
 			
 			/* Two Tests Fail */
 			if ((test1 | test2) == 1L) {
@@ -363,7 +424,7 @@ public class QTESLA {
 		
 		for (int i = 0; i < n; i++) {
 			
-			list[i] = absolute (polynomial[i]);
+			list[i] = CommonFunction.absolute (polynomial[i]);
 			
 		}
 		
@@ -417,7 +478,7 @@ public class QTESLA {
 		
 		for (int i = 0; i < n; i++) {
 			
-			list[i] = (short) (absolute (polynomial[offset + i]));
+			list[i] = (short) (CommonFunction.absolute (polynomial[offset + i]));
 			
 		}
 		
@@ -1059,7 +1120,7 @@ public class QTESLA {
 			hashFunction (C, 0, V, randomnessInput, Polynomial.RANDOM + Polynomial.SEED, n, d, q);
 			
 			/* Generate C = EncodeC (C') Where C' is the Hashing of V Together with Message */
-			Sample.encodeC (positionList, signList, C, 0, n, h);
+			encodeC (positionList, signList, C, 0, n, h);
 			
 			Polynomial.sparsePolynomialMultiplication16 (SC, secretPolynomial, positionList, signList, n, h);
 			
@@ -1385,7 +1446,7 @@ public class QTESLA {
 			hashFunction (C, 0, V, randomnessInput, Polynomial.RANDOM + Polynomial.SEED, n, k, d, q);
 			
 			/* Generate C = EncodeC (C') Where C' is the Hashing of V Together with Message */
-			Sample.encodeC (positionList, signList, C, 0, n, h);
+			encodeC (positionList, signList, C, 0, n, h);
 			
 			Polynomial.sparsePolynomialMultiplication8 (SC, 0, privateKey, 0, positionList, signList, n, h);
 			
@@ -1637,7 +1698,7 @@ public class QTESLA {
 		/* Generate A Polynomial */
 		Polynomial.polynomialUniform (A, seed, 0, n, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform);
 		
-		Sample.encodeC (positionList, signList, C, 0, n, h);
+		encodeC (positionList, signList, C, 0, n, h);
 		
 		/* W = A * Z - TC */
 		Polynomial.sparsePolynomialMultiplication32 (TC, newPublicKey, positionList, signList, n, h);
@@ -1897,7 +1958,7 @@ public class QTESLA {
 		/* Generate A Polynomial */
 		Polynomial.polynomialUniform (A, seed, 0, n, k, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform);
 		
-		Sample.encodeC (positionList, signList, C, 0, n, h);
+		encodeC (positionList, signList, C, 0, n, h);
 		
 		Polynomial.polynomialNumberTheoreticTransform (numberTheoreticTransformZ, Z, n);
 		

@@ -12,44 +12,44 @@ public final class QTESLAPrivateKey implements PrivateKey {
 	private static final long serialVersionUID = 7972867974716612313L;
 
 	/**
-	 * qTESLA Security Category (From 4 To 8)
+	 * qTESLA Security Category
 	 */
-	private int securityCategory;
+	private String securityCategory;
 	
 	/**
 	 * Text of the qTESLA Private Key
 	 */
 	private byte[] privateKey;
 	
-	public QTESLAPrivateKey (int securityCategory) {
+	public QTESLAPrivateKey (String securityCategory) {
 		
 		this.securityCategory = securityCategory;
 		
-		if (securityCategory == QTESLASignature.HEURISTIC_I) {
+		if (securityCategory == "heuristicQTESLASecurityCategoryI") {
 			
 			privateKey = new byte[Polynomial.PRIVATE_KEY_I];
 			
 		}
 		
-		if (securityCategory == QTESLASignature.HEURISTIC_III_SIZE) {
+		if (securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
 			
 			privateKey = new byte[Polynomial.PRIVATE_KEY_III_SIZE];
 			
 		}
 		
-		if (securityCategory == QTESLASignature.HEURISTIC_III_SPEED) {
+		if (securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
 			
 			privateKey = new byte[Polynomial.PRIVATE_KEY_III_SPEED];
 			
 		}
 		
-		if (securityCategory == QTESLASignature.PROVABLY_SECURE_I) {
+		if (securityCategory == "provablySecureQTESLASecurityCategoryI") {
 			
 			privateKey = new byte[Polynomial.PRIVATE_KEY_I_P];
 			
 		}
 		
-		if (securityCategory == QTESLASignature.PROVABLY_SECURE_III) {
+		if (securityCategory == "provablySecureQTESLASecurityCategoryIII") {
 			
 			privateKey = new byte[Polynomial.PRIVATE_KEY_III_P];
 			
@@ -59,13 +59,7 @@ public final class QTESLAPrivateKey implements PrivateKey {
 		
 	}
 	
-	public int getSecurityCategory () {
-		
-		return this.securityCategory;
-		
-	}
-	
-	public void setSecurityCategory (int securityCategory) {
+	public void setSecurityCategory (String securityCategory) {
 		
 		this.securityCategory = securityCategory;
 		
@@ -73,38 +67,8 @@ public final class QTESLAPrivateKey implements PrivateKey {
 	
 	@Override
 	public String getAlgorithm () {
-
-		if (this.securityCategory == QTESLASignature.HEURISTIC_I) {
-			
-			return "heuristic_qTESLA_security_category_I";
-			
-		}
 		
-		if (this.securityCategory == QTESLASignature.HEURISTIC_III_SIZE) {
-			
-			return "heuristic_qTESLA_security_category_III_option_for_size";
-			
-		}
-		
-		if (this.securityCategory == QTESLASignature.HEURISTIC_III_SPEED) {
-			
-			return "heuristic_qTESLA_security_category_III_option_for_speed";
-			
-		}
-		
-		if (this.securityCategory == QTESLASignature.PROVABLY_SECURE_I) {
-			
-			return "provably_secure_qTESLA_security_category_I";
-			
-		}
-		
-		if (this.securityCategory == QTESLASignature.PROVABLY_SECURE_III) {
-			
-			return "provably_secure_qTESLA_security_category_III";
-			
-		}
-		
-		return null;
+		return this.securityCategory;
 		
 	}
 
