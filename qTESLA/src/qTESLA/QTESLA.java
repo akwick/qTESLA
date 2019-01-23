@@ -11,7 +11,97 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 
 public class QTESLA {
-
+	
+	/**
+	 * Size of Hashed Message
+	 */
+	public static final int MESSAGE = 64;
+	
+	/** 
+	 * Size of the Signature Package (Z, C) (in Byte) for Heuristic qTESLA Security Category-1.
+	 * Z is A Polynomial Bounded by B and C is the Output of A Hashed String
+	 */
+	public static final int SIGNATURE_I			= (Parameter.N_I			* Parameter.D_I			+ 7) / 8 + Parameter.HASH;
+	
+	/** 
+	 * Size of the Signature Package (Z, C) (in Byte) for Heuristic qTESLA Security Category-3 (Option for Size).
+	 * Z is A Polynomial Bounded by B and C is the Output of A Hashed String
+	 */
+	public static final int SIGNATURE_III_SIZE	= (Parameter.N_III_SIZE		* Parameter.D_III_SIZE	+ 7) / 8 + Parameter.HASH;
+	
+	/** 
+	 * Size of the Signature Package (Z, C) (in Byte) for Heuristic qTESLA Security Category-3 (Option for Speed).
+	 * Z is A Polynomial Bounded by B and C is the Output of A Hashed String
+	 */
+	public static final int SIGNATURE_III_SPEED	= (Parameter.N_III_SPEED	* Parameter.D_III_SPEED	+ 7) / 8 + Parameter.HASH;
+	
+	/** 
+	 * Size of the Signature Package (Z, C) (in Byte) for Provably-Secure qTESLA Security Category-1.
+	 * Z is A Polynomial Bounded by B and C is the Output of A Hashed String
+	 */
+	public static final int SIGNATURE_I_P		= (Parameter.N_I_P			* Parameter.D_I_P		+ 7) / 8 + Parameter.HASH;
+	
+	/** 
+	 * Size of the Signature Package (Z, C) (in Byte) for Provably-Secure qTESLA Security Category-3.
+	 * Z is A Polynomial Bounded by B and C is the Output of A Hashed String
+	 */
+	public static final int SIGNATURE_III_P		= (Parameter.N_III_P		* Parameter.D_III_P		+ 7) / 8 + Parameter.HASH;
+	
+	/** 
+	 * Size of the Public Key (in Byte) Containing seedA and Polynomial T for Heuristic qTESLA Security Category-1
+	 */
+	public static final int PUBLIC_KEY_I			= (Parameter.N_I			* Parameter.K_I			* Parameter.Q_LOGARITHM_I			+ 7) / 8 + Parameter.SEED;
+	
+	/** 
+	 * Size of the Public Key (in Byte) Containing seedA and Polynomial T for Heuristic qTESLA Security Category-3 (Option for Size)
+	 */
+	public static final int PUBLIC_KEY_III_SIZE		= (Parameter.N_III_SIZE		* Parameter.K_III_SIZE	* Parameter.Q_LOGARITHM_III_SIZE	+ 7) / 8 + Parameter.SEED;
+	
+	/** 
+	 * Size of the Public Key (in Byte) Containing seedA and Polynomial T for Heuristic qTESLA Security Category-3 (Option for Speed)
+	 */
+	public static final int PUBLIC_KEY_III_SPEED	= (Parameter.N_III_SPEED	* Parameter.K_III_SPEED	* Parameter.Q_LOGARITHM_III_SPEED	+ 7) / 8 + Parameter.SEED;
+	
+	/** 
+	 * Size of the Public Key (in Byte) Containing seedA and Polynomial T for Provably-Secure qTESLA Security Category-1
+	 */
+	public static final int PUBLIC_KEY_I_P			= (Parameter.N_I_P			* Parameter.K_I_P		* Parameter.Q_LOGARITHM_I_P			+ 7) / 8 + Parameter.SEED;
+	
+	/** 
+	 * Size of the Public Key (in Byte) Containing seedA and Polynomial T for Provably-Secure qTESLA Security Category-3
+	 */
+	public static final int PUBLIC_KEY_III_P		= (Parameter.N_III_P		* Parameter.K_III_P		* Parameter.Q_LOGARITHM_III_P		+ 7) / 8 + Parameter.SEED;
+	
+	/** 
+	 * Size of the Private Key (in Byte) Containing Polynomials (Secret Polynomial and Error Polynomial) and Seeds (seedA and seedY)
+	 * for Heuristic qTESLA Security Category-1
+	 */
+	public static final int PRIVATE_KEY_I			= Parameter.N_I			* Parameter.S_BIT_I			/ Byte.SIZE * 2 + Parameter.SEED * 2;
+	
+	/** 
+	 * Size of the Private Key (in Byte) Containing Polynomials (Secret Polynomial and Error Polynomial) and Seeds (seedA and seedY)
+	 * for Heuristic qTESLA Security Category-3 (Option for Size)
+	 */
+	public static final int PRIVATE_KEY_III_SIZE	= Parameter.N_III_SIZE	* Parameter.S_BIT_III_SIZE	/ Byte.SIZE * 2 + Parameter.SEED * 2;
+	
+	/** 
+	 * Size of the Private Key (in Byte) Containing Polynomials (Secret Polynomial and Error Polynomial) and Seeds (seedA and seedY)
+	 * for Heuristic qTESLA Security Category-3 (Option for Speed)
+	 */
+	public static final int PRIVATE_KEY_III_SPEED	= Parameter.N_III_SPEED	* Parameter.S_BIT_III_SPEED	/ Byte.SIZE * 2 + Parameter.SEED * 2;
+	
+	/** 
+	 * Size of the Private Key (in Byte) Containing Polynomials (Secret Polynomial and Error Polynomial) and Seeds (seedA and seedY)
+	 * for Provably-Secure qTESLA Security Category-1
+	 */
+	public static final int PRIVATE_KEY_I_P			= Parameter.N_I_P	+ Parameter.N_I_P	* Parameter.K_I_P	+ Parameter.SEED * 2;
+	
+	/** 
+	 * Size of the Private Key (in Byte) Containing Polynomials (Secret Polynomial and Error Polynomial) and Seeds (seedA and seedY)
+	 * for Provably-Secure qTESLA Security Category-3
+	 */
+	public static final int PRIVATE_KEY_III_P		= Parameter.N_III_P	+ Parameter.N_III_P	* Parameter.K_III_P	+ Parameter.SEED * 2;
+	
 	private static RandomNumberGenerator rng = new RandomNumberGenerator ();
 	
 	public static RandomNumberGenerator getRandomNumberGenerator () {
@@ -28,7 +118,7 @@ public class QTESLA {
 		int mask;
 		int cL;
 		
-		byte[] T = new byte[n + Polynomial.MESSAGE];
+		byte[] T = new byte[n + MESSAGE];
 		
 		for (int i = 0; i < n; i++) {
 			/* If V[i] > Q / 2 Then V[i] = V[i] - Q */
@@ -42,17 +132,17 @@ public class QTESLA {
 			
 		}
 		
-		System.arraycopy (message, messageOffset, T, n, Polynomial.MESSAGE);
+		System.arraycopy (message, messageOffset, T, n, MESSAGE);
 		
 		if (q == Parameter.Q_I) {
 			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (output, outputOffset, Polynomial.HASH, T, 0, n + Polynomial.MESSAGE);
+			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (output, outputOffset, Parameter.HASH, T, 0, n + MESSAGE);
 		
 		}
 		
 		if (q == Parameter.Q_III_SIZE || q == Parameter.Q_III_SPEED) {
 			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (output, outputOffset, Polynomial.HASH, T, 0, n + Polynomial.MESSAGE);
+			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (output, outputOffset, Parameter.HASH, T, 0, n + MESSAGE);
 			
 		}
 		
@@ -68,7 +158,7 @@ public class QTESLA {
 		long cL;
 		long temporary;
 		
-		byte[] T = new byte[n * k + Polynomial.MESSAGE];
+		byte[] T = new byte[n * k + MESSAGE];
 		
 		for (int j = 0; j < k; j++) {
 			
@@ -90,17 +180,17 @@ public class QTESLA {
 			
 		}
 		
-		System.arraycopy (message, messageOffset, T, n * k, Polynomial.MESSAGE);
+		System.arraycopy (message, messageOffset, T, n * k, MESSAGE);
 		
 		if (q == Parameter.Q_I_P) {
 			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (output, outputOffset, Polynomial.HASH, T, 0, n * k + Polynomial.MESSAGE);
+			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (output, outputOffset, Parameter.HASH, T, 0, n * k + MESSAGE);
 		
 		}
 		
 		if (q == Parameter.Q_III_P) {
 			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (output, outputOffset, Polynomial.HASH, T, 0, n * k + Polynomial.MESSAGE);
+			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (output, outputOffset, Parameter.HASH, T, 0, n * k + MESSAGE);
 			
 		}
 	
@@ -130,7 +220,7 @@ public class QTESLA {
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
 			randomness, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE,
 			domainSeparator++,
-			output, outputOffset, Polynomial.RANDOM
+			output, outputOffset, Parameter.RANDOM
 		);
 		
 		/* Use Rejection Sampling to Determine Positions to be Set in the New Vector */
@@ -146,7 +236,7 @@ public class QTESLA {
 				FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
 					randomness, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE,
 					domainSeparator++,
-					output, outputOffset, Polynomial.RANDOM
+					output, outputOffset, Parameter.RANDOM
 				);
 				
 				count = 0;
@@ -548,10 +638,10 @@ public class QTESLA {
 		/* Initialize Domain Separator for Error Polynomial and Secret Polynomial */
 		int nonce = 0;
 		
-		byte[] randomness			= new byte[Polynomial.RANDOM];
+		byte[] randomness			= new byte[Parameter.RANDOM];
 		
 		/* Extend Random Bytes to Seed Generation of Error Polynomial and Secret Polynomial */
-		byte[] randomnessExtended	= new byte[Polynomial.SEED * 4];
+		byte[] randomnessExtended	= new byte[Parameter.SEED * 4];
 		
 		int[] secretPolynomial	= new int[n];
 		int[] errorPolynomial	= new int[n];
@@ -559,18 +649,18 @@ public class QTESLA {
 		int[] T					= new int[n];
 		
 		/* Get randomnessExtended <- seedErrorPolynomial, seedSecretPolynomial, seedA, seedY */
-		rng.randomByte (randomness, 0, Polynomial.RANDOM);
+		rng.randomByte (randomness, 0, Parameter.RANDOM);
 		// secureRandom.nextBytes (randomness);
 		
 		if (q == Parameter.Q_I) { 
 			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (randomnessExtended, 0, Polynomial.SEED * 4, randomness, 0, Polynomial.RANDOM);
+			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (randomnessExtended, 0, Parameter.SEED * 4, randomness, 0, Parameter.RANDOM);
 			
 		}
 		
 		if (q == Parameter.Q_III_SIZE || q == Parameter.Q_III_SPEED) {
 			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (randomnessExtended, 0, Polynomial.SEED * 4, randomness, 0, Polynomial.RANDOM);
+			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (randomnessExtended, 0, Parameter.SEED * 4, randomness, 0, Parameter.RANDOM);
 			
 		}
 		
@@ -610,26 +700,26 @@ public class QTESLA {
 			
 			if (q == Parameter.Q_I) {
 				
-				Sample.polynomialGaussSamplerI (secretPolynomial, 0, randomnessExtended, Polynomial.SEED, ++nonce);
+				Sample.polynomialGaussSamplerI (secretPolynomial, 0, randomnessExtended, Parameter.SEED, ++nonce);
 				
 			}
 			
 			if (q == Parameter.Q_III_SIZE) {
 				
-				Sample.polynomialGaussSamplerIII (secretPolynomial, 0, randomnessExtended, Polynomial.SEED, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_III_SIZE);
+				Sample.polynomialGaussSamplerIII (secretPolynomial, 0, randomnessExtended, Parameter.SEED, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_III_SIZE);
 				
 			}
 			
 			if (q == Parameter.Q_III_SPEED) {
 				
-				Sample.polynomialGaussSamplerIII (secretPolynomial, 0, randomnessExtended, Polynomial.SEED, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_III_SPEED);
+				Sample.polynomialGaussSamplerIII (secretPolynomial, 0, randomnessExtended, Parameter.SEED, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_III_SPEED);
 				
 			}
 			
 		} while (checkPolynomial (secretPolynomial, secretBound, n, h) == true);
 		
 		/* Generate Uniform Polynomial A */
-		Polynomial.polynomialUniform (A, randomnessExtended, Polynomial.SEED * 2, n, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform);
+		Polynomial.polynomialUniform (A, randomnessExtended, Parameter.SEED * 2, n, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform);
 		
 		/* Compute the Public Key T = A * secretPolynomial + errorPolynomial */
 		Polynomial.polynomialMultiplication (T, A, secretPolynomial, n, q, qInverse, zeta);
@@ -638,22 +728,22 @@ public class QTESLA {
 		/* Pack Public and Private Keys */
 		if (q == Parameter.Q_I) {
 			
-			Pack.encodePrivateKeyI (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, Polynomial.SEED * 2);
-			Pack.encodePublicKey (publicKey, T, randomnessExtended, Polynomial.SEED * 2, Parameter.N_I,	Parameter.Q_LOGARITHM_I);
+			Pack.encodePrivateKeyI (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, Parameter.SEED * 2);
+			Pack.encodePublicKey (publicKey, T, randomnessExtended, Parameter.SEED * 2, Parameter.N_I,	Parameter.Q_LOGARITHM_I);
 		
 		}
 		
 		if (q == Parameter.Q_III_SIZE) {
 			
-			Pack.encodePrivateKeyIIISize (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, Polynomial.SEED * 2);
-			Pack.encodePublicKey (publicKey, T, randomnessExtended, Polynomial.SEED * 2, Parameter.N_III_SIZE,	Parameter.Q_LOGARITHM_III_SIZE);
+			Pack.encodePrivateKeyIIISize (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, Parameter.SEED * 2);
+			Pack.encodePublicKey (publicKey, T, randomnessExtended, Parameter.SEED * 2, Parameter.N_III_SIZE,	Parameter.Q_LOGARITHM_III_SIZE);
 			
 		}
 		
 		if (q == Parameter.Q_III_SPEED) {
 			
-			Pack.encodePrivateKeyIIISpeed (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, Polynomial.SEED * 2);
-			Pack.encodePublicKeyIIISpeed (publicKey, T, randomnessExtended, Polynomial.SEED * 2);
+			Pack.encodePrivateKeyIIISpeed (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, Parameter.SEED * 2);
+			Pack.encodePublicKeyIIISpeed (publicKey, T, randomnessExtended, Parameter.SEED * 2);
 			
 		}
 		
@@ -805,10 +895,10 @@ public class QTESLA {
 		
 		long mask;
 		
-		byte[] randomness			= new byte[Polynomial.RANDOM];
+		byte[] randomness			= new byte[Parameter.RANDOM];
 		
 		/* Extend Random Bytes to Seed Generation of Error Polynomial and Secret Polynomial */
-		byte[] randomnessExtended	= new byte[Polynomial.SEED * (k + 3)];
+		byte[] randomnessExtended	= new byte[Parameter.SEED * (k + 3)];
 		
 		long[] secretPolynomial							= new long[n];
 		long[] secretPolynomialNumberTheoreticTransform	= new long[n];
@@ -817,13 +907,13 @@ public class QTESLA {
 		long[] T										= new long[n * k];
 		
 		/* Get randomnessExtended <- seedErrorPolynomial, seedSecretPolynomial, seedA, seedY */
-		rng.randomByte (randomness, 0, Polynomial.RANDOM);
+		rng.randomByte (randomness, 0, Parameter.RANDOM);
 		// secureRandom.nextBytes (randomness);
 		
 		if (q == Parameter.Q_I_P) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomnessExtended, 0, Polynomial.SEED * (k + 3), randomness, 0, Polynomial.RANDOM
+				randomnessExtended, 0, Parameter.SEED * (k + 3), randomness, 0, Parameter.RANDOM
 			);
 			
 		}
@@ -831,7 +921,7 @@ public class QTESLA {
 		if (q == Parameter.Q_III_P) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomnessExtended, 0, Polynomial.SEED * (k + 3), randomness, 0, Polynomial.RANDOM
+				randomnessExtended, 0, Parameter.SEED * (k + 3), randomness, 0, Parameter.RANDOM
 			);
 			
 		}
@@ -847,13 +937,13 @@ public class QTESLA {
 				
 				if (q == Parameter.Q_I_P) {
 					
-					Sample.polynomialGaussSamplerIP (errorPolynomial, n * i, randomnessExtended, Polynomial.SEED * i, ++nonce);
+					Sample.polynomialGaussSamplerIP (errorPolynomial, n * i, randomnessExtended, Parameter.SEED * i, ++nonce);
 				
 				}
 				
 				if (q == Parameter.Q_III_P) {
 					
-					Sample.polynomialGaussSamplerIIIP (errorPolynomial, n * i, randomnessExtended, Polynomial.SEED * i, ++nonce);
+					Sample.polynomialGaussSamplerIIIP (errorPolynomial, n * i, randomnessExtended, Parameter.SEED * i, ++nonce);
 					
 				}
 				
@@ -870,13 +960,13 @@ public class QTESLA {
 			
 			if (q == Parameter.Q_I_P) {
 				
-				Sample.polynomialGaussSamplerIP (secretPolynomial, 0, randomnessExtended, Polynomial.SEED * k, ++nonce);
+				Sample.polynomialGaussSamplerIP (secretPolynomial, 0, randomnessExtended, Parameter.SEED * k, ++nonce);
 			
 			}
 			
 			if (q == Parameter.Q_III_P) {
 				
-				Sample.polynomialGaussSamplerIIIP (secretPolynomial, 0, randomnessExtended, Polynomial.SEED * k, ++nonce);
+				Sample.polynomialGaussSamplerIIIP (secretPolynomial, 0, randomnessExtended, Parameter.SEED * k, ++nonce);
 				
 			}
 			
@@ -884,7 +974,7 @@ public class QTESLA {
 		
 		/* Generate Uniform Polynomial A */
 		Polynomial.polynomialUniform (
-			A, randomnessExtended, Polynomial.SEED * (k + 1), n, k, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform
+			A, randomnessExtended, Parameter.SEED * (k + 1), n, k, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform
 		);
 			
 		Polynomial.polynomialNumberTheoreticTransform (secretPolynomialNumberTheoreticTransform, secretPolynomial, n);
@@ -905,17 +995,17 @@ public class QTESLA {
 		}
 		
 		/* Pack Public and Private Keys */
-		Pack.packPrivateKey (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, Polynomial.SEED * (k + 1), n, k);
+		Pack.packPrivateKey (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, Parameter.SEED * (k + 1), n, k);
 		
 		if (q == Parameter.Q_I_P) {
 			
-			Pack.encodePublicKeyIP (publicKey, T, randomnessExtended, Polynomial.SEED * (k + 1));
+			Pack.encodePublicKeyIP (publicKey, T, randomnessExtended, Parameter.SEED * (k + 1));
 			
 		}
 		
 		if (q == Parameter.Q_III_P) {
 			
-			Pack.encodePublicKeyIIIP (publicKey, T, randomnessExtended, Polynomial.SEED * (k + 1));
+			Pack.encodePublicKeyIIIP (publicKey, T, randomnessExtended, Parameter.SEED * (k + 1));
 			
 		}
 		
@@ -1038,10 +1128,10 @@ public class QTESLA {
 	
 	) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
-		byte[] C						= new byte[Polynomial.HASH];
-		byte[] randomness				= new byte[Polynomial.SEED];
-		byte[] randomnessInput			= new byte[Polynomial.RANDOM + Polynomial.SEED + Polynomial.MESSAGE];
-		byte[] seed						= new byte[Polynomial.SEED * 2];
+		byte[] C						= new byte[Parameter.HASH];
+		byte[] randomness				= new byte[Parameter.SEED];
+		byte[] randomnessInput			= new byte[Parameter.RANDOM + Parameter.SEED + MESSAGE];
+		byte[] seed						= new byte[Parameter.SEED * 2];
 		// byte[] temporaryRandomnessInput	= new byte[Polynomial.RANDOM];
 		int[] positionList				= new int[h];
 		short[] signList				= new short[h];
@@ -1076,20 +1166,20 @@ public class QTESLA {
 			
 		}
 		
-		rng.randomByte (randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
+		rng.randomByte (randomnessInput, Parameter.RANDOM, Parameter.RANDOM);
 		// secureRandom.nextBytes (temporaryRandomnessInput);
 		// System.arraycopy (temporaryRandomnessInput, 0, randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
 		
-		System.arraycopy (seed, Polynomial.SEED, randomnessInput, 0, Polynomial.SEED);
+		System.arraycopy (seed, Parameter.SEED, randomnessInput, 0, Parameter.SEED);
 		
 		if (q == Parameter.Q_I) {
 		
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomnessInput, Polynomial.RANDOM + Polynomial.SEED, Polynomial.MESSAGE, message, 0, messageLength
+				randomnessInput, Parameter.RANDOM + Parameter.SEED, MESSAGE, message, 0, messageLength
 			);
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomness, 0, Polynomial.SEED, randomnessInput, 0, Polynomial.RANDOM + Polynomial.SEED + Polynomial.MESSAGE
+				randomness, 0, Parameter.SEED, randomnessInput, 0, Parameter.RANDOM + Parameter.SEED + MESSAGE
 			);
 		
 		}
@@ -1097,11 +1187,11 @@ public class QTESLA {
 		if (q == Parameter.Q_III_SIZE || q == Parameter.Q_III_SPEED) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomnessInput, Polynomial.RANDOM + Polynomial.SEED, Polynomial.MESSAGE, message, 0, messageLength
+				randomnessInput, Parameter.RANDOM + Parameter.SEED, MESSAGE, message, 0, messageLength
 			);
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomness, 0, Polynomial.SEED, randomnessInput, 0, Polynomial.RANDOM + Polynomial.SEED + Polynomial.MESSAGE
+				randomness, 0, Parameter.SEED, randomnessInput, 0, Parameter.RANDOM + Parameter.SEED + MESSAGE
 			);
 			
 		}
@@ -1117,7 +1207,7 @@ public class QTESLA {
 			/* V = A * Y Modulo Q */
 			Polynomial.polynomialMultiplication (V, A, Y, n, q, qInverse, zeta);
 			
-			hashFunction (C, 0, V, randomnessInput, Polynomial.RANDOM + Polynomial.SEED, n, d, q);
+			hashFunction (C, 0, V, randomnessInput, Parameter.RANDOM + Parameter.SEED, n, d, q);
 			
 			/* Generate C = EncodeC (C') Where C' is the Hashing of V Together with Message */
 			encodeC (positionList, signList, C, 0, n, h);
@@ -1148,10 +1238,10 @@ public class QTESLA {
 			if (q == Parameter.Q_I) {
 
 				/* Copy the Message into the Signature Package */
-				System.arraycopy (message, messageOffset, signature, signatureOffset + Polynomial.SIGNATURE_I, messageLength);
+				System.arraycopy (message, messageOffset, signature, signatureOffset + SIGNATURE_I, messageLength);
 				
 				/* Length of the Output */
-				signatureLength[0] = Polynomial.SIGNATURE_I + messageLength;
+				signatureLength[0] = SIGNATURE_I + messageLength;
 				
 				/* Pack Signature */
 				Pack.encodeSignature (signature, 0, C, 0, Z, n, d);
@@ -1161,10 +1251,10 @@ public class QTESLA {
 			if (q == Parameter.Q_III_SIZE) {
 				
 				/* Copy the Message into the Signature Package */
-				System.arraycopy (message, messageOffset, signature, signatureOffset + Polynomial.SIGNATURE_III_SIZE, messageLength);
+				System.arraycopy (message, messageOffset, signature, signatureOffset + SIGNATURE_III_SIZE, messageLength);
 				
 				/* Length of the Output */
-				signatureLength[0] = Polynomial.SIGNATURE_III_SIZE + messageLength;
+				signatureLength[0] = SIGNATURE_III_SIZE + messageLength;
 				
 				/* Pack Signature */
 				Pack.encodeSignature (signature, 0, C, 0, Z, n, d);
@@ -1174,10 +1264,10 @@ public class QTESLA {
 			if (q == Parameter.Q_III_SPEED) {
 				
 				/* Copy the Message into the Signature Package */
-				System.arraycopy (message, messageOffset, signature, signatureOffset + Polynomial.SIGNATURE_III_SPEED, messageLength);
+				System.arraycopy (message, messageOffset, signature, signatureOffset + SIGNATURE_III_SPEED, messageLength);
 				
 				/* Length of the Output */
-				signatureLength[0] = Polynomial.SIGNATURE_III_SPEED + messageLength;
+				signatureLength[0] = SIGNATURE_III_SPEED + messageLength;
 				
 				/* Pack Signature */
 				Pack.encodeSignatureIIISpeed (signature, 0, C, 0, Z);
@@ -1373,9 +1463,9 @@ public class QTESLA {
 	
 	) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
 		
-		byte[] C						= new byte[Polynomial.HASH];
-		byte[] randomness				= new byte[Polynomial.SEED];
-		byte[] randomnessInput			= new byte[Polynomial.RANDOM + Polynomial.SEED + Polynomial.MESSAGE];
+		byte[] C						= new byte[Parameter.HASH];
+		byte[] randomness				= new byte[Parameter.SEED];
+		byte[] randomnessInput			= new byte[Parameter.RANDOM + Parameter.SEED + MESSAGE];
 		// byte[] temporaryRandomnessInput	= new byte[Polynomial.RANDOM];
 		int[] positionList				= new int[h];
 		short[] signList				= new short[h];
@@ -1393,20 +1483,20 @@ public class QTESLA {
 		/* Domain Separator for Sampling Y */
 		int nonce = 0;
 		
-		rng.randomByte (randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
+		rng.randomByte (randomnessInput, Parameter.RANDOM, Parameter.RANDOM);
 		// secureRandom.nextBytes (temporaryRandomnessInput);
 		// System.arraycopy (temporaryRandomnessInput, 0, randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
-		System.arraycopy (privateKey, privateKeySize - Polynomial.SEED, randomnessInput, 0, Polynomial.SEED);
+		System.arraycopy (privateKey, privateKeySize - Parameter.SEED, randomnessInput, 0, Parameter.SEED);
 		
 		if (q == Parameter.Q_I_P) {
 		
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomnessInput, Polynomial.RANDOM + Polynomial.SEED, Polynomial.MESSAGE, message, 0, messageLength
+				randomnessInput, Parameter.RANDOM + Parameter.SEED, MESSAGE, message, 0, messageLength
 			);
 			
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomness, 0, Polynomial.SEED, randomnessInput, 0, Polynomial.RANDOM + Polynomial.SEED + Polynomial.MESSAGE
+				randomness, 0, Parameter.SEED, randomnessInput, 0, Parameter.RANDOM + Parameter.SEED + MESSAGE
 			);
 		
 		}
@@ -1414,18 +1504,18 @@ public class QTESLA {
 		if (q == Parameter.Q_III_P) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomnessInput, Polynomial.RANDOM + Polynomial.SEED, Polynomial.MESSAGE, message, 0, messageLength
+				randomnessInput, Parameter.RANDOM + Parameter.SEED, MESSAGE, message, 0, messageLength
 			);
 			
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomness, 0, Polynomial.SEED, randomnessInput, 0, Polynomial.RANDOM + Polynomial.SEED + Polynomial.MESSAGE
+				randomness, 0, Parameter.SEED, randomnessInput, 0, Parameter.RANDOM + Parameter.SEED + MESSAGE
 			);
 			
 		}
 		
 		Polynomial.polynomialUniform (
-			A, privateKey, privateKeySize - 2 * Polynomial.SEED, n, k, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform
+			A, privateKey, privateKeySize - 2 * Parameter.SEED, n, k, q, qInverse, qLogarithm, generatorA, inverseNumberTheoreticTransform
 		);
 		
 		/* Loop Due to Possible Rejection */
@@ -1443,7 +1533,7 @@ public class QTESLA {
 				
 			}
 			
-			hashFunction (C, 0, V, randomnessInput, Polynomial.RANDOM + Polynomial.SEED, n, k, d, q);
+			hashFunction (C, 0, V, randomnessInput, Parameter.RANDOM + Parameter.SEED, n, k, d, q);
 			
 			/* Generate C = EncodeC (C') Where C' is the Hashing of V Together with Message */
 			encodeC (positionList, signList, C, 0, n, h);
@@ -1486,10 +1576,10 @@ public class QTESLA {
 			if (q == Parameter.Q_I_P) {
 				
 				/* Copy the Message into the Signature Package */
-				System.arraycopy (message, messageOffset, signature, signatureOffset + Polynomial.SIGNATURE_I_P, messageLength);
+				System.arraycopy (message, messageOffset, signature, signatureOffset + SIGNATURE_I_P, messageLength);
 				
 				/* Length of the Output */
-				signatureLength[0] = messageLength + Polynomial.SIGNATURE_I_P;
+				signatureLength[0] = messageLength + SIGNATURE_I_P;
 				
 				/* Pack Signature */
 				Pack.encodeSignatureIP (signature, 0, C, 0, Z);
@@ -1499,10 +1589,10 @@ public class QTESLA {
 			if (q == Parameter.Q_III_P) {
 				
 				/* Copy the Message into the Signature Package */
-				System.arraycopy (message, messageOffset, signature, signatureOffset + Polynomial.SIGNATURE_III_P, messageLength);
+				System.arraycopy (message, messageOffset, signature, signatureOffset + SIGNATURE_III_P, messageLength);
 				
 				/* Length of the Output */
-				signatureLength[0] = messageLength + Polynomial.SIGNATURE_III_P;
+				signatureLength[0] = messageLength + SIGNATURE_III_P;
 				
 				/* Pack Signature */
 				Pack.encodeSignatureIIIP (signature, 0, C, 0, Z);
@@ -1551,7 +1641,7 @@ public class QTESLA {
 				privateKey, secureRandom,
 				Parameter.N_I_P, Parameter.K_I_P, Parameter.H_I_P, Parameter.Q_I_P, Parameter.Q_INVERSE_I_P, Parameter.Q_LOGARITHM_I_P,
 				Parameter.B_I_P, Parameter.B_BIT_I_P, Parameter.D_I_P, Parameter.U_I_P, Parameter.REJECTION_I_P,
-				Parameter.GENERATOR_A_I_P, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_I_P, Polynomial.PRIVATE_KEY_I_P,
+				Parameter.GENERATOR_A_I_P, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_I_P, PRIVATE_KEY_I_P,
 				Parameter.BARRETT_MULTIPLICATION_I_P, Parameter.BARRETT_DIVISION_I_P
 		
 		);
@@ -1595,7 +1685,7 @@ public class QTESLA {
 				privateKey, secureRandom,
 				Parameter.N_III_P, Parameter.K_III_P, Parameter.H_III_P, Parameter.Q_III_P, Parameter.Q_INVERSE_III_P, Parameter.Q_LOGARITHM_III_P,
 				Parameter.B_III_P, Parameter.B_BIT_III_P, Parameter.D_III_P, Parameter.U_III_P, Parameter.REJECTION_III_P,
-				Parameter.GENERATOR_A_III_P, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_III_P, Polynomial.PRIVATE_KEY_III_P,
+				Parameter.GENERATOR_A_III_P, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_III_P, PRIVATE_KEY_III_P,
 				Parameter.BARRETT_MULTIPLICATION_III_P, Parameter.BARRETT_DIVISION_III_P
 		
 		);
@@ -1644,10 +1734,10 @@ public class QTESLA {
 		
 	) {
 		
-		byte[]	C				= new byte[Polynomial.HASH];
-		byte[]	cSignature		= new byte[Polynomial.HASH];
-		byte[]	seed			= new byte[Polynomial.SEED];
-		byte[]	hashMessage		= new byte[Polynomial.MESSAGE];
+		byte[]	C				= new byte[Parameter.HASH];
+		byte[]	cSignature		= new byte[Parameter.HASH];
+		byte[]	seed			= new byte[Parameter.SEED];
+		byte[]	hashMessage		= new byte[MESSAGE];
 		int[]	newPublicKey	= new int[n];
 		
 		int[] 	positionList	= new int[h];
@@ -1710,7 +1800,7 @@ public class QTESLA {
 		if (q == Parameter.Q_I) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				hashMessage, 0, Polynomial.MESSAGE, signature, signatureSize, signatureLength - signatureSize
+				hashMessage, 0, MESSAGE, signature, signatureSize, signatureLength - signatureSize
 			);
 			
 		}
@@ -1718,7 +1808,7 @@ public class QTESLA {
 		if (q == Parameter.Q_III_SIZE || q == Parameter.Q_III_SPEED) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				hashMessage, 0, Polynomial.MESSAGE, signature, signatureSize, signatureLength - signatureSize
+				hashMessage, 0, MESSAGE, signature, signatureSize, signatureLength - signatureSize
 			);
 			
 		}
@@ -1727,7 +1817,7 @@ public class QTESLA {
 		hashFunction (cSignature, 0, W, hashMessage, 0, n, d, q);
 		
 		/* Check if Same With One from Signature */
-		if (CommonFunction.memoryEqual (C, 0, cSignature, 0, Polynomial.HASH) == false) {
+		if (CommonFunction.memoryEqual (C, 0, cSignature, 0, Parameter.HASH) == false) {
 			
 			return -3;
 			
@@ -1771,7 +1861,7 @@ public class QTESLA {
 				publicKey,
 				Parameter.N_I, Parameter.H_I, Parameter.Q_I, Parameter.Q_INVERSE_I, Parameter.Q_LOGARITHM_I,
 				Parameter.B_I, Parameter.D_I, Parameter.U_I, Parameter.R_I,
-				Polynomial.SIGNATURE_I,
+				SIGNATURE_I,
 				Parameter.GENERATOR_A_I, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_I,
 				Parameter.BARRETT_MULTIPLICATION_I, Parameter.BARRETT_DIVISION_I,
 				PolynomialHeuristic.ZETA_I
@@ -1811,7 +1901,7 @@ public class QTESLA {
 				Parameter.N_III_SIZE, Parameter.H_III_SIZE,
 				Parameter.Q_III_SIZE, Parameter.Q_INVERSE_III_SIZE, Parameter.Q_LOGARITHM_III_SIZE,
 				Parameter.B_III_SIZE, Parameter.D_III_SIZE, Parameter.U_III_SIZE, Parameter.R_III_SIZE,
-				Polynomial.SIGNATURE_III_SIZE,
+				SIGNATURE_III_SIZE,
 				Parameter.GENERATOR_A_III_SIZE, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_III_SIZE,
 				Parameter.BARRETT_MULTIPLICATION_III_SIZE, Parameter.BARRETT_DIVISION_III_SIZE,
 				PolynomialHeuristic.ZETA_III_SIZE
@@ -1851,7 +1941,7 @@ public class QTESLA {
 				Parameter.N_III_SPEED, Parameter.H_III_SPEED,
 				Parameter.Q_III_SPEED, Parameter.Q_INVERSE_III_SPEED, Parameter.Q_LOGARITHM_III_SPEED,
 				Parameter.B_III_SPEED, Parameter.D_III_SPEED, Parameter.U_III_SPEED, Parameter.R_III_SPEED,
-				Polynomial.SIGNATURE_III_SPEED,
+				SIGNATURE_III_SPEED,
 				Parameter.GENERATOR_A_III_SPEED, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_III_SPEED,
 				Parameter.BARRETT_MULTIPLICATION_III_SPEED, Parameter.BARRETT_DIVISION_III_SPEED,
 				PolynomialHeuristic.ZETA_III_SPEED
@@ -1903,10 +1993,10 @@ public class QTESLA {
 			
 	) {
 		
-		byte[]	C					= new byte[Polynomial.HASH];
-		byte[]	cSignature			= new byte[Polynomial.HASH];
-		byte[]	seed				= new byte[Polynomial.SEED];
-		byte[]	hashMessage			= new byte[Polynomial.MESSAGE];
+		byte[]	C					= new byte[Parameter.HASH];
+		byte[]	cSignature			= new byte[Parameter.HASH];
+		byte[]	seed				= new byte[Parameter.SEED];
+		byte[]	hashMessage			= new byte[MESSAGE];
 		int[]	newPublicKey		= new int[n * k];
 		
 		int[]	positionList		= new int[h];
@@ -1978,7 +2068,7 @@ public class QTESLA {
 		if (q == Parameter.Q_I_P) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				hashMessage, 0, Polynomial.MESSAGE, signature, signatureSize, signatureLength - signatureSize
+				hashMessage, 0, MESSAGE, signature, signatureSize, signatureLength - signatureSize
 			);
 			
 		}
@@ -1986,7 +2076,7 @@ public class QTESLA {
 		if (q == Parameter.Q_III_P) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				hashMessage, 0, Polynomial.MESSAGE, signature, signatureSize, signatureLength - signatureSize
+				hashMessage, 0, MESSAGE, signature, signatureSize, signatureLength - signatureSize
 			);
 			
 		}
@@ -1995,7 +2085,7 @@ public class QTESLA {
 		hashFunction (cSignature, 0, W, hashMessage, 0, n, k, d, q);
 		
 		/* Check if Same with One from Signature */
-		if (CommonFunction.memoryEqual (C, 0, cSignature, 0, Polynomial.HASH) == false) {
+		if (CommonFunction.memoryEqual (C, 0, cSignature, 0, Parameter.HASH) == false) {
 			
 			return -3;
 			
@@ -2039,7 +2129,7 @@ public class QTESLA {
 				publicKey,
 				Parameter.N_I_P, Parameter.K_I_P, Parameter.H_I_P,
 				Parameter.Q_I_P, Parameter.Q_INVERSE_I_P, Parameter.Q_LOGARITHM_I_P,
-				Parameter.B_I_P, Parameter.D_I_P, Parameter.U_I_P, Polynomial.SIGNATURE_I_P,
+				Parameter.B_I_P, Parameter.D_I_P, Parameter.U_I_P, SIGNATURE_I_P,
 				Parameter.GENERATOR_A_I_P, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_I_P,
 				Parameter.BARRETT_MULTIPLICATION_I_P, Parameter.BARRETT_DIVISION_I_P,
 				PolynomialProvablySecure.ZETA_I_P
@@ -2078,7 +2168,7 @@ public class QTESLA {
 				publicKey,
 				Parameter.N_III_P, Parameter.K_III_P, Parameter.H_III_P,
 				Parameter.Q_III_P, Parameter.Q_INVERSE_III_P, Parameter.Q_LOGARITHM_III_P,
-				Parameter.B_III_P, Parameter.D_III_P, Parameter.U_III_P, Polynomial.SIGNATURE_III_P,
+				Parameter.B_III_P, Parameter.D_III_P, Parameter.U_III_P, SIGNATURE_III_P,
 				Parameter.GENERATOR_A_III_P, Parameter.INVERSE_NUMBER_THEORETIC_TRANSFORM_III_P,
 				Parameter.BARRETT_MULTIPLICATION_III_P, Parameter.BARRETT_DIVISION_III_P,
 				PolynomialProvablySecure.ZETA_III_P

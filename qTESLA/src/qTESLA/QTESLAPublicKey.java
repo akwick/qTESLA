@@ -27,31 +27,31 @@ public final class QTESLAPublicKey implements PublicKey {
 		
 		if (securityCategory == "heuristicQTESLASecurityCategoryI") {
 			
-			publicKey = new byte[Polynomial.PUBLIC_KEY_I];
+			publicKey = new byte[QTESLA.PUBLIC_KEY_I];
 			
 		}
 		
 		if (securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
 			
-			publicKey = new byte[Polynomial.PUBLIC_KEY_III_SIZE];
+			publicKey = new byte[QTESLA.PUBLIC_KEY_III_SIZE];
 			
 		}
 		
 		if (securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
 			
-			publicKey = new byte[Polynomial.PUBLIC_KEY_III_SPEED];
+			publicKey = new byte[QTESLA.PUBLIC_KEY_III_SPEED];
 			
 		}
 		
 		if (securityCategory == "provablySecureQTESLASecurityCategoryI") {
 			
-			publicKey = new byte[Polynomial.PUBLIC_KEY_I_P];
+			publicKey = new byte[QTESLA.PUBLIC_KEY_I_P];
 			
 		}
 		
 		if (securityCategory == "provablySecureQTESLASecurityCategoryIII") {
 			
-			publicKey = new byte[Polynomial.PUBLIC_KEY_III_P];
+			publicKey = new byte[QTESLA.PUBLIC_KEY_III_P];
 			
 		}
 		

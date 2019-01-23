@@ -27,31 +27,31 @@ public final class QTESLAPrivateKey implements PrivateKey {
 		
 		if (securityCategory == "heuristicQTESLASecurityCategoryI") {
 			
-			privateKey = new byte[Polynomial.PRIVATE_KEY_I];
+			privateKey = new byte[QTESLA.PRIVATE_KEY_I];
 			
 		}
 		
 		if (securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
 			
-			privateKey = new byte[Polynomial.PRIVATE_KEY_III_SIZE];
+			privateKey = new byte[QTESLA.PRIVATE_KEY_III_SIZE];
 			
 		}
 		
 		if (securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
 			
-			privateKey = new byte[Polynomial.PRIVATE_KEY_III_SPEED];
+			privateKey = new byte[QTESLA.PRIVATE_KEY_III_SPEED];
 			
 		}
 		
 		if (securityCategory == "provablySecureQTESLASecurityCategoryI") {
 			
-			privateKey = new byte[Polynomial.PRIVATE_KEY_I_P];
+			privateKey = new byte[QTESLA.PRIVATE_KEY_I_P];
 			
 		}
 		
 		if (securityCategory == "provablySecureQTESLASecurityCategoryIII") {
 			
-			privateKey = new byte[Polynomial.PRIVATE_KEY_III_P];
+			privateKey = new byte[QTESLA.PRIVATE_KEY_III_P];
 			
 		}
 		

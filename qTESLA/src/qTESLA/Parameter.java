@@ -409,4 +409,19 @@ public final class Parameter {
 	public static final int R_III_SIZE	= 35843;
 	public static final int R_III_SPEED	= 15873;
 	
+	/**
+	 * Size of A Random Number (in Byte)
+	 */
+	public static final int RANDOM	= 32;
+	
+	/**
+	 * Size of A Seed (in Byte)
+	 */
+	public static final int SEED	= 32;
+	
+	/**
+	 * Size of Hash Value C (in Byte) in the Signature Package
+	 */
+	public static final int HASH	= 32;
+	
 }

@@ -506,13 +506,13 @@ public class QTESLATest {
 				
 		byte[] seed				= CommonFunction.hexadecimalStringToByteArray (seedString);
 		byte[] publicKeyInput	= CommonFunction.hexadecimalStringToByteArray (publicKeyString);
-		byte[] publicKeyOutput	= new byte[Polynomial.PUBLIC_KEY_I];
+		byte[] publicKeyOutput	= new byte[QTESLA.PUBLIC_KEY_I];
 		byte[] privateKeyInput	= CommonFunction.hexadecimalStringToByteArray (privateKeyString);
-		byte[] privateKeyOutput	= new byte[Polynomial.PRIVATE_KEY_I];
+		byte[] privateKeyOutput	= new byte[QTESLA.PRIVATE_KEY_I];
 		byte[] message			= CommonFunction.hexadecimalStringToByteArray (messageString);
 		byte[] signatureInput	= CommonFunction.hexadecimalStringToByteArray (signatureString);
-		byte[] signatureOutput	= new byte[Polynomial.SIGNATURE_I + 3300];
-		int[] signatureLength	= {Polynomial.SIGNATURE_I + 3300};
+		byte[] signatureOutput	= new byte[QTESLA.SIGNATURE_I + 3300];
+		int[] signatureLength	= {QTESLA.SIGNATURE_I + 3300};
 		
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		int value1 = QTESLA.generateKeyPairI (publicKeyOutput, privateKeyOutput, (new SecureRandom()));
@@ -551,13 +551,13 @@ public class QTESLATest {
 		
 		byte[] seed				= CommonFunction.hexadecimalStringToByteArray (seedString);
 		byte[] publicKeyInput	= CommonFunction.hexadecimalStringToByteArray (publicKeyString);
-		byte[] publicKeyOutput	= new byte[Polynomial.PUBLIC_KEY_III_SIZE];
+		byte[] publicKeyOutput	= new byte[QTESLA.PUBLIC_KEY_III_SIZE];
 		byte[] privateKeyInput	= CommonFunction.hexadecimalStringToByteArray (privateKeyString);
-		byte[] privateKeyOutput	= new byte[Polynomial.PRIVATE_KEY_III_SIZE];
+		byte[] privateKeyOutput	= new byte[QTESLA.PRIVATE_KEY_III_SIZE];
 		byte[] message			= CommonFunction.hexadecimalStringToByteArray (messageString);
 		byte[] signatureInput	= CommonFunction.hexadecimalStringToByteArray (signatureString);
-		byte[] signatureOutput	= new byte[Polynomial.SIGNATURE_III_SIZE + 3300];
-		int[] signatureLength	= {Polynomial.SIGNATURE_III_SIZE + 3300};
+		byte[] signatureOutput	= new byte[QTESLA.SIGNATURE_III_SIZE + 3300];
+		int[] signatureLength	= {QTESLA.SIGNATURE_III_SIZE + 3300};
 		
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		int value1 = QTESLA.generateKeyPairIIISize (publicKeyOutput, privateKeyOutput, (new SecureRandom()));
@@ -596,13 +596,13 @@ public class QTESLATest {
 				
 		byte[] seed				= CommonFunction.hexadecimalStringToByteArray (seedString);
 		byte[] publicKeyInput	= CommonFunction.hexadecimalStringToByteArray (publicKeyString);
-		byte[] publicKeyOutput	= new byte[Polynomial.PUBLIC_KEY_III_SPEED];
+		byte[] publicKeyOutput	= new byte[QTESLA.PUBLIC_KEY_III_SPEED];
 		byte[] privateKeyInput	= CommonFunction.hexadecimalStringToByteArray (privateKeyString);
-		byte[] privateKeyOutput	= new byte[Polynomial.PRIVATE_KEY_III_SPEED];
+		byte[] privateKeyOutput	= new byte[QTESLA.PRIVATE_KEY_III_SPEED];
 		byte[] message			= CommonFunction.hexadecimalStringToByteArray (messageString);
 		byte[] signatureInput	= CommonFunction.hexadecimalStringToByteArray (signatureString);
-		byte[] signatureOutput	= new byte[Polynomial.SIGNATURE_III_SPEED + 3300];
-		int[] signatureLength	= {Polynomial.SIGNATURE_III_SPEED + 3300};
+		byte[] signatureOutput	= new byte[QTESLA.SIGNATURE_III_SPEED + 3300];
+		int[] signatureLength	= {QTESLA.SIGNATURE_III_SPEED + 3300};
 		
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		int value1 = QTESLA.generateKeyPairIIISpeed (publicKeyOutput, privateKeyOutput, (new SecureRandom()));
@@ -641,13 +641,13 @@ public class QTESLATest {
 		
 		byte[] seed				= CommonFunction.hexadecimalStringToByteArray (seedString);
 		byte[] publicKeyInput	= CommonFunction.hexadecimalStringToByteArray (publicKeyString);
-		byte[] publicKeyOutput	= new byte[Polynomial.PUBLIC_KEY_I_P];
+		byte[] publicKeyOutput	= new byte[QTESLA.PUBLIC_KEY_I_P];
 		byte[] privateKeyInput	= CommonFunction.hexadecimalStringToByteArray (privateKeyString);
-		byte[] privateKeyOutput	= new byte[Polynomial.PRIVATE_KEY_I_P];
+		byte[] privateKeyOutput	= new byte[QTESLA.PRIVATE_KEY_I_P];
 		byte[] message			= CommonFunction.hexadecimalStringToByteArray (messageString);
 		byte[] signatureInput	= CommonFunction.hexadecimalStringToByteArray (signatureString);
-		byte[] signatureOutput	= new byte[Polynomial.SIGNATURE_I_P + 3300];
-		int[] signatureLength	= {Polynomial.SIGNATURE_I_P + 3300};
+		byte[] signatureOutput	= new byte[QTESLA.SIGNATURE_I_P + 3300];
+		int[] signatureLength	= {QTESLA.SIGNATURE_I_P + 3300};
 		
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		int value1 = QTESLA.generateKeyPairIP (publicKeyOutput, privateKeyOutput, (new SecureRandom()));
@@ -686,13 +686,13 @@ public class QTESLATest {
 		
 		byte[] seed				= CommonFunction.hexadecimalStringToByteArray (seedString);
 		byte[] publicKeyInput	= CommonFunction.hexadecimalStringToByteArray (publicKeyString);
-		byte[] publicKeyOutput	= new byte[Polynomial.PUBLIC_KEY_III_P];
+		byte[] publicKeyOutput	= new byte[QTESLA.PUBLIC_KEY_III_P];
 		byte[] privateKeyInput	= CommonFunction.hexadecimalStringToByteArray (privateKeyString);
-		byte[] privateKeyOutput	= new byte[Polynomial.PRIVATE_KEY_III_P];
+		byte[] privateKeyOutput	= new byte[QTESLA.PRIVATE_KEY_III_P];
 		byte[] message			= CommonFunction.hexadecimalStringToByteArray (messageString);
 		byte[] signatureInput	= CommonFunction.hexadecimalStringToByteArray (signatureString);
-		byte[] signatureOutput	= new byte[Polynomial.SIGNATURE_III_P + 3300];
-		int[] signatureLength	= {Polynomial.SIGNATURE_III_P + 3300};
+		byte[] signatureOutput	= new byte[QTESLA.SIGNATURE_III_P + 3300];
+		int[] signatureLength	= {QTESLA.SIGNATURE_III_P + 3300};
 		
 		QTESLA.getRandomNumberGenerator().initiateRandomByte (seed, null, 256);
 		int value1 = QTESLA.generateKeyPairIIIP (publicKeyOutput, privateKeyOutput, (new SecureRandom()));

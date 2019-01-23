@@ -4,111 +4,6 @@ import java.util.Arrays;
 
 public class Polynomial {
 	
-	/**
-	 * Size of A Random Number (in Byte)
-	 */
-	public static final int RANDOM	= 32;
-	
-	/**
-	 * Size of A Seed (in Byte)
-	 */
-	public static final int SEED	= 32;
-	
-	/**
-	 * Size of Hash Value C (in Byte) in the Signature Package
-	 */
-	public static final int HASH	= 32;
-	
-	/**
-	 * Size of Hashed Message
-	 */
-	public static final int MESSAGE = 64;
-	
-	/** 
-	 * Size of the Signature Package (Z, C) (in Byte) for Heuristic qTESLA Security Category-1.
-	 * Z is A Polynomial Bounded by B and C is the Output of A Hashed String
-	 */
-	public static final int SIGNATURE_I			= (Parameter.N_I			* Parameter.D_I			+ 7) / 8 + HASH;
-	
-	/** 
-	 * Size of the Signature Package (Z, C) (in Byte) for Heuristic qTESLA Security Category-3 (Option for Size).
-	 * Z is A Polynomial Bounded by B and C is the Output of A Hashed String
-	 */
-	public static final int SIGNATURE_III_SIZE	= (Parameter.N_III_SIZE		* Parameter.D_III_SIZE	+ 7) / 8 + HASH;
-	
-	/** 
-	 * Size of the Signature Package (Z, C) (in Byte) for Heuristic qTESLA Security Category-3 (Option for Speed).
-	 * Z is A Polynomial Bounded by B and C is the Output of A Hashed String
-	 */
-	public static final int SIGNATURE_III_SPEED	= (Parameter.N_III_SPEED	* Parameter.D_III_SPEED	+ 7) / 8 + HASH;
-	
-	/** 
-	 * Size of the Signature Package (Z, C) (in Byte) for Provably-Secure qTESLA Security Category-1.
-	 * Z is A Polynomial Bounded by B and C is the Output of A Hashed String
-	 */
-	public static final int SIGNATURE_I_P		= (Parameter.N_I_P			* Parameter.D_I_P		+ 7) / 8 + HASH;
-	
-	/** 
-	 * Size of the Signature Package (Z, C) (in Byte) for Provably-Secure qTESLA Security Category-3.
-	 * Z is A Polynomial Bounded by B and C is the Output of A Hashed String
-	 */
-	public static final int SIGNATURE_III_P		= (Parameter.N_III_P		* Parameter.D_III_P		+ 7) / 8 + HASH;
-	
-	/** 
-	 * Size of the Public Key (in Byte) Containing seedA and Polynomial T for Heuristic qTESLA Security Category-1
-	 */
-	public static final int PUBLIC_KEY_I			= (Parameter.N_I			* Parameter.K_I			* Parameter.Q_LOGARITHM_I			+ 7) / 8 + SEED;
-	
-	/** 
-	 * Size of the Public Key (in Byte) Containing seedA and Polynomial T for Heuristic qTESLA Security Category-3 (Option for Size)
-	 */
-	public static final int PUBLIC_KEY_III_SIZE		= (Parameter.N_III_SIZE		* Parameter.K_III_SIZE	* Parameter.Q_LOGARITHM_III_SIZE	+ 7) / 8 + SEED;
-	
-	/** 
-	 * Size of the Public Key (in Byte) Containing seedA and Polynomial T for Heuristic qTESLA Security Category-3 (Option for Speed)
-	 */
-	public static final int PUBLIC_KEY_III_SPEED	= (Parameter.N_III_SPEED	* Parameter.K_III_SPEED	* Parameter.Q_LOGARITHM_III_SPEED	+ 7) / 8 + SEED;
-	
-	/** 
-	 * Size of the Public Key (in Byte) Containing seedA and Polynomial T for Provably-Secure qTESLA Security Category-1
-	 */
-	public static final int PUBLIC_KEY_I_P			= (Parameter.N_I_P			* Parameter.K_I_P		* Parameter.Q_LOGARITHM_I_P			+ 7) / 8 + SEED;
-	
-	/** 
-	 * Size of the Public Key (in Byte) Containing seedA and Polynomial T for Provably-Secure qTESLA Security Category-3
-	 */
-	public static final int PUBLIC_KEY_III_P		= (Parameter.N_III_P		* Parameter.K_III_P		* Parameter.Q_LOGARITHM_III_P		+ 7) / 8 + SEED;
-	
-	/** 
-	 * Size of the Private Key (in Byte) Containing Polynomials (Secret Polynomial and Error Polynomial) and Seeds (seedA and seedY)
-	 * for Heuristic qTESLA Security Category-1
-	 */
-	public static final int PRIVATE_KEY_I			= Parameter.N_I			* Parameter.S_BIT_I			/ Byte.SIZE * 2 + SEED * 2;
-	
-	/** 
-	 * Size of the Private Key (in Byte) Containing Polynomials (Secret Polynomial and Error Polynomial) and Seeds (seedA and seedY)
-	 * for Heuristic qTESLA Security Category-3 (Option for Size)
-	 */
-	public static final int PRIVATE_KEY_III_SIZE	= Parameter.N_III_SIZE	* Parameter.S_BIT_III_SIZE	/ Byte.SIZE * 2 + SEED * 2;
-	
-	/** 
-	 * Size of the Private Key (in Byte) Containing Polynomials (Secret Polynomial and Error Polynomial) and Seeds (seedA and seedY)
-	 * for Heuristic qTESLA Security Category-3 (Option for Speed)
-	 */
-	public static final int PRIVATE_KEY_III_SPEED	= Parameter.N_III_SPEED	* Parameter.S_BIT_III_SPEED	/ Byte.SIZE * 2 + SEED * 2;
-	
-	/** 
-	 * Size of the Private Key (in Byte) Containing Polynomials (Secret Polynomial and Error Polynomial) and Seeds (seedA and seedY)
-	 * for Provably-Secure qTESLA Security Category-1
-	 */
-	public static final int PRIVATE_KEY_I_P			= Parameter.N_I_P	+ Parameter.N_I_P	* Parameter.K_I_P	+ SEED * 2;
-	
-	/** 
-	 * Size of the Private Key (in Byte) Containing Polynomials (Secret Polynomial and Error Polynomial) and Seeds (seedA and seedY)
-	 * for Provably-Secure qTESLA Security Category-3
-	 */
-	public static final int PRIVATE_KEY_III_P		= Parameter.N_III_P	+ Parameter.N_III_P	* Parameter.K_III_P	+ SEED * 2;
-	
 	/****************************************************************************
 	 * Description:	Montgomery Reduction for Heuristic qTESLA Security Category 1
 	 * 				and Security Category-3 (Option for Size and Speed)
@@ -884,7 +779,7 @@ public class Polynomial {
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
 			buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * generatorA,
 			dualModeSampler++,
-			seed, seedOffset, RANDOM
+			seed, seedOffset, Parameter.RANDOM
 		);
 		
 		while (i < n) {
@@ -896,7 +791,7 @@ public class Polynomial {
 				FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
 					buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * numberOfBlock,
 					dualModeSampler++,
-					seed, seedOffset, RANDOM
+					seed, seedOffset, Parameter.RANDOM
 				);
 				
 				position = 0;
@@ -977,7 +872,7 @@ public class Polynomial {
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
 			buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * generatorA,
 			dualModeSampler++,
-			seed, seedOffset, RANDOM
+			seed, seedOffset, Parameter.RANDOM
 		);
 		
 		while (i < n * k) {
@@ -989,7 +884,7 @@ public class Polynomial {
 				FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
 					buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * numberOfBlock,
 					dualModeSampler++,
-					seed, seedOffset, RANDOM
+					seed, seedOffset, Parameter.RANDOM
 				);
 				
 				position = 0;

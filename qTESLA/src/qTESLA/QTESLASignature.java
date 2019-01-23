@@ -193,31 +193,31 @@ public final class QTESLASignature extends SignatureSpi {
 		
 		if (this.securityCategory == "heuristicQTESLASecurityCategoryI") {
 			
-			signature = new byte[Polynomial.SIGNATURE_I + this.messageLength[0]];
+			signature = new byte[QTESLA.SIGNATURE_I + this.messageLength[0]];
 			
 		}
 		
 		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
 			
-			signature = new byte[Polynomial.SIGNATURE_III_SIZE + this.messageLength[0]];
+			signature = new byte[QTESLA.SIGNATURE_III_SIZE + this.messageLength[0]];
 			
 		}
 		
 		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
 			
-			signature = new byte[Polynomial.SIGNATURE_III_SPEED + this.messageLength[0]];
+			signature = new byte[QTESLA.SIGNATURE_III_SPEED + this.messageLength[0]];
 			
 		}
 		
 		if (this.securityCategory == "provablySecureQTESLASecurityCategoryI") {
 			
-			signature = new byte[Polynomial.SIGNATURE_I_P + this.messageLength[0]];
+			signature = new byte[QTESLA.SIGNATURE_I_P + this.messageLength[0]];
 			
 		}
 		
 		if (this.securityCategory == "provablySecureQTESLASecurityCategoryIII") {
 			
-			signature = new byte[Polynomial.SIGNATURE_III_P + this.messageLength[0]];
+			signature = new byte[QTESLA.SIGNATURE_III_P + this.messageLength[0]];
 			
 		}
 		
@@ -279,31 +279,31 @@ public final class QTESLASignature extends SignatureSpi {
 		
 		if (this.securityCategory == "heuristicQTESLASecurityCategoryI") {
 			
-			return engineVerify (signature, 0, Polynomial.SIGNATURE_I + this.messageLength[0]);
+			return engineVerify (signature, 0, QTESLA.SIGNATURE_I + this.messageLength[0]);
 			
 		}
 		
 		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
 			
-			return engineVerify (signature, 0, Polynomial.SIGNATURE_III_SIZE + this.messageLength[0]);
+			return engineVerify (signature, 0, QTESLA.SIGNATURE_III_SIZE + this.messageLength[0]);
 			
 		}
 		
 		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
 			
-			return engineVerify (signature, 0, Polynomial.SIGNATURE_III_SPEED + this.messageLength[0]);
+			return engineVerify (signature, 0, QTESLA.SIGNATURE_III_SPEED + this.messageLength[0]);
 			
 		}
 		
 		if (this.securityCategory == "provablySecureQTESLASecurityCategoryI") {
 			
-			return engineVerify (signature, 0, Polynomial.SIGNATURE_I_P + this.messageLength[0]);
+			return engineVerify (signature, 0, QTESLA.SIGNATURE_I_P + this.messageLength[0]);
 			
 		}
 		
 		if (this.securityCategory == "provablySecureQTESLASecurityCategoryIII") {
 			
-			return engineVerify (signature, 0, Polynomial.SIGNATURE_III_P + this.messageLength[0]);
+			return engineVerify (signature, 0, QTESLA.SIGNATURE_III_P + this.messageLength[0]);
 			
 		}
 		

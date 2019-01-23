@@ -1441,7 +1441,7 @@ public class Test {
 		
 		int[] positionList	= new int[Parameter.H_I];
 		short[] signList	= new short[Parameter.H_I];
-		short[] secretKey	= new short[Polynomial.PRIVATE_KEY_I];
+		short[] secretKey	= new short[QTESLA.PRIVATE_KEY_I];
 		int[] product		= new int[Parameter.N_I];
 		
 		QTESLA.encodeC (positionList, signList, seed, 0, Parameter.N_I, Parameter.H_I);
@@ -1494,7 +1494,7 @@ public class Test {
 		
 		System.out.println ("\nDisplay Product\n");
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_I; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_I; i++) {
 			
 			secretKey[i] = (short) (PolynomialHeuristic.ZETA_I[i % Parameter.N_I] & 0xFFFFL);
 			
@@ -1532,7 +1532,7 @@ public class Test {
 		
 		int[] positionList	= new int[Parameter.H_III_SIZE];
 		short[] signList	= new short[Parameter.H_III_SIZE];
-		short[] secretKey	= new short[Polynomial.PRIVATE_KEY_III_SIZE];
+		short[] secretKey	= new short[QTESLA.PRIVATE_KEY_III_SIZE];
 		int[] product		= new int[Parameter.N_III_SIZE];
 		
 		QTESLA.encodeC (positionList, signList, seed, 0, Parameter.N_III_SIZE, Parameter.H_III_SIZE);
@@ -1585,7 +1585,7 @@ public class Test {
 		
 		System.out.println ("\nDisplay Product\n");
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_SIZE; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_III_SIZE; i++) {
 			
 			secretKey[i] = (short) (PolynomialHeuristic.ZETA_III_SIZE[i % Parameter.N_III_SIZE] & 0xFFFFL);
 			
@@ -1623,7 +1623,7 @@ public class Test {
 		
 		int[] positionList	= new int[Parameter.H_III_P];
 		short[] signList	= new short[Parameter.H_III_P];
-		byte[] secretKey	= new byte[Polynomial.PRIVATE_KEY_III_P];
+		byte[] secretKey	= new byte[QTESLA.PRIVATE_KEY_III_P];
 		long[] product		= new long[Parameter.N_III_P];
 		
 		QTESLA.encodeC (positionList, signList, seed, 0, Parameter.N_III_P, Parameter.H_III_P);
@@ -1676,7 +1676,7 @@ public class Test {
 		
 		System.out.println ("\nDisplay Product\n");
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_P; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_III_P; i++) {
 			
 			secretKey[i] = (byte) (PolynomialProvablySecure.ZETA_III_P[i % Parameter.N_III_P] & 0xFFL);
 			
@@ -1714,7 +1714,7 @@ public class Test {
 		
 		int[] positionList	= new int[Parameter.H_III_SIZE];
 		short[] signList	= new short[Parameter.H_III_SIZE];
-		int[] publicKey		= new int[Polynomial.PUBLIC_KEY_III_SIZE];
+		int[] publicKey		= new int[QTESLA.PUBLIC_KEY_III_SIZE];
 		int[] product		= new int[Parameter.N_III_SIZE];
 		
 		QTESLA.encodeC (positionList, signList, seed, 0, Parameter.N_III_SIZE, Parameter.H_III_SIZE);
@@ -1767,7 +1767,7 @@ public class Test {
 		
 		System.out.println ("\nDisplay Product\n");
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_SIZE; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_SIZE; i++) {
 			
 			publicKey[i] = (int) (PolynomialHeuristic.ZETA_III_SIZE[i % Parameter.N_III_SIZE] & 0xFFFFFFFFL);
 			
@@ -1805,7 +1805,7 @@ public class Test {
 		
 		int[] positionList	= new int[Parameter.H_III_P];
 		short[] signList	= new short[Parameter.H_III_P];
-		int[] publicKey		= new int[Polynomial.PUBLIC_KEY_III_P];
+		int[] publicKey		= new int[QTESLA.PUBLIC_KEY_III_P];
 		long[] product		= new long[Parameter.N_III_P];
 		
 		QTESLA.encodeC (positionList, signList, seed, 0, Parameter.N_III_P, Parameter.H_III_P);
@@ -1858,7 +1858,7 @@ public class Test {
 		
 		System.out.println ("\nDisplay Product\n");
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_P; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_P; i++) {
 			
 			publicKey[i] = (int) (PolynomialProvablySecure.ZETA_III_P[i % Parameter.N_III_P] & 0xFFFFFFFFL);
 			
@@ -1895,7 +1895,7 @@ public class Test {
 	
 	public static void testEncodePrivateKeyI() {
 		
-		byte[] privateKey				= new byte[Polynomial.PRIVATE_KEY_I];
+		byte[] privateKey				= new byte[QTESLA.PRIVATE_KEY_I];
 		int[] secretPolynomial			= new int[Parameter.N_I];
 		int[] errorPolynomial			= new int[Parameter.N_I];
 		
@@ -1907,7 +1907,7 @@ public class Test {
 		
 		Pack.encodePrivateKeyI (privateKey, secretPolynomial, errorPolynomial, seed, 0);
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_I; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_I; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -1933,7 +1933,7 @@ public class Test {
 	
 	public static void testEncodePrivateKeyIIISize() {
 		
-		byte[] privateKey				= new byte[Polynomial.PRIVATE_KEY_III_SIZE];
+		byte[] privateKey				= new byte[QTESLA.PRIVATE_KEY_III_SIZE];
 		int[] secretPolynomial			= new int[Parameter.N_III_SIZE];
 		int[] errorPolynomial			= new int[Parameter.N_III_SIZE];
 		
@@ -1945,7 +1945,7 @@ public class Test {
 		
 		Pack.encodePrivateKeyIIISize (privateKey, secretPolynomial, errorPolynomial, seed, 0);
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_SIZE; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_III_SIZE; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -1971,7 +1971,7 @@ public class Test {
 	
 	public static void testEncodePrivateKeyIIISpeed() {
 		
-		byte[] privateKey				= new byte[Polynomial.PRIVATE_KEY_III_SPEED];
+		byte[] privateKey				= new byte[QTESLA.PRIVATE_KEY_III_SPEED];
 		int[] secretPolynomial			= new int[Parameter.N_III_SPEED];
 		int[] errorPolynomial			= new int[Parameter.N_III_SPEED];
 		
@@ -1983,7 +1983,7 @@ public class Test {
 		
 		Pack.encodePrivateKeyIIISpeed (privateKey, secretPolynomial, errorPolynomial, seed, 0);
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_SPEED; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_III_SPEED; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2009,14 +2009,14 @@ public class Test {
 	
 	public static void testDecodePrivateKeyI() {
 		
-		byte[] privateKey				= new byte[Polynomial.PRIVATE_KEY_I];
+		byte[] privateKey				= new byte[QTESLA.PRIVATE_KEY_I];
 		short[] secretPolynomial		= new short[Parameter.N_I];
 		short[] errorPolynomial			= new short[Parameter.N_I];
-		byte[] hashValue				= new byte[Polynomial.SEED * 2];
+		byte[] hashValue				= new byte[Parameter.SEED * 2];
 		
 		System.out.println ("Test for Decoding Private Key in Polynomial for Heuristic qTESLA Security Category-1\n");
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_I; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_I; i++) {
 			
 			privateKey[i]		= (byte) PolynomialHeuristic.ZETA_I[i % Parameter.N_I];
 			
@@ -2026,7 +2026,7 @@ public class Test {
 		
 		System.out.println ("Seed\n");
 		
-		for (int i = 0; i < Polynomial.SEED * 2; i++) {
+		for (int i = 0; i < Parameter.SEED * 2; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2090,14 +2090,14 @@ public class Test {
 	
 	public static void testDecodePrivateKeyIIISize() {
 		
-		byte[] privateKey				= new byte[Polynomial.PRIVATE_KEY_III_SIZE];
+		byte[] privateKey				= new byte[QTESLA.PRIVATE_KEY_III_SIZE];
 		short[] secretPolynomial		= new short[Parameter.N_III_SIZE];
 		short[] errorPolynomial			= new short[Parameter.N_III_SIZE];
-		byte[] hashValue				= new byte[Polynomial.SEED * 2];
+		byte[] hashValue				= new byte[Parameter.SEED * 2];
 		
 		System.out.println ("Test for Decoding Private Key in Polynomial for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_SIZE; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_III_SIZE; i++) {
 			
 			privateKey[i]		= (byte) PolynomialHeuristic.ZETA_III_SIZE[i % Parameter.N_III_SIZE];
 			
@@ -2107,7 +2107,7 @@ public class Test {
 		
 		System.out.println ("Seed\n");
 		
-		for (int i = 0; i < Polynomial.SEED * 2; i++) {
+		for (int i = 0; i < Parameter.SEED * 2; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2171,14 +2171,14 @@ public class Test {
 	
 	public static void testDecodePrivateKeyIIISpeed() {
 		
-		byte[] privateKey				= new byte[Polynomial.PRIVATE_KEY_III_SPEED];
+		byte[] privateKey				= new byte[QTESLA.PRIVATE_KEY_III_SPEED];
 		short[] secretPolynomial		= new short[Parameter.N_III_SPEED];
 		short[] errorPolynomial			= new short[Parameter.N_III_SPEED];
-		byte[] hashValue				= new byte[Polynomial.SEED * 2];
+		byte[] hashValue				= new byte[Parameter.SEED * 2];
 		
 		System.out.println ("Test for Decoding Private Key in Polynomial for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_SPEED; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_III_SPEED; i++) {
 			
 			privateKey[i]		= (byte) PolynomialHeuristic.ZETA_III_SPEED[i % Parameter.N_III_SPEED];
 			
@@ -2188,7 +2188,7 @@ public class Test {
 		
 		System.out.println ("Seed\n");
 		
-		for (int i = 0; i < Polynomial.SEED * 2; i++) {
+		for (int i = 0; i < Parameter.SEED * 2; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2252,7 +2252,7 @@ public class Test {
 	
 	public static void testPackPrivateKeyIIIP() {
 		
-		byte[] privateKey				= new byte[Polynomial.PRIVATE_KEY_III_P];
+		byte[] privateKey				= new byte[QTESLA.PRIVATE_KEY_III_P];
 		long[] secretPolynomial			= new long[Parameter.N_III_P];
 		long[] errorPolynomial			= new long[Parameter.N_III_P * Parameter.K_III_P];
 		
@@ -2268,7 +2268,7 @@ public class Test {
 		
 		Pack.packPrivateKey (privateKey, secretPolynomial, errorPolynomial, seed, 0, Parameter.N_III_P, Parameter.K_III_P);
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_P; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_III_P; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2296,11 +2296,11 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Public Key in QTESLA for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 		
-		byte[] publicKey			= new byte[Polynomial.PUBLIC_KEY_III_SIZE];
+		byte[] publicKey			= new byte[QTESLA.PUBLIC_KEY_III_SIZE];
 		
 		Pack.encodePublicKey (publicKey, PolynomialHeuristic.ZETA_III_SIZE, seed, 0, Parameter.N_III_SIZE, Parameter.Q_LOGARITHM_III_SIZE);
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_SIZE; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_SIZE; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2328,11 +2328,11 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Public Key in QTESLA for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 		
-		byte[] publicKey 			= new byte[Polynomial.PUBLIC_KEY_III_SPEED];
+		byte[] publicKey 			= new byte[QTESLA.PUBLIC_KEY_III_SPEED];
 		
 		Pack.encodePublicKeyIIISpeed (publicKey, PolynomialHeuristic.ZETA_III_SPEED, seed, 0);
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_SPEED; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_SPEED; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2361,7 +2361,7 @@ public class Test {
 		System.out.println ("Test for Encoding Public Key in QTESLA for Provably-Secure qTESLA Security Category-1\n");
 		
 		long[] T					= new long[Parameter.N_I_P * Parameter.K_I_P];
-		byte[] publicKey			= new byte[Polynomial.PUBLIC_KEY_I_P];
+		byte[] publicKey			= new byte[QTESLA.PUBLIC_KEY_I_P];
 		
 		for (int k = 0; k < Parameter.K_I_P; k++) {
 		
@@ -2371,7 +2371,7 @@ public class Test {
 		
 		Pack.encodePublicKeyIP (publicKey, T, seed, 0);
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_I_P; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_I_P; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2400,7 +2400,7 @@ public class Test {
 		System.out.println ("Test for Encoding Public Key in QTESLA for Provably-Secure qTESLA Security Category-3\n");
 		
 		long[] T					= new long[Parameter.N_III_P * Parameter.K_III_P];
-		byte[] publicKey			= new byte[Polynomial.PUBLIC_KEY_III_P];
+		byte[] publicKey			= new byte[QTESLA.PUBLIC_KEY_III_P];
 		
 		for (int k = 0; k < Parameter.K_III_P; k++) {
 		
@@ -2410,7 +2410,7 @@ public class Test {
 		
 		Pack.encodePublicKeyIIIP (publicKey, T, seed, 0);
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_P; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_P; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2438,11 +2438,11 @@ public class Test {
 		
 		System.out.println ("Test for Decoding Public Key in QTESLA for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 		
-		byte[] publicKeyInput	= new byte[Polynomial.PUBLIC_KEY_III_SIZE];
+		byte[] publicKeyInput	= new byte[QTESLA.PUBLIC_KEY_III_SIZE];
 		int[] publicKey			= new int[Parameter.N_III_SIZE];
-		byte[] seedA			= new byte[Polynomial.SEED];
+		byte[] seedA			= new byte[Parameter.SEED];
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_SIZE; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_SIZE; i++) {
 			
 			publicKeyInput[i] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i % Parameter.N_III_SIZE] & 0xFFL);
 		
@@ -2472,7 +2472,7 @@ public class Test {
 		
 		System.out.println ("\nSeed\n");
 	
-		for (int i = 0; i < Polynomial.SEED; i++) {
+		for (int i = 0; i < Parameter.SEED; i++) {
 	
 			System.out.printf ("%02X ", seedA[i]);
 	
@@ -2486,11 +2486,11 @@ public class Test {
 		
 		System.out.println ("Test for Decoding Public Key in QTESLA for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 		
-		byte[] publicKeyInput	= new byte[Polynomial.PUBLIC_KEY_III_SPEED];
+		byte[] publicKeyInput	= new byte[QTESLA.PUBLIC_KEY_III_SPEED];
 		int[] publicKey			= new int[Parameter.N_III_SPEED];
-		byte[] seedA			= new byte[Polynomial.SEED];
+		byte[] seedA			= new byte[Parameter.SEED];
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_SPEED; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_SPEED; i++) {
 		
 			publicKeyInput[i] = (byte) (PolynomialHeuristic.ZETA_III_SPEED[i % Parameter.N_III_SPEED] & 0xFFL);
 			
@@ -2520,7 +2520,7 @@ public class Test {
 		
 		System.out.println ("\nSeed\n");
 		
-		for (int i = 0; i < Polynomial.SEED; i++) {
+		for (int i = 0; i < Parameter.SEED; i++) {
 		
 			System.out.printf ("%02X ", seedA[i]);
 		
@@ -2534,11 +2534,11 @@ public class Test {
 		
 		System.out.println ("Test for Decoding Public Key in QTESLA for Provably-Secure qTESLA Security Category-1\n");
 		
-		byte[] publicKeyInput	= new byte[Polynomial.PUBLIC_KEY_I_P];
+		byte[] publicKeyInput	= new byte[QTESLA.PUBLIC_KEY_I_P];
 		int[] publicKey			= new int[Parameter.N_I_P * Parameter.K_I_P];
-		byte[] seedA			= new byte[Polynomial.SEED];
+		byte[] seedA			= new byte[Parameter.SEED];
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_I_P; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_I_P; i++) {
 			
 			publicKeyInput[i] = (byte) (PolynomialProvablySecure.ZETA_I_P[i % Parameter.N_I_P] & 0xFFL);
 		
@@ -2568,7 +2568,7 @@ public class Test {
 		
 		System.out.println ("\nSeed\n");
 		
-		for (int i = 0; i < Polynomial.SEED; i++) {
+		for (int i = 0; i < Parameter.SEED; i++) {
 			
 			System.out.printf ("%02X ", seedA[i]);
 			
@@ -2582,11 +2582,11 @@ public class Test {
 		
 		System.out.println ("Test for Decoding Public Key in QTESLA for Provably-Secure qTESLA Security Category-3\n");
 		
-		byte[] publicKeyInput	= new byte[Polynomial.PUBLIC_KEY_III_P];
+		byte[] publicKeyInput	= new byte[QTESLA.PUBLIC_KEY_III_P];
 		int[] publicKey			= new int[Parameter.N_III_P * Parameter.K_III_P];
-		byte[] seedA			= new byte[Polynomial.SEED];
+		byte[] seedA			= new byte[Parameter.SEED];
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_P; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_P; i++) {
 		
 			publicKeyInput[i] = (byte) (PolynomialProvablySecure.ZETA_III_P[i % Parameter.N_III_P] & 0xFFL);
 			
@@ -2614,7 +2614,7 @@ public class Test {
 		
 		System.out.println ("\nSeed\n");
 		
-		for (int i = 0; i < Polynomial.SEED; i++) {
+		for (int i = 0; i < Parameter.SEED; i++) {
 			
 			System.out.printf ("%02X ", seedA[i]);
 			
@@ -2628,11 +2628,11 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Signature in QTESLA for Heuristic qTESLA Security Category-1\n");
 		
-		byte[] signature	= new byte[Polynomial.SIGNATURE_I];
+		byte[] signature	= new byte[QTESLA.SIGNATURE_I];
 		
 		Pack.encodeSignature (signature, 0, seed, 0, PolynomialHeuristic.ZETA_I, Parameter.N_I, Parameter.D_I);
 		
-		for (int i = 0; i < Polynomial.SIGNATURE_I; i++) {
+		for (int i = 0; i < QTESLA.SIGNATURE_I; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2660,11 +2660,11 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Signature in QTESLA for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 		
-		byte[] signature	= new byte[Polynomial.SIGNATURE_III_SIZE];
+		byte[] signature	= new byte[QTESLA.SIGNATURE_III_SIZE];
 		
 		Pack.encodeSignature (signature, 0, seed, 0, PolynomialHeuristic.ZETA_III_SIZE, Parameter.N_III_SIZE, Parameter.D_III_SIZE);
 		
-		for (int i = 0; i < Polynomial.SIGNATURE_III_SIZE; i++) {
+		for (int i = 0; i < QTESLA.SIGNATURE_III_SIZE; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2692,11 +2692,11 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Signature in QTESLA for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 		
-		byte[] signature	= new byte[Polynomial.SIGNATURE_III_SPEED];
+		byte[] signature	= new byte[QTESLA.SIGNATURE_III_SPEED];
 		
 		Pack.encodeSignatureIIISpeed (signature, 0, seed, 0, PolynomialHeuristic.ZETA_III_SPEED);
 		
-		for (int i = 0; i < Polynomial.SIGNATURE_III_SPEED; i++) {
+		for (int i = 0; i < QTESLA.SIGNATURE_III_SPEED; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2724,11 +2724,11 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Signature in Polynomial for Provably-Secure qTESLA Security Category-1\n");
 		
-		byte[] signature	= new byte[Polynomial.SIGNATURE_I_P];
+		byte[] signature	= new byte[QTESLA.SIGNATURE_I_P];
 		
 		Pack.encodeSignatureIP (signature, 0, seed, 0, PolynomialProvablySecure.ZETA_I_P);
 		
-		for (int i = 0; i < Polynomial.SIGNATURE_I_P; i++) {
+		for (int i = 0; i < QTESLA.SIGNATURE_I_P; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2756,11 +2756,11 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Signature in Polynomial for Provably-Secure qTESLA Security Category-3\n");
 		
-		byte[] signature	= new byte[Polynomial.SIGNATURE_III_P];
+		byte[] signature	= new byte[QTESLA.SIGNATURE_III_P];
 		
 		Pack.encodeSignatureIIIP (signature, 0, seed, 0, PolynomialProvablySecure.ZETA_III_P);
 		
-		for (short i = 0; i < Polynomial.SIGNATURE_III_P; i++) {
+		for (short i = 0; i < QTESLA.SIGNATURE_III_P; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2789,10 +2789,10 @@ public class Test {
 		System.out.println ("Test for Decoding Signature in Polynomial for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 		
 		int[] Z				= new int[Parameter.N_III_SIZE];
-		byte[] C			= new byte[Polynomial.HASH];
-		byte[] signature	= new byte[Polynomial.SIGNATURE_III_SIZE];
+		byte[] C			= new byte[Parameter.HASH];
+		byte[] signature	= new byte[QTESLA.SIGNATURE_III_SIZE];
 		
-		for (int i = 0; i < Polynomial.SIGNATURE_III_SIZE; i++) {
+		for (int i = 0; i < QTESLA.SIGNATURE_III_SIZE; i++) {
 				
 			signature[i] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i % Parameter.N_III_SIZE] & 0xFFL);
 			
@@ -2802,7 +2802,7 @@ public class Test {
 		
 		System.out.println ("\nDisplay C\n");
 		
-		for (int i = 0; i < Polynomial.HASH; i++) {
+		for (int i = 0; i < Parameter.HASH; i++) {
 			
 			System.out.printf ("%02X ", C[i]);
 			
@@ -2839,10 +2839,10 @@ public class Test {
 		System.out.println ("Test for Decoding Signature in Polynomial for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 		
 		int[] Z				= new int[Parameter.N_III_SPEED];
-		byte[] C			= new byte[Polynomial.HASH];
-		byte[] signature	= new byte[Polynomial.SIGNATURE_III_SPEED];
+		byte[] C			= new byte[Parameter.HASH];
+		byte[] signature	= new byte[QTESLA.SIGNATURE_III_SPEED];
 		
-		for (int i = 0; i < Polynomial.SIGNATURE_III_SPEED; i++) {
+		for (int i = 0; i < QTESLA.SIGNATURE_III_SPEED; i++) {
 
 			signature[i] = (byte) (PolynomialHeuristic.ZETA_III_SPEED[i % Parameter.N_III_SPEED] & 0xFFL);
 			
@@ -2852,7 +2852,7 @@ public class Test {
 		
 		System.out.println ("\nDisplay C\n");
 		
-		for (int i = 0; i < Polynomial.HASH; i++) {
+		for (int i = 0; i < Parameter.HASH; i++) {
 			
 			System.out.printf ("%02X ", C[i]);
 			
@@ -2889,10 +2889,10 @@ public class Test {
 		System.out.println ("Test for Decoding Signature in Polynomial for Provably-Secure qTESLA Security Category-1\n");
 		
 		long[] Z			= new long[Parameter.N_I_P];
-		byte[] C			= new byte[Polynomial.HASH];
-		byte[] signature	= new byte[Polynomial.SIGNATURE_I_P];
+		byte[] C			= new byte[Parameter.HASH];
+		byte[] signature	= new byte[QTESLA.SIGNATURE_I_P];
 		
-		for (int i = 0; i < Polynomial.SIGNATURE_I_P; i++) {
+		for (int i = 0; i < QTESLA.SIGNATURE_I_P; i++) {
 
 			signature[i] = (byte) (PolynomialProvablySecure.ZETA_I_P[i % Parameter.N_I_P] & 0xFFL);
 			
@@ -2902,7 +2902,7 @@ public class Test {
 		
 		System.out.println ("\nDisplay C\n");
 		
-		for (int i = 0; i < Polynomial.HASH; i++) {
+		for (int i = 0; i < Parameter.HASH; i++) {
 			
 			System.out.printf ("%02X ", C[i]);
 			
@@ -2939,10 +2939,10 @@ public class Test {
 		System.out.println ("Test for Decoding Signature in Polynomial for Provably-Secure qTESLA Security Category-3\n");
 		
 		long[] Z			= new long[Parameter.N_III_P];
-		byte[] C			= new byte[Polynomial.HASH];
-		byte[] signature	= new byte[Polynomial.SIGNATURE_III_P];
+		byte[] C			= new byte[Parameter.HASH];
+		byte[] signature	= new byte[QTESLA.SIGNATURE_III_P];
 		
-		for (int i = 0; i < Polynomial.SIGNATURE_III_P; i++) {
+		for (int i = 0; i < QTESLA.SIGNATURE_III_P; i++) {
 		
 			signature[i] = (byte) (PolynomialProvablySecure.ZETA_III_P[i % Parameter.N_III_P] & 0xFFL);
 			
@@ -2952,7 +2952,7 @@ public class Test {
 		
 		System.out.println ("\nDisplay C\n");
 		
-		for (int i = 0; i < Polynomial.HASH; i++) {
+		for (int i = 0; i < Parameter.HASH; i++) {
 			
 			System.out.printf ("%02X ", C[i]);
 			
@@ -2990,8 +2990,8 @@ public class Test {
 		
 		System.out.println ("Test for Generation of the Key Pair for Heuristic qTESLA Security Category-1\n");
 		
-		byte[] publicKey	= new byte[Polynomial.PUBLIC_KEY_I];
-		byte[] privateKey	= new byte[Polynomial.PRIVATE_KEY_I];
+		byte[] publicKey	= new byte[QTESLA.PUBLIC_KEY_I];
+		byte[] privateKey	= new byte[QTESLA.PRIVATE_KEY_I];
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
@@ -3013,7 +3013,7 @@ public class Test {
 		
 		System.out.println ("Public Key:\n");
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_I; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_I; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -3033,7 +3033,7 @@ public class Test {
 		
 		System.out.println ("\nPrivate Key:\n");
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_I; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_I; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -3055,7 +3055,7 @@ public class Test {
 		
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
-		byte[] signature = new byte[Polynomial.SIGNATURE_I + 66];
+		byte[] signature = new byte[QTESLA.SIGNATURE_I + 66];
 		byte[] messageInput = new byte[66];
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
@@ -3110,7 +3110,7 @@ public class Test {
 		
 		int valid;
 		int response;
-		byte[] messageOutput = new byte[Polynomial.SIGNATURE_I + 66];
+		byte[] messageOutput = new byte[QTESLA.SIGNATURE_I + 66];
 		
 		System.out.println ("Test for Verifying for Heuristic qTESLA Security Category-1\n");
 		
@@ -3139,7 +3139,7 @@ public class Test {
 			
 		}
 		
-		signature[secureRandom.nextInt(32) % (Polynomial.SIGNATURE_I + 66)] ^= 1;
+		signature[secureRandom.nextInt(32) % (QTESLA.SIGNATURE_I + 66)] ^= 1;
 		
 		long startVerifyingTimeNano2	= System.nanoTime ();
 		response = QTESLA.verifyingIIISpeed (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
@@ -3184,8 +3184,8 @@ public class Test {
 		
 		System.out.println ("Test for Generation of the Key Pair for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 		
-		byte[] publicKey	= new byte[Polynomial.PUBLIC_KEY_III_SIZE];
-		byte[] privateKey	= new byte[Polynomial.PRIVATE_KEY_III_SIZE];
+		byte[] publicKey	= new byte[QTESLA.PUBLIC_KEY_III_SIZE];
+		byte[] privateKey	= new byte[QTESLA.PRIVATE_KEY_III_SIZE];
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
@@ -3207,7 +3207,7 @@ public class Test {
 		
 		System.out.println ("Public Key:\n");
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_SIZE; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_SIZE; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -3227,7 +3227,7 @@ public class Test {
 		
 		System.out.println ("\nPrivate Key:\n");
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_SIZE; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_III_SIZE; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -3249,7 +3249,7 @@ public class Test {
 		
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
-		byte[] signature = new byte[Polynomial.SIGNATURE_III_SIZE + 66];
+		byte[] signature = new byte[QTESLA.SIGNATURE_III_SIZE + 66];
 		byte[] messageInput = new byte[66];
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
@@ -3304,7 +3304,7 @@ public class Test {
 		
 		int valid;
 		int response;
-		byte[] messageOutput = new byte[Polynomial.SIGNATURE_III_SIZE + 66];
+		byte[] messageOutput = new byte[QTESLA.SIGNATURE_III_SIZE + 66];
 		
 		System.out.println ("Test for Verifying for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 		
@@ -3333,7 +3333,7 @@ public class Test {
 			
 		}
 		
-		signature[secureRandom.nextInt(32) % (Polynomial.SIGNATURE_III_SIZE + 66)] ^= 1;
+		signature[secureRandom.nextInt(32) % (QTESLA.SIGNATURE_III_SIZE + 66)] ^= 1;
 		
 		long startVerifyingTimeNano2	= System.nanoTime();
 		response = QTESLA.verifyingIIISize (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
@@ -3378,8 +3378,8 @@ public class Test {
 		
 		System.out.println ("Test for Generation of the Key Pair for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 		
-		byte[] publicKey	= new byte[Polynomial.PUBLIC_KEY_III_SPEED];
-		byte[] privateKey	= new byte[Polynomial.PRIVATE_KEY_III_SPEED];
+		byte[] publicKey	= new byte[QTESLA.PUBLIC_KEY_III_SPEED];
+		byte[] privateKey	= new byte[QTESLA.PRIVATE_KEY_III_SPEED];
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
@@ -3401,7 +3401,7 @@ public class Test {
 		
 		System.out.println ("Public Key:\n");
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_SPEED; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_SPEED; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -3421,7 +3421,7 @@ public class Test {
 		
 		System.out.println ("\nPrivate Key:\n");
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_SPEED; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_III_SPEED; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -3443,7 +3443,7 @@ public class Test {
 		
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
-		byte[] signature = new byte[Polynomial.SIGNATURE_III_SPEED + 66];
+		byte[] signature = new byte[QTESLA.SIGNATURE_III_SPEED + 66];
 		byte[] messageInput = new byte[66];
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
@@ -3498,7 +3498,7 @@ public class Test {
 		
 		int valid;
 		int response;
-		byte[] messageOutput = new byte[Polynomial.SIGNATURE_III_SPEED + 66];
+		byte[] messageOutput = new byte[QTESLA.SIGNATURE_III_SPEED + 66];
 		
 		System.out.println ("Test for Verifying for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 		
@@ -3527,7 +3527,7 @@ public class Test {
 			
 		}
 		
-		signature[secureRandom.nextInt(32) % (Polynomial.SIGNATURE_III_SPEED + 66)] ^= 1;
+		signature[secureRandom.nextInt(32) % (QTESLA.SIGNATURE_III_SPEED + 66)] ^= 1;
 		
 		long startVerifyingTimeNano2	= System.nanoTime();
 		response = QTESLA.verifyingIIISpeed (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
@@ -3572,8 +3572,8 @@ public class Test {
 		
 		System.out.println ("Test for Generation of the Key Pair for Provably-Secure qTESLA Security Category-1\n");
 		
-		byte[] publicKey	= new byte[Polynomial.PUBLIC_KEY_I_P];
-		byte[] privateKey	= new byte[Polynomial.PRIVATE_KEY_I_P];
+		byte[] publicKey	= new byte[QTESLA.PUBLIC_KEY_I_P];
+		byte[] privateKey	= new byte[QTESLA.PRIVATE_KEY_I_P];
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
@@ -3595,7 +3595,7 @@ public class Test {
 		
 		System.out.println ("Public Key:\n");
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_I_P; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_I_P; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -3615,7 +3615,7 @@ public class Test {
 		
 		System.out.println ("\nPrivate Key:\n");
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_I_P; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_I_P; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -3637,7 +3637,7 @@ public class Test {
 		
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
-		byte[] signature = new byte[Polynomial.SIGNATURE_I_P + 66];
+		byte[] signature = new byte[QTESLA.SIGNATURE_I_P + 66];
 		byte[] messageInput = new byte[66];
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
@@ -3692,7 +3692,7 @@ public class Test {
 
 		int valid;
 		int response;
-		byte[] messageOutput = new byte[Polynomial.SIGNATURE_I_P + 66];
+		byte[] messageOutput = new byte[QTESLA.SIGNATURE_I_P + 66];
 		
 		System.out.println ("Test for Verifying for Provably-Secure qTESLA Security Category-1\n");
 		
@@ -3721,7 +3721,7 @@ public class Test {
 			
 		}
 		
-		signature[secureRandom.nextInt(32) % (Polynomial.SIGNATURE_I_P + 66)] ^= 1;
+		signature[secureRandom.nextInt(32) % (QTESLA.SIGNATURE_I_P + 66)] ^= 1;
 		
 		long startVerifyingTimeNano2	= System.nanoTime();
 		response = QTESLA.verifyingIP (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
@@ -3767,8 +3767,8 @@ public class Test {
 		
 		System.out.println ("Test for Generation of the Key Pair for Provably-Secure qTESLA Security Category-3\n");
 		
-		byte[] publicKey	= new byte[Polynomial.PUBLIC_KEY_III_P];
-		byte[] privateKey	= new byte[Polynomial.PRIVATE_KEY_III_P];
+		byte[] publicKey	= new byte[QTESLA.PUBLIC_KEY_III_P];
+		byte[] privateKey	= new byte[QTESLA.PRIVATE_KEY_III_P];
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
@@ -3791,7 +3791,7 @@ public class Test {
 		/*
 		System.out.println ("Public Key:\n");
 		
-		for (int i = 0; i < Polynomial.PUBLIC_KEY_III_P; i++) {
+		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_P; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -3811,7 +3811,7 @@ public class Test {
 		
 		System.out.println ("\nPrivate Key:\n");
 		
-		for (int i = 0; i < Polynomial.PRIVATE_KEY_III_P; i++) {
+		for (int i = 0; i < QTESLA.PRIVATE_KEY_III_P; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -3833,7 +3833,7 @@ public class Test {
 		*/
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
-		byte[] signature = new byte[Polynomial.SIGNATURE_III_P + 66];
+		byte[] signature = new byte[QTESLA.SIGNATURE_III_P + 66];
 		byte[] messageInput = new byte[66];
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
@@ -3888,7 +3888,7 @@ public class Test {
 		*/
 		int valid;
 		int response;
-		byte[] messageOutput = new byte[Polynomial.SIGNATURE_III_P + 66];
+		byte[] messageOutput = new byte[QTESLA.SIGNATURE_III_P + 66];
 		
 		System.out.println ("Test for Verifying for Provably-Secure qTESLA Security Category-3\n");
 		
@@ -3917,7 +3917,7 @@ public class Test {
 			
 		}
 		
-		signature[secureRandom.nextInt(32) % (Polynomial.SIGNATURE_III_P + 66)] ^= 1;
+		signature[secureRandom.nextInt(32) % (QTESLA.SIGNATURE_III_P + 66)] ^= 1;
 		
 		long startVerifyingTimeNano2	= System.nanoTime();
 		response = QTESLA.verifyingIIIP (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
@@ -4038,7 +4038,7 @@ public class Test {
 		qTESLASignature.initSign (qTESLAPrivateKey, secureRandom);
 		qTESLASignature.update (messageInput, 0, 66);
 		
-		byte[] signature = new byte[Polynomial.SIGNATURE_I + 66];
+		byte[] signature = new byte[QTESLA.SIGNATURE_I + 66];
 		
 		qTESLASignature.sign (signature, 0, signature.length);
 		

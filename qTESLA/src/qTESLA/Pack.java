@@ -41,7 +41,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (seed, seedOffset, privateKey, Parameter.N_I * Parameter.S_BIT_I * 2 / Byte.SIZE, Polynomial.SEED * 2);
+		System.arraycopy (seed, seedOffset, privateKey, Parameter.N_I * Parameter.S_BIT_I * 2 / Byte.SIZE, Parameter.SEED * 2);
 		
 	}
 	
@@ -70,7 +70,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (seed, seedOffset, privateKey, Parameter.N_III_SIZE * Parameter.S_BIT_III_SIZE * 2 / Byte.SIZE, Polynomial.SEED * 2);
+		System.arraycopy (seed, seedOffset, privateKey, Parameter.N_III_SIZE * Parameter.S_BIT_III_SIZE * 2 / Byte.SIZE, Parameter.SEED * 2);
 		
 	}
 	
@@ -121,7 +121,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (seed, seedOffset, privateKey, Parameter.N_III_SPEED * Parameter.S_BIT_III_SPEED * 2 / Byte.SIZE, Polynomial.SEED * 2);
+		System.arraycopy (seed, seedOffset, privateKey, Parameter.N_III_SPEED * Parameter.S_BIT_III_SPEED * 2 / Byte.SIZE, Parameter.SEED * 2);
 		
 	}
 	
@@ -206,7 +206,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (privateKey, Parameter.N_I * Parameter.S_BIT_I * 2 / Byte.SIZE, seed, 0, Polynomial.SEED * 2);
+		System.arraycopy (privateKey, Parameter.N_I * Parameter.S_BIT_I * 2 / Byte.SIZE, seed, 0, Parameter.SEED * 2);
 		
 	}
 	
@@ -235,7 +235,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (privateKey, Parameter.N_III_SIZE * Parameter.S_BIT_III_SIZE * 2 / Byte.SIZE, seed, 0, Polynomial.SEED * 2);
+		System.arraycopy (privateKey, Parameter.N_III_SIZE * Parameter.S_BIT_III_SIZE * 2 / Byte.SIZE, seed, 0, Parameter.SEED * 2);
 		
 	}
 	
@@ -376,7 +376,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (privateKey, Parameter.N_III_SPEED * Parameter.S_BIT_III_SPEED * 2 / Byte.SIZE, seed, 0, Polynomial.SEED * 2);
+		System.arraycopy (privateKey, Parameter.N_III_SPEED * Parameter.S_BIT_III_SPEED * 2 / Byte.SIZE, seed, 0, Parameter.SEED * 2);
 		
 	}
 	
@@ -411,7 +411,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (seed, seedOffset, privateKey, n + k * n, Polynomial.SEED * 2);
+		System.arraycopy (seed, seedOffset, privateKey, n + k * n, Parameter.SEED * 2);
 		
 	}
 	
@@ -461,7 +461,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (seedA, seedAOffset, publicKey, n * qLogarithm / Byte.SIZE, Polynomial.SEED);
+		System.arraycopy (seedA, seedAOffset, publicKey, n * qLogarithm / Byte.SIZE, Parameter.SEED);
 		
 	}
 	
@@ -489,7 +489,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (seedA, seedAOffset, publicKey, Parameter.N_III_SPEED * Parameter.Q_LOGARITHM_III_SPEED / Byte.SIZE, Polynomial.SEED);
+		System.arraycopy (seedA, seedAOffset, publicKey, Parameter.N_III_SPEED * Parameter.Q_LOGARITHM_III_SPEED / Byte.SIZE, Parameter.SEED);
 		
 	}
 	
@@ -543,7 +543,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (seedA, seedAOffset, publicKey, Parameter.N_I_P * Parameter.K_I_P * Parameter.Q_LOGARITHM_I_P / Byte.SIZE, Polynomial.SEED);
+		System.arraycopy (seedA, seedAOffset, publicKey, Parameter.N_I_P * Parameter.K_I_P * Parameter.Q_LOGARITHM_I_P / Byte.SIZE, Parameter.SEED);
 		
 	}
 	
@@ -573,7 +573,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (seedA, seedAOffset, publicKey, Parameter.N_III_P * Parameter.K_III_P * Parameter.Q_LOGARITHM_III_P / Byte.SIZE, Polynomial.SEED);
+		System.arraycopy (seedA, seedAOffset, publicKey, Parameter.N_III_P * Parameter.K_III_P * Parameter.Q_LOGARITHM_III_P / Byte.SIZE, Parameter.SEED);
 		
 	}
 	
@@ -687,7 +687,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (publicKeyInput, n * qLogarithm / Byte.SIZE, seedA, seedAOffset, Polynomial.SEED);
+		System.arraycopy (publicKeyInput, n * qLogarithm / Byte.SIZE, seedA, seedAOffset, Parameter.SEED);
 		
 	}
 	
@@ -723,7 +723,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (publicKeyInput, Parameter.N_III_SPEED * Parameter.Q_LOGARITHM_III_SPEED / Byte.SIZE, seedA, seedAOffset, Polynomial.SEED);
+		System.arraycopy (publicKeyInput, Parameter.N_III_SPEED * Parameter.Q_LOGARITHM_III_SPEED / Byte.SIZE, seedA, seedAOffset, Parameter.SEED);
 		
 	}
 	
@@ -841,7 +841,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (publicKeyInput, Parameter.N_I_P * Parameter.K_I_P * Parameter.Q_LOGARITHM_I_P / Byte.SIZE, seedA, seedAOffset, Polynomial.SEED);
+		System.arraycopy (publicKeyInput, Parameter.N_I_P * Parameter.K_I_P * Parameter.Q_LOGARITHM_I_P / Byte.SIZE, seedA, seedAOffset, Parameter.SEED);
 		
 	}
 	
@@ -878,7 +878,7 @@ public class Pack {
 		
 		}
 		
-		System.arraycopy (publicKeyInput, Parameter.N_III_P * Parameter.K_III_P * Parameter.Q_LOGARITHM_III_P / Byte.SIZE, seedA, seedAOffset, Polynomial.SEED);
+		System.arraycopy (publicKeyInput, Parameter.N_III_P * Parameter.K_III_P * Parameter.Q_LOGARITHM_III_P / Byte.SIZE, seedA, seedAOffset, Parameter.SEED);
 		
 	}
 	
@@ -928,7 +928,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (C, cOffset, signature, signatureOffset + n * d / Byte.SIZE, Polynomial.HASH);
+		System.arraycopy (C, cOffset, signature, signatureOffset + n * d / Byte.SIZE, Parameter.HASH);
 		
 	}
 	
@@ -965,7 +965,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (C, cOffset, signature, signatureOffset + Parameter.N_III_SPEED * Parameter.D_III_SPEED / Byte.SIZE, Polynomial.HASH);
+		System.arraycopy (C, cOffset, signature, signatureOffset + Parameter.N_III_SPEED * Parameter.D_III_SPEED / Byte.SIZE, Parameter.HASH);
 		
 	}
 	
@@ -1002,7 +1002,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (C, cOffset, signature, signatureOffset + Parameter.N_III_SPEED * Parameter.D_III_SPEED / Byte.SIZE, Polynomial.HASH);
+		System.arraycopy (C, cOffset, signature, signatureOffset + Parameter.N_III_SPEED * Parameter.D_III_SPEED / Byte.SIZE, Parameter.HASH);
 		
 	}
 	
@@ -1031,7 +1031,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (C, cOffset, signature, signatureOffset + Parameter.N_III_P * Parameter.D_III_P / Byte.SIZE, Polynomial.HASH);
+		System.arraycopy (C, cOffset, signature, signatureOffset + Parameter.N_III_P * Parameter.D_III_P / Byte.SIZE, Parameter.HASH);
 		
 	}
 	
@@ -1141,7 +1141,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (signature, signatureOffset + n * d / Byte.SIZE, C, 0, Polynomial.HASH);
+		System.arraycopy (signature, signatureOffset + n * d / Byte.SIZE, C, 0, Parameter.HASH);
 		
 	}
 	
@@ -1207,7 +1207,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (signature, signatureOffset + Parameter.N_III_SPEED * Parameter.D_III_SPEED / Byte.SIZE, C, 0, Polynomial.HASH);
+		System.arraycopy (signature, signatureOffset + Parameter.N_III_SPEED * Parameter.D_III_SPEED / Byte.SIZE, C, 0, Parameter.HASH);
 		
 	}
 	
@@ -1273,7 +1273,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (signature, signatureOffset + Parameter.N_I_P * Parameter.D_I_P / Byte.SIZE, C, 0, Polynomial.HASH);
+		System.arraycopy (signature, signatureOffset + Parameter.N_I_P * Parameter.D_I_P / Byte.SIZE, C, 0, Parameter.HASH);
 		
 	}
 	
@@ -1307,7 +1307,7 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (signature, signatureOffset + Parameter.N_III_P * Parameter.D_III_P / Byte.SIZE, C, 0, Polynomial.HASH);
+		System.arraycopy (signature, signatureOffset + Parameter.N_III_P * Parameter.D_III_P / Byte.SIZE, C, 0, Parameter.HASH);
 		
 	}
 	

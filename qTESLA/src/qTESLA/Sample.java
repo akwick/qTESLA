@@ -1,7 +1,5 @@
 package qTESLA;
 
-import java.util.Arrays;
-
 public class Sample {
 
 	public static final double[][] EXPONENTIAL_DISTRIBUTION_I = {
@@ -321,7 +319,7 @@ public class Sample {
 		if (q == Parameter.Q_I) {
 		
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
-				buffer, 0, n * numberOfByte, dualModeSampler++, seed, seedOffset, Polynomial.RANDOM
+				buffer, 0, n * numberOfByte, dualModeSampler++, seed, seedOffset, Parameter.RANDOM
 			);
 		
 		}
@@ -329,7 +327,7 @@ public class Sample {
 		if (q == Parameter.Q_III_SIZE || q == Parameter.Q_III_SPEED) {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
-				buffer, 0, n * numberOfByte, dualModeSampler++, seed, seedOffset, Polynomial.RANDOM
+				buffer, 0, n * numberOfByte, dualModeSampler++, seed, seedOffset, Parameter.RANDOM
 			);
 			
 		}
@@ -347,7 +345,7 @@ public class Sample {
 					FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
 						buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE,
 						dualModeSampler++,
-						seed, seedOffset, Polynomial.RANDOM
+						seed, seedOffset, Parameter.RANDOM
 					);
 					
 				}
@@ -361,7 +359,7 @@ public class Sample {
 					FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
 						buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_256_RATE,
 						dualModeSampler++,
-						seed, seedOffset, Polynomial.RANDOM
+						seed, seedOffset, Parameter.RANDOM
 					);
 					
 				}
@@ -433,7 +431,7 @@ public class Sample {
 		if (q == Parameter.Q_I_P) {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
-				buffer, 0, n * numberOfByte, dualModeSampler++, seed, seedOffset, Polynomial.RANDOM
+				buffer, 0, n * numberOfByte, dualModeSampler++, seed, seedOffset, Parameter.RANDOM
 			);
 		
 		}
@@ -441,7 +439,7 @@ public class Sample {
 		if (q == Parameter.Q_III_P) {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
-				buffer, 0, n * numberOfByte, dualModeSampler++, seed, seedOffset, Polynomial.RANDOM
+				buffer, 0, n * numberOfByte, dualModeSampler++, seed, seedOffset, Parameter.RANDOM
 			);
 			
 		}
@@ -459,7 +457,7 @@ public class Sample {
 					FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
 						buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE,
 						dualModeSampler++,
-						seed, seedOffset, Polynomial.RANDOM
+						seed, seedOffset, Parameter.RANDOM
 					);
 					
 				}
@@ -473,7 +471,7 @@ public class Sample {
 					FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
 						buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_256_RATE,
 						dualModeSampler++,
-						seed, seedOffset, Polynomial.RANDOM
+						seed, seedOffset, Parameter.RANDOM
 					);
 					
 				}
@@ -546,7 +544,7 @@ public class Sample {
 		long buffer;
 		
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
-			seedExpander, 0, Parameter.N_I * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Polynomial.RANDOM
+			seedExpander, 0, Parameter.N_I * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Parameter.RANDOM
 		);
 		
 		for (index = 0; index < Parameter.N_I; index++) {
@@ -554,7 +552,7 @@ public class Sample {
 			if (j + 46 > Parameter.N_I) {
 
 				FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
-					seedExpander, 0, Parameter.N_I * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Polynomial.RANDOM
+					seedExpander, 0, Parameter.N_I * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Parameter.RANDOM
 				);
 				
 				j = 0;
@@ -707,7 +705,7 @@ public class Sample {
 		long buffer;
 		
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
-			seedExpander, 0, Parameter.N_I_P * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Polynomial.RANDOM
+			seedExpander, 0, Parameter.N_I_P * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Parameter.RANDOM
 		);
 		
 		for (index = 0; index < Parameter.N_I_P; index++) {
@@ -715,7 +713,7 @@ public class Sample {
 			if (j + 46 > Parameter.N_I_P) {
 
 				FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
-					seedExpander, 0, Parameter.N_I_P * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Polynomial.RANDOM
+					seedExpander, 0, Parameter.N_I_P * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Parameter.RANDOM
 				);
 				
 				j = 0;
@@ -871,7 +869,7 @@ public class Sample {
 		long z;
 		
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
-			seedExpander, 0, n * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Polynomial.RANDOM
+			seedExpander, 0, n * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Parameter.RANDOM
 		);
 		
 		for (index = 0; index < n; index++) {
@@ -879,7 +877,7 @@ public class Sample {
 			if (j + 46 > n) {
 
 				FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
-					seedExpander, 0, n * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Polynomial.RANDOM
+					seedExpander, 0, n * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Parameter.RANDOM
 				);
 				
 				j = 0;
@@ -1037,7 +1035,7 @@ public class Sample {
 		long z;
 		
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
-			seedExpander, 0, Parameter.N_III_P * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Polynomial.RANDOM
+			seedExpander, 0, Parameter.N_III_P * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Parameter.RANDOM
 		);
 		
 		for (index = 0; index < Parameter.N_III_P; index++) {
@@ -1045,7 +1043,7 @@ public class Sample {
 			if (j + 46 > Parameter.N_III_P) {
 
 				FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
-					seedExpander, 0, Parameter.N_III_P * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Polynomial.RANDOM
+					seedExpander, 0, Parameter.N_III_P * Long.SIZE / Byte.SIZE, domainSeparator++, seed, seedOffset, Parameter.RANDOM
 				);
 				
 				j = 0;
