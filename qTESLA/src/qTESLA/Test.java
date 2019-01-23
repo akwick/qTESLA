@@ -150,7 +150,9 @@ public class Test {
 		// testGenerateKeyPairSigningVerifyingIIIP ();
 		
 		/* qTESLA Provider */
-		testQTESLAProvider ();
+		
+		// testQTESLAProviderI ();
+		testQTESLAProviderIP ();
 		
 	}
 	
@@ -3954,9 +3956,9 @@ public class Test {
 	
 	}
 	
-	/* Test for qTESLA Provider */
+	/* Test for qTESLA Provider for Heuristic qTESLA Security Category-1 */
 	
-	public static void testQTESLAProvider () 
+	public static void testQTESLAProviderI () 
 			
 			throws InvalidAlgorithmParameterException, InvalidKeyException, NoSuchAlgorithmException, NoSuchProviderException, SignatureException {
 		
@@ -4061,6 +4063,128 @@ public class Test {
 		}
 		
 		System.out.println ("\nVerify for Heuristic qTESLA Security Category 1\n");
+		
+		qTESLASignature.initVerify (qTESLAPublicKey);
+		
+		if (qTESLASignature.verify(signature) == true) {
+			
+			System.out.println ("The Signature Is Valid\n");
+			
+		} else {
+			
+			System.out.println ("The Signature Is Invalid\n");
+			
+		}
+		
+	}
+	
+	/* Test for qTESLA Provider for Provably-Secure qTESLA Security Category-1 */
+	
+	public static void testQTESLAProviderIP () 
+			
+			throws InvalidAlgorithmParameterException, InvalidKeyException, NoSuchAlgorithmException, NoSuchProviderException, SignatureException {
+		
+		Security.addProvider (new QTESLAProvider ());
+		
+		for (Provider provider: Security.getProviders()) {
+			
+			if (provider.getName().equals ("qTESLAProvider")) {
+				
+				System.out.println ("A Provider is Found: " + provider.getInfo() + "\n");
+				
+				for (Service service: provider.getServices()) {
+					
+					System.out.println ("Service: " + service);
+					
+				}
+				
+			}
+			
+		}
+		
+		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance ("QTESLAKeyPairGenerator", "qTESLAProvider");
+		QTESLAParameterSpecification specification = new QTESLAParameterSpecification ("provablySecureQTESLASecurityCategoryI");
+		keyPairGenerator.initialize (specification, secureRandom);
+		KeyPair keyPair = keyPairGenerator.generateKeyPair();
+		QTESLAPrivateKey qTESLAPrivateKey = (QTESLAPrivateKey) keyPair.getPrivate();
+		QTESLAPublicKey qTESLAPublicKey = (QTESLAPublicKey) keyPair.getPublic();
+		byte[] privateKey = qTESLAPrivateKey.getEncoded();
+		byte[] publicKey = qTESLAPublicKey.getEncoded();
+		
+		System.out.println ("Private Key for Provably-Secure qTESLA Security Category 1\n");
+		
+		for (int i = 0; i < privateKey.length; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", privateKey[i]);
+			
+			if (i % 32 == 31 || i == privateKey.length - 1) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
+		
+		System.out.println ("\nPublic Key for Provably-Secure qTESLA Security Category 1\n");
+		
+		for (int i = 0; i < publicKey.length; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", publicKey[i]);
+			
+			if (i % 32 == 31 || i == publicKey.length - 1) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
+		
+		System.out.println ("\nSign for Provably-Secure qTESLA Security Category 1\n");
+		
+		String messageString =
+				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
+		byte[] messageInput = new byte[66];
+		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
+		
+		Signature qTESLASignature = Signature.getInstance ("QTESLASignature", "qTESLAProvider");
+		qTESLASignature.initSign (qTESLAPrivateKey, secureRandom);
+		qTESLASignature.update (messageInput, 0, 66);
+		
+		byte[] signature = new byte[QTESLA.SIGNATURE_I_P + 66];
+		
+		qTESLASignature.sign (signature, 0, signature.length);
+		
+		for (int i = 0; i < signature.length; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %3d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", signature[i]);
+			
+			if (i % 32 == 31 || i == signature.length - 1) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
+		
+		System.out.println ("\nVerify for Provably-Secure qTESLA Security Category 1\n");
 		
 		qTESLASignature.initVerify (qTESLAPublicKey);
 		
