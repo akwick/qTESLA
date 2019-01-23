@@ -10,6 +10,8 @@ import java.security.Provider;
 import java.security.Provider.Service;
 import java.security.SecureRandom;
 import java.security.Security;
+import java.security.Signature;
+import java.security.SignatureException;
 import java.util.Arrays;
 
 import javax.crypto.BadPaddingException;
@@ -56,7 +58,7 @@ public class Test {
 	
 	public static void main (String[] args)
 			
-			throws BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, NoSuchProviderException, ShortBufferException
+			throws BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, NoSuchProviderException, ShortBufferException, SignatureException
 	
 	{
 		
@@ -3954,7 +3956,9 @@ public class Test {
 	
 	/* Test for qTESLA Provider */
 	
-	public static void testQTESLAProvider () throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
+	public static void testQTESLAProvider () 
+			
+			throws InvalidAlgorithmParameterException, InvalidKeyException, NoSuchAlgorithmException, NoSuchProviderException, SignatureException {
 		
 		Security.addProvider (new QTESLAProvider ());
 		
@@ -3975,7 +3979,7 @@ public class Test {
 		}
 		
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance ("QTESLAKeyPairGenerator", "qTESLAProvider");
-		QTESLAParameterSpecification specification = new QTESLAParameterSpecification("heuristicQTESLASecurityCategoryI");
+		QTESLAParameterSpecification specification = new QTESLAParameterSpecification ("heuristicQTESLASecurityCategoryI");
 		keyPairGenerator.initialize (specification, secureRandom);
 		KeyPair keyPair = keyPairGenerator.generateKeyPair();
 		QTESLAPrivateKey qTESLAPrivateKey = (QTESLAPrivateKey) keyPair.getPrivate();
@@ -3993,7 +3997,7 @@ public class Test {
 			
 			}
 			
-			System.out.printf("%02X ", privateKey[i]);
+			System.out.printf ("%02X ", privateKey[i]);
 			
 			if (i % 32 == 31 || i == privateKey.length - 1) {
 				
@@ -4003,7 +4007,7 @@ public class Test {
 			
 		}
 		
-		System.out.println("\nPublic Key for Heuristic qTESLA Security Category 1\n");
+		System.out.println ("\nPublic Key for Heuristic qTESLA Security Category 1\n");
 		
 		for (int i = 0; i < publicKey.length; i++) {
 			
@@ -4013,13 +4017,60 @@ public class Test {
 			
 			}
 			
-			System.out.printf("%02X ", publicKey[i]);
+			System.out.printf ("%02X ", publicKey[i]);
 			
 			if (i % 32 == 31 || i == publicKey.length - 1) {
 				
 				System.out.println ();
 			
 			}
+			
+		}
+		
+		System.out.println ("\nSign for Heuristic qTESLA Security Category 1\n");
+		
+		String messageString =
+				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
+		byte[] messageInput = new byte[66];
+		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
+		
+		Signature qTESLASignature = Signature.getInstance ("QTESLASignature", "qTESLAProvider");
+		qTESLASignature.initSign (qTESLAPrivateKey, secureRandom);
+		qTESLASignature.update (messageInput, 0, 66);
+		
+		byte[] signature = new byte[Polynomial.SIGNATURE_I + 66];
+		
+		qTESLASignature.sign (signature, 0, signature.length);
+		
+		for (int i = 0; i < signature.length; i++) {
+			
+			if (i % 32 == 0) {
+				
+				System.out.printf ("LINE %2d\t", (i / 32 + 1));
+			
+			}
+			
+			System.out.printf ("%02X ", signature[i]);
+			
+			if (i % 32 == 31 || i == signature.length - 1) {
+				
+				System.out.println ();
+			
+			}
+			
+		}
+		
+		System.out.println ("\nVerify for Heuristic qTESLA Security Category 1\n");
+		
+		qTESLASignature.initVerify (qTESLAPublicKey);
+		
+		if (qTESLASignature.verify(signature) == true) {
+			
+			System.out.println ("The Signature Is Valid\n");
+			
+		} else {
+			
+			System.out.println ("The Signature Is Invalid\n");
 			
 		}
 		

@@ -1,10 +1,10 @@
 package qTESLA;
 
-import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.security.AlgorithmParameters;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.InvalidParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -18,7 +18,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.ShortBufferException;
 
-public abstract class QTESLASignature extends SignatureSpi {
+public final class QTESLASignature extends SignatureSpi {
 	
 	/**
 	 * qTESLA Security Category
@@ -45,53 +45,11 @@ public abstract class QTESLASignature extends SignatureSpi {
 	private int messageOffset;
 	
 	private int[] messageLength;
-		
-	public QTESLASignature (String securityCategory) {
-		
-		this.securityCategory	= securityCategory;
-		this.setPublicKey (null);
-		this.setPrivateKey (null);
-		this.setSecureRandom (null);
-		this.setMessage (null);
-		this.setMessageOffset (0);
-		this.messageLength		= new int[1];
-		
-	}
 	
 	public String getSecurityCategory () {
 		
 		return this.securityCategory;
 		
-	}
-	
-	public void setSecurityCategory (String securityCategory) {
-		
-		this.securityCategory = securityCategory;
-		
-	}
-	
-	public QTESLAPublicKey getPublicKey () {
-		
-		return publicKey;
-	
-	}
-
-	public void setPublicKey (QTESLAPublicKey publicKey) {
-		
-		this.publicKey = publicKey;
-	
-	}
-	
-	public QTESLAPrivateKey getPrivateKey () {
-		
-		return privateKey;
-	
-	}
-
-	public void setPrivateKey (QTESLAPrivateKey privateKey) {
-		
-		this.privateKey = privateKey;
-	
 	}
 	
 	public SecureRandom getSecureRandom () {
@@ -106,42 +64,7 @@ public abstract class QTESLASignature extends SignatureSpi {
 	
 	}
 	
-	public byte[] getMessage () {
-		
-		return message;
-	
-	}
-
-	public void setMessage (byte[] message) {
-		
-		System.arraycopy (message, 0, this.message, 0, message.length);
-	
-	}
-	
-	public int getMessageOffset() {
-		
-		return messageOffset;
-	
-	}
-
-	public void setMessageOffset(int messageOffset) {
-		
-		this.messageOffset = messageOffset;
-	
-	}
-	
-	public int[] getMessageLength () {
-		
-		return messageLength;
-	
-	}
-
-	public void setMessageLength (int[] messageLength) {
-		
-		System.arraycopy (messageLength, 0, this.messageLength, 0, messageLength.length);
-	
-	}
-	
+	@Override
 	protected void engineInitSign (PrivateKey privateKey, SecureRandom random) throws InvalidKeyException {
 		
 		if (!(privateKey instanceof QTESLAPrivateKey)) {
@@ -150,17 +73,20 @@ public abstract class QTESLASignature extends SignatureSpi {
 			
 		}
 		
-		this.setPrivateKey ((QTESLAPrivateKey) privateKey);
-		this.setSecureRandom (random);
+		this.privateKey = (QTESLAPrivateKey) privateKey;
+		this.securityCategory = ((QTESLAPrivateKey) privateKey).getAlgorithm();
+		this.secureRandom = random;
 		
 	}
 	
+	@Override
 	protected void engineInitSign (PrivateKey privateKey) throws InvalidKeyException {
 		
 		engineInitSign (privateKey, new SecureRandom ());
 		
 	}
 	
+	@Override
 	protected void engineInitVerify (PublicKey publicKey) throws InvalidKeyException {
 		
 		if (!(publicKey instanceof QTESLAPublicKey)) {
@@ -169,11 +95,14 @@ public abstract class QTESLASignature extends SignatureSpi {
 			
 		}
 		
-		this.setPublicKey ((QTESLAPublicKey) publicKey);
+		this.publicKey = (QTESLAPublicKey) publicKey;
+		this.securityCategory = ((QTESLAPublicKey) publicKey).getAlgorithm();
+		this.secureRandom = null;
 		
 	}
 	
-	protected int engineSign(byte[] signature, int signatureOffset, int signatureLength) throws SignatureException {
+	@Override
+	protected int engineSign (byte[] signature, int signatureOffset, int signatureLength) throws SignatureException {
 		
 		int[] lengthOfSignature	= new int[1];
 		lengthOfSignature[0]	= signatureLength;
@@ -257,6 +186,48 @@ public abstract class QTESLASignature extends SignatureSpi {
 		
 	}
 	
+	@Override
+	protected byte[] engineSign () throws SignatureException {
+		
+		byte[] signature = null;
+		
+		if (this.securityCategory == "heuristicQTESLASecurityCategoryI") {
+			
+			signature = new byte[Polynomial.SIGNATURE_I + this.messageLength[0]];
+			
+		}
+		
+		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
+			
+			signature = new byte[Polynomial.SIGNATURE_III_SIZE + this.messageLength[0]];
+			
+		}
+		
+		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
+			
+			signature = new byte[Polynomial.SIGNATURE_III_SPEED + this.messageLength[0]];
+			
+		}
+		
+		if (this.securityCategory == "provablySecureQTESLASecurityCategoryI") {
+			
+			signature = new byte[Polynomial.SIGNATURE_I_P + this.messageLength[0]];
+			
+		}
+		
+		if (this.securityCategory == "provablySecureQTESLASecurityCategoryIII") {
+			
+			signature = new byte[Polynomial.SIGNATURE_III_P + this.messageLength[0]];
+			
+		}
+		
+		engineSign (signature, 0, signature.length);
+		
+		return signature;
+		
+	}
+	
+	@Override
 	protected boolean engineVerify (byte[] signature, int signatureOffset, int signatureLength) throws SignatureException {
 		
 		int success = 0;
@@ -303,35 +274,36 @@ public abstract class QTESLASignature extends SignatureSpi {
 		
 	}
 	
+	@Override
 	protected boolean engineVerify (byte[] signature) throws SignatureException {
 		
 		if (this.securityCategory == "heuristicQTESLASecurityCategoryI") {
 			
-			return engineVerify (signature, 0, Polynomial.SIGNATURE_I);
+			return engineVerify (signature, 0, Polynomial.SIGNATURE_I + this.messageLength[0]);
 			
 		}
 		
 		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
 			
-			return engineVerify (signature, 0, Polynomial.SIGNATURE_III_SIZE);
+			return engineVerify (signature, 0, Polynomial.SIGNATURE_III_SIZE + this.messageLength[0]);
 			
 		}
 		
 		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
 			
-			return engineVerify (signature, 0, Polynomial.SIGNATURE_III_SPEED);
+			return engineVerify (signature, 0, Polynomial.SIGNATURE_III_SPEED + this.messageLength[0]);
 			
 		}
 		
 		if (this.securityCategory == "provablySecureQTESLASecurityCategoryI") {
 			
-			return engineVerify (signature, 0, Polynomial.SIGNATURE_I_P);
+			return engineVerify (signature, 0, Polynomial.SIGNATURE_I_P + this.messageLength[0]);
 			
 		}
 		
 		if (this.securityCategory == "provablySecureQTESLASecurityCategoryIII") {
 			
-			return engineVerify (signature, 0, Polynomial.SIGNATURE_III_P);
+			return engineVerify (signature, 0, Polynomial.SIGNATURE_III_P + this.messageLength[0]);
 			
 		}
 		
@@ -339,27 +311,68 @@ public abstract class QTESLASignature extends SignatureSpi {
 		
 	}
 	
-	protected void engineUpdate (byte[] data, int offset, int length) throws SignatureException {
+	@Override
+	protected void engineUpdate (byte b) throws SignatureException {
 		
-		(new ByteArrayOutputStream()).write (data, offset, length);
+		this.message = new byte[1];
+		this.messageLength = new int[1];
 		
-	}
-	
-	protected void engineUpdate (ByteBuffer data) {
-		
-		super.engineUpdate (data);
-		
-	}
-	
-	protected AlgorithmParameters engineGetParameter () throws UnsupportedOperationException {
-		
-		return super.engineGetParameters();
+		this.message[0] = b;
+		this.messageOffset = 0;
+		this.messageLength[0] = 1;
 		
 	}
 	
+	@Override
+	protected void engineUpdate (byte[] byteArray, int byteArrayOffset, int byteArrayLength) throws SignatureException {
+		
+		this.message = new byte[byteArrayOffset + byteArrayLength];
+		this.messageLength = new int[1];
+		
+		System.arraycopy (byteArray, byteArrayOffset, this.message, byteArrayOffset, byteArrayLength);
+		this.messageOffset = byteArrayOffset;
+		this.messageLength[0] = byteArrayLength;
+		
+	}
+	
+	@Override
+	protected void engineUpdate (ByteBuffer byteBuffer) {
+		
+		int length = byteBuffer.remaining();
+		this.message = new byte[length];
+		this.messageLength = new int[1];
+		
+		byteBuffer.get (this.message, 0, length);
+		this.messageOffset = 0;
+		this.messageLength[0] = length;
+		
+	}
+	
+	@Override
+	protected AlgorithmParameters engineGetParameters() {
+		
+		return null;
+		
+	}
+	
+	@Override
 	protected void engineSetParameter (AlgorithmParameterSpec specification) throws InvalidAlgorithmParameterException {
 		
-		super.engineSetParameter (specification);
+		QTESLAParameterSpecification qTESLAParameterSpecification = (QTESLAParameterSpecification) specification;
+		
+		this.securityCategory = qTESLAParameterSpecification.getSecurityCategory();
+		
+	}
+
+	@Override
+	protected Object engineGetParameter (String parameter) throws InvalidParameterException {
+		
+		return null;
+		
+	}
+
+	@Override
+	protected void engineSetParameter(String parameter, Object value) throws InvalidParameterException {
 		
 	}
 	
