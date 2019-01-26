@@ -12,11 +12,6 @@ import java.util.Arrays;
 
 public class QTESLA {
 	
-	/**
-	 * Size of Hashed Message
-	 */
-	public static final int MESSAGE = 64;
-	
 	/** 
 	 * Size of the Signature Package (Z, C) (in Byte) for Heuristic qTESLA Security Category-1.
 	 * Z is A Polynomial Bounded by B and C is the Output of A Hashed String
@@ -118,7 +113,7 @@ public class QTESLA {
 		int mask;
 		int cL;
 		
-		byte[] T = new byte[n + MESSAGE];
+		byte[] T = new byte[n + Parameter.MESSAGE];
 		
 		for (int i = 0; i < n; i++) {
 			/* If V[i] > Q / 2 Then V[i] = V[i] - Q */
@@ -132,17 +127,17 @@ public class QTESLA {
 			
 		}
 		
-		System.arraycopy (message, messageOffset, T, n, MESSAGE);
+		System.arraycopy (message, messageOffset, T, n, Parameter.MESSAGE);
 		
 		if (q == Parameter.Q_I) {
 			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (output, outputOffset, Parameter.HASH, T, 0, n + MESSAGE);
+			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (output, outputOffset, Parameter.HASH, T, 0, n + Parameter.MESSAGE);
 		
 		}
 		
 		if (q == Parameter.Q_III_SIZE || q == Parameter.Q_III_SPEED) {
 			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (output, outputOffset, Parameter.HASH, T, 0, n + MESSAGE);
+			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (output, outputOffset, Parameter.HASH, T, 0, n + Parameter.MESSAGE);
 			
 		}
 		
@@ -158,7 +153,7 @@ public class QTESLA {
 		long cL;
 		long temporary;
 		
-		byte[] T = new byte[n * k + MESSAGE];
+		byte[] T = new byte[n * k + Parameter.MESSAGE];
 		
 		for (int j = 0; j < k; j++) {
 			
@@ -180,17 +175,17 @@ public class QTESLA {
 			
 		}
 		
-		System.arraycopy (message, messageOffset, T, n * k, MESSAGE);
+		System.arraycopy (message, messageOffset, T, n * k, Parameter.MESSAGE);
 		
 		if (q == Parameter.Q_I_P) {
 			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (output, outputOffset, Parameter.HASH, T, 0, n * k + MESSAGE);
+			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (output, outputOffset, Parameter.HASH, T, 0, n * k + Parameter.MESSAGE);
 		
 		}
 		
 		if (q == Parameter.Q_III_P) {
 			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (output, outputOffset, Parameter.HASH, T, 0, n * k + MESSAGE);
+			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (output, outputOffset, Parameter.HASH, T, 0, n * k + Parameter.MESSAGE);
 			
 		}
 	
@@ -1130,7 +1125,7 @@ public class QTESLA {
 		
 		byte[] C						= new byte[Parameter.HASH];
 		byte[] randomness				= new byte[Parameter.SEED];
-		byte[] randomnessInput			= new byte[Parameter.RANDOM + Parameter.SEED + MESSAGE];
+		byte[] randomnessInput			= new byte[Parameter.RANDOM + Parameter.SEED + Parameter.MESSAGE];
 		byte[] seed						= new byte[Parameter.SEED * 2];
 		// byte[] temporaryRandomnessInput	= new byte[Polynomial.RANDOM];
 		int[] positionList				= new int[h];
@@ -1175,11 +1170,11 @@ public class QTESLA {
 		if (q == Parameter.Q_I) {
 		
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomnessInput, Parameter.RANDOM + Parameter.SEED, MESSAGE, message, 0, messageLength
+				randomnessInput, Parameter.RANDOM + Parameter.SEED, Parameter.MESSAGE, message, 0, messageLength
 			);
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomness, 0, Parameter.SEED, randomnessInput, 0, Parameter.RANDOM + Parameter.SEED + MESSAGE
+				randomness, 0, Parameter.SEED, randomnessInput, 0, Parameter.RANDOM + Parameter.SEED + Parameter.MESSAGE
 			);
 		
 		}
@@ -1187,11 +1182,11 @@ public class QTESLA {
 		if (q == Parameter.Q_III_SIZE || q == Parameter.Q_III_SPEED) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomnessInput, Parameter.RANDOM + Parameter.SEED, MESSAGE, message, 0, messageLength
+				randomnessInput, Parameter.RANDOM + Parameter.SEED, Parameter.MESSAGE, message, 0, messageLength
 			);
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomness, 0, Parameter.SEED, randomnessInput, 0, Parameter.RANDOM + Parameter.SEED + MESSAGE
+				randomness, 0, Parameter.SEED, randomnessInput, 0, Parameter.RANDOM + Parameter.SEED + Parameter.MESSAGE
 			);
 			
 		}
@@ -1465,7 +1460,7 @@ public class QTESLA {
 		
 		byte[] C						= new byte[Parameter.HASH];
 		byte[] randomness				= new byte[Parameter.SEED];
-		byte[] randomnessInput			= new byte[Parameter.RANDOM + Parameter.SEED + MESSAGE];
+		byte[] randomnessInput			= new byte[Parameter.RANDOM + Parameter.SEED + Parameter.MESSAGE];
 		// byte[] temporaryRandomnessInput	= new byte[Polynomial.RANDOM];
 		int[] positionList				= new int[h];
 		short[] signList				= new short[h];
@@ -1491,12 +1486,12 @@ public class QTESLA {
 		if (q == Parameter.Q_I_P) {
 		
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomnessInput, Parameter.RANDOM + Parameter.SEED, MESSAGE, message, 0, messageLength
+				randomnessInput, Parameter.RANDOM + Parameter.SEED, Parameter.MESSAGE, message, 0, messageLength
 			);
 			
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomness, 0, Parameter.SEED, randomnessInput, 0, Parameter.RANDOM + Parameter.SEED + MESSAGE
+				randomness, 0, Parameter.SEED, randomnessInput, 0, Parameter.RANDOM + Parameter.SEED + Parameter.MESSAGE
 			);
 		
 		}
@@ -1504,12 +1499,12 @@ public class QTESLA {
 		if (q == Parameter.Q_III_P) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomnessInput, Parameter.RANDOM + Parameter.SEED, MESSAGE, message, 0, messageLength
+				randomnessInput, Parameter.RANDOM + Parameter.SEED, Parameter.MESSAGE, message, 0, messageLength
 			);
 			
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomness, 0, Parameter.SEED, randomnessInput, 0, Parameter.RANDOM + Parameter.SEED + MESSAGE
+				randomness, 0, Parameter.SEED, randomnessInput, 0, Parameter.RANDOM + Parameter.SEED + Parameter.MESSAGE
 			);
 			
 		}
@@ -1737,7 +1732,7 @@ public class QTESLA {
 		byte[]	C				= new byte[Parameter.HASH];
 		byte[]	cSignature		= new byte[Parameter.HASH];
 		byte[]	seed			= new byte[Parameter.SEED];
-		byte[]	hashMessage		= new byte[MESSAGE];
+		byte[]	hashMessage		= new byte[Parameter.MESSAGE];
 		int[]	newPublicKey	= new int[n];
 		
 		int[] 	positionList	= new int[h];
@@ -1800,7 +1795,7 @@ public class QTESLA {
 		if (q == Parameter.Q_I) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				hashMessage, 0, MESSAGE, signature, signatureSize, signatureLength - signatureSize
+				hashMessage, 0, Parameter.MESSAGE, signature, signatureSize, signatureLength - signatureSize
 			);
 			
 		}
@@ -1808,7 +1803,7 @@ public class QTESLA {
 		if (q == Parameter.Q_III_SIZE || q == Parameter.Q_III_SPEED) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				hashMessage, 0, MESSAGE, signature, signatureSize, signatureLength - signatureSize
+				hashMessage, 0, Parameter.MESSAGE, signature, signatureSize, signatureLength - signatureSize
 			);
 			
 		}
@@ -1996,7 +1991,7 @@ public class QTESLA {
 		byte[]	C					= new byte[Parameter.HASH];
 		byte[]	cSignature			= new byte[Parameter.HASH];
 		byte[]	seed				= new byte[Parameter.SEED];
-		byte[]	hashMessage			= new byte[MESSAGE];
+		byte[]	hashMessage			= new byte[Parameter.MESSAGE];
 		int[]	newPublicKey		= new int[n * k];
 		
 		int[]	positionList		= new int[h];
@@ -2068,7 +2063,7 @@ public class QTESLA {
 		if (q == Parameter.Q_I_P) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				hashMessage, 0, MESSAGE, signature, signatureSize, signatureLength - signatureSize
+				hashMessage, 0, Parameter.MESSAGE, signature, signatureSize, signatureLength - signatureSize
 			);
 			
 		}
@@ -2076,7 +2071,7 @@ public class QTESLA {
 		if (q == Parameter.Q_III_P) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				hashMessage, 0, MESSAGE, signature, signatureSize, signatureLength - signatureSize
+				hashMessage, 0, Parameter.MESSAGE, signature, signatureSize, signatureLength - signatureSize
 			);
 			
 		}

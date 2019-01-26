@@ -424,4 +424,9 @@ public final class Parameter {
 	 */
 	public static final int HASH	= 32;
 	
+	/**
+	 * Size of Hashed Message
+	 */
+	public static final int MESSAGE = 64;
+	
 }
