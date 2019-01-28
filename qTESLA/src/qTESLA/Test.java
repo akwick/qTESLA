@@ -152,7 +152,7 @@ public class Test {
 		// testGenerateKeyPairSigningVerifyingIIISize ();
 		// testGenerateKeyPairSigningVerifyingIIISpeed ();
 		// testGenerateKeyPairSigningVerifyingIP ();
-		// testGenerateKeyPairSigningVerifyingIIIP ();
+		testGenerateKeyPairSigningVerifyingIIIP ();
 		
 		/* qTESLA Provider */
 		
@@ -3079,7 +3079,7 @@ public class Test {
 		long startGeneratingKeyPairTimeNano	= System.nanoTime ();
 		QTESLA.generateKeyPairI (publicKey, privateKey, secureRandom);
 		long endGeneratingKeyPairTimeNano	= System.nanoTime ();
-		
+		/*
 		System.out.println ("Public Key:\n");
 		
 		for (int i = 0; i < QTESLA.PUBLIC_KEY_I; i++) {
@@ -3121,7 +3121,7 @@ public class Test {
 		}
 		
 		System.out.println ("\nTest for Signing for Heuristic qTESLA Security Category-1\n");
-		
+		*/
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
 		byte[] signature = new byte[QTESLA.SIGNATURE_I + 66];
@@ -3130,7 +3130,7 @@ public class Test {
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
 		messageInput = Common.hexadecimalStringToByteArray (messageString);
-		
+		/*
 		System.out.println ("Message:\n");
 		
 		for (int i = 0; i < 66; i++) {
@@ -3152,11 +3152,11 @@ public class Test {
 		}
 		
 		System.out.println ("\nSignature:\n");
-		
+		*/
 		long startSigningTimeNano	= System.nanoTime ();
 		QTESLA.signingI (signature, 0, signatureLength, messageInput, 0, 66, privateKey, secureRandom);
 		long endSigningTimeNano		= System.nanoTime ();
-		
+		/*
 		for (int i = 0; i < signature.length; i++) {
 			
 			if (i % 32 == 0) {
@@ -3176,12 +3176,12 @@ public class Test {
 		}
 		
 		System.out.printf ("\nThe Length of Signature is %d and the Length of Signature Package is %d\n\n", signature.length, signatureLength[0]);
-		
+		*/
 		int valid;
 		int response;
 		byte[] messageOutput = new byte[QTESLA.SIGNATURE_I + 66];
 		
-		System.out.println ("Test for Verifying for Heuristic qTESLA Security Category-1\n");
+		// System.out.println ("Test for Verifying for Heuristic qTESLA Security Category-1\n");
 		
 		long startVerifyingTimeNano1	= System.nanoTime ();
 		valid = QTESLA.verifyingI (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
@@ -3211,17 +3211,17 @@ public class Test {
 		signature[secureRandom.nextInt(32) % (QTESLA.SIGNATURE_I + 66)] ^= 1;
 		
 		long startVerifyingTimeNano2	= System.nanoTime ();
-		response = QTESLA.verifyingIIISpeed (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
+		response = QTESLA.verifyingI (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
 		long endVerifyingTimeNano2		= System.nanoTime ();
 		
 		timeOfGeneratingKeyPair[round] = (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 3);
-		System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
+		// System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
 		timeOfSigning[round] = (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 3);
-		System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
+		// System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
 		timeOfVerifying[round] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 3);
-		System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
-		System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
-		
+		// System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
+		// System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
+		/*
 		if (response == 0) {
 			
 			System.out.println ("Corrupted Signature Verified with " + response + "\n");
@@ -3231,7 +3231,7 @@ public class Test {
 			System.out.println ("Signature Tests Passed\n");
 		
 		}
-		
+		*/
 		}
 		
 		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
@@ -3273,7 +3273,7 @@ public class Test {
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
 		QTESLA.generateKeyPairIIISize (publicKey, privateKey, secureRandom);
 		long endGeneratingKeyPairTimeNano	= System.nanoTime();
-		
+		/*
 		System.out.println ("Public Key:\n");
 		
 		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_SIZE; i++) {
@@ -3315,7 +3315,7 @@ public class Test {
 		}
 		
 		System.out.println ("\nTest for Signing for Heuristic qTESLA Security Category-3 (Option for Size)\n");
-		
+		*/
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
 		byte[] signature = new byte[QTESLA.SIGNATURE_III_SIZE + 66];
@@ -3324,7 +3324,7 @@ public class Test {
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
 		messageInput = Common.hexadecimalStringToByteArray (messageString);
-		
+		/*
 		System.out.println ("Message:\n");
 		
 		for (int i = 0; i < 66; i++) {
@@ -3346,11 +3346,11 @@ public class Test {
 		}
 		
 		System.out.println ("\nSignature:\n");
-		
+		*/
 		long startSigningTimeNano	= System.nanoTime();
 		QTESLA.signingIIISize (signature, 0, signatureLength, messageInput, 0, 66, privateKey, secureRandom);
 		long endSigningTimeNano		= System.nanoTime();
-		
+		/*
 		for (int i = 0; i < signature.length; i++) {
 			
 			if (i % 32 == 0) {
@@ -3370,12 +3370,12 @@ public class Test {
 		}
 		
 		System.out.printf ("\nThe Length of Signature is %d and the Length of Signature Package is %d\n\n", signature.length, signatureLength[0]);
-		
+		*/
 		int valid;
 		int response;
 		byte[] messageOutput = new byte[QTESLA.SIGNATURE_III_SIZE + 66];
 		
-		System.out.println ("Test for Verifying for Heuristic qTESLA Security Category-3 (Option for Size)\n");
+		// System.out.println ("Test for Verifying for Heuristic qTESLA Security Category-3 (Option for Size)\n");
 		
 		long startVerifyingTimeNano1	= System.nanoTime();
 		valid = QTESLA.verifyingIIISize (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
@@ -3409,13 +3409,13 @@ public class Test {
 		long endVerifyingTimeNano2		= System.nanoTime();
 		
 		timeOfGeneratingKeyPair[round] = (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 3);
-		System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
+		// System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
 		timeOfSigning[round] = (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 3);
-		System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
+		// System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
 		timeOfVerifying[round] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 3);
-		System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
-		System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
-		
+		// System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
+		// System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
+		/*
 		if (response == 0) {
 			
 			System.out.println ("Corrupted Signature Verified with " + response + "\n");
@@ -3425,7 +3425,7 @@ public class Test {
 			System.out.println ("Signature Tests Passed\n");
 		
 		}
-		
+		*/
 		}
 		
 		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
@@ -3467,7 +3467,7 @@ public class Test {
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
 		QTESLA.generateKeyPairIIISpeed (publicKey, privateKey, secureRandom);
 		long endGeneratingKeyPairTimeNano	= System.nanoTime();
-		
+		/*
 		System.out.println ("Public Key:\n");
 		
 		for (int i = 0; i < QTESLA.PUBLIC_KEY_III_SPEED; i++) {
@@ -3509,7 +3509,7 @@ public class Test {
 		}
 		
 		System.out.println ("\nTest for Signing for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
-		
+		*/
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
 		byte[] signature = new byte[QTESLA.SIGNATURE_III_SPEED + 66];
@@ -3518,7 +3518,7 @@ public class Test {
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
 		messageInput = Common.hexadecimalStringToByteArray (messageString);
-		
+		/*
 		System.out.println ("Message:\n");
 		
 		for (int i = 0; i < 66; i++) {
@@ -3540,11 +3540,11 @@ public class Test {
 		}
 		
 		System.out.println ("\nSignature:\n");
-		
+		*/
 		long startSigningTimeNano	= System.nanoTime();
 		QTESLA.signingIIISpeed (signature, 0, signatureLength, messageInput, 0, 66, privateKey, secureRandom);
 		long endSigningTimeNano		= System.nanoTime();
-		
+		/*
 		for (int i = 0; i < signature.length; i++) {
 			
 			if (i % 32 == 0) {
@@ -3564,12 +3564,12 @@ public class Test {
 		}
 		
 		System.out.printf ("\nThe Length of Signature is %d and the Length of Signature Package is %d\n\n", signature.length, signatureLength[0]);
-		
+		*/
 		int valid;
 		int response;
 		byte[] messageOutput = new byte[QTESLA.SIGNATURE_III_SPEED + 66];
 		
-		System.out.println ("Test for Verifying for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
+		// System.out.println ("Test for Verifying for Heuristic qTESLA Security Category-3 (Option for Speed)\n");
 		
 		long startVerifyingTimeNano1	= System.nanoTime();
 		valid = QTESLA.verifyingIIISpeed (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
@@ -3603,13 +3603,13 @@ public class Test {
 		long endVerifyingTimeNano2		= System.nanoTime();
 		
 		timeOfGeneratingKeyPair[round] = (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 3);
-		System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
+		// System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
 		timeOfSigning[round] = (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 3);
-		System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
+		// System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
 		timeOfVerifying[round] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 3);
-		System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
-		System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
-		
+		// System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
+		// System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
+		/*
 		if (response == 0) {
 			
 			System.out.println ("Corrupted Signature Verified with " + response + "\n");
@@ -3619,7 +3619,7 @@ public class Test {
 			System.out.println ("Signature Tests Passed\n");
 		
 		}
-		
+		*/
 		}
 		
 		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
@@ -3661,7 +3661,7 @@ public class Test {
 		long startGeneratingKeyPairTimeNano	= System.nanoTime();
 		QTESLA.generateKeyPairIP (publicKey, privateKey, secureRandom);
 		long endGeneratingKeyPairTimeNano	= System.nanoTime();
-		
+		/*
 		System.out.println ("Public Key:\n");
 		
 		for (int i = 0; i < QTESLA.PUBLIC_KEY_I_P; i++) {
@@ -3703,7 +3703,7 @@ public class Test {
 		}
 		
 		System.out.println ("\nTest for Signing for Provably-Secure qTESLA Security Category-1\n");
-		
+		*/
 		int[] signatureLength = new int[1];
 		int[] messageLength = new int[1];
 		byte[] signature = new byte[QTESLA.SIGNATURE_I_P + 66];
@@ -3712,7 +3712,7 @@ public class Test {
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
 		messageInput = Common.hexadecimalStringToByteArray (messageString);
-		
+		/*
 		System.out.println ("Message:\n");
 		
 		for (int i = 0; i < 66; i++) {
@@ -3734,11 +3734,11 @@ public class Test {
 		}
 		
 		System.out.println ("\n\nSignature:\n");
-		
+		*/
 		long startSigningTimeNano	= System.nanoTime();
 		QTESLA.signingIP (signature, 0, signatureLength, messageInput, 0, 66, privateKey, secureRandom);
 		long endSigningTimeNano		= System.nanoTime();
-		
+		/*
 		for (int i = 0; i < signature.length; i++) {
 			
 			if (i % 32 == 0) {
@@ -3758,12 +3758,12 @@ public class Test {
 		}
 		
 		System.out.printf ("\nThe Length of Signature is %d and the Length of Signature Package is %d\n\n", signature.length, signatureLength[0]);
-
+		*/
 		int valid;
 		int response;
 		byte[] messageOutput = new byte[QTESLA.SIGNATURE_I_P + 66];
 		
-		System.out.println ("Test for Verifying for Provably-Secure qTESLA Security Category-1\n");
+		// System.out.println ("Test for Verifying for Provably-Secure qTESLA Security Category-1\n");
 		
 		long startVerifyingTimeNano1	= System.nanoTime();
 		valid = QTESLA.verifyingIP (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
@@ -3797,13 +3797,13 @@ public class Test {
 		long endVerifyingTimeNano2		= System.nanoTime();
 		
 		timeOfGeneratingKeyPair[round] = (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 3);
-		System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
+		// System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
 		timeOfSigning[round] = (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 3);
-		System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
+		// System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
 		timeOfVerifying[round] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 3);
-		System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
-		System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
-		
+		// System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
+		// System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
+		/*
 		if (response == 0) {
 			
 			System.out.println ("Corrupted Signature Verified with " + response + "\n");
@@ -3813,7 +3813,7 @@ public class Test {
 			System.out.println ("Signature Test Passed\n");
 		
 		}
-		
+		*/
 		}
 		
 		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
@@ -3959,7 +3959,7 @@ public class Test {
 		int response;
 		byte[] messageOutput = new byte[QTESLA.SIGNATURE_III_P + 66];
 		
-		System.out.println ("Test for Verifying for Provably-Secure qTESLA Security Category-3\n");
+		// System.out.println ("Test for Verifying for Provably-Secure qTESLA Security Category-3\n");
 		
 		long startVerifyingTimeNano1	= System.nanoTime();
 		valid = QTESLA.verifyingIIIP (messageOutput, 0, messageLength, signature, 0, signatureLength[0], publicKey);
@@ -3993,13 +3993,13 @@ public class Test {
 		long endVerifyingTimeNano2		= System.nanoTime();
 		
 		timeOfGeneratingKeyPair[round] = (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 3);
-		System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
+		// System.out.printf ("Generating key pair spent %f milliseconds\n\n", (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) / Math.pow (10, 6));
 		timeOfSigning[round] = (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 3);
-		System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
+		// System.out.printf ("Signing spent %f milliseconds\n\n", (endSigningTimeNano - startSigningTimeNano) / Math.pow (10, 6));
 		timeOfVerifying[round] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 3);
-		System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
-		System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
-		
+		// System.out.printf ("Verifying spent %f milliseconds\n\n", (endVerifyingTimeNano1 - startVerifyingTimeNano1) / Math.pow (10, 6));
+		// System.out.printf ("After changing signature verifying spent %f milliseconds\n\n", (endVerifyingTimeNano2 - startVerifyingTimeNano2) / Math.pow (10, 6));
+		/*
 		if (response == 0) {
 			
 			System.out.println ("Corrupted Signature Verified with " + response + "\n");
@@ -4009,7 +4009,7 @@ public class Test {
 			System.out.println ("Signature Test Passed\n");
 		
 		}
-		
+		*/
 		}
 		
 		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
