@@ -69,9 +69,11 @@ public class Test {
 		// testLoadShortNumber ();
 		// testLoadIntegerNumber ();
 		// testLoadLongNumber ();
+		// testLoadLongArray ();
 		// testStoreShortNumber ();
 		// testStoreIntegerNumber ();
 		// testStoreLongNumber ();
+		// testStoreLongArray ();
 		
 		// testFederalInformationProcessingStandard202 ();
 		
@@ -79,16 +81,18 @@ public class Test {
 		
 		// testRandomByte ();
 		
-		/* Sample */
+		/* Y Sampler */
 		
 		// testSampleYI ();
 		// testSampleYIIISize ();
 		// testSampleYIIIP ();
+		
+		/* Polynomial Gauss Sampler */
+		
 		// testPolynomialGaussSamplerI ();
 		// testPolynomialGaussSamplerIP ();
 		// testPolynomialGaussSamplerIIISize ();
 		// testPolynomialGaussSamplerIIIP ();
-		// testEncodeC ();
 		
 		/* Polynomial */
 		
@@ -143,6 +147,7 @@ public class Test {
 		
 		/* qTESLA */
 		
+		// testEncodeC ();
 		// testGenerateKeyPairSigningVerifyingI ();
 		// testGenerateKeyPairSigningVerifyingIIISize ();
 		// testGenerateKeyPairSigningVerifyingIIISpeed ();
@@ -152,7 +157,7 @@ public class Test {
 		/* qTESLA Provider */
 		
 		// testQTESLAProviderI ();
-		testQTESLAProviderIP ();
+		// testQTESLAProviderIP ();
 		
 	}
 	
@@ -166,11 +171,11 @@ public class Test {
 		
 		System.arraycopy (byteArray, 2, newByteArray, 0, 8);
 		
-		System.out.printf ("%B\n\n", CommonFunction.memoryEqual (byteArray, 2, newByteArray, 0, 8));
+		System.out.printf ("%B\n\n", Common.memoryEqual (byteArray, 2, newByteArray, 0, 8));
 		
 		Arrays.fill (newByteArray, (byte) 0xAA);
 		
-		System.out.printf ("%B\n\n", CommonFunction.memoryEqual (byteArray, 2, newByteArray, 0, 8));
+		System.out.printf ("%B\n\n", Common.memoryEqual (byteArray, 2, newByteArray, 0, 8));
 		
 	}
 	
@@ -180,7 +185,7 @@ public class Test {
 		
 		System.out.println ("Test for Loading Short Number in Common Function\n");
 		
-		System.out.printf ("%X\n\n", CommonFunction.load16 (byteArray, 15));
+		System.out.printf ("%X\n\n", Common.load16 (byteArray, 15));
 		
 	}
 	
@@ -190,7 +195,7 @@ public class Test {
 		
 		System.out.println ("Test for Loading Integer Number in Common Function\n");
 		
-		System.out.printf ("%X\n\n", CommonFunction.load32 (byteArray, 13));
+		System.out.printf ("%X\n\n", Common.load32 (byteArray, 13));
 		
 	}
 	
@@ -200,7 +205,27 @@ public class Test {
 		
 		System.out.println ("Test for Loading Long Number in Common Function\n");
 		
-		System.out.printf ("%X\n\n", CommonFunction.load64 (byteArray, 9));
+		System.out.printf ("%X\n\n", Common.load64 (byteArray, 9));
+		
+	}
+	
+	/* Test for Loading Long Number Array in Common Function */
+	
+	public static void testLoadLongArray () {
+		
+		long[] longArray = new long[2];
+		
+		Common.load64 (byteArray, longArray);
+		
+		System.out.println ("Test Load Long Number Array\n");
+		
+		for (int i = 0; i < 2; i++) {
+			
+			System.out.printf ("%016X\t", longArray[i]);
+			
+		}
+		
+		System.out.println ();
 		
 	}
 	
@@ -212,7 +237,7 @@ public class Test {
 		
 		byte[] newByteArray = new byte[Long.SIZE];
 		
-		CommonFunction.store16 (newByteArray, 4, shortNumber);
+		Common.store16 (newByteArray, 4, shortNumber);
 		
 		for (int i = 0; i < Short.SIZE / Byte.SIZE; i++) {
 			
@@ -232,7 +257,7 @@ public class Test {
 		
 		System.out.println ("Test for Storing Integer Number in Common Function\n");
 		
-		CommonFunction.store32 (newByteArray, 4, integerNumber);
+		Common.store32 (newByteArray, 4, integerNumber);
 		
 		for (int i = 0; i < Integer.SIZE / Byte.SIZE; i++) {
 			
@@ -252,7 +277,7 @@ public class Test {
 		
 		byte[] newByteArray = new byte[Long.SIZE];
 		
-		CommonFunction.store64 (newByteArray, 0, longNumber);
+		Common.store64 (newByteArray, 0, longNumber);
 		
 		for (int i = 0; i < Long.SIZE / Byte.SIZE; i++) {
 			
@@ -261,6 +286,28 @@ public class Test {
 		}
 		
 		System.out.printf ("\n\n");
+		
+	}
+	
+	/* Test for Storing Long Number Array in Common Function */
+	
+	public static void testStoreLongArray () {
+		
+		long[] longArray = {0x1122334455667788L, 0xFFEEDDCCBBAA9988L};
+		
+		byte[] resultArray = new byte[16];
+		
+		Common.store64 (resultArray, longArray);
+		
+		System.out.println ("Test for Storing Long Number Array in Common Function\n");
+		
+		for (int i = 0; i < 16; i++) {
+			
+			System.out.printf ("%02X ", resultArray[i]);
+			
+		}
+		
+		System.out.println ();
 		
 	}
 	
@@ -721,7 +768,12 @@ public class Test {
 		
 		int[] data	= new int[Parameter.N_I];
 		
-		Sample.polynomialGaussSamplerI (data, 0, seed, 0, 128);
+		Gauss.polynomialGaussSampler (
+				data, 0, seed, 0, 128, Parameter.N_I,
+				CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_I,
+				CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_I,
+				CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_I
+		);
 		
 		for (int i = 0; i < Parameter.N_I; i++) {
 			
@@ -753,7 +805,12 @@ public class Test {
 		
 		long[] data	= new long[Parameter.N_I_P];
 		
-		Sample.polynomialGaussSamplerIP (data, 0, seed, 0, 128);
+		Gauss.polynomialGaussSampler (
+				data, 0, seed, 0, 128, Parameter.N_I_P,
+				CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_I_P,
+				CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_I_P,
+				CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_I_P
+		);
 		
 		for (int i = 0; i < Parameter.N_I_P; i++) {
 			
@@ -806,7 +863,12 @@ public class Test {
 				
 		};
 		
-		Sample.polynomialGaussSamplerIII (data, 0, seedExtended, 0, 128, Parameter.N_III_SIZE, Parameter.XI_III_SIZE, Sample.EXPONENTIAL_DISTRIBUTION_III_SIZE);
+		Gauss.polynomialGaussSampler (
+				data, 0, seedExtended, 0, 128, Parameter.N_III_SIZE,
+				CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_III_SIZE,
+				CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_III_SIZE,
+				CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_III_SIZE
+		);
 		
 		for (int i = 0; i < Parameter.N_III_SIZE; i++) {
 			
@@ -838,7 +900,12 @@ public class Test {
 		
 		long[] data	= new long[Parameter.N_III_P];
 		
-		Sample.polynomialGaussSamplerIIIP (data, 0, seed, 0, 256);
+		Gauss.polynomialGaussSampler (
+				data, 0, seed, 0, 256, Parameter.N_III_P,
+				CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_III_P,
+				CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_III_P,
+				CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_III_P
+		);
 		
 		for (int i = 0; i < Parameter.N_III_P; i++) {
 			
@@ -2997,13 +3064,13 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
-		int timeOfTest = 1000;
+		int timeOfTest = 5000;
 		
 		double[] timeOfGeneratingKeyPair = new double[timeOfTest];
 		double[] timeOfSigning = new double[timeOfTest];
 		double[] timeOfVerifying = new double[timeOfTest];
 		
-		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
+		seed = Common.hexadecimalStringToByteArray (seedString);
 		
 		for (int round = 0; round < timeOfTest; round++) {
 		
@@ -3062,7 +3129,7 @@ public class Test {
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
-		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
+		messageInput = Common.hexadecimalStringToByteArray (messageString);
 		
 		System.out.println ("Message:\n");
 		
@@ -3168,13 +3235,13 @@ public class Test {
 		}
 		
 		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfGeneratingKeyPair), CommonFunction.averageNumber(timeOfGeneratingKeyPair));
+				Common.medianNumber(timeOfGeneratingKeyPair), Common.averageNumber(timeOfGeneratingKeyPair));
 		
 		System.out.printf ("Signing Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfSigning), CommonFunction.averageNumber(timeOfSigning));
+				Common.medianNumber(timeOfSigning), Common.averageNumber(timeOfSigning));
 		
 		System.out.printf ("Verification Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfVerifying), CommonFunction.averageNumber(timeOfVerifying));
+				Common.medianNumber(timeOfVerifying), Common.averageNumber(timeOfVerifying));
 		
 	}
 	
@@ -3191,13 +3258,13 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
-		int timeOfTest = 1000;
+		int timeOfTest = 5000;
 		
 		double[] timeOfGeneratingKeyPair = new double[timeOfTest];
 		double[] timeOfSigning = new double[timeOfTest];
 		double[] timeOfVerifying = new double[timeOfTest];
 		
-		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
+		seed = Common.hexadecimalStringToByteArray (seedString);
 		
 		for (int round = 0; round < timeOfTest; round++) {
 		
@@ -3256,7 +3323,7 @@ public class Test {
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
-		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
+		messageInput = Common.hexadecimalStringToByteArray (messageString);
 		
 		System.out.println ("Message:\n");
 		
@@ -3362,13 +3429,13 @@ public class Test {
 		}
 		
 		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfGeneratingKeyPair), CommonFunction.averageNumber(timeOfGeneratingKeyPair));
+				Common.medianNumber(timeOfGeneratingKeyPair), Common.averageNumber(timeOfGeneratingKeyPair));
 		
 		System.out.printf ("Signing Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfSigning), CommonFunction.averageNumber(timeOfSigning));
+				Common.medianNumber(timeOfSigning), Common.averageNumber(timeOfSigning));
 		
 		System.out.printf ("Verification Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfVerifying), CommonFunction.averageNumber(timeOfVerifying));
+				Common.medianNumber(timeOfVerifying), Common.averageNumber(timeOfVerifying));
 		
 	}
 	
@@ -3385,13 +3452,13 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
-		int timeOfTest = 1000;
+		int timeOfTest = 5000;
 		
 		double[] timeOfGeneratingKeyPair = new double[timeOfTest];
 		double[] timeOfSigning = new double[timeOfTest];
 		double[] timeOfVerifying = new double[timeOfTest];
 		
-		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
+		seed = Common.hexadecimalStringToByteArray (seedString);
 		
 		for (int round = 0; round < timeOfTest; round++) {
 		
@@ -3450,7 +3517,7 @@ public class Test {
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
-		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
+		messageInput = Common.hexadecimalStringToByteArray (messageString);
 		
 		System.out.println ("Message:\n");
 		
@@ -3556,13 +3623,13 @@ public class Test {
 		}
 		
 		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfGeneratingKeyPair), CommonFunction.averageNumber(timeOfGeneratingKeyPair));
+				Common.medianNumber(timeOfGeneratingKeyPair), Common.averageNumber(timeOfGeneratingKeyPair));
 		
 		System.out.printf ("Signing Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfSigning), CommonFunction.averageNumber(timeOfSigning));
+				Common.medianNumber(timeOfSigning), Common.averageNumber(timeOfSigning));
 		
 		System.out.printf ("Verification Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfVerifying), CommonFunction.averageNumber(timeOfVerifying));
+				Common.medianNumber(timeOfVerifying), Common.averageNumber(timeOfVerifying));
 		
 	}
 	
@@ -3579,13 +3646,13 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
-		int timeOfTest = 1000;
+		int timeOfTest = 5000;
 		
 		double[] timeOfGeneratingKeyPair = new double[timeOfTest];
 		double[] timeOfSigning = new double[timeOfTest];
 		double[] timeOfVerifying = new double[timeOfTest];
 		
-		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
+		seed = Common.hexadecimalStringToByteArray (seedString);
 		
 		for (int round = 0; round < timeOfTest; round++) {
 		
@@ -3644,7 +3711,7 @@ public class Test {
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
-		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
+		messageInput = Common.hexadecimalStringToByteArray (messageString);
 		
 		System.out.println ("Message:\n");
 		
@@ -3750,13 +3817,13 @@ public class Test {
 		}
 		
 		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfGeneratingKeyPair), CommonFunction.averageNumber(timeOfGeneratingKeyPair));
+				Common.medianNumber(timeOfGeneratingKeyPair), Common.averageNumber(timeOfGeneratingKeyPair));
 		
 		System.out.printf ("Signing Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfSigning), CommonFunction.averageNumber(timeOfSigning));
+				Common.medianNumber(timeOfSigning), Common.averageNumber(timeOfSigning));
 		
 		System.out.printf ("Verification Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfVerifying), CommonFunction.averageNumber(timeOfVerifying));
+				Common.medianNumber(timeOfVerifying), Common.averageNumber(timeOfVerifying));
 		
 	}
 
@@ -3774,13 +3841,13 @@ public class Test {
 		byte[] seed			= new byte[48];
 		String seedString 	= "64335BF29E5DE62842C941766BA129B0643B5E7121CA26CFC190EC7DC3543830557FDD5C03CF123A456D48EFEA43C868";
 		
-		int timeOfTest = 1000;
+		int timeOfTest = 5000;
 		
 		double[] timeOfGeneratingKeyPair = new double[timeOfTest];
 		double[] timeOfSigning = new double[timeOfTest];
 		double[] timeOfVerifying = new double[timeOfTest];
 		
-		seed = CommonFunction.hexadecimalStringToByteArray (seedString);
+		seed = Common.hexadecimalStringToByteArray (seedString);
 		
 		for (int round = 0; round < timeOfTest; round++) {
 		
@@ -3840,7 +3907,7 @@ public class Test {
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		
-		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
+		messageInput = Common.hexadecimalStringToByteArray (messageString);
 		/*
 		System.out.println ("Message:\n");
 		
@@ -3946,13 +4013,13 @@ public class Test {
 		}
 		
 		System.out.printf ("Key Generation Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfGeneratingKeyPair), CommonFunction.averageNumber(timeOfGeneratingKeyPair));
+				Common.medianNumber(timeOfGeneratingKeyPair), Common.averageNumber(timeOfGeneratingKeyPair));
 		
 		System.out.printf ("Signing Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfSigning), CommonFunction.averageNumber(timeOfSigning));
+				Common.medianNumber(timeOfSigning), Common.averageNumber(timeOfSigning));
 		
 		System.out.printf ("Verification Time: Median number: %f microseconds, average number: %f microseconds\n\n", 
-				CommonFunction.medianNumber(timeOfVerifying), CommonFunction.averageNumber(timeOfVerifying));
+				Common.medianNumber(timeOfVerifying), Common.averageNumber(timeOfVerifying));
 	
 	}
 	
@@ -4034,7 +4101,7 @@ public class Test {
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		byte[] messageInput = new byte[66];
-		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
+		messageInput = Common.hexadecimalStringToByteArray (messageString);
 		
 		Signature qTESLASignature = Signature.getInstance ("QTESLASignature", "qTESLAProvider");
 		qTESLASignature.initSign (qTESLAPrivateKey, secureRandom);
@@ -4156,7 +4223,7 @@ public class Test {
 		String messageString =
 				"225D5CE2CEAC61930A07503FB59F7C2F936A3E075481DA3CA299A80F8C5DF9223A073E7B90E02EBF98CA2227EBA38C1AB2568209E46DBA961869C6F83983B17DCD49";
 		byte[] messageInput = new byte[66];
-		messageInput = CommonFunction.hexadecimalStringToByteArray (messageString);
+		messageInput = Common.hexadecimalStringToByteArray (messageString);
 		
 		Signature qTESLASignature = Signature.getInstance ("QTESLASignature", "qTESLAProvider");
 		qTESLASignature.initSign (qTESLAPrivateKey, secureRandom);

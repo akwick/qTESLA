@@ -37,8 +37,7 @@ public class Polynomial {
 	}
 	
 	/**********************************************************************************************
-	 * Description:	Barrett Reduction for Heuristic qTESLA Security Category-3
-	 * 				(Option for Size or Speed)
+	 * Description:	Barrett Reduction for Heuristic Security Category 3 (Option for Size and Speed)
 	 * 
 	 * @param		number					Number to be Reduced
 	 * @param		barrettMultiplication
@@ -54,8 +53,8 @@ public class Polynomial {
 	}
 	
 	/*************************************************************************************************
-	 * Description:	Barrett Reduction for Provably-Secure qTESLA Security Category-1 and
-	 * 				Security Category-3
+	 * Description:	Barrett Reduction for Provably-Secure qTESLA Security Category 1 and
+	 * 				Security Category 3
 	 * 
 	 * @param		number					Number to be Reduced
 	 * @param		barrettMultiplication
@@ -70,9 +69,9 @@ public class Polynomial {
 	
 	}
 	
-	/************************************************************************************************************
-	 * Description:	Forward Number Theoretic Transform for Heuristic qTESLA Security Category-1,
-	 * 				Security Category-3 (Option for Size and Speed)
+	/******************************************************************************************************************
+	 * Description:	Forward Number Theoretic Transform for Heuristic qTESLA Security Category 1,
+	 * 				Security Category 3 (Option for Size and Speed)
 	 *
 	 * @param		destination		Destination of Transformation
 	 * @param		source			Source of Transformation
@@ -81,8 +80,8 @@ public class Polynomial {
 	 * @param		qInverse
 	 * 
 	 * @return		none
-	 ************************************************************************************************************/
-	private static void numberTheoreticTransform (int destination[], int source[], int n, int q, long qInverse) {
+	 ******************************************************************************************************************/
+	private static void numberTheoreticTransform (int destination[], final int source[], int n, int q, long qInverse) {
 		
 		int jTwiddle = 0;
 		int numberOfProblem = n >> 1;
@@ -94,7 +93,7 @@ public class Polynomial {
 			
 			for (jFirst = 0; jFirst < n; jFirst = j + numberOfProblem) {
 				
-				long omega = source[jTwiddle++];
+				long omega = (long) source[jTwiddle++];
 				
 				for (j = jFirst; j < jFirst + numberOfProblem; j++) {
 					
@@ -119,7 +118,7 @@ public class Polynomial {
 	 * 
 	 * @return		none
 	 **************************************************************************************************************/
-	private static void numberTheoreticTransformIP (long destination[], long source[]) {
+	private static void numberTheoreticTransformIP (long destination[], final long source[]) {
 		
 		int numberOfProblem = Parameter.N_I_P >> 1;
 		int jTwiddle = 0;
@@ -160,7 +159,7 @@ public class Polynomial {
 	 * 
 	 * @return		none
 	 **************************************************************************************************************/
-	private static void numberTheoreticTransformIIIP (long destination[], long source[]) {
+	private static void numberTheoreticTransformIIIP (long destination[], final long source[]) {
 		
 		int jTwiddle = 0;
 		int numberOfProblem = Parameter.N_III_P >> 1; 
@@ -210,7 +209,7 @@ public class Polynomial {
 	}
 	
 	/******************************************************************************************************************
-	 * Description:	Inverse Number Theoretic Transform for Heuristic qTESLA Security Category-1
+	 * Description:	Inverse Number Theoretic Transform for Heuristic qTESLA Security Category 1
 	 * 
 	 * @param		destination			Destination of Inverse Transformation
 	 * @param		destinationOffset	Starting Point of the Destination
@@ -219,7 +218,7 @@ public class Polynomial {
 	 * 
 	 * @return		none
 	 ******************************************************************************************************************/
-	private static void inverseNumberTheoreticTransformI (int destination[], int source[]) {
+	private static void inverseNumberTheoreticTransformI (int destination[], final int source[]) {
 		
 		int jTwiddle = 0;
 		
@@ -230,7 +229,7 @@ public class Polynomial {
 			
 			for (jFirst = 0; jFirst < Parameter.N_I; jFirst = j + numberOfProblem) {
 				
-				long omega = source[jTwiddle++];
+				long omega = (long) source[jTwiddle++];
 				
 				for (j = jFirst; j < jFirst + numberOfProblem; j++) {
 					
@@ -257,8 +256,8 @@ public class Polynomial {
 		
 	}
 	
-	/**************************************************************************************************************************************************************************
-	 * Description:	Inverse Number Theoretic Transform for Heuristic qTESLA Security Category-3 (Option for Size and Speed)
+	/********************************************************************************************************************************************************************************
+	 * Description:	Inverse Number Theoretic Transform for Heuristic qTESLA Security Category 3 (Option for Size and Speed)
 	 * 
 	 * @param		destination					Destination of Inverse Transformation
 	 * @param		source						Source of Inverse Transformation
@@ -270,8 +269,8 @@ public class Polynomial {
 	 * @param		barrettDivision
 	 * 
 	 * @return		none
-	 **************************************************************************************************************************************************************************/
-	private static void inverseNumberTheoreticTransform (int destination[], int source[], int n, int q, long qInverse, int r, int barrettMultiplication, int barrettDivision) {
+	 ********************************************************************************************************************************************************************************/
+	private static void inverseNumberTheoreticTransform (int destination[], final int source[], int n, int q, long qInverse, int r, int barrettMultiplication, int barrettDivision) {
 	
 		int jTwiddle = 0;
 		
@@ -281,7 +280,7 @@ public class Polynomial {
 			
 			for (int jFirst = 0; jFirst < n; jFirst = j + numberOfProblem) {
 				
-				long omega = source[jTwiddle++];
+				long omega = (long) source[jTwiddle++];
 				
 				for (j = jFirst; j < jFirst + numberOfProblem; j++) {
 					
@@ -314,7 +313,7 @@ public class Polynomial {
 	}
 	
 	/***********************************************************************************************************************************************************************************
-	 * Description:	Inverse Number Theoretic Transform for Provably-Secure qTESLA Security Category-1
+	 * Description:	Inverse Number Theoretic Transform for Provably-Secure qTESLA Security Category 1
 	 * 
 	 * @param		destination			Destination of Inverse Transformation
 	 * @param		destinationOffset	Starting Point of the Destination
@@ -323,7 +322,7 @@ public class Polynomial {
 	 * 
 	 * @return		none
 	 ***********************************************************************************************************************************************************************************/
-	private static void inverseNumberTheoreticTransformIP (long destination[], int destinationOffset, long source[], int sourceOffset) {
+	private static void inverseNumberTheoreticTransformIP (long destination[], int destinationOffset, final long source[], int sourceOffset) {
 		
 		int jTwiddle = 0;
 		
@@ -343,7 +342,7 @@ public class Polynomial {
 					destination[destinationOffset + j]						=	temporary + destination[destinationOffset + j + numberOfProblem];
 					
 					destination[destinationOffset + j + numberOfProblem]	=	montgomeryP (
-																					omega * (temporary + (2L * Parameter.Q_I_P - destination[destinationOffset + j + numberOfProblem])),
+																					omega * (temporary + (2 * Parameter.Q_I_P - destination[destinationOffset + j + numberOfProblem])),
 																					Parameter.Q_I_P, Parameter.Q_INVERSE_I_P
 																				);
 					
@@ -367,7 +366,7 @@ public class Polynomial {
 																				);
 					
 					destination[destinationOffset + j + numberOfProblem]	=	montgomeryP (
-																					omega * (temporary + (2L * Parameter.Q_I_P - destination[destinationOffset + j + numberOfProblem])),
+																					omega * (temporary + (2 * Parameter.Q_I_P - destination[destinationOffset + j + numberOfProblem])),
 																					Parameter.Q_I_P, Parameter.Q_INVERSE_I_P
 																				);
 					
@@ -380,7 +379,7 @@ public class Polynomial {
 	}
 	
 	/******************************************************************************************************************************************************************************************
-	 * Description:	Inverse Number Theoretic Transform for Provably-Secure qTESLA Security Category-3
+	 * Description:	Inverse Number Theoretic Transform for Provably-Secure qTESLA Security Category 3
 	 * 
 	 * @param		destination			Destination of Inverse Transformation
 	 * @param		destinationOffset	Starting Point of the Destination
@@ -389,7 +388,7 @@ public class Polynomial {
 	 * 
 	 * @return		none
 	 ******************************************************************************************************************************************************************************************/
-	private static void inverseNumberTheoreticTransformIIIP (long destination[], int destinationOffset, long source[], int sourceOffset) {
+	private static void inverseNumberTheoreticTransformIIIP (long destination[], int destinationOffset, final long source[], int sourceOffset) {
 	
 		int jTwiddle = 0;
 		
@@ -427,8 +426,8 @@ public class Polynomial {
 		
 	}
 	
-	/****************************************************************************************************************************************************
-	 * Description:	Component Wise Polynomial Multiplication for Heuristic qTESLA Security Category-1 and Security Category-3 (Option for Size and Speed)
+	/*********************************************************************************************************************************************************
+	 * Description:	Component Wise Polynomial Multiplication for Heuristic qTESLA Security Category 1 and Security Category 3 (Option for Size and Speed)
 	 * 
 	 * @param		product					Product = Multiplicand (*) Multiplier
 	 * @param		multiplicand			Multiplicand Array
@@ -438,8 +437,8 @@ public class Polynomial {
 	 * @param		qInverse
 	 * 
 	 * @return		none
-	 ****************************************************************************************************************************************************/
-	private static void componentWisePolynomialMultiplication (int[] product, int[] multiplicand, int[] multiplier, int n, int q, long qInverse) {
+	 *********************************************************************************************************************************************************/
+	private static void componentWisePolynomialMultiplication (int[] product, final int[] multiplicand, final int[] multiplier, int n, int q, long qInverse) {
 
 		for (int i = 0; i < n; i++) {
 			
@@ -449,8 +448,8 @@ public class Polynomial {
 	
 	}
 	
-	/******************************************************************************************************************************************************************************************************************
-	 * Description:	Component Wise Polynomial Multiplication for Provably-Secure qTESLA Security Category-1 and Security Category-3
+	/*****************************************************************************************************************************************************************************************************************************
+	 * Description:	Component Wise Polynomial Multiplication for Provably-Secure qTESLA Security Category 1 and Security Category 3
 	 * 
 	 * @param		product					Product = Multiplicand (*) Multiplier
 	 * @param		productOffset			Starting Point of the Product Array
@@ -463,8 +462,8 @@ public class Polynomial {
 	 * @param		qInverse
 	 * 
 	 * @return		none
-	 ******************************************************************************************************************************************************************************************************************/
-	private static void componentWisePolynomialMultiplication (long[] product, int productOffset, long[] multiplicand, int multiplicandOffset, long[] multiplier, int multiplierOffset, int n, int q, long qInverse) {
+	 *****************************************************************************************************************************************************************************************************************************/
+	private static void componentWisePolynomialMultiplication (long[] product, int productOffset, final long[] multiplicand, int multiplicandOffset, final long[] multiplier, int multiplierOffset, int n, int q, long qInverse) {
 
 		for (int i = 0; i < n; i++) {
 			
@@ -474,16 +473,16 @@ public class Polynomial {
 	
 	}
 	
-	/***********************************************************************************************************************************************
-	 * Description:	Polynomial Number Theoretic Transform for Provably-Secure qTESLA Security Category-1 and Category-3
+	/**********************************************************************************************************************
+	 * Description:	Polynomial Number Theoretic Transform for Provably-Secure qTESLA Security Category 1 and Category 3
 	 * 
 	 * @param		arrayNumberTheoreticTransform		Transformed Array
 	 * @param		array								Array to be Transformed
 	 * @param		n									Polynomial Degree
 	 * 
 	 * @return		none
-	 ***********************************************************************************************************************************************/
-	public static void polynomialNumberTheoreticTransform (long[] arrayNumberTheoreticTransform, long[] array, int n) {
+	 **********************************************************************************************************************/
+	public static void polynomialNumberTheoreticTransform (long[] arrayNumberTheoreticTransform, final long[] array, int n) {
 		
 		for (int i = 0; i < n; i++) {
 			
@@ -505,8 +504,8 @@ public class Polynomial {
 		
 	}
 	
-	/*******************************************************************************************************************************************
-	 * Description:	Polynomial Multiplication for Heuristic qTESLA Security Category-1 and Category-3 (Option for Size and Speed)
+	/*******************************************************************************************************************************************************
+	 * Description:	Polynomial Multiplication for Heuristic qTESLA Security Category 1 and Category 3 (Option for Size and Speed)
 	 * 
 	 * @param		product					Product = Multiplicand * Multiplier
 	 * @param		multiplicand			Multiplicand Array
@@ -517,8 +516,8 @@ public class Polynomial {
 	 * @param		zeta
 	 * 
 	 * @return		none
-	 *******************************************************************************************************************************************/
-	public static void polynomialMultiplication (int[] product, int[] multiplicand, int[] multiplier, int n, int q, long qInverse, int[] zeta) {
+	 *******************************************************************************************************************************************************/
+	public static void polynomialMultiplication (int[] product, final int[] multiplicand, final int[] multiplier, int n, int q, long qInverse, int[] zeta) {
 		
 		int[] multiplierNumberTheoreticTransform = new int[n];
 		
@@ -564,8 +563,8 @@ public class Polynomial {
 		
 	}
 	
-	/***************************************************************************************************************************************************************************************************
-	 * Description:	Polynomial Multiplication for Provably-Secure qTESLA Security Category-1 and Category-3
+	/***************************************************************************************************************************************************************************************************************
+	 * Description:	Polynomial Multiplication for Provably-Secure qTESLA Security Category 1 and Category 3
 	 * 
 	 * @param		product					Product = Multiplicand * Multiplier
 	 * @param		productOffset			Starting Point of the Product Array
@@ -578,8 +577,8 @@ public class Polynomial {
 	 * @param		qInverse
 	 * 
 	 * @return		none
-	 ***************************************************************************************************************************************************************************************************/
-	public static void polynomialMultiplication (long[] product, int productOffset, long[] multiplicand, int multiplicandOffset, long[] multiplier, int multiplierOffset, int n, int q, long qInverse) {
+	 ***************************************************************************************************************************************************************************************************************/
+	public static void polynomialMultiplication (long[] product, int productOffset, final long[] multiplicand, int multiplicandOffset, final long[] multiplier, int multiplierOffset, int n, int q, long qInverse) {
 		
 		componentWisePolynomialMultiplication (product, productOffset, multiplicand, multiplicandOffset, multiplier, multiplierOffset, n, q, qInverse);
 		
@@ -598,7 +597,7 @@ public class Polynomial {
 	}
 	
 	/****************************************************************************************************************************************************
-	 * Description:	Polynomial Addition for Heuristic qTESLA Security Category-1 and Category-3 (Option for Size or Speed)
+	 * Description:	Polynomial Addition for Heuristic qTESLA Security Category 1 and Category 3 (Option for Size or Speed)
 	 * 				Q + L_E < 2 ^ (CEIL (LOGARITHM (Q, 2)))
 	 * 				No Necessary Reduction for Y + SC
 	 * 
@@ -609,7 +608,7 @@ public class Polynomial {
 	 * 
 	 * @return		none
 	 ****************************************************************************************************************************************************/
-	public static void polynomialAddition (int[] summation, int[] augend, int[] addend, int n) {
+	public static void polynomialAddition (int[] summation, final int[] augend, final int[] addend, int n) {
 		
 		for (int i = 0; i < n; i++) {
 			
@@ -619,8 +618,8 @@ public class Polynomial {
 		
 	}
 	
-	/********************************************************************************************************************************************************
-	 * Description:	Polynomial Addition for Provably-Secure qTESLA Security Category-1 and Category-3
+	/*******************************************************************************************************************************************************************
+	 * Description:	Polynomial Addition for Provably-Secure qTESLA Security Category 1 and Category 3
 	 * 				Q + L_E < 2 ^ (CEIL (LOGARITHM (Q, 2)))
 	 * 				No Necessary Reduction for Y + SC
 	 * 
@@ -633,8 +632,8 @@ public class Polynomial {
 	 * @param		n					Polynomial Degree
 	 * 
 	 * @return		none
-	 ********************************************************************************************************************************************************/
-	public static void polynomialAddition (long[] summation, int summationOffset, long[] augend, int augendOffset, long[] addend, int addendOffset, int n) {
+	 *******************************************************************************************************************************************************************/
+	public static void polynomialAddition (long[] summation, int summationOffset, final long[] augend, int augendOffset, final long[] addend, int addendOffset, int n) {
 		
 		for (int i = 0; i < n; i++) {
 			
@@ -644,8 +643,8 @@ public class Polynomial {
 		
 	}
 	
-	/*************************************************************************************************************
-	 * Description:	Polynomial Addition with Correction for Heuristic qTESLA Security Category-1 and Category-3
+	/************************************************************************************************************************
+	 * Description:	Polynomial Addition with Correction for Heuristic qTESLA Security Category 1 and Category 3
 	 * 				(Option for Size or Speed)
 	 * 				Q + L_E < 2 ^ (CEIL (LOGARITHM (Q, 2)))
 	 * 				No Necessary Reduction for Y + SC
@@ -656,8 +655,8 @@ public class Polynomial {
 	 * @param		n					Polynomial Degree
 	 * 
 	 * @return		none
-	 ************************************************************************************************************/
-	public static void polynomialAdditionCorrection (int[] summation, int[] augend, int[] addend, int n, int q) {
+	 ************************************************************************************************************************/
+	public static void polynomialAdditionCorrection (int[] summation, final int[] augend, final int[] addend, int n, int q) {
 		
 		for (int i = 0; i < n; i++) {
 			
@@ -672,8 +671,38 @@ public class Polynomial {
 		
 	}
 	
-	/**********************************************************************************************************************
-	 * Description:	Polynomial Subtraction with Correction for Heuristic qTESLA Security Category-1 and Security Category-3
+	/************************************************************************************************************************************************************************************
+	 * Description:	Polynomial Addition with Correction for Provably-Secure qTESLA Security Category 1 and Category 3
+	 * 				Q + L_E < 2 ^ (CEIL (LOGARITHM (Q, 2)))
+	 * 				No Necessary Reduction for Y + SC
+	 * 
+	 * @param		summation			Summation = Augend + Addend
+	 * @param		summationOffset		Starting Point of the Summation
+	 * @param		augend				Augend Array
+	 * @param		augendOffset		Starting Point of the Augend
+	 * @param		addend				Addend Array
+	 * @param		addendOffset		Starting Point of the Addend
+	 * @param		n					Polynomial Degree
+	 * 
+	 * @return		none
+	 ************************************************************************************************************************************************************************************/
+	public static void polynomialAdditionCorrection (long[] summation, int summationOffset, final long[] augend, int augendOffset, final long[] addend, int addendOffset, int n, int q) {
+		
+		for (int i = 0; i < n; i++) {
+			
+			summation[summationOffset + i]  = augend[addendOffset + i] + addend[addendOffset + i];
+			/* If summation[i] < 0 Then Add Q */
+			summation[summationOffset + i] += (summation[summationOffset + i] >> 31) & q;
+			summation[summationOffset + i] -= q;
+			/* If summation[i] >= Q Then Subtract Q */
+			summation[summationOffset + i] += (summation[summationOffset + i] >> 31) & q;
+			
+		}
+		
+	}
+	
+	/*********************************************************************************************************************************
+	 * Description:	Polynomial Subtraction with Correction for Heuristic qTESLA Security Category 1 and Security Category 3
 	 *				(Option for Size or Speed)
 	 * 
 	 * @param		difference					Difference = Minuend (-) Subtrahend
@@ -683,8 +712,8 @@ public class Polynomial {
 	 * @param		q							Modulus
 	 * 
 	 * @return		none
-	 ***********************************************************************************************************************/
-	public static void polynomialSubtractionCorrection (int[] difference, int[] minuend, int[] subtrahend, int n, int q) {
+	 *********************************************************************************************************************************/
+	public static void polynomialSubtractionCorrection (int[] difference, final int[] minuend, final int[] subtrahend, int n, int q) {
 		
 		for (int i = 0; i < n; i++) {
 			
@@ -696,8 +725,8 @@ public class Polynomial {
 		
 	}
 	
-	/*******************************************************************************************************************************************
-	 * Description:	Polynomial Subtraction with Montgomery Reduction for Heuristic qTESLA Security Category-1 and Security Category-3
+	/******************************************************************************************************************************************************
+	 * Description:	Polynomial Subtraction with Montgomery Reduction for Heuristic qTESLA Security Category 1 and Security Category 3
 	 *				(Option for Size or Speed)
 	 * 
 	 * @param		difference					Difference = Minuend (-) Subtrahend
@@ -709,8 +738,8 @@ public class Polynomial {
 	 * @param		r
 	 * 
 	 * @return		none
-	 *******************************************************************************************************************************************/
-	public static void polynomialSubtractionMontgomery (int[] difference, int[] minuend, int[] subtrahend, int n, int q, long qInverse, int r) {
+	 *******************************************************************************************************************************************************/
+	public static void polynomialSubtractionMontgomery (int[] difference, final int[] minuend, final int[] subtrahend, int n, int q, long qInverse, int r) {
 		
 		for (int i = 0; i < n; i++) {
 			
@@ -720,8 +749,8 @@ public class Polynomial {
 		
 	}
 	
-	/******************************************************************************************************************************************************************************************************************************
-	 * Description:	Polynomial Subtraction for Provably-Secure qTESLA Security Category-1 and Security Category-3
+	/******************************************************************************************************************************************************************************************************************************************
+	 * Description:	Polynomial Subtraction for Provably-Secure qTESLA Security Category 1 and Security Category 3
 	 * 
 	 * @param		difference					Difference = Minuend (-) Subtrahend
 	 * @param		differenceOffset			Starting Point of the Difference Array
@@ -735,8 +764,8 @@ public class Polynomial {
 	 * @param		barrettDivision
 	 * 
 	 * @return		none
-	 ******************************************************************************************************************************************************************************************************************************/
-	public static void polynomialSubtraction (long[] difference, int differenceOffset, long[] minuend, int minuendOffset, long [] subtrahend, int subtrahendOffset, int n, int q, int barrettMultiplication, int barrettDivision) {
+	 ******************************************************************************************************************************************************************************************************************************************/
+	public static void polynomialSubtraction (long[] difference, int differenceOffset, final long[] minuend, int minuendOffset, final long [] subtrahend, int subtrahendOffset, int n, int q, int barrettMultiplication, int barrettDivision) {
 		
 		for (int i = 0; i < n; i++) {
 			
@@ -798,16 +827,16 @@ public class Polynomial {
 				
 			}
 			
-			value1 = CommonFunction.load32 (buffer, position) & mask; 
+			value1 = Common.load32 (buffer, position) & mask; 
 			position += numberOfByte;
 			
-			value2 = CommonFunction.load32 (buffer, position) & mask;
+			value2 = Common.load32 (buffer, position) & mask;
 			position += numberOfByte;
 			
-			value3 = CommonFunction.load32 (buffer, position) & mask;
+			value3 = Common.load32 (buffer, position) & mask;
 			position += numberOfByte;
 			
-			value4 = CommonFunction.load32 (buffer, position) & mask;
+			value4 = Common.load32 (buffer, position) & mask;
 			position += numberOfByte;
 			
 			if (value1 < q && i < n) {
@@ -891,16 +920,16 @@ public class Polynomial {
 				
 			}
 			
-			value1 = CommonFunction.load32 (buffer, position) & mask; 
+			value1 = Common.load32 (buffer, position) & mask; 
 			position += numberOfByte;
 			
-			value2 = CommonFunction.load32 (buffer, position) & mask;
+			value2 = Common.load32 (buffer, position) & mask;
 			position += numberOfByte;
 			
-			value3 = CommonFunction.load32 (buffer, position) & mask;
+			value3 = Common.load32 (buffer, position) & mask;
 			position += numberOfByte;
 			
-			value4 = CommonFunction.load32 (buffer, position) & mask;
+			value4 = Common.load32 (buffer, position) & mask;
 			position += numberOfByte;
 			
 			if (value1 < q && i < n * k) {

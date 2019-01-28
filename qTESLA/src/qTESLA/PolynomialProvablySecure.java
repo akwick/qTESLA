@@ -2,7 +2,7 @@ package qTESLA;
 
 public final class PolynomialProvablySecure {
 	
-	/* Provably-Secure qTESLA Security Category-1 */
+/* Provably-Secure qTESLA Security Category-1 */
 	
 	public static final long[] ZETA_I_P = {					/* 1024-Entry */
 			

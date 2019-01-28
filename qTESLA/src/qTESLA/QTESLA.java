@@ -106,7 +106,7 @@ public class QTESLA {
 	}
 	
 	/******************************************************************************************************************************************
-	 * Description:	Hash Function to Generate C' for Heuristic qTESLA Security Category-1 and Category-3 (Option for Size or Speed)
+	 * Description:	Hash-Based Function to Generate C' for Heuristic qTESLA Security Category 1 and Category 3 (Option for Size or Speed)
 	 ******************************************************************************************************************************************/
 	private static void hashFunction (byte[] output, int outputOffset, int[] V, final byte[] message, int messageOffset, int n, int d, int q) {
 		
@@ -144,14 +144,14 @@ public class QTESLA {
 	}
 	
 	/**************************************************************************************************************************************************
-	 * Description:	Hash Function to Generate C' for Provably-Secure qTESLA Security Category-1 and Security Category-3
+	 * Description:	Hash Function to Generate C' for Provably-Secure qTESLA Security Category 1 and Security Category 3
 	 **************************************************************************************************************************************************/
 	private static void hashFunction (byte[] output, int outputOffset, long[] V, final byte[] message, int messageOffset, int n, int k, int d, int q) {
 		
 		int index;
-		long mask;
-		long cL;
-		long temporary;
+		int mask;
+		int cL;
+		int temporary;
 		
 		byte[] T = new byte[n * k + Parameter.MESSAGE];
 		
@@ -161,13 +161,13 @@ public class QTESLA {
 			
 			for (int i = 0; i < n; i++) {
 				
-				temporary	= V[index];
+				temporary	= (int) V[index];
 				/* If V[i] > Q / 2 Then V[i] = V[i] - Q */
 				mask		= (q / 2 - temporary) >> 63;
 				temporary	= ((temporary - q) & mask) | (temporary & (~ mask));
 				cL			= temporary & ((1 << d) - 1);
 				/* If cL > 2 ^ (d - 1) Then cL = cL - 2 ^ d */
-				mask		= ((1 << (d - 1)) - cL) >> 63;
+				mask		= ((1 << (d - 1)) - cL) >> 31;
 				cL			= ((cL - (1 << d)) & mask) | (cL & (~ mask));
 				T[index++]	= (byte) ((temporary - cL) >> d);
 				
@@ -289,7 +289,7 @@ public class QTESLA {
 		
 		for (int i = 0; i < n; i++) {
 			
-			if (CommonFunction.absolute (Z[i]) > (b - u)) {
+			if (Common.absolute (Z[i]) > (b - u)) {
 				
 				return true;
 				
@@ -320,7 +320,7 @@ public class QTESLA {
 		
 		for (int i = 0; i < n; i++) {
 			
-			if (CommonFunction.absolute (Z[i]) > (b - u)) {
+			if (Common.absolute ((int) Z[i]) > (b - u)) {
 				
 				return true;
 				
@@ -334,7 +334,7 @@ public class QTESLA {
 	
 	/**********************************************************************************
 	 * Description:	Checks Bounds for Signature Vector Z During Signature Verification
-	 * 				for Heuristic qTESLA Security Category-1 and Security Category-3
+	 * 				for Heuristic qTESLA Security Category 1 and Security Category 3
 	 * 				(Option of Size of Speed)
 	 * 
 	 * @param		Z		Signature Vector
@@ -389,12 +389,12 @@ public class QTESLA {
 		
 	}
 	
-	/*********************************************************************************
+	/*************************************************************************************
 	 * Description:	Checks Bounds for W = V - EC During Signature Verification.
 	 * 				Leaks the Position of the Coefficient that Fails the Test.
 	 * 				The Position of the Coefficient is Independent of the Secret Data.
 	 * 				Does not Leak the Signature of the Coefficients.
-	 * 				For Heuristic qTESLA Security Category-1 and Security Category-3
+	 * 				For Heuristic qTESLA Security Category 1 and Security Category 3
 	 * 				(Option for Size or Speed)
 	 * 
 	 * @param		V			Parameter to be Checked
@@ -405,8 +405,8 @@ public class QTESLA {
 	 * 
 	 * @return		false		Valid / Accepted
 	 * 				true		Invalid / Rejected
-	 *********************************************************************************/
-	private static boolean testV (int[] V, int n, int d, int q, int rejection) {
+	 *************************************************************************************/
+	private static boolean testCorrectness (int[] V, int n, int d, int q, int rejection) {
 	
 		int mask;
 		int left;
@@ -418,11 +418,11 @@ public class QTESLA {
 			
 			mask  = (q / 2 - V[i]) >> 31;
 			right = ((V[i] - q) & mask) | (V[i] & (~ mask));
-			test1 = (~ (CommonFunction.absolute (right) - (q / 2 - rejection))) >>> 31;
+			test1 = (~ (Common.absolute (right) - (q / 2 - rejection))) >>> 31;
 			left  = right;
 			right = (right + (1 << (d - 1)) - 1) >> d;
 			right = left - (right << d);
-			test2 = (~ (CommonFunction.absolute (right) - ((1 << (d - 1)) - rejection))) >>> 31;
+			test2 = (~ (Common.absolute (right) - ((1 << (d - 1)) - rejection))) >>> 31;
 			
 			/* Two Tests Fail */
 			if ((test1 | test2) == 1) {
@@ -437,12 +437,12 @@ public class QTESLA {
 		
 	}
 	
-	/****************************************************************************************
+	/**************************************************************************************************
 	 * Description:	Checks Bounds for W = V - EC During Signature Verification.
 	 * 				Leaks the Position of the Coefficient that Fails the Test.
 	 * 				The Position of the Coefficient is Independent of the Secret Data.
 	 * 				Does not Leak the Signature of the Coefficients.
-	 * 				For Provably-Secure qTESLA Security Category-1 and Security Category-3
+	 * 				For Provably-Secure qTESLA Security Category 1 and Security Category 3
 	 * 
 	 * @param		V			Parameter to be Checked
 	 * @param		vOffset		Starting Point of V
@@ -453,25 +453,25 @@ public class QTESLA {
 	 * 
 	 * @return		false		Valid / Accepted
 	 * 				true		Invalid / Rejected
-	 ****************************************************************************************/
-	private static boolean testV (long[] V, int vOffset, int n, int d, int q, int rejection) {
+	 ***************************************************************************************************/
+	private static boolean testCorrectness (long[] V, int vOffset, int n, int d, int q, int rejection) {
 	
-		long mask;
-		long left;
-		long right;
-		long test1;
-		long test2;
+		int mask;
+		int left;
+		int right;
+		int test1;
+		int test2;
 		
 		for (int i = 0; i < n; i++) {
 			
-			mask  = (q / 2 - V[vOffset + i]) >> 63;
-			right = ((V[vOffset + i] - q) & mask) | (V[vOffset + i] & (~ mask));
-			test1 = (~ (CommonFunction.absolute (right) - (q / 2 - rejection))) >>> 63;
+			mask  = (int) (q / 2 - V[vOffset + i]) >> 31;
+			right = (int) (((V[vOffset + i] - q) & mask) | (V[vOffset + i] & (~ mask)));
+			test1 = (~ (Common.absolute (right) - (q / 2 - rejection))) >>> 31;
 			
 			left  = right;
-			right = (int) ((right + (1 << (d - 1)) - 1) >> d);
+			right = (right + (1 << (d - 1)) - 1) >> d;
 			right = left - (right << d);
-			test2 = (~ (CommonFunction.absolute (right) - ((1 << (d - 1)) - rejection))) >>> 63;
+			test2 = (~ (Common.absolute (right) - ((1 << (d - 1)) - rejection))) >>> 31;
 			
 			/* Two Tests Fail */
 			if ((test1 | test2) == 1L) {
@@ -501,7 +501,7 @@ public class QTESLA {
 	 **********************************************************************************************************/
 	private static boolean checkPolynomial (int[] polynomial, int bound, int n, int h) {
 		
-		int summation = 0;
+		long summation = 0;
 		int limit = n;
 		int temporary;
 		int mask;
@@ -509,7 +509,7 @@ public class QTESLA {
 		
 		for (int i = 0; i < n; i++) {
 			
-			list[i] = CommonFunction.absolute (polynomial[i]);
+			list[i] = Common.absolute (polynomial[i]);
 			
 		}
 		
@@ -525,6 +525,7 @@ public class QTESLA {
 			}
 			
 			summation += list[limit - 1];
+			
 			limit--;
 			
 		}
@@ -539,10 +540,10 @@ public class QTESLA {
 		
 	}
 	
-	/**********************************************************************************************************
+	/***********************************************************************************************
 	 * Description:	Checks Whether the Generated Error Polynomial or the Generated Secret Polynomial
 	 *				Fulfills Certain Properties Needed in Key Generation Algorithm
-	 *				For Provably-Secure qTESLA Security Category-1 and Security Category-3
+	 *				For Provably-Secure qTESLA Security Category 1 and Security Category 3
 	 * 
 	 * @param		polynomial		Parameter to be Checked
 	 * @param		offset			Starting Point of the Polynomial to be Checked
@@ -552,18 +553,18 @@ public class QTESLA {
 	 * 
 	 * @return		false			Fulfillment
 	 * 				true			No Fulfillment
-	 **********************************************************************************************************/
+	 ***********************************************************************************************/
 	private static boolean checkPolynomial (long[] polynomial, int offset, int bound, int n, int h) {
 		
 		int summation = 0;
 		int limit = n;
-		short temporary;
-		short mask;
-		short[] list = new short[n];
+		int temporary;
+		int mask;
+		int[] list = new int[n];
 		
 		for (int i = 0; i < n; i++) {
 			
-			list[i] = (short) (CommonFunction.absolute (polynomial[offset + i]));
+			list[i] = Common.absolute ((int) polynomial[offset + i]);
 			
 		}
 		
@@ -571,14 +572,14 @@ public class QTESLA {
 			
 			for (int j = 0; j < limit - 1; j++) {
 				/* If list[j + 1] > list[j] Then Exchanges Contents */
-				mask		= (short) ((list[j + 1] - list[j]) >> 15);
-				temporary	= (short) ((list[j + 1] & mask) | (list[j]     & (~ mask)));
-				list[j + 1]	= (short) ((list[j]     & mask) | (list[j + 1] & (~ mask)));
+				mask		= (list[j + 1] - list[j]) >> 31;
+				temporary	= (list[j + 1] & mask) | (list[j]	  & (~ mask));
+				list[j + 1]	= (list[j]     & mask) | (list[j + 1] & (~ mask));
 				list[j]		= temporary;
 				
 			}
 			
-			summation += (int) list[limit - 1];
+			summation += list[limit - 1];
 			limit--;
 			
 		}
@@ -668,19 +669,34 @@ public class QTESLA {
 			
 			if (q == Parameter.Q_I) {
 				
-				Sample.polynomialGaussSamplerI (errorPolynomial, 0, randomnessExtended, 0, ++nonce);
+				Gauss.polynomialGaussSampler (
+						errorPolynomial, 0, randomnessExtended, 0, ++nonce, n,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_I,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_I,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_I
+				);
 				
 			}
 			
 			if (q == Parameter.Q_III_SIZE) {
 				
-				Sample.polynomialGaussSamplerIII (errorPolynomial, 0, randomnessExtended, 0, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_III_SIZE);
+				Gauss.polynomialGaussSampler (
+						errorPolynomial, 0, randomnessExtended, 0, ++nonce, n,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_III_SIZE,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_III_SIZE,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_III_SIZE
+				);
 				
 			}
 			
 			if (q == Parameter.Q_III_SPEED) {
 				
-				Sample.polynomialGaussSamplerIII (errorPolynomial, 0, randomnessExtended, 0, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_III_SPEED);
+				Gauss.polynomialGaussSampler (
+						errorPolynomial, 0, randomnessExtended, 0, ++nonce, n,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_III_SPEED,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_III_SPEED,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_III_SPEED
+				);
 				
 			}
 			
@@ -695,19 +711,34 @@ public class QTESLA {
 			
 			if (q == Parameter.Q_I) {
 				
-				Sample.polynomialGaussSamplerI (secretPolynomial, 0, randomnessExtended, Parameter.SEED, ++nonce);
+				Gauss.polynomialGaussSampler (
+						secretPolynomial, 0, randomnessExtended, Parameter.SEED, ++nonce, n,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_I,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_I,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_I
+				);
 				
 			}
 			
 			if (q == Parameter.Q_III_SIZE) {
 				
-				Sample.polynomialGaussSamplerIII (secretPolynomial, 0, randomnessExtended, Parameter.SEED, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_III_SIZE);
+				Gauss.polynomialGaussSampler (
+						secretPolynomial, 0, randomnessExtended, Parameter.SEED, ++nonce, n,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_III_SIZE,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_III_SIZE,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_III_SIZE
+				);
 				
 			}
 			
 			if (q == Parameter.Q_III_SPEED) {
 				
-				Sample.polynomialGaussSamplerIII (secretPolynomial, 0, randomnessExtended, Parameter.SEED, ++nonce, n, xi, Sample.EXPONENTIAL_DISTRIBUTION_III_SPEED);
+				Gauss.polynomialGaussSampler (
+						secretPolynomial, 0, randomnessExtended, Parameter.SEED, ++nonce, n,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_III_SPEED,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_III_SPEED,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_III_SPEED
+				);
 				
 			}
 			
@@ -888,8 +919,6 @@ public class QTESLA {
 		/* Initialize Domain Separator for Error Polynomial and Secret Polynomial */
 		int nonce = 0;
 		
-		long mask;
-		
 		byte[] randomness			= new byte[Parameter.RANDOM];
 		
 		/* Extend Random Bytes to Seed Generation of Error Polynomial and Secret Polynomial */
@@ -932,13 +961,23 @@ public class QTESLA {
 				
 				if (q == Parameter.Q_I_P) {
 					
-					Sample.polynomialGaussSamplerIP (errorPolynomial, n * i, randomnessExtended, Parameter.SEED * i, ++nonce);
-				
+					Gauss.polynomialGaussSampler (
+							errorPolynomial, n * i, randomnessExtended, Parameter.SEED * i, ++nonce, n,
+							CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_I_P,
+							CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_I_P,
+							CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_I_P
+					);
+					
 				}
 				
 				if (q == Parameter.Q_III_P) {
 					
-					Sample.polynomialGaussSamplerIIIP (errorPolynomial, n * i, randomnessExtended, Parameter.SEED * i, ++nonce);
+					Gauss.polynomialGaussSampler (
+							errorPolynomial, n * i, randomnessExtended, Parameter.SEED * i, ++nonce, n,
+							CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_III_P,
+							CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_III_P,
+							CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_III_P
+					);
 					
 				}
 				
@@ -955,14 +994,24 @@ public class QTESLA {
 			
 			if (q == Parameter.Q_I_P) {
 				
-				Sample.polynomialGaussSamplerIP (secretPolynomial, 0, randomnessExtended, Parameter.SEED * k, ++nonce);
-			
+				Gauss.polynomialGaussSampler (
+						secretPolynomial, 0, randomnessExtended, Parameter.SEED * k, ++nonce, n,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_I_P,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_I_P,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_I_P
+				);
+				
 			}
 			
 			if (q == Parameter.Q_III_P) {
 				
-				Sample.polynomialGaussSamplerIIIP (secretPolynomial, 0, randomnessExtended, Parameter.SEED * k, ++nonce);
-				
+				Gauss.polynomialGaussSampler (
+						secretPolynomial, 0, randomnessExtended, Parameter.SEED * k, ++nonce, n,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_ROW_III_P,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_III_P,
+						CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_III_P
+				);
+
 			}
 			
 		} while (checkPolynomial (secretPolynomial, 0, secretBound, n, h) == true);
@@ -978,14 +1027,7 @@ public class QTESLA {
 		for (int i = 0; i < k; i++) {
 			
 			Polynomial.polynomialMultiplication (T, n * i, A, n * i, secretPolynomialNumberTheoreticTransform, 0, n, q, qInverse);	
-			Polynomial.polynomialAddition (T, n * i, T, n * i, errorPolynomial, n * i, n);
-			
-			for (int j = 0; j < n; j++) {
-				
-				mask = (q - T[n * i + j]) >> 63;
-				T[n * i + j] -= (q & mask);
-				
-			}
+			Polynomial.polynomialAdditionCorrection (T, n * i, T, n * i, errorPolynomial, n * i, n, q);
 		
 		}
 		
@@ -1224,7 +1266,7 @@ public class QTESLA {
 			/* V = V - EC modulo Q */
 			Polynomial.polynomialSubtractionCorrection (V, V, EC, n, q);
 			
-			if (testV (V, n, d, q, rejection) == true) {
+			if (testCorrectness (V, n, d, q, rejection) == true) {
 				
 				continue;
 				
@@ -1552,7 +1594,7 @@ public class QTESLA {
 				/* V_i = V_i - EC_i Modulo Q for All k */
 				Polynomial.polynomialSubtraction (V, n * i, V, n * i, EC, n * i, n, q, barrettMultiplication, barrettDivision);
 				
-				response = testV (V, n * i, n, d, q, rejection);
+				response = testCorrectness (V, n * i, n, d, q, rejection);
 				
 				if (response == true) {
 				
@@ -1812,7 +1854,7 @@ public class QTESLA {
 		hashFunction (cSignature, 0, W, hashMessage, 0, n, d, q);
 		
 		/* Check if Same With One from Signature */
-		if (CommonFunction.memoryEqual (C, 0, cSignature, 0, Parameter.HASH) == false) {
+		if (Common.memoryEqual (C, 0, cSignature, 0, Parameter.HASH) == false) {
 			
 			return -3;
 			
@@ -2080,7 +2122,7 @@ public class QTESLA {
 		hashFunction (cSignature, 0, W, hashMessage, 0, n, k, d, q);
 		
 		/* Check if Same with One from Signature */
-		if (CommonFunction.memoryEqual (C, 0, cSignature, 0, Parameter.HASH) == false) {
+		if (Common.memoryEqual (C, 0, cSignature, 0, Parameter.HASH) == false) {
 			
 			return -3;
 			

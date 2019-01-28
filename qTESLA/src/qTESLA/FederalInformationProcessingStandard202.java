@@ -236,7 +236,7 @@ public class FederalInformationProcessingStandard202 {
 			
 			for (int i = 0; i < rate / 8; ++i) {
 				
-				state[i] ^= CommonFunction.load64 (message, messageOffset + Long.SIZE / Byte.SIZE * i);
+				state[i] ^= Common.load64 (message, messageOffset + Long.SIZE / Byte.SIZE * i);
 				
 			}
 			
@@ -255,7 +255,7 @@ public class FederalInformationProcessingStandard202 {
 		
 		for (int i = 0; i < rate / (Long.SIZE / Byte.SIZE); ++i) {
 			
-			state[i] ^= CommonFunction.load64 (T, Long.SIZE / Byte.SIZE * i);
+			state[i] ^= Common.load64 (T, Long.SIZE / Byte.SIZE * i);
 			
 		}
 		
@@ -269,7 +269,7 @@ public class FederalInformationProcessingStandard202 {
 			
 			for (int i = 0; i < (rate >> 3); i++) {
 				
-				CommonFunction.store64 (output, outputOffset + Long.SIZE / Byte.SIZE * i, state[i]);
+				Common.store64 (output, outputOffset + Long.SIZE / Byte.SIZE * i, state[i]);
 				
 			}
 
