@@ -150,7 +150,7 @@ public class Test {
 		// testEncodeC ();
 		// testGenerateKeyPairSigningVerifyingI ();
 		// testGenerateKeyPairSigningVerifyingIIISize ();
-		testGenerateKeyPairSigningVerifyingIIISpeed ();
+		// testGenerateKeyPairSigningVerifyingIIISpeed ();
 		// testGenerateKeyPairSigningVerifyingPI ();
 		// testGenerateKeyPairSigningVerifyingPIII ();
 		
