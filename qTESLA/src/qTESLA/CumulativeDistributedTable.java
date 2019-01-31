@@ -2,17 +2,6 @@ package qTESLA;
 
 public class CumulativeDistributedTable {
 	
-	public static final int CUMULATIVE_DISTRIBUTED_TABLE_ROW_I = 209;
-	public static final int CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_I = 1;
-	public static final int CUMULATIVE_DISTRIBUTED_TABLE_ROW_III_SIZE = 101;
-	public static final int CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_III_SIZE = 2;
-	public static final int CUMULATIVE_DISTRIBUTED_TABLE_ROW_III_SPEED = 135;
-	public static final int CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_III_SPEED = 2;
-	public static final int CUMULATIVE_DISTRIBUTED_TABLE_ROW_I_P = 79;
-	public static final int CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_I_P = 1;
-	public static final int CUMULATIVE_DISTRIBUTED_TABLE_ROW_III_P = 112;
-	public static final int CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_III_P = 2;
-	
 	public static final long[] CUMULATIVE_DISTRIBUTED_TABLE_I = { // 209 * 1
 		    
 			0x0000000000000000L,	// 0
@@ -473,7 +462,7 @@ public class CumulativeDistributedTable {
 			
 	};
 	
-	public static final long[] CUMULATIVE_DISTRIBUTED_TABLE_I_P = {
+	public static final long[] CUMULATIVE_DISTRIBUTED_TABLE_P_I = {
 			
 			0x0000000000000000L,	// 0
 		    0x0601F22A500CC7A8L,	// 1
@@ -557,7 +546,7 @@ public class CumulativeDistributedTable {
 			
 	};
 	
-	public static final long[] CUMULATIVE_DISTRIBUTED_TABLE_III_P = {
+	public static final long[] CUMULATIVE_DISTRIBUTED_TABLE_P_III = {
 		
 			0x0000000000000000L,	0x0000000000000000L,	// 0
 		    0x0601F22A500CC7A8L,	0x5C36071879D7F29CL,	// 1

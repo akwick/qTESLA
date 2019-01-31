@@ -7,6 +7,77 @@ public class Gauss {
 	 */
 	public static final int CHUNK = 512;
 	
+	/** 
+	 * Dimension, (Dimension - 1) is the Polynomial Degree
+	 */
+	private static int n;
+	
+	/**
+	 * Row Size of the Cumulative Distributed Table
+	 */
+	private static int row;
+	
+	/**
+	 * Column Size of the Cumulative Distributed Table
+	 */
+	private static int column;
+	
+	private static long[] cumulativeDistributedTable;
+	
+	public int getN () {
+		
+		return n;
+		
+	}
+	
+	public Gauss (String securityCategory) {
+		
+		if (securityCategory == "qTESLA-I") {
+			
+			n = 512;
+			row = 209;
+			column = 1;
+			cumulativeDistributedTable = CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_I;
+			
+		} else if (securityCategory == "qTESLA-III-Speed") {
+			
+			n = 1024;
+			row = 135;
+			column = 2;
+			cumulativeDistributedTable = CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_III_SPEED;
+			
+		} else if (securityCategory == "qTESLA-III-Size") {
+			
+			n = 1024;
+			row = 101;
+			column = 2;
+			cumulativeDistributedTable = CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_III_SIZE;
+			
+		} else if (securityCategory == "qTESLA-P-I") {
+			
+			n = 1024;
+			row = 79;
+			column = 1;
+			cumulativeDistributedTable = CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_P_I;
+			
+		} else if (securityCategory == "qTESLA-P-III") {
+			
+			n = 2048;
+			row = 112;
+			column = 2;
+			cumulativeDistributedTable = CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_P_III;
+			
+		} else {
+			
+			n = 1;
+			row = 1;
+			column = 1;
+			cumulativeDistributedTable = null;
+			
+		}
+		
+	}
+	
 	private static void differ (long[] difference, long[] array, int u, int v, int position) {
 		
 		difference[0] = (difference[0] + (array[v + position] & Long.MAX_VALUE) - (array[u + position] & Long.MAX_VALUE)) >> 63;
@@ -36,7 +107,7 @@ public class Gauss {
 		
 	}
 	
-	private static void minimumMaximum2 (long[] exchange, long[] difference, long[] array, int u, int v, int column) {
+	private static void minimumMaximum2 (long[] exchange, long[] difference, long[] array, int u, int v) {
 		
 		if (column > 1) {
 			
@@ -52,55 +123,55 @@ public class Gauss {
 		
 	}
 	
-	private static void minimumMaximum3 (long[] exchange, long[] difference, long[] array, int u, int v, int column) {
+	private static void minimumMaximum3 (long[] exchange, long[] difference, long[] array, int u, int v) {
 		
 		if (column > 2) {
 			
 			differ (difference, array, u, v, 2);
-			minimumMaximum2 (exchange, difference, array, u, v, column);
+			minimumMaximum2 (exchange, difference, array, u, v);
 			swap (exchange, difference, array, u, v, 2);
 			
 		} else {
 			
-			minimumMaximum2 (exchange, difference, array, u, v, column);
+			minimumMaximum2 (exchange, difference, array, u, v);
 			
 		}
 		
 	}
 	
-	private static void minimumMaximum4 (long[] exchange, long[] difference, long[] array, int u, int v, int column) {
+	private static void minimumMaximum4 (long[] exchange, long[] difference, long[] array, int u, int v) {
 		
 		if (column > 3) {
 		
 			differ (difference, array, u, v, 3);
-			minimumMaximum3 (exchange, difference, array, u, v, column);
+			minimumMaximum3 (exchange, difference, array, u, v);
 			swap (exchange, difference, array, u, v, 3);
 		
 		} else {
 			
-			minimumMaximum3 (exchange, difference, array, u, v, column);
+			minimumMaximum3 (exchange, difference, array, u, v);
 			
 		}
 		
 	}
 	
-	private static void minimumMaximum5 (long[] exchange, long[] difference, long[] array, int u, int v, int column) {
+	private static void minimumMaximum5 (long[] exchange, long[] difference, long[] array, int u, int v) {
 		
 		if (column > 4) {
 		
 			differ (difference, array, u, v, 4);
-			minimumMaximum4 (exchange, difference, array, u, v, column);
+			minimumMaximum4 (exchange, difference, array, u, v);
 			swap (exchange, difference, array, u, v, 4);
 			
 		} else {
 			
-			minimumMaximum4 (exchange, difference, array, u, v, column);
+			minimumMaximum4 (exchange, difference, array, u, v);
 			
 		}
 		
 	}
 	
-	private static void minimumMaximum (long[] array, int uArray, int vArray, int[] order, int uOrder, int vOrder, int column) {
+	private static void minimumMaximum (long[] array, int uArray, int vArray, int[] order, int uOrder, int vOrder) {
 		
 		if (column <= 5) {
 			
@@ -108,7 +179,7 @@ public class Gauss {
 			long[] exchangeArray	= {0};
 			int[] exchangeOrder		= {0};
 			
-			minimumMaximum5 (exchangeArray, difference, array, uArray, vArray, column);
+			minimumMaximum5 (exchangeArray, difference, array, uArray, vArray);
 			swapOrder (exchangeOrder, difference, order, uOrder, vOrder);
 			
 		}
@@ -124,18 +195,17 @@ public class Gauss {
 		
 	}
 	
-	/******************************************************************************************************************
-	 * Description: Sort the Key Order Array Using Donald Ervin Knuth's Iterative Merge-Exchange Sorting.
+	/**********************************************************************************************
+	 * Description: Sort the Key Order Array Using Donald Ervin Knuth's Iterative Merge-Exchange
+	 *				Sorting.
 	 * 
 	 * @param	key			The Sampling Key Array to Sort in Place
 	 * @param	order		The Accompanying Sampling Order Array to Sort Together
 	 * @param	size		The Size of the Array
-	 * @param	row			The Row Number of the Array
-	 * @param	column		The Column Number of the Array
 	 * 
 	 * @return
-	 *******************************************************************************************************************/
-	private static void donaldErvinKnuthMergeExchangeKeyOrder (long[] key, int[] order, int size, int row, int column) {
+	 **********************************************************************************************/
+	private static void donaldErvinKnuthMergeExchangeKeyOrder (long[] key, int[] order, int size) {
 		
 		if (size <= 1) {
 			
@@ -160,7 +230,7 @@ public class Gauss {
 				
 				if ((i & p) == 0) {
 					
-					minimumMaximum (key, position, positionP, order, i, p + i, column);
+					minimumMaximum (key, position, positionP, order, i, p + i);
 					
 				}
 				
@@ -175,7 +245,7 @@ public class Gauss {
 					
 					if ((i & p) == 0) {
 						
-						minimumMaximum (key, positionP, positionQ, order, p + i, q + i, column);
+						minimumMaximum (key, positionP, positionQ, order, p + i, q + i);
 						
 					}
 					
@@ -187,14 +257,15 @@ public class Gauss {
 		
 	}
 	
-	/********************************************************************************************
-	 * Description: Sort the Sampling Order Array Using Donald Ervin Knuth's Iterative Merge-Exchange Sorting.
+	/*******************************************************************************
+	 * Description: Sort the Sampling Order Array Using Donald Ervin Knuth's
+	 * 				Iterative Merge-Exchange Sorting.
 	 * 
 	 * @param	order		The Accompanying Sampling Order Array to Sort Together
 	 * @param	size		The Size of the Array
 	 * 
 	 * @return
-	 ********************************************************************************************/
+	 *******************************************************************************/
 	private static void donaldErvinKnuthMergeExchangeOrder (int[] order, int size) {
 		
 		if (size <= 1) {
@@ -241,36 +312,33 @@ public class Gauss {
 		
 	}
 	
-	/************************************************************************************************************************************************************************************
-	 * Description: Generate CHUNK Samples from the Normal Distribution in Constant Time for Heuristic qTESLA Security Category 1 and Security Category 3 (Option for Size and Speed)
+	/***************************************************************************************************************************************
+	 * Description: Generate CHUNK Samples from the Normal Distribution in Constant Time for Heuristic qTESLA
 	 * 
 	 * @param		data							Data to be Sampled
 	 * @param		dataOffset						Starting Point of the Data to be Sampled
 	 * @param		seed							Kappa-Bit Seed
 	 * @param		seedOffset						Starting Point of the Kappa-Bit Seed
-	 * @param		nonce							Domain Separator for Error Polynomial and Secret Polynomial
-	 * @param		row								The Row Number of the Array
-	 * @param		column							The Column Number of the Array
-	 * @param		cumulativeDistributedTable		The Cumulative Distributed Table		
+	 * @param		nonce							Domain Separator for Error Polynomial and Secret Polynomial	
 	 * 
 	 * @return
-	 ************************************************************************************************************************************************************************************/
-	private static void donaldErvinKnuthMergeExchangeGauss (int[] data, int dataOffset, byte[] seed, int seedOffset, int nonce, int row, int column, long[] cumulativeDistributedTable) {
+	 ***************************************************************************************************************************************/
+	private static void donaldErvinKnuthMergeExchangeGauss (int[] data, int dataOffset, byte[] seed, int seedOffset, int nonce) {
 		
 		long[] samplingKeyArray		= new long[(CHUNK + row) * column];
 		byte[] samplingKeyByteArray	= new byte[(CHUNK + row) * column * Byte.SIZE];
 		int[] samplingOrderArray	= new int[CHUNK + row];
 		
-		if (column == CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_I) {
+		if (column == 1) {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (		
-					samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE, (short) nonce, seed, seedOffset, Parameter.RANDOM					
+					samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE, (short) nonce, seed, seedOffset, QTESLAParameter.RANDOM					
 			);
 			
 		} else {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (		
-					samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE, (short) nonce, seed, seedOffset, Parameter.RANDOM					
+					samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE, (short) nonce, seed, seedOffset, QTESLAParameter.RANDOM					
 			);
 			
 		}
@@ -294,7 +362,7 @@ public class Gauss {
 		}
 		
 		/* Constant-Time Sorting According to the Uniformly Random Sorting Key */
-		donaldErvinKnuthMergeExchangeKeyOrder (samplingKeyArray, samplingOrderArray, CHUNK + row, row, column);
+		donaldErvinKnuthMergeExchangeKeyOrder (samplingKeyArray, samplingOrderArray, CHUNK + row);
 		
 		/* Set Each Entry's Gaussian Index */
 		int previousIndex = 0;
@@ -324,36 +392,33 @@ public class Gauss {
 		
 	}
 	
-	/*************************************************************************************************************************************************************************************
-	 * Description: Generate CHUNK Samples from the Normal Distribution in Constant Time for Provably-Secure qTESLA Security Category 1 and Security Category 3
+	/***************************************************************************************************************************************
+	 * Description: Generate CHUNK Samples from the Normal Distribution in Constant Time for Provably Secure qTESLA
 	 * 
 	 * @param		data							Data to be Sampled
 	 * @param		dataOffset						Starting Point of the Data to be Sampled
 	 * @param		seed							Kappa-Bit Seed
 	 * @param		seedOffset						Starting Point of the Kappa-Bit Seed
-	 * @param		nonce							Domain Separator for Error Polynomial and Secret Polynomial
-	 * @param		row								The Row Number of the Array
-	 * @param		column							The Column Number of the Array
-	 * @param		cumulativeDistributedTable		The Cumulative Distributed Table		
+	 * @param		nonce							Domain Separator for Error Polynomial and Secret Polynomial		
 	 * 
 	 * @return
-	 *************************************************************************************************************************************************************************************/
-	private static void donaldErvinKnuthMergeExchangeGauss (long[] data, int dataOffset, byte[] seed, int seedOffset, int nonce, int row, int column, long[] cumulativeDistributedTable) {
+	 ***************************************************************************************************************************************/
+	private static void donaldErvinKnuthMergeExchangeGauss (long[] data, int dataOffset, byte[] seed, int seedOffset, int nonce) {
 		
 		long[] samplingKeyArray		= new long[(CHUNK + row) * column];
 		byte[] samplingKeyByteArray	= new byte[(CHUNK + row) * column * Byte.SIZE];
 		int[] samplingOrderArray	= new int[CHUNK + row];
 		
-		if (column == CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_COLUMN_I_P) {
+		if (column == 1) {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (		
-					samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE, (short) nonce, seed, seedOffset, Parameter.RANDOM					
+					samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE, (short) nonce, seed, seedOffset, QTESLAParameter.RANDOM					
 			);
 			
 		} else {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (		
-					samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE, (short) nonce, seed, seedOffset, Parameter.RANDOM					
+					samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE, (short) nonce, seed, seedOffset, QTESLAParameter.RANDOM					
 			);
 			
 		}
@@ -377,7 +442,7 @@ public class Gauss {
 		}
 		
 		/* Constant-Time Sorting According to the Uniformly Random Sorting Key */
-		donaldErvinKnuthMergeExchangeKeyOrder (samplingKeyArray, samplingOrderArray, CHUNK + row, row, column);
+		donaldErvinKnuthMergeExchangeKeyOrder (samplingKeyArray, samplingOrderArray, CHUNK + row);
 		
 		/* Set Each Entry's Gaussian Index */
 		int previousIndex = 0;
@@ -407,32 +472,31 @@ public class Gauss {
 		
 	}
 	
-	/************************************************************************************************************************************************************************************
-	 * Description:	Gaussian Sampler for Heuristic qTESLA Security Category 1 and Security Category 3 (Option for Size and Speed)
+	/*****************************************************************************************************************
+	 * Description:	Gaussian Sampler for Heuristic qTESLA
 	 * 
 	 * @param		data						Data to be Sampled
 	 * @param		dataOffset					Starting Point of the Data to be Sampled
 	 * @param		seed						Kappa-Bit Seed
 	 * @param		seedOffset					Starting Point of the Kappa-Bit Seed
 	 * @param		nonce						Domain Separator for Error Polynomial and Secret Polynomial
-	 * @param		n							Polynomial Dimension
 	 * 
 	 * @return		none
-	 ************************************************************************************************************************************************************************************/
-	public static void polynomialGaussSampler (int[] data, int dataOffset, final byte[] seed, int seedOffset, int nonce, int n, int row, int column, long[] cumulativeDistributedTable) {
+	 *****************************************************************************************************************/
+	public void polynomialGaussianSampler (int[] data, int dataOffset, final byte[] seed, int seedOffset, int nonce) {
 		
 		int domainSeparator = nonce << 8;
 		
 		for (int chunk = 0; chunk < n; chunk += CHUNK) {
 			
-			donaldErvinKnuthMergeExchangeGauss (data, dataOffset + chunk, seed, seedOffset, domainSeparator++, row, column, cumulativeDistributedTable);
+			donaldErvinKnuthMergeExchangeGauss (data, dataOffset + chunk, seed, seedOffset, domainSeparator++);
 			
 		}
 		
 	}
 	
-	/************************************************************************************************************************************************************************************
-	 * Description:	Gaussian Sampler for for Provably-Secure qTESLA Security Category 1 and Security Category 3
+	/***************************************************************************************************************
+	 * Description:	Gaussian Sampler for for Provably Secure qTESLA
 	 * 
 	 * @param		data						Data to be Sampled
 	 * @param		dataOffset					Starting Point of the Data to be Sampled
@@ -442,14 +506,14 @@ public class Gauss {
 	 * @param		n							Polynomial Dimension
 	 * 
 	 * @return		none
-	 ************************************************************************************************************************************************************************************/
-	public static void polynomialGaussSampler (long[] data, int dataOffset, final byte[] seed, int seedOffset, int nonce, int n, int row, int column, long[] cumulativeDistributedTable) {
+	 ******************************************************************************************************************/
+	public void polynomialGaussianSampler (long[] data, int dataOffset, final byte[] seed, int seedOffset, int nonce) {
 		
 		int domainSeparator = nonce << 8;
 		
 		for (int chunk = 0; chunk < n; chunk += CHUNK) {
 			
-			donaldErvinKnuthMergeExchangeGauss (data, dataOffset + chunk, seed, seedOffset, domainSeparator++, row, column, cumulativeDistributedTable);
+			donaldErvinKnuthMergeExchangeGauss (data, dataOffset + chunk, seed, seedOffset, domainSeparator++);
 			
 		}
 		

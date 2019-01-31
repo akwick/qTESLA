@@ -38,13 +38,15 @@ public final class QTESLASignature extends SignatureSpi {
 	/**
 	 * The Source of Randomness
 	 */
-	private SecureRandom secureRandom;
+	private SecureRandom random;
 	
 	private byte[] message;
 	
 	private int messageOffset;
 	
 	private int[] messageLength;
+	
+	private QTESLA qTESLA;
 	
 	public String getSecurityCategory () {
 		
@@ -54,14 +56,20 @@ public final class QTESLASignature extends SignatureSpi {
 	
 	public SecureRandom getSecureRandom () {
 		
-		return secureRandom;
+		return random;
 	
 	}
 
-	public void setSecureRandom (SecureRandom secureRandom) {
+	public void setSecureRandom (SecureRandom random) {
 		
-		this.secureRandom = secureRandom;
+		this.random = random;
 	
+	}
+	
+	public void setQTESLA (QTESLA qTESLA) {
+		
+		this.qTESLA = qTESLA;
+		
 	}
 	
 	@Override
@@ -75,7 +83,8 @@ public final class QTESLASignature extends SignatureSpi {
 		
 		this.privateKey = (QTESLAPrivateKey) privateKey;
 		this.securityCategory = ((QTESLAPrivateKey) privateKey).getAlgorithm();
-		this.secureRandom = random;
+		this.random = random;
+		this.qTESLA = new QTESLA (this.securityCategory);
 		
 	}
 	
@@ -97,7 +106,8 @@ public final class QTESLASignature extends SignatureSpi {
 		
 		this.publicKey = (QTESLAPublicKey) publicKey;
 		this.securityCategory = ((QTESLAPublicKey) publicKey).getAlgorithm();
-		this.secureRandom = null;
+		this.random = null;
+		this.qTESLA = new QTESLA (this.securityCategory);
 		
 	}
 	
@@ -107,11 +117,11 @@ public final class QTESLASignature extends SignatureSpi {
 		int[] lengthOfSignature	= new int[1];
 		lengthOfSignature[0]	= signatureLength;
 		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryI") {
+		if (this.securityCategory == "qTESLA-I" || this.securityCategory == "qTESLA-Speed" || this.securityCategory == "qTESLA-Size") {
 			
 			try {
 				
-				QTESLA.signingI (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
+				qTESLA.sign (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.random);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
 					| NoSuchPaddingException | ShortBufferException exception) {
@@ -122,56 +132,11 @@ public final class QTESLASignature extends SignatureSpi {
 			
 		}
 		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
+		if (this.securityCategory == "qTESLA-P-I" || this.securityCategory == "qTESLA-P-III") {
 			
 			try {
 				
-				QTESLA.signingIIISize (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
-			
-			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException exception) {
-				
-				exception.printStackTrace();
-			
-			}
-			
-		}
-		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
-			
-			try {
-				
-				QTESLA.signingIIISpeed (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
-			
-			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException exception) {
-				
-				exception.printStackTrace();
-			
-			}
-			
-		}
-		
-		if (this.securityCategory == "provablySecureQTESLASecurityCategoryI") {
-			
-			try {
-				
-				QTESLA.signingIP (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
-			
-			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException exception) {
-				
-				exception.printStackTrace();
-				
-			}
-			
-		}
-		
-		if (this.securityCategory == "provablySecureQTESLASecurityCategoryIII") {
-			
-			try {
-				
-				QTESLA.signingIIIP (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.secureRandom);
+				qTESLA.signP (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.random);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
 					| NoSuchPaddingException | ShortBufferException exception) {
@@ -191,35 +156,7 @@ public final class QTESLASignature extends SignatureSpi {
 		
 		byte[] signature = null;
 		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryI") {
-			
-			signature = new byte[QTESLA.SIGNATURE_I + this.messageLength[0]];
-			
-		}
-		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
-			
-			signature = new byte[QTESLA.SIGNATURE_III_SIZE + this.messageLength[0]];
-			
-		}
-		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
-			
-			signature = new byte[QTESLA.SIGNATURE_III_SPEED + this.messageLength[0]];
-			
-		}
-		
-		if (this.securityCategory == "provablySecureQTESLASecurityCategoryI") {
-			
-			signature = new byte[QTESLA.SIGNATURE_I_P + this.messageLength[0]];
-			
-		}
-		
-		if (this.securityCategory == "provablySecureQTESLASecurityCategoryIII") {
-			
-			signature = new byte[QTESLA.SIGNATURE_III_P + this.messageLength[0]];
-			
-		}
+		signature = new byte[qTESLA.getQTESLAParameter().signatureSize + this.messageLength[0]];
 		
 		engineSign (signature, 0, signature.length);
 		
@@ -232,33 +169,15 @@ public final class QTESLASignature extends SignatureSpi {
 		
 		int success = 0;
 		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryI") {
+		if (this.securityCategory == "qTESLA-I" || this.securityCategory == "qTESLA-III-Speed" || this.securityCategory == "qTESLA-III-Size") {
 			
-			success = QTESLA.verifyingI (this.message, this.messageOffset, this.messageLength, signature, signatureOffset, signatureLength, this.publicKey.getEncoded());
-			
-		}
-		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
-			
-			success = QTESLA.verifyingIIISize (this.message, this.messageOffset, this.messageLength, signature, signatureOffset, signatureLength, this.publicKey.getEncoded());
+			success = qTESLA.verify (this.message, this.messageOffset, this.messageLength, signature, signatureOffset, signatureLength, this.publicKey.getEncoded());
 			
 		}
 		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
+		if (this.securityCategory == "qTESLA-P-I" || this.securityCategory == "qTESLA-P-III") {
 			
-			success = QTESLA.verifyingIIISpeed (this.message, this.messageOffset, this.messageLength, signature, signatureOffset, signatureLength, this.publicKey.getEncoded());
-			
-		}
-		
-		if (this.securityCategory == "provablySecureQTESLASecurityCategoryI") {
-			
-			success = QTESLA.verifyingIP (this.message, this.messageOffset, this.messageLength, signature, signatureOffset, signatureLength, this.publicKey.getEncoded());
-			
-		}
-		
-		if (this.securityCategory == "provablySecureQTESLASecurityCategoryIII") {
-			
-			success = QTESLA.verifyingIIIP (this.message, this.messageOffset, this.messageLength, signature, signatureOffset, signatureLength, this.publicKey.getEncoded());
+			success = qTESLA.verifyP (this.message, this.messageOffset, this.messageLength, signature, signatureOffset, signatureLength, this.publicKey.getEncoded());
 			
 		}
 		
@@ -277,37 +196,7 @@ public final class QTESLASignature extends SignatureSpi {
 	@Override
 	protected boolean engineVerify (byte[] signature) throws SignatureException {
 		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryI") {
-			
-			return engineVerify (signature, 0, QTESLA.SIGNATURE_I + this.messageLength[0]);
-			
-		}
-		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
-			
-			return engineVerify (signature, 0, QTESLA.SIGNATURE_III_SIZE + this.messageLength[0]);
-			
-		}
-		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
-			
-			return engineVerify (signature, 0, QTESLA.SIGNATURE_III_SPEED + this.messageLength[0]);
-			
-		}
-		
-		if (this.securityCategory == "provablySecureQTESLASecurityCategoryI") {
-			
-			return engineVerify (signature, 0, QTESLA.SIGNATURE_I_P + this.messageLength[0]);
-			
-		}
-		
-		if (this.securityCategory == "provablySecureQTESLASecurityCategoryIII") {
-			
-			return engineVerify (signature, 0, QTESLA.SIGNATURE_III_P + this.messageLength[0]);
-			
-		}
-		
-		return false;
+		return engineVerify (signature, 0, qTESLA.getQTESLAParameter().signatureSize + this.messageLength[0]);
 		
 	}
 	

@@ -10,7 +10,7 @@ public final class QTESLAPrivateKey implements PrivateKey {
 	 * A previous Version of the Class
 	 */
 	private static final long serialVersionUID = 7972867974716612313L;
-
+	
 	/**
 	 * qTESLA Security Category
 	 */
@@ -24,37 +24,8 @@ public final class QTESLAPrivateKey implements PrivateKey {
 	public QTESLAPrivateKey (String securityCategory) {
 		
 		this.securityCategory = securityCategory;
-		
-		if (securityCategory == "heuristicQTESLASecurityCategoryI") {
-			
-			privateKey = new byte[QTESLA.PRIVATE_KEY_I];
-			
-		}
-		
-		if (securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
-			
-			privateKey = new byte[QTESLA.PRIVATE_KEY_III_SIZE];
-			
-		}
-		
-		if (securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
-			
-			privateKey = new byte[QTESLA.PRIVATE_KEY_III_SPEED];
-			
-		}
-		
-		if (securityCategory == "provablySecureQTESLASecurityCategoryI") {
-			
-			privateKey = new byte[QTESLA.PRIVATE_KEY_I_P];
-			
-		}
-		
-		if (securityCategory == "provablySecureQTESLASecurityCategoryIII") {
-			
-			privateKey = new byte[QTESLA.PRIVATE_KEY_III_P];
-			
-		}
-		
+		QTESLAParameter parameter = new QTESLAParameter (securityCategory);
+		privateKey = new byte[parameter.privateKeySize];
 		Arrays.fill (privateKey, (byte) 0);
 		
 	}

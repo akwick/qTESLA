@@ -24,37 +24,8 @@ public final class QTESLAPublicKey implements PublicKey {
 	public QTESLAPublicKey (String securityCategory) {
 		
 		this.securityCategory = securityCategory;
-		
-		if (securityCategory == "heuristicQTESLASecurityCategoryI") {
-			
-			publicKey = new byte[QTESLA.PUBLIC_KEY_I];
-			
-		}
-		
-		if (securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
-			
-			publicKey = new byte[QTESLA.PUBLIC_KEY_III_SIZE];
-			
-		}
-		
-		if (securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
-			
-			publicKey = new byte[QTESLA.PUBLIC_KEY_III_SPEED];
-			
-		}
-		
-		if (securityCategory == "provablySecureQTESLASecurityCategoryI") {
-			
-			publicKey = new byte[QTESLA.PUBLIC_KEY_I_P];
-			
-		}
-		
-		if (securityCategory == "provablySecureQTESLASecurityCategoryIII") {
-			
-			publicKey = new byte[QTESLA.PUBLIC_KEY_III_P];
-			
-		}
-		
+		QTESLAParameter parameter = new QTESLAParameter (securityCategory);
+		publicKey = new byte[parameter.publicKeySize];
 		Arrays.fill (publicKey, (byte) 0);
 		
 	}

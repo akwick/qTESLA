@@ -20,7 +20,18 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 	 */
 	private String securityCategory;
 	
-	private SecureRandom secureRandom;
+	/**
+	 * The Source of Randomness
+	 */
+	private SecureRandom random;
+	
+	private QTESLA qTESLA;
+	
+	public void setQTESLA (QTESLA qTESLA) {
+		
+		this.qTESLA = qTESLA;
+		
+	}
 	
 	@Override
 	public KeyPair generateKeyPair() {
@@ -30,13 +41,13 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 		
 		byte[] privateKey	= qTESLAPrivateKey.getEncoded();
 		byte[] publicKey 	= qTESLAPublicKey.getEncoded();
-		this.secureRandom	= new SecureRandom();
+		this.random			= new SecureRandom();
 		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryI") {
+		if (this.securityCategory == "qTESLA-I" || this.securityCategory == "qTESLA-III-Speed" || this.securityCategory == "qTESLA-III-Size") {
 				
 			try {
 				
-				QTESLA.generateKeyPairI (publicKey, privateKey, secureRandom);
+				qTESLA.generateKeyPair (publicKey, privateKey, random);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
 					| NoSuchPaddingException | ShortBufferException exception) {
@@ -47,53 +58,11 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 			
 		}
 		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISize") {
+		if (this.securityCategory == "qTESLA-P-I" || this.securityCategory == "qTESLA-P-III") {
 			
 			try {
 				
-				QTESLA.generateKeyPairIIISize (publicKey, privateKey, secureRandom);
-			
-			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException exception) {
-				
-				exception.printStackTrace();
-			}
-			
-		}
-		
-		if (this.securityCategory == "heuristicQTESLASecurityCategoryIIISpeed") {
-			
-			try {
-				
-				QTESLA.generateKeyPairIIISpeed (publicKey, privateKey, secureRandom);
-			
-			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException exception) {
-				
-				exception.printStackTrace();
-			}
-			
-		}
-		
-		if (this.securityCategory == "provablySecureQTESLASecurityCategoryI") {
-			
-			try {
-				
-				QTESLA.generateKeyPairIP (publicKey, privateKey, secureRandom);
-			
-			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException exception) {
-				
-				exception.printStackTrace();
-			}
-			
-		}
-		
-		if (this.securityCategory == "provablySecureQTESLASecurityCategoryIII") {
-			
-			try {
-				
-				QTESLA.generateKeyPairIIIP (publicKey, privateKey, secureRandom);
+				qTESLA.generateKeyPairP (publicKey, privateKey, random);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
 					| NoSuchPaddingException | ShortBufferException exception) {
@@ -138,7 +107,8 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 		QTESLAParameterSpecification qTESLAParameterSpecification = (QTESLAParameterSpecification) specification;
 		
 		this.securityCategory = qTESLAParameterSpecification.getSecurityCategory();
-		this.secureRandom = random;
+		this.random = random;
+		this.qTESLA = new QTESLA (this.securityCategory);
 		
 	}
 	

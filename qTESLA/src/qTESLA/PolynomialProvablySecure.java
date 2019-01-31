@@ -4,7 +4,7 @@ public final class PolynomialProvablySecure {
 	
 /* Provably-Secure qTESLA Security Category-1 */
 	
-	public static final long[] ZETA_I_P = {					/* 1024-Entry */
+	public static final long[] ZETA_P_I = {					/* 1024-Entry */
 			
 			152487987,	362708180,	151084668,	393585500,	285507339,	301982154,	215753424,	31155376,
 			233716852,	465705615,	128512487,	219324660,	50229578,	153034376,	215476824,	300536066,
@@ -137,7 +137,7 @@ public final class PolynomialProvablySecure {
 	
 	};
 
-	public static final long[] ZETA_INVERSE_I_P = {			/* 1024-Entry */
+	public static final long[] ZETA_INVERSE_P_I = {			/* 1024-Entry */
 			
 			227437893,	259230182,	221092011,	96074549,	159789516,	100334577,	259036224,	5363675,
 			327453755,	245456906,	277504006,	28751871,	431300536,	396359392,	219236929,	321189233,
@@ -272,7 +272,7 @@ public final class PolynomialProvablySecure {
 	
 	/* Provably-Secure qTESLA Security Category-3 */
 	
-	public static final long[] ZETA_III_P = {				/* 2048-Entry */
+	public static final long[] ZETA_P_III = {				/* 2048-Entry */
 			
 			663045521,	592864312,	129934065,	177469925,	343322489,	76003277,	514174562,	190066344,
 			383213768,	787962888,	658937726,	1080673671,	1119184179,	711485619,	895353292,	741830559,
@@ -533,7 +533,7 @@ public final class PolynomialProvablySecure {
 			
 	};
 	
-	public static final long[] ZETA_INVERSE_III_P = {		/* 2048-Entry */
+	public static final long[] ZETA_INVERSE_P_III = {		/* 2048-Entry */
 			
 			1065536839,	258146786,	625514770,	943281315,	362769278,	94302905,	757479365,	470325346,
 			40408230,	565338085,	418623492,	809745897,	490050815,	250208337,	406320343,	437439078,
