@@ -1,3 +1,11 @@
+/******************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* Number Theoretic Transform, Modular Reduction and Polynomial Functions
+* 
+* @author Yinhua Xu
+*******************************************************************************/
+
 package qTESLA;
 
 import java.util.Arrays;
@@ -6,12 +14,22 @@ public class Polynomial {
 	
 	private static QTESLAParameter parameter;
 	
+	/*******************************************************
+	 * Constructor of Manipulation in Polynomials
+	 * 
+	 * @param securityCategory		qTESLA Security Category
+	 *******************************************************/
 	public Polynomial (String securityCategory) {
 		
 		parameter = new QTESLAParameter (securityCategory);
 		
 	}
 	
+	/*********************************************
+	 * Getter of qTESLA Parameter Object
+	 * 
+	 * @return	none
+	 *********************************************/
 	public QTESLAParameter getQTESLAParameter () {
 		
 		return parameter;
@@ -70,17 +88,14 @@ public class Polynomial {
 	
 	}
 	
-	/******************************************************************************************************************
+	/**********************************************************************************************************
 	 * Description:	Forward Number Theoretic Transform for Heuristic qTESLA
 	 *
 	 * @param		destination		Destination of Transformation
 	 * @param		source			Source of Transformation
-	 * @param		n				Polynomial Degree
-	 * @param		q				Modulus
-	 * @param		qInverse
 	 * 
 	 * @return		none
-	 ******************************************************************************************************************/
+	 **********************************************************************************************************/
 	private void numberTheoreticTransform (int destination[], final int source[]) {
 		
 		int numberOfProblem = parameter.n >> 1;
@@ -109,14 +124,14 @@ public class Polynomial {
 		
 	}
 	
-	/************************************************************************************************************
+	/****************************************************************************************************************
 	 * Description:	Forward Number Theoretic Transform for Provably Secure qTESLA
 	 * 
 	 * @param		destination		Destination of Transformation
 	 * @param		source			Source of Transformation
 	 * 
 	 * @return		none
-	 ************************************************************************************************************/
+	 ****************************************************************************************************************/
 	private void numberTheoreticTransform (long destination[], final long source[]) {
 		
 		int numberOfProblem = parameter.n >> 1;
@@ -153,9 +168,18 @@ public class Polynomial {
 					
 					for (j = jFirst; j < jFirst + numberOfProblem; j++) {
 						
-						long temporary = paulBarrettReduction (peterLawrenceMontgomeryReductionP (omega * destination[j + numberOfProblem]));										
+						long temporary = paulBarrettReduction (
+								
+							peterLawrenceMontgomeryReductionP (omega * destination[j + numberOfProblem])
+								
+						);										
 						
-						destination[j + numberOfProblem] = paulBarrettReduction (destination[j] + (2L * parameter.q - temporary));					
+						destination[j + numberOfProblem] = paulBarrettReduction (
+							
+							destination[j] + (2L * parameter.q - temporary)
+							
+						);					
+						
 						destination[j] = paulBarrettReduction (destination[j] + temporary);
 						
 					}
@@ -168,14 +192,14 @@ public class Polynomial {
 		
 	}
 		
-	/************************************************************************************************************
+	/*********************************************************************************************************
 	 * Description:	Inverse Number Theoretic Transform for Heuristic qTESLA
 	 * 
 	 * @param		destination			Destination of Inverse Transformation
 	 * @param		source				Source of Inverse Transformation
 	 * 
 	 * @return		none
-	 ************************************************************************************************************/
+	 *********************************************************************************************************/
 	private void inverseNumberTheoreticTransform (int destination[], final int source[]) {
 		
 		int jTwiddle = 0;
@@ -198,8 +222,11 @@ public class Polynomial {
 					
 					}
 					
-					if (parameter.securityCategory == "qTESLA-III-Speed" ||
-							parameter.securityCategory == "qTESLA-III-Size") {
+					if (
+							parameter.securityCategory == "qTESLA-III-Speed" ||
+							parameter.securityCategory == "qTESLA-III-Size"
+							
+					) {
 						
 						if (numberOfProblem == 16) {
 							
@@ -213,8 +240,11 @@ public class Polynomial {
 						
 					}
 					
-					destination[j + numberOfProblem] = 
-							peterLawrenceMontgomeryReduction (omega * (temporary - destination[j + numberOfProblem]));
+					destination[j + numberOfProblem] = peterLawrenceMontgomeryReduction (
+						
+						omega * (temporary - destination[j + numberOfProblem])
+						
+					);
 					
 				}
 				
@@ -230,7 +260,7 @@ public class Polynomial {
 		
 	}
 	
-	/*************************************************************************************************************************************************************************************
+	/*********************************************************************************************************************
 	 * Description:	Inverse Number Theoretic Transform for Provably Secure qTESLA
 	 * 
 	 * @param		destination			Destination of Inverse Transformation
@@ -239,8 +269,12 @@ public class Polynomial {
 	 * @param		sourceOffset		Starting Point of the Source
 	 * 
 	 * @return		none
-	 *************************************************************************************************************************************************************************************/
-	private void inverseNumberTheoreticTransform (long destination[], int destinationOffset, final long source[], int sourceOffset) {
+	 *********************************************************************************************************************/
+	private void inverseNumberTheoreticTransform (
+			
+		long destination[], int destinationOffset, final long source[], int sourceOffset
+		
+	) {
 		
 		int jTwiddle = 0;
 		
@@ -258,10 +292,15 @@ public class Polynomial {
 					
 						long temporary = destination[destinationOffset + j];
 					
-						destination[destinationOffset + j] = temporary + destination[destinationOffset + j + numberOfProblem];
+						destination[destinationOffset + j] =
+								
+							temporary + destination[destinationOffset + j + numberOfProblem];
 					
-						destination[destinationOffset + j + numberOfProblem] =
-								peterLawrenceMontgomeryReductionP (omega * (temporary + (2 * parameter.q - destination[destinationOffset + j + numberOfProblem])));
+						destination[destinationOffset + j + numberOfProblem] = peterLawrenceMontgomeryReductionP (
+								
+							omega * (temporary + (2 * parameter.q - destination[destinationOffset + j + numberOfProblem]))
+							
+						);
 					
 					}
 				
@@ -277,10 +316,17 @@ public class Polynomial {
 					
 						long temporary = destination[destinationOffset + j];
 					
-						destination[destinationOffset + j] = paulBarrettReduction (temporary + destination[destinationOffset + j + numberOfProblem]);
+						destination[destinationOffset + j] = paulBarrettReduction (
+								
+							temporary + destination[destinationOffset + j + numberOfProblem]
+						
+						);
 					
-						destination[destinationOffset + j + numberOfProblem] =
-							peterLawrenceMontgomeryReductionP (omega * (temporary + (2 * parameter.q - destination[destinationOffset + j + numberOfProblem])));
+						destination[destinationOffset + j + numberOfProblem] = peterLawrenceMontgomeryReductionP (
+							
+							omega * (temporary + (2 * parameter.q - destination[destinationOffset + j + numberOfProblem]))
+							
+						);
 					
 					}
 				
@@ -298,10 +344,21 @@ public class Polynomial {
 						
 						long temporary = destination[destinationOffset + j];
 						
-						destination[destinationOffset + j] = paulBarrettReduction (temporary + destination[destinationOffset + j + numberOfProblem]);
+						destination[destinationOffset + j] = paulBarrettReduction (
+								
+							temporary + destination[destinationOffset + j + numberOfProblem]
+									
+						);
 						
-						destination[destinationOffset + j + numberOfProblem] =
-								paulBarrettReduction (peterLawrenceMontgomeryReductionP (omega * (temporary + (2L * parameter.q - destination[destinationOffset + j + numberOfProblem]))));
+						destination[destinationOffset + j + numberOfProblem] = paulBarrettReduction (
+								
+							peterLawrenceMontgomeryReductionP (
+									
+								omega * (temporary + (2L * parameter.q - destination[destinationOffset + j + numberOfProblem]))
+								
+							)
+								
+						);
 					
 					}
 					
@@ -313,7 +370,7 @@ public class Polynomial {
 		
 	}
 	
-	/***************************************************************************************************************************
+	/*********************************************************************************************************************
 	 * Description:	Component Wise Polynomial Multiplication for Heuristic qTESLA
 	 * 
 	 * @param		product					Product = Multiplicand (*) Multiplier
@@ -321,7 +378,7 @@ public class Polynomial {
 	 * @param		multiplier				Multiplier Array
 	 * 
 	 * @return		none
-	 ****************************************************************************************************************************/
+	 *********************************************************************************************************************/
 	private void componentWisePolynomialMultiplication (int[] product, final int[] multiplicand, final int[] multiplier) {
 
 		for (int i = 0; i < parameter.n; i++) {
@@ -332,7 +389,7 @@ public class Polynomial {
 	
 	}
 	
-	/************************************************************************************************************************************************************************************************
+	/**********************************************************************************
 	 * Description:	Component Wise Polynomial Multiplication for Provably Secure qTESLA
 	 * 
 	 * @param		product					Product = Multiplicand (*) Multiplier
@@ -343,12 +400,22 @@ public class Polynomial {
 	 * @param		multiplierOffset		Starting Point of the Multiplier Array
 	 * 
 	 * @return		none
-	 ************************************************************************************************************************************************************************************************/
-	private void componentWisePolynomialMultiplication (long[] product, int productOffset, final long[] multiplicand, int multiplicandOffset, final long[] multiplier, int multiplierOffset) {
+	 ***********************************************************************************/
+	private void componentWisePolynomialMultiplication (
+			
+		long[] product, int productOffset,
+		final long[] multiplicand, int multiplicandOffset,
+		final long[] multiplier, int multiplierOffset
+		
+	) {
 
 		for (int i = 0; i < parameter.n; i++) {
 			
-			product[productOffset + i] = peterLawrenceMontgomeryReductionP (multiplicand[multiplicandOffset + i] * multiplier[multiplierOffset + i]);
+			product[productOffset + i] = peterLawrenceMontgomeryReductionP (
+				
+				multiplicand[multiplicandOffset + i] * multiplier[multiplierOffset + i]
+			
+			);
 			
 		}
 	
@@ -359,7 +426,6 @@ public class Polynomial {
 	 * 
 	 * @param		arrayNumberTheoreticTransform		Transformed Array
 	 * @param		array								Array to be Transformed
-	 * @param		n									Polynomial Degree
 	 * 
 	 * @return		none
 	 **********************************************************************************************************/
@@ -385,7 +451,7 @@ public class Polynomial {
 		
 	}
 	
-	/*********************************************************************************************************
+	/*******************************************************************************************************
 	 * Description:	Polynomial Multiplication for Heuristic qTESLA
 	 * 
 	 * @param		product					Product = Multiplicand * Multiplier
@@ -393,7 +459,7 @@ public class Polynomial {
 	 * @param		multiplier				Multiplier Array
 	 * 
 	 * @return		none
-	 *********************************************************************************************************/
+	 *******************************************************************************************************/
 	public void polynomialMultiplication (int[] product, final int[] multiplicand, final int[] multiplier) {
 		
 		int[] multiplierNumberTheoreticTransform = new int[parameter.n];
@@ -430,7 +496,7 @@ public class Polynomial {
 		
 	}
 	
-	/***************************************************************************************************************************************************************************
+	/*************************************************************************************************************
 	 * Description:	Polynomial Multiplication for Provably Secure qTESLA Security
 	 * 
 	 * @param		product					Product = Multiplicand * Multiplier
@@ -439,15 +505,22 @@ public class Polynomial {
 	 * @param		multiplicandOffset		Starting Point of the Multiplicand Array
 	 * @param		multiplier				Multiplier Array
 	 * @param		multiplierOffset		Starting Point of the Multiplier Array
-	 * @param		n						Polynomial Degree
-	 * @param		q						Modulus
-	 * @param		qInverse
 	 * 
 	 * @return		none
-	 ***************************************************************************************************************************************************************************/
-	public void polynomialMultiplication (long[] product, int productOffset, final long[] multiplicand, int multiplicandOffset, final long[] multiplier, int multiplierOffset) {
+	 *************************************************************************************************************/
+	public void polynomialMultiplication (
+			
+		long[] product, int productOffset,
+		final long[] multiplicand, int multiplicandOffset,
+		final long[] multiplier, int multiplierOffset
+	
+	) {
 		
-		componentWisePolynomialMultiplication (product, productOffset, multiplicand, multiplicandOffset, multiplier, multiplierOffset);
+		componentWisePolynomialMultiplication (
+			
+			product, productOffset, multiplicand, multiplicandOffset, multiplier, multiplierOffset
+		
+		);
 		
 		if (parameter.securityCategory == "qTESLA-P-I") {
 			
@@ -484,7 +557,7 @@ public class Polynomial {
 		
 	}
 	
-	/*****************************************************************************************************************************************************
+	/*******************************************************************************************
 	 * Description:	Polynomial Addition for Provably Secure qTESLA
 	 * 				Q + L_E < 2 ^ (CEIL (LOGARITHM (Q, 2)))
 	 * 				No Necessary Reduction for Y + SC
@@ -497,8 +570,14 @@ public class Polynomial {
 	 * @param		addendOffset		Starting Point of the Addend Array
 	 * 
 	 * @return		none
-	 *****************************************************************************************************************************************************/
-	public void polynomialAddition (long[] summation, int summationOffset, final long[] augend, int augendOffset, final long[] addend, int addendOffset) {
+	 *******************************************************************************************/
+	public void polynomialAddition (
+			
+		long[] summation, int summationOffset,
+		final long[] augend, int augendOffset,
+		final long[] addend, int addendOffset
+	
+	) {
 		
 		for (int i = 0; i < parameter.n; i++) {
 			
@@ -535,7 +614,7 @@ public class Polynomial {
 		
 	}
 	
-	/**************************************************************************************************************************************************************
+	/********************************************************************************************
 	 * Description:	Polynomial Addition with Correction for Provably Secure qTESLA
 	 * 				Q + L_E < 2 ^ (CEIL (LOGARITHM (Q, 2)))
 	 * 				No Necessary Reduction for Y + SC
@@ -548,8 +627,14 @@ public class Polynomial {
 	 * @param		addendOffset		Starting Point of the Addend
 	 * 
 	 * @return		none
-	 ***************************************************************************************************************************************************************/
-	public void polynomialAdditionCorrection (long[] summation, int summationOffset, final long[] augend, int augendOffset, final long[] addend, int addendOffset) {
+	 ********************************************************************************************/
+	public void polynomialAdditionCorrection (
+			
+		long[] summation, int summationOffset,
+		final long[] augend, int augendOffset,
+		final long[] addend, int addendOffset
+		
+	) {
 		
 		for (int i = 0; i < parameter.n; i++) {
 			
@@ -570,8 +655,6 @@ public class Polynomial {
 	 * @param		difference					Difference = Minuend (-) Subtrahend
 	 * @param		minuend						Minuend Array
 	 * @param		subtrahend					Subtrahend Array
-	 * @param		n							Polynomial Degree
-	 * @param		q							Modulus
 	 * 
 	 * @return		none
 	 ************************************************************************************************************/
@@ -587,19 +670,15 @@ public class Polynomial {
 		
 	}
 	
-	/************************************************************************************************************
+	/***********************************************************************************************************
 	 * Description:	Polynomial Subtraction with Peter Lawrence Montgomery Reduction for Heuristic qTESLA
 	 * 
 	 * @param		difference					Difference = Minuend (-) Subtrahend
 	 * @param		minuend						Minuend Array
 	 * @param		subtrahend					Subtrahend Array
-	 * @param		n							Polynomial Degree
-	 * @param		q							Modulus
-	 * @param		qInverse
-	 * @param		r
 	 * 
 	 * @return		none
-	 ************************************************************************************************************/
+	 ***********************************************************************************************************/
 	public void polynomialSubtractionReduction (int[] difference, final int[] minuend, final int[] subtrahend) {
 		
 		for (int i = 0; i < parameter.n; i++) {
@@ -610,7 +689,7 @@ public class Polynomial {
 		
 	}
 	
-	/*********************************************************************************************************************************************************************
+	/*********************************************************************************
 	 * Description:	Polynomial Subtraction for Provably Secure qTESLA
 	 * 
 	 * @param		difference					Difference = Minuend (-) Subtrahend
@@ -621,18 +700,26 @@ public class Polynomial {
 	 * @param		subtrahendOffset			Starting Point of the Subtrahend Array
 	 * 
 	 * @return		none
-	 *********************************************************************************************************************************************************************/
-	public void polynomialSubtraction (long[] difference, int differenceOffset, final long[] minuend, int minuendOffset, final long [] subtrahend, int subtrahendOffset) {
+	 *********************************************************************************/
+	public void polynomialSubtraction (
+			
+		long[] difference, int differenceOffset,
+		final long[] minuend, int minuendOffset,
+		final long [] subtrahend, int subtrahendOffset) {
 		
 		for (int i = 0; i < parameter.n; i++) {
 			
-			difference[differenceOffset + i] = paulBarrettReduction (minuend[minuendOffset + i] - subtrahend[subtrahendOffset + i]);
+			difference[differenceOffset + i] = paulBarrettReduction (
+				
+					minuend[minuendOffset + i] - subtrahend[subtrahendOffset + i]
+							
+			);
 			
 		}
 		
 	}
 	
-	/******************************************************************************************************************************************************************
+	/********************************************************************************************************************
 	 * Description:	Generation of Polynomial A for Heuristic qTESLA
 	 * 
 	 * @param		A									Polynomial to be Generated
@@ -640,7 +727,7 @@ public class Polynomial {
 	 * @param		seedOffset							Starting Point of the Kappa-Bit Seed
 	 *  
 	 * @return		none
-	 ******************************************************************************************************************************************************************/
+	 ********************************************************************************************************************/
 	public void polynomialUniform (int[] A, byte[] seed, int seedOffset) {
 		
 		int position = 0;
@@ -654,24 +741,37 @@ public class Polynomial {
 		int value4;
 		int mask = (1 << parameter.qLogarithm) - 1;
 		
-		byte[] buffer = new byte[FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * parameter.generateA];
+		byte[] buffer =
+
+			new byte[FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * parameter.generateA];
 		
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
-			buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * parameter.generateA,
+			
+			buffer, 0,
+			FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * parameter.generateA,
 			dualModeSampler++,
 			seed, seedOffset, QTESLAParameter.RANDOM
+		
 		);
 		
 		while (i < parameter.n) {
 			
-			if (position > (FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * numberOfBlock - Integer.SIZE / Byte.SIZE * numberOfByte)) {
+			if (position > 
+			
+				FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * numberOfBlock -
+				Integer.SIZE / Byte.SIZE * numberOfByte
+				
+		) {
 				
 				numberOfBlock = 1;
 				
 				FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
-					buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * numberOfBlock,
+					
+					buffer, 0,
+					FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * numberOfBlock,
 					dualModeSampler++,
 					seed, seedOffset, QTESLAParameter.RANDOM
+				
 				);
 				
 				position = 0;
@@ -740,24 +840,37 @@ public class Polynomial {
 		int value4;
 		int mask = (1 << parameter.qLogarithm) - 1;
 		
-		byte[] buffer = new byte[FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * parameter.generateA];
+		byte[] buffer =
+
+			new byte[FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * parameter.generateA];
 		
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
-			buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * parameter.generateA,
+			
+			buffer, 0,
+			FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * parameter.generateA,
 			dualModeSampler++,
 			seed, seedOffset, QTESLAParameter.RANDOM
+		
 		);
 		
 		while (i < parameter.n * parameter.k) {
 			
-			if (position > (FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * numberOfBlock - Integer.SIZE / Byte.SIZE * numberOfByte)) {
+			if (position >
+			
+					FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * numberOfBlock -
+					Integer.SIZE / Byte.SIZE * numberOfByte
+					
+			) {
 				
 				numberOfBlock = 1;
 				
 				FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
-					buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * numberOfBlock,
+					
+					buffer, 0,
+					FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE * numberOfBlock,
 					dualModeSampler++,
 					seed, seedOffset, QTESLAParameter.RANDOM
+				
 				);
 				
 				position = 0;
@@ -804,8 +917,9 @@ public class Polynomial {
 		
 	}
 	
-	/*****************************************************************************************************************************************
-	 * Description:	Performs Sparse Polynomial Multiplication for A Value Needed During Message Signification for Heuristic qTESLA
+	/********************************************************************************************
+	 * Description:	Performs Sparse Polynomial Multiplication for A Value Needed During
+	 *				Message Signification for Heuristic qTESLA
 	 * 
 	 * @param		product				Product of Two Polynomials
 	 * @param		privateKey			Part of the Private Key
@@ -813,8 +927,12 @@ public class Polynomial {
 	 * @param		signList			List of Signs of Non-Zero Elements in C
 	 * 
 	 * @return		none
-	 *****************************************************************************************************************************************/
-	public void sparsePolynomialMultiplication16 (int[] product, final short[] privateKey, final int[] positionList, final short[] signList) {
+	 ********************************************************************************************/
+	public void sparsePolynomialMultiplication16 (
+			
+		int[] product, final short[] privateKey, final int[] positionList, final short[] signList
+		
+	) {
 		
 		int position;
 		
@@ -840,8 +958,9 @@ public class Polynomial {
 		
 	}
 	
-	/*********************************************************************************************************************************************************************************
-	 * Description:	Performs Sparse Polynomial Multiplication for A Value Needed During Message Signification for Provably Secure qTESLA
+	/*****************************************************************************************************************
+	 * Description:	Performs Sparse Polynomial Multiplication for A Value Needed During Message Signification for
+	 *				Provably Secure qTESLA
 	 * 
 	 * @param		product				Product of Two Polynomials
 	 * @param		productOffset		Starting Point of the Product of Two Polynomials
@@ -851,8 +970,13 @@ public class Polynomial {
 	 * @param		signList			List of Signs of Non-Zero Elements in C
 	 * 
 	 * @return		none
-	 *********************************************************************************************************************************************************************************/
-	public void sparsePolynomialMultiplication8 (long[] product, int productOffset, final byte[] privateKey, int privateKeyOffset, final int[] positionList, final short[] signList) {
+	 *****************************************************************************************************************/
+	public void sparsePolynomialMultiplication8 (
+			
+			long[] product, int productOffset, final byte[] privateKey, int privateKeyOffset,
+			final int[] positionList, final short[] signList
+	
+	) {
 		
 		int position;
 		
@@ -878,8 +1002,9 @@ public class Polynomial {
 		
 	}
 	
-	/**************************************************************************************************************************************
-	 * Description:	Performs Sparse Polynomial Multiplication for A Value Needed During Message Signification for Heuristic qTESLA
+	/*****************************************************************************************
+	 * Description:	Performs Sparse Polynomial Multiplication for A Value Needed During
+	 *				Message Signification for Heuristic qTESLA
 	 * 
 	 * @param		product					Product of Two Polynomials
 	 * @param		publicKey				Part of the Public Key
@@ -887,8 +1012,12 @@ public class Polynomial {
 	 * @param		signList				List of Signs of Non-Zero Elements in C
 	 * 
 	 * @return		none
-	 **************************************************************************************************************************************/
-	public void sparsePolynomialMultiplication32 (int[] product, final int[] publicKey, final int[] positionList, final short[] signList) {
+	 *****************************************************************************************/
+	public void sparsePolynomialMultiplication32 (
+			
+		int[] product, final int[] publicKey, final int[] positionList, final short[] signList
+		
+	) {
 		
 		int position;
 		
@@ -914,8 +1043,9 @@ public class Polynomial {
 		
 	}
 	
-	/*******************************************************************************************************************************************************************************
-	 * Description:	Performs Sparse Polynomial Multiplication for A Value Needed During Message Signification for Provably Secure qTESLA
+	/*************************************************************************************************************
+	 * Description:	Performs Sparse Polynomial Multiplication for A Value Needed During Message Signification for
+	 *				Provably Secure qTESLA
 	 * 
 	 * @param		product					Product of Two Polynomials
 	 * @param		productOffset			Starting Point of the Product of Two Polynomials
@@ -925,8 +1055,13 @@ public class Polynomial {
 	 * @param		signList				List of Signs of Non-Zero Elements in C
 	 * 
 	 * @return		none
-	 *******************************************************************************************************************************************************************************/
-	public void sparsePolynomialMultiplication32 (long[] product, int productOffset, final int[] publicKey, int publicKeyOffset, final int[] positionList, final short[] signList) {
+	 *************************************************************************************************************/
+	public void sparsePolynomialMultiplication32 (
+			
+		long[] product, int productOffset, final int[] publicKey, int publicKeyOffset,
+		final int[] positionList, final short[] signList
+		
+	) {
 		
 		int position;
 		

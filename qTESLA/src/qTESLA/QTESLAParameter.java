@@ -1,3 +1,11 @@
+/******************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* Heuristic and Provably Secure qTESLA Parameters
+* 
+* @author Yinhua Xu
+*******************************************************************************/
+
 package qTESLA;
 
 public final class QTESLAParameter {
@@ -115,6 +123,11 @@ public final class QTESLAParameter {
 	 */
 	public int privateKeySize;
 	
+	/*******************************************************
+	 * qTESLA Parameter Constructor
+	 * 
+	 * @param securityCategory		qTESLA Security Category
+	 *******************************************************/
 	public QTESLAParameter (String securityCategory) {
 		
 		this.securityCategory = securityCategory;

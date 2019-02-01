@@ -1,3 +1,18 @@
+/************************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* Secure-Hash-Algorithm 3 Derived Functions: Secure-Hash-Algorithm-and-KECCAK (SHAKE)
+* and Customizable-Secure-Hash-Algorithm-and-KECCAK (cSHAKE)
+* 
+* See National Institute of Science and Technology Special Publication 800-185
+* by John Kesley, Shu-jen Chang and Ray Perlner
+* from Federal Information Processing Standards Publications 202
+* 
+* Link: https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-185.pdf
+* 
+* @author Yinhua Xu
+*************************************************************************************/
+
 package qTESLA;
 
 import java.util.Arrays;
@@ -228,7 +243,14 @@ public class FederalInformationProcessingStandard202 {
 
 	}
 	
-	private static void keccakAbsorb (long[] state, int rate, final byte[] message, int messageOffset, int messageLength, byte character) {
+	/*********************************************************************************************************
+	 * Description: Absorption Phase of Secure Hash Algorithm and KECCAK
+	 *********************************************************************************************************/
+	private static void keccakAbsorb (
+			
+			long[] state, int rate, final byte[] message, int messageOffset, int messageLength, byte character
+	
+	) {
 		
 		byte[] T = new byte[200];
 		
@@ -261,6 +283,9 @@ public class FederalInformationProcessingStandard202 {
 		
 	}
 	
+	/********************************************************************************************************************
+	 * Description: Squeeze Phase of Secure Hash Algorithm and KECCAK
+	 ********************************************************************************************************************/
 	private static void keccakSqueezeBlock (byte[] output, int outputOffset, int numberOfBlock, long state[], int rate) {
 		
 		while (numberOfBlock > 0) {
@@ -280,33 +305,68 @@ public class FederalInformationProcessingStandard202 {
 		
 	}
 	
-	/* Secure Hash Algorithm KECCAK 128 / Secure Hash Algorithm KECCAK 256 */
+	/******************************************************************************************************************
+	 * Description: Absorption Phase of Secure Hash Algorithm and KECCAK (128-Bit)
+	 ******************************************************************************************************************/
 	
-	public static void secureHashAlgorithmKECCAK128Absorb (long[] state, final byte[] input, int inputOffset, int byteLengthOfInput) {
+	public static void secureHashAlgorithmKECCAK128Absorb (
+			
+		long[] state, final byte[] input, int inputOffset, int byteLengthOfInput
+	
+	) {
 		
 		keccakAbsorb (state, SECURE_HASH_ALGORITHM_KECCAK_128_RATE, input, inputOffset, byteLengthOfInput, (byte) 0x1F);
 		
 	}
 	
-	public static void secureHashAlgorithmKECCAK256Absorb (long[] state, final byte[] input, int inputOffset, int byteLengthOfInput) {
+	/******************************************************************************************************************
+	 * Description: Absorption Phase of Secure Hash Algorithm and KECCAK (256-Bit)
+	 ******************************************************************************************************************/
+	public static void secureHashAlgorithmKECCAK256Absorb (
+			
+		long[] state, final byte[] input, int inputOffset, int byteLengthOfInput
+	
+	) {
 		
 		keccakAbsorb (state, SECURE_HASH_ALGORITHM_KECCAK_256_RATE, input, inputOffset, byteLengthOfInput, (byte) 0x1F);
 		
 	}
 	
-	public static void secureHashAlgorithmKECCAK128SqueezeBlock (byte[] output, int outputOffset, int numberOfBlock, long[] state) {
+	/**********************************************************************************************************
+	 * Description: Squeeze Phase of Secure Hash Algorithm and KECCAK (128-Bit)
+	 **********************************************************************************************************/
+	public static void secureHashAlgorithmKECCAK128SqueezeBlock (
+			
+		byte[] output, int outputOffset, int numberOfBlock, long[] state
+			
+	) {
 		
 		keccakSqueezeBlock (output, outputOffset, numberOfBlock, state, SECURE_HASH_ALGORITHM_KECCAK_128_RATE);
 		
 	}
 	
-	public static void secureHashAlgorithmKECCAK256SqueezeBlock (byte[] output, int outputOffset, int numberOfBlock, long[] state) {
+	/**********************************************************************************************************
+	 * Description: Squeeze Phase of Secure Hash Algorithm and KECCAK (256-Bit)
+	 **********************************************************************************************************/
+	public static void secureHashAlgorithmKECCAK256SqueezeBlock (
+			
+		byte[] output, int outputOffset, int numberOfBlock, long[] state
+			
+	) {
 		
 		keccakSqueezeBlock (output, outputOffset, numberOfBlock, state, SECURE_HASH_ALGORITHM_KECCAK_256_RATE);
 		
 	}
 	
-	private static void secureHashAlgorithmKECCAK (byte[] output, int outputOffset, int outputLength, final byte[] input, int inputOffset, int inputLength, int rate) {
+	/***************************************************************************
+	 * Description: Secure Hash Algorithm and KECCAK Extendable-Output Function
+	 ***************************************************************************/
+	private static void secureHashAlgorithmKECCAK (
+			
+			byte[] output, int outputOffset, int outputLength,
+			final byte[] input, int inputOffset, int inputLength, int rate
+			
+	) {
 		
 		long[] state = new long[25];
 		byte[] T = new byte[rate];
@@ -337,27 +397,53 @@ public class FederalInformationProcessingStandard202 {
 		
 	}
 	
-	/***************************************************************************************************************************************************************
-	 * Description:	The Secure-Hash-Algorithm-3 Extendable-Output Function That Generally Supports 128 Bits of Security Strength, If the Output is Sufficiently Long
-	 ***************************************************************************************************************************************************************/
-	public static void secureHashAlgorithmKECCAK128 (byte[] output, int outputOffset, int outputLength, byte[] input, int inputOffset, int inputLength) {
+	/*****************************************************************************************************************
+	 * Description:	The Secure-Hash-Algorithm-3 Extendable-Output Function That Generally Supports 128 Bits of
+	 *				Security Strength, If the Output is Sufficiently Long
+	 *****************************************************************************************************************/
+	public static void secureHashAlgorithmKECCAK128 (
+			
+		byte[] output, int outputOffset, int outputLength, byte[] input, int inputOffset, int inputLength
+			
+	) {
 		
-		secureHashAlgorithmKECCAK (output, outputOffset, outputLength, input, inputOffset, inputLength, SECURE_HASH_ALGORITHM_KECCAK_128_RATE);
+		secureHashAlgorithmKECCAK (
+				
+			output, outputOffset, outputLength, input, inputOffset, inputLength, SECURE_HASH_ALGORITHM_KECCAK_128_RATE
+				
+		);
 		
 	}
 	
-	/***************************************************************************************************************************************************************
-	 * Description:	The Secure-Hash-Algorithm-3 Extendable-Output Function That Generally Supports 256 Bits of Security Strength, If the Output is Sufficiently Long
-	 ***************************************************************************************************************************************************************/
-	public static void secureHashAlgorithmKECCAK256 (byte[] output, int outputOffset, int outputLength, byte[] input, int inputOffset, int inputLength) {
+	/*****************************************************************************************************************
+	 * Description:	The Secure-Hash-Algorithm-3 Extendable-Output Function That Generally Supports 256 Bits of
+	 *				Security Strength, If the Output is Sufficiently Long
+	 *****************************************************************************************************************/
+	public static void secureHashAlgorithmKECCAK256 (
+			
+		byte[] output, int outputOffset, int outputLength, byte[] input, int inputOffset, int inputLength
+			
+	) {
 		
-		secureHashAlgorithmKECCAK (output, outputOffset, outputLength, input, inputOffset, inputLength, SECURE_HASH_ALGORITHM_KECCAK_256_RATE);
+		secureHashAlgorithmKECCAK (
+				
+			output, outputOffset, outputLength, input, inputOffset, inputLength, SECURE_HASH_ALGORITHM_KECCAK_256_RATE
+		
+		);
 		
 	}
 	
-	/* Customizable Secure Hash Algorithm KECCAK 128 / Customizable Secure Hash Algorithm KECCAK 256 */
-	
-	private static void customizableSecureHashAlgorithmKECCAKSimpleAbsorb (long[] state, short continuousTimeStochasticModelling, byte[] input, int inputOffset, int inputLength, long firstState, int rate) {
+	/********************************************************************************
+	 * Description: Absorption Phase of Customizable Secure Hash Algorithm and KECCAK
+	 ********************************************************************************/
+	 
+	private static void customizableSecureHashAlgorithmKECCAKSimpleAbsorb (
+			
+		long[] state, short continuousTimeStochasticModelling,
+		byte[] input, int inputOffset, int inputLength,
+		long firstState, int rate
+			
+	) {
 		
 		Arrays.fill(state, 0L);
 		
@@ -372,36 +458,87 @@ public class FederalInformationProcessingStandard202 {
 		
 	}
 	
-	public static void customizableSecureHashAlgorithmKECCAK128SimpleAbsorb (long[] state, short continuousTimeStochasticModelling, byte[] input, int inputOffset, int inputLength) {
+	/********************************************************************************************************
+	 * Description: Absorption Phase of Customizable Secure Hash Algorithm and KECCAK (128-Bit)
+	 ********************************************************************************************************/
+	public static void customizableSecureHashAlgorithmKECCAK128SimpleAbsorb (
+			
+		long[] state, short continuousTimeStochasticModelling, byte[] input, int inputOffset, int inputLength
+	
+	) {
 		
-		customizableSecureHashAlgorithmKECCAKSimpleAbsorb (state, continuousTimeStochasticModelling, input, inputOffset, inputLength, (long) 0x10010001A801L, SECURE_HASH_ALGORITHM_KECCAK_128_RATE);
+		customizableSecureHashAlgorithmKECCAKSimpleAbsorb (
+				
+			state, continuousTimeStochasticModelling,
+			input, inputOffset, inputLength,
+			(long) 0x10010001A801L, SECURE_HASH_ALGORITHM_KECCAK_128_RATE
+				
+		);
 		
 	}
 	
-	public static void customizableSecureHashAlgorithmKECCAK256SimpleAbsorb (long[] state, short continuousTimeStochasticModelling, byte[] input, int inputOffset, int inputLength) {
+	/********************************************************************************************************
+	 * Description: Absorption Phase of Customizable Secure Hash Algorithm and KECCAK (256-Bit)
+	 ********************************************************************************************************/
+	public static void customizableSecureHashAlgorithmKECCAK256SimpleAbsorb (
+			
+		long[] state, short continuousTimeStochasticModelling, byte[] input, int inputOffset, int inputLength
 		
-		customizableSecureHashAlgorithmKECCAKSimpleAbsorb (state, continuousTimeStochasticModelling, input, inputOffset, inputLength, (long) 0x100100018801L, SECURE_HASH_ALGORITHM_KECCAK_256_RATE);
+	) {
+		
+		customizableSecureHashAlgorithmKECCAKSimpleAbsorb (
+				
+			state, continuousTimeStochasticModelling,
+			input, inputOffset, inputLength,
+			(long) 0x100100018801L, SECURE_HASH_ALGORITHM_KECCAK_256_RATE
+				
+		);
 		
 	}
 	
-	public static void customizableSecureHashAlgorithmKECCAK128SimpleSqueezeBlock (byte[] output, int outputOffset, int numberOfBlock, long[] state) {
+	/**********************************************************************************************************
+	 * Description: Squeeze Phase of Customizable Secure Hash Algorithm and KECCAK (128-Bit)
+	 **********************************************************************************************************/
+	public static void customizableSecureHashAlgorithmKECCAK128SimpleSqueezeBlock (
+			
+		byte[] output, int outputOffset, int numberOfBlock, long[] state
+			
+	) {
 
 		keccakSqueezeBlock (output, outputOffset, numberOfBlock, state, SECURE_HASH_ALGORITHM_KECCAK_128_RATE);
 		
 	}
 	
-	public static void customizableSecureHashAlgorithmKECCAK256SimpleSqueezeBlock (byte[] output, int outputOffset, int numberOfBlock, long[] state) {
+	/**********************************************************************************************************
+	 * Description: Squeeze Phase of Customizable Secure Hash Algorithm and KECCAK (256-Bit)
+	 **********************************************************************************************************/
+	public static void customizableSecureHashAlgorithmKECCAK256SimpleSqueezeBlock (
+			
+		byte[] output, int outputOffset, int numberOfBlock, long[] state
+			
+	) {
 		
 		keccakSqueezeBlock (output, outputOffset, numberOfBlock, state, SECURE_HASH_ALGORITHM_KECCAK_256_RATE);
 		
 	}
 	
-	private static void customizableSecureHashAlgorithmKECCAKSimple (byte[] output, int outputOffset, int outputLength, short continuousTimeStochasticModelling, byte[] input, int inputOffset, int inputLength, long firstState, int rate) {
+	private static void customizableSecureHashAlgorithmKECCAKSimple (
+			
+		byte[] output, int outputOffset, int outputLength,
+		short continuousTimeStochasticModelling,
+		byte[] input, int inputOffset, int inputLength,
+		long firstState, int rate
+			
+	) {
 		
 		long state[] = new long[25];
 		byte T[] = new byte[rate];
 		
-		customizableSecureHashAlgorithmKECCAKSimpleAbsorb (state, continuousTimeStochasticModelling, input, inputOffset, inputLength, firstState, rate);
+		customizableSecureHashAlgorithmKECCAKSimpleAbsorb (
+				
+			state, continuousTimeStochasticModelling, input, inputOffset, inputLength, firstState, rate
+				
+		);
 		
 		/* Squeeze output */
 		keccakSqueezeBlock (output, outputOffset, outputLength / rate, state, rate);
@@ -422,15 +559,41 @@ public class FederalInformationProcessingStandard202 {
 		
 	}
 	
-	public static void customizableSecureHashAlgorithmKECCAK128Simple (byte[] output, int outputOffset, int outputLength, short continuousTimeStochasticModelling, byte[] input, int inputOffset, int inputLength) {
+	public static void customizableSecureHashAlgorithmKECCAK128Simple (
+			
+		byte[] output, int outputOffset, int outputLength,
+		short continuousTimeStochasticModelling,
+		byte[] input, int inputOffset, int inputLength
+			
+	) {
 		
-		customizableSecureHashAlgorithmKECCAKSimple (output, outputOffset, outputLength, continuousTimeStochasticModelling, input, inputOffset, inputLength, (long) 0x10010001A801L, SECURE_HASH_ALGORITHM_KECCAK_128_RATE);
+		customizableSecureHashAlgorithmKECCAKSimple (
+				
+			output, outputOffset, outputLength,
+			continuousTimeStochasticModelling,
+			input, inputOffset, inputLength,
+			(long) 0x10010001A801L, SECURE_HASH_ALGORITHM_KECCAK_128_RATE
+			
+		);
 		
 	}
 	
-	public static void customizableSecureHashAlgorithmKECCAK256Simple (byte[] output, int outputOffset, int outputLength, short continuousTimeStochasticModelling, byte[] input, int inputOffset, int inputLength) {
+	public static void customizableSecureHashAlgorithmKECCAK256Simple (
+			
+		byte[] output, int outputOffset, int outputLength,
+		short continuousTimeStochasticModelling,
+		byte[] input, int inputOffset, int inputLength
+	
+	) {
 		
-		customizableSecureHashAlgorithmKECCAKSimple (output, outputOffset, outputLength, continuousTimeStochasticModelling, input, inputOffset, inputLength, (long) 0x100100018801L, SECURE_HASH_ALGORITHM_KECCAK_256_RATE);
+		customizableSecureHashAlgorithmKECCAKSimple (
+				
+			output, outputOffset, outputLength,
+			continuousTimeStochasticModelling,
+			input, inputOffset, inputLength,
+			(long) 0x100100018801L, SECURE_HASH_ALGORITHM_KECCAK_256_RATE
+			
+		);
 		
 	}
 	

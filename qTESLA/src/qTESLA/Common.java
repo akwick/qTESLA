@@ -1,3 +1,11 @@
+/******************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* Common Functions
+* 
+* @author Yinhua Xu
+*******************************************************************************/
+
 package qTESLA;
 
 import java.util.Arrays;
@@ -63,15 +71,15 @@ public class Common {
 		
 	}
 	
-	/*****************************************************************************
-	 * Description:	Converts 2 Consecutive Bytes in "load" to A Number of "Short"
-	 *				from A Known Position
+	/*********************************************************************************
+	 * Description:	Converts 2 Consecutive Bytes in "load" to A Number of "Short" from
+	 *				A Known Position
 	 * 
 	 * @param		source			Source Array
 	 * @param		sourceOffset	Starting Position
 	 * 
 	 * @return		A Number of "Short"
-	 *****************************************************************************/
+	 *********************************************************************************/
 	public static short load16 (final byte[] source, int sourceOffset) {
 		
 		short number = 0;
@@ -134,15 +142,15 @@ public class Common {
 		
 	}
 	
-	/****************************************************************************
-	 * Description:	Converts 8 Consecutive Bytes in "load" to A Number of "Long"
-	 *				from A Known Position
+	/**********************************************************************************
+	 * Description:	Converts 8 Consecutive Bytes in "load" to A Number of "Long" from
+	 *				A Known Position
 	 * 
 	 * @param		source			Source Array
 	 * @param		sourceOffset	Starting Position
 	 * 
 	 * @return		A Number of "Long"
-	 ****************************************************************************/
+	 *********************************************************************************/
 	public static long load64 (final byte[] source, int sourceOffset) {
 		
 		long number = 0L;
@@ -169,7 +177,7 @@ public class Common {
 		
 	}
 	
-	/*******************************************************************
+	/********************************************************************
 	 * Description:	Converts 8N Consecutive Bytes in "load" to An Array
 	 *				of N "Long" Numbers
 	 * 
@@ -220,16 +228,16 @@ public class Common {
 		
 	}
 	
-	/*******************************************************************************************
-	 * Description:	Converts A Number of "Integer" to 4 Consecutive Bytes in "store" from A
-	 * 				Known Position
+	/********************************************************************************************
+	 * Description:	Converts A Number of "Integer" to 4 Consecutive Bytes in "store" from A Known
+	 * 				Position
 	 * 
 	 * @param		destination				Destination Byte Array
 	 * @param		destinationOffset		Starting Position
 	 * @param		source					Source Integer Number
 	 * 
 	 * @return		none
-	 *******************************************************************************************/
+	 ********************************************************************************************/
 	public static void store32 (byte[] destination, int destinationOffset, final int source) {
 		
 		if (destination.length - destinationOffset >= Integer.SIZE / Byte.SIZE) {

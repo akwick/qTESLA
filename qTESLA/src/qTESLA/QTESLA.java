@@ -1,3 +1,11 @@
+/****************************************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* Functions of qTESLA Signature Scheme (Key Generation, Signature Generation, Signature Verification)
+* 
+* @author Yinhua Xu
+*****************************************************************************************************/
+
 package qTESLA;
 
 import javax.crypto.BadPaddingException;
@@ -24,6 +32,11 @@ public class QTESLA {
 	
 	private static RandomNumberGenerator randomNumberGenerator;
 	
+	/********************************************************
+	 * qTESLA Constructor
+	 * 
+	 * @param securityCategory		qTESLA Security Category
+	 ********************************************************/
 	public QTESLA (String securityCategory) {
 		
 		parameter = new QTESLAParameter (securityCategory);
@@ -35,18 +48,33 @@ public class QTESLA {
 		
 	}
 	
+	/*********************************************
+	 * Getter of qTESLA Parameter Object
+	 * 
+	 * @return	none
+	 *********************************************/
 	public QTESLAParameter getQTESLAParameter () {
 		
 		return parameter;
 		
 	}
 	
+	/***********************************
+	 * Getter of Polynomial Object
+	 * 
+	 * @return	none
+	 ***********************************/
 	public Polynomial getPolynomial () {
 		
 		return polynomial;
 		
 	}
 	
+	/*********************************************************
+	 * Getter of Random Number Generator Object
+	 * 
+	 * @return	none
+	 *********************************************************/
 	public RandomNumberGenerator getRandomNumberGenerator () {
 		
 		return randomNumberGenerator;
@@ -80,7 +108,9 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-I") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-					output, outputOffset, QTESLAParameter.HASH, T, 0, parameter.n + QTESLAParameter.MESSAGE
+				
+				output, outputOffset, QTESLAParameter.HASH, T, 0, parameter.n + QTESLAParameter.MESSAGE
+			
 			);
 		
 		}
@@ -88,16 +118,18 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-III-Speed" || parameter.securityCategory == "qTESLA-III-Size") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-					output, outputOffset, QTESLAParameter.HASH, T, 0, parameter.n + QTESLAParameter.MESSAGE
+				
+				output, outputOffset, QTESLAParameter.HASH, T, 0, parameter.n + QTESLAParameter.MESSAGE
+			
 			);
 			
 		}
 		
 	}
 	
-	/**************************************************************************************************************************************************
+	/**********************************************************************************************************************
 	 * Description:	Hash Function to Generate C' for Provably Secure qTESLA
-	 **************************************************************************************************************************************************/
+	 **********************************************************************************************************************/
 	private static void hashFunction (byte[] output, int outputOffset, long[] V, final byte[] message, int messageOffset) {
 		
 		int index;
@@ -132,7 +164,9 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-P-I") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-					output, outputOffset, QTESLAParameter.HASH, T, 0, parameter.n * parameter.k + QTESLAParameter.MESSAGE
+				
+				output, outputOffset, QTESLAParameter.HASH, T, 0, parameter.n * parameter.k + QTESLAParameter.MESSAGE
+			
 			);
 		
 		}
@@ -140,7 +174,9 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-P-III") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-					output, outputOffset, QTESLAParameter.HASH, T, 0, parameter.n * parameter.k + QTESLAParameter.MESSAGE
+				
+				output, outputOffset, QTESLAParameter.HASH, T, 0, parameter.n * parameter.k + QTESLAParameter.MESSAGE
+			
 			);
 			
 		}
@@ -168,9 +204,11 @@ public class QTESLA {
 		
 		/* Use the Hash Value as Key to Generate Some Randomness */
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
+			
 			randomness, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE,
 			domainSeparator++,
 			output, outputOffset, QTESLAParameter.RANDOM
+		
 		);
 		
 		/* Use Rejection Sampling to Determine Positions to be Set in the New Vector */
@@ -184,9 +222,11 @@ public class QTESLA {
 			if (count > FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE - 3) {
 				
 				FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
+					
 					randomness, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE,
 					domainSeparator++,
 					output, outputOffset, QTESLAParameter.RANDOM
+				
 				);
 				
 				count = 0;
@@ -306,14 +346,15 @@ public class QTESLA {
 		
 	}
 	
-	/************************************************************************************************************
-	 * Description:	Checks Bounds for Signature Vector Z During Signature Verification for Provably Secure qTESLA
+	/****************************************************************************************************
+	 * Description:	Checks Bounds for Signature Vector Z During Signature Verification for
+	 *				Provably Secure qTESLA
 	 * 
 	 * @param		Z		Signature Vector
 	 * 
 	 * @return		false	Valid / Accepted
 	 * 				true	Invalid / Rejected
-	 ************************************************************************************************************/
+	 ****************************************************************************************************/
 	private static boolean testZ (long[] Z) {
 		
 		for (int i = 0; i < parameter.n; i++) {
@@ -523,7 +564,7 @@ public class QTESLA {
 		
 	}
 	
-	/***********************************************************************************************************************************************************
+	/************************************************************************************************************************
 	 * Description:	Generates A Pair of Public Key and Private Key for Heuristic qTESLA Signature Scheme
 	 * 
 	 * @param		publicKey							Contains Public Key
@@ -538,10 +579,17 @@ public class QTESLA {
 	 * @throws		NoSuchAlgorithmException
 	 * @throws 		NoSuchPaddingException
 	 * @throws		ShortBufferException
-	 ***********************************************************************************************************************************************************/
-	public int generateKeyPair (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom)
-					
-			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
+	 ************************************************************************************************************************/
+	public int generateKeyPair (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom) throws
+		
+		BadPaddingException,
+		IllegalBlockSizeException,
+		InvalidKeyException,
+		NoSuchAlgorithmException,
+		NoSuchPaddingException,
+		ShortBufferException
+
+	{
 		
 		/* Initialize Domain Separator for Error Polynomial and Secret Polynomial */
 		int nonce = 0;
@@ -563,7 +611,9 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-I") { 
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-					randomnessExtended, 0, QTESLAParameter.SEED * 4, randomness, 0, QTESLAParameter.RANDOM
+				
+				randomnessExtended, 0, QTESLAParameter.SEED * 4, randomness, 0, QTESLAParameter.RANDOM
+			
 			);
 			
 		}
@@ -571,7 +621,9 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-III-Speed" || parameter.securityCategory == "qTESLA-III-Size") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-					randomnessExtended, 0, QTESLAParameter.SEED * 4, randomness, 0, QTESLAParameter.RANDOM
+				
+				randomnessExtended, 0, QTESLAParameter.SEED * 4, randomness, 0, QTESLAParameter.RANDOM
+			
 			);
 			
 		}
@@ -613,7 +665,7 @@ public class QTESLA {
 		
 	}
 	
-	/***********************************************************************************************************************************************************
+	/******************************************************************************************************************
 	 * Description:	Generates A Pair of Public Key and Private Key for Provably Secure qTESLA Signature Scheme
 	 * 
 	 * @param		publicKey							Contains Public Key
@@ -628,10 +680,17 @@ public class QTESLA {
 	 * @throws		NoSuchAlgorithmException 
 	 * @throws		NoSuchPaddingException
 	 * @throws		ShortBufferException
-	 ***********************************************************************************************************************************************************/
-	public int generateKeyPairP (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom)
+	 *****************************************************************************************************************/
+	public int generateKeyPairP (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom) throws
 
-			throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
+		BadPaddingException,
+		IllegalBlockSizeException,
+		InvalidKeyException,
+		NoSuchAlgorithmException,
+		NoSuchPaddingException,
+		ShortBufferException
+
+	{
 		
 		/* Initialize Domain Separator for Error Polynomial and Secret Polynomial */
 		int nonce = 0;
@@ -654,7 +713,9 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-P-I") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
+				
 				randomnessExtended, 0, QTESLAParameter.SEED * (parameter.k + 3), randomness, 0, QTESLAParameter.RANDOM
+			
 			);
 			
 		}
@@ -662,7 +723,9 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-P-III") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
+				
 				randomnessExtended, 0, QTESLAParameter.SEED * (parameter.k + 3), randomness, 0, QTESLAParameter.RANDOM
+			
 			);
 			
 		}
@@ -676,7 +739,11 @@ public class QTESLA {
 			
 			do {
 				
-				gauss.polynomialGaussianSampler (errorPolynomial, parameter.n * i, randomnessExtended, QTESLAParameter.SEED * i, ++nonce);
+				gauss.polynomialGaussianSampler (
+						
+					errorPolynomial, parameter.n * i, randomnessExtended, QTESLAParameter.SEED * i, ++nonce
+					
+				);
 				
 			} while (checkPolynomial (errorPolynomial, parameter.n * i, parameter.boundE) == true);
 		
@@ -689,7 +756,11 @@ public class QTESLA {
 		 */
 		do {
 			
-			gauss.polynomialGaussianSampler (secretPolynomial, 0, randomnessExtended, QTESLAParameter.SEED * parameter.k, ++nonce);
+			gauss.polynomialGaussianSampler (
+					
+				secretPolynomial, 0, randomnessExtended, QTESLAParameter.SEED * parameter.k, ++nonce
+				
+			);
 						
 		} while (checkPolynomial (secretPolynomial, 0, parameter.boundS) == true);
 		
@@ -701,21 +772,36 @@ public class QTESLA {
 		/* Compute the Public Key T = A * secretPolynomial + errorPolynomial */
 		for (int i = 0; i < parameter.k; i++) {
 			
-			polynomial.polynomialMultiplication (T, parameter.n * i, A, parameter.n * i, secretPolynomialNumberTheoreticTransform, 0);	
-			polynomial.polynomialAdditionCorrection (T, parameter.n * i, T, parameter.n * i, errorPolynomial, parameter.n * i);
+			polynomial.polynomialMultiplication (
+					
+				T, parameter.n * i, A, parameter.n * i, secretPolynomialNumberTheoreticTransform, 0
+				
+			);	
+			
+			polynomial.polynomialAdditionCorrection (
+					
+				T, parameter.n * i, T, parameter.n * i, errorPolynomial, parameter.n * i
+				
+			);
 		
 		}
 		
 		/* Pack Public and Private Keys */
-		pack.packPrivateKey (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, QTESLAParameter.SEED * (parameter.k + 1));
+		pack.packPrivateKey (
+				
+			privateKey, secretPolynomial, errorPolynomial, randomnessExtended, QTESLAParameter.SEED * (parameter.k + 1)
+			
+		);
+		
 		pack.encodePublicKey (publicKey, T, randomnessExtended, QTESLAParameter.SEED * (parameter.k + 1));
 		
 		return 0;
 		
 	}
 	
-	/******************************************************************************************************************************************************
-	 * Description:	Generates A Signature for A Given Message According to the Ring-TESLA Signature Scheme for Heuristic qTESLA
+	/**************************************************************************************************************
+	 * Description:	Generates A Signature for A Given Message According to the Ring-TESLA Signature Scheme for
+	 * 				Heuristic qTESLA
 	 * 
 	 * @param		message								Message to be Signed
 	 * @param		messageOffset						Starting Point of the Message to be Signed
@@ -734,18 +820,28 @@ public class QTESLA {
 	 * @throws		NoSuchAlgorithmException
 	 * @throws		NoSuchPaddingException 
 	 * @throws		ShortBufferException
-	 ******************************************************************************************************************************************************/
+	 **************************************************************************************************************/
 	public int sign (
 			
 			byte[] signature, int signatureOffset, int[] signatureLength,
 			final byte[] message, int messageOffset, int messageLength,
 			final byte[] privateKey, SecureRandom secureRandom
 			
-	) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
+	) throws 
+	
+		BadPaddingException,
+		IllegalBlockSizeException,
+		InvalidKeyException,
+		NoSuchAlgorithmException,
+		NoSuchPaddingException,
+		ShortBufferException
+
+	{
 		
 		byte[] C						= new byte[QTESLAParameter.HASH];
 		byte[] randomness				= new byte[QTESLAParameter.SEED];
-		byte[] randomnessInput			= new byte[QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE];
+		byte[] randomnessInput			=
+			new byte[QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE];
 		byte[] seed						= new byte[QTESLAParameter.SEED * 2];
 		// byte[] temporaryRandomnessInput	= new byte[Polynomial.RANDOM];
 		int[] positionList				= new int[parameter.h];
@@ -774,11 +870,17 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-I") {
 		
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomnessInput, QTESLAParameter.RANDOM + QTESLAParameter.SEED, QTESLAParameter.MESSAGE, message, 0, messageLength
+				
+				randomnessInput, QTESLAParameter.RANDOM + QTESLAParameter.SEED, QTESLAParameter.MESSAGE,
+				message, 0, messageLength
+			
 			);
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomness, 0, QTESLAParameter.SEED, randomnessInput, 0, QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE
+				
+				randomness, 0, QTESLAParameter.SEED,
+				randomnessInput, 0, QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE
+			
 			);
 		
 		}
@@ -786,11 +888,17 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-III-Speed" || parameter.securityCategory == "qTESLA-III-Size") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomnessInput, QTESLAParameter.RANDOM + QTESLAParameter.SEED, QTESLAParameter.MESSAGE, message, 0, messageLength
+				
+				randomnessInput, QTESLAParameter.RANDOM + QTESLAParameter.SEED, QTESLAParameter.MESSAGE,
+				message, 0, messageLength
+			
 			);
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomness, 0, QTESLAParameter.SEED, randomnessInput, 0, QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE
+				
+				randomness, 0, QTESLAParameter.SEED,
+				randomnessInput, 0, QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE
+			
 			);
 			
 		}
@@ -835,7 +943,11 @@ public class QTESLA {
 			}
 			
 			/* Copy the Message into the Signature Package */
-			System.arraycopy (message, messageOffset, signature, signatureOffset + parameter.signatureSize, messageLength);
+			System.arraycopy (
+					
+				message, messageOffset, signature, signatureOffset + parameter.signatureSize, messageLength
+				
+			);
 				
 			/* Length of the Output */
 			signatureLength[0] = parameter.signatureSize + messageLength;
@@ -849,8 +961,9 @@ public class QTESLA {
 		
 	}
 	
-	/*****************************************************************************************************************************************************
-	 * Description:	Generates A Signature for A Given Message According to the Ring-TESLA Signature Scheme for Provably Secure qTESLA
+	/*************************************************************************************************************
+	 * Description:	Generates A Signature for A Given Message According to the Ring-TESLA Signature Scheme for
+	 *				Provably Secure qTESLA
 	 * 
 	 * @param		message								Message to be Signed
 	 * @param		messageOffset						Starting Point of the Message to be Signed
@@ -869,18 +982,28 @@ public class QTESLA {
 	 * @throws		NoSuchAlgorithmException
 	 * @throws		NoSuchPaddingException
 	 * @throws		ShortBufferException
-	 *****************************************************************************************************************************************************/
+	 *************************************************************************************************************/
 	public int signP (
 			
 			byte[] signature, int signatureOffset, int[] signatureLength,
 			final byte[] message, int messageOffset, int messageLength,
 			final byte[] privateKey, SecureRandom secureRandom
 	
-	) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, ShortBufferException {
+	) throws
+		
+		BadPaddingException,
+		IllegalBlockSizeException,
+		InvalidKeyException,
+		NoSuchAlgorithmException,
+		NoSuchPaddingException,
+		ShortBufferException
+	
+	{
 		
 		byte[] C						= new byte[QTESLAParameter.HASH];
 		byte[] randomness				= new byte[QTESLAParameter.SEED];
-		byte[] randomnessInput			= new byte[QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE];
+		byte[] randomnessInput			=
+			new byte[QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE];
 		// byte[] temporaryRandomnessInput	= new byte[Polynomial.RANDOM];
 		int[] positionList				= new int[parameter.h];
 		short[] signList				= new short[parameter.h];
@@ -901,17 +1024,27 @@ public class QTESLA {
 		randomNumberGenerator.randomByte (randomnessInput, QTESLAParameter.RANDOM, QTESLAParameter.RANDOM);
 		// secureRandom.nextBytes (temporaryRandomnessInput);
 		// System.arraycopy (temporaryRandomnessInput, 0, randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
-		System.arraycopy (privateKey, parameter.privateKeySize - QTESLAParameter.SEED, randomnessInput, 0, QTESLAParameter.SEED);
+		System.arraycopy (
+				
+			privateKey, parameter.privateKeySize - QTESLAParameter.SEED, randomnessInput, 0, QTESLAParameter.SEED
+			
+		);
 		
 		if (parameter.securityCategory == "qTESLA-P-I") {
 		
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomnessInput, QTESLAParameter.RANDOM + QTESLAParameter.SEED, QTESLAParameter.MESSAGE, message, 0, messageLength
+				
+				randomnessInput, QTESLAParameter.RANDOM + QTESLAParameter.SEED, QTESLAParameter.MESSAGE,
+				message, 0, messageLength
+			
 			);
 			
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				randomness, 0, QTESLAParameter.SEED, randomnessInput, 0, QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE
+				
+				randomness, 0, QTESLAParameter.SEED,
+				randomnessInput, 0, QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE
+			
 			);
 		
 		}
@@ -919,12 +1052,18 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-P-III") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomnessInput, QTESLAParameter.RANDOM + QTESLAParameter.SEED, QTESLAParameter.MESSAGE, message, 0, messageLength
+				
+				randomnessInput, QTESLAParameter.RANDOM + QTESLAParameter.SEED, QTESLAParameter.MESSAGE,
+				message, 0, messageLength
+			
 			);
 			
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				randomness, 0, QTESLAParameter.SEED, randomnessInput, 0, QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE
+				
+				randomness, 0, QTESLAParameter.SEED,
+				randomnessInput, 0, QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE
+			
 			);
 			
 		}
@@ -942,7 +1081,11 @@ public class QTESLA {
 			/* V_i = A_i * Y Modulo Q for All i */
 			for (int i = 0; i < parameter.k; i++) {
 				
-				polynomial.polynomialMultiplication (V, parameter.n * i, A, parameter.n * i, numberTheoreticTransformY, 0);
+				polynomial.polynomialMultiplication (
+					
+					V, parameter.n * i, A, parameter.n * i, numberTheoreticTransformY, 0
+					
+				);
 				
 			}
 			
@@ -965,7 +1108,11 @@ public class QTESLA {
 			
 			for (int i = 0; i < parameter.k; i++) {
 				
-				polynomial.sparsePolynomialMultiplication8 (EC, parameter.n * i, privateKey, parameter.n * (i + 1), positionList, signList);
+				polynomial.sparsePolynomialMultiplication8 (
+						
+					EC, parameter.n * i, privateKey, parameter.n * (i + 1), positionList, signList
+					
+				);
 				
 				/* V_i = V_i - EC_i Modulo Q for All k */
 				polynomial.polynomialSubtraction (V, parameter.n * i, V, parameter.n * i, EC, parameter.n * i);
@@ -987,7 +1134,11 @@ public class QTESLA {
 			}
 			
 			/* Copy the Message into the Signature Package */
-			System.arraycopy (message, messageOffset, signature, signatureOffset + parameter.signatureSize, messageLength);
+			System.arraycopy (
+					
+				message, messageOffset, signature, signatureOffset + parameter.signatureSize, messageLength
+				
+			);
 				
 			/* Length of the Output */
 			signatureLength[0] = messageLength + parameter.signatureSize;
@@ -1001,9 +1152,9 @@ public class QTESLA {
 		
 	}
 	
-	/**********************************************************************************************************************************
-	 * Description:	Extracts the Original Message and Checks Whether the Generated Signature is Valid for A Given Signature Package
-	 * 				for Heuristic qTESLA
+	/*****************************************************************************************************
+	 * Description:	Extracts the Original Message and Checks Whether the Generated Signature is Valid for
+	 *				A Given Signature Package for Heuristic qTESLA
 	 * 
 	 * @param 		signature							Given Signature Package
 	 * @param		signatureOffset						Starting Point of the Given Signature Package
@@ -1015,7 +1166,7 @@ public class QTESLA {
 	 * 
 	 * @return		0									Valid Signature
 	 * 				< 0									Invalid Signature
-	 **********************************************************************************************************************************/
+	 *****************************************************************************************************/
 	public int verify (
 			
 			byte[] message, int messageOffset, int[] messageLength,
@@ -1070,15 +1221,25 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-I") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				hashMessage, 0, QTESLAParameter.MESSAGE, signature, parameter.signatureSize, signatureLength - parameter.signatureSize
+				
+				hashMessage, 0, QTESLAParameter.MESSAGE,
+				signature, parameter.signatureSize, signatureLength - parameter.signatureSize
+			
 			);
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Speed" || parameter.securityCategory == "qTESLA-III-Size") {
+		if (
+				parameter.securityCategory == "qTESLA-III-Speed" ||
+				parameter.securityCategory == "qTESLA-III-Size"
+				
+		) {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				hashMessage, 0, QTESLAParameter.MESSAGE, signature, parameter.signatureSize, signatureLength - parameter.signatureSize
+				
+				hashMessage, 0, QTESLAParameter.MESSAGE,
+				signature, parameter.signatureSize, signatureLength - parameter.signatureSize
+			
 			);
 			
 		}
@@ -1095,15 +1256,19 @@ public class QTESLA {
 		
 		messageLength[0] = signatureLength - parameter.signatureSize;
 		
-		System.arraycopy (signature, signatureOffset + parameter.signatureSize, message, messageOffset, messageLength[0]);
+		System.arraycopy (
+				
+			signature, signatureOffset + parameter.signatureSize, message, messageOffset, messageLength[0]
+					
+		);
 		
 		return 0;
 
 	}
 	
-	/********************************************************************************************************************************
-	 * Description:	Extracts the Original Message and Checks Whether the Generated Signature is Valid for A Given Signature Package
-	 *				for Provably Secure qTESLA
+	/*****************************************************************************************************
+	 * Description:	Extracts the Original Message and Checks Whether the Generated Signature is Valid for
+	 *				A Given Signature Package for Provably Secure qTESLA
 	 * 
 	 * @param 		signature							Given Signature Package
 	 * @param		signatureOffset						Starting Point of the Given Signature Package
@@ -1115,7 +1280,7 @@ public class QTESLA {
 	 * 
 	 * @return		0									Valid Signature
 	 * 				< 0									Invalid Signature
-	 ********************************************************************************************************************************/
+	 *****************************************************************************************************/
 	public int verifyP (
 			
 			byte[] message, int messageOffset, int[] messageLength,
@@ -1166,9 +1331,17 @@ public class QTESLA {
 		/* W_i = A_i * Z_i - TC_i for All i */
 		for (int i = 0; i < parameter.k; i++) {
 			
-			polynomial.polynomialMultiplication (W, parameter.n * i, A, parameter.n * i, numberTheoreticTransformZ, 0);	
+			polynomial.polynomialMultiplication (
+					
+				W, parameter.n * i, A, parameter.n * i, numberTheoreticTransformZ, 0
+				
+			);	
 			
-			polynomial.sparsePolynomialMultiplication32 (TC, parameter.n * i, newPublicKey, parameter.n * i, positionList, signList);
+			polynomial.sparsePolynomialMultiplication32 (
+					
+				TC, parameter.n * i, newPublicKey, parameter.n * i, positionList, signList
+				
+			);
 			
 			polynomial.polynomialSubtraction (W, parameter.n * i, W, parameter.n * i, TC, parameter.n * i);
 		
@@ -1177,7 +1350,10 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-P-I") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				hashMessage, 0, QTESLAParameter.MESSAGE, signature, parameter.signatureSize, signatureLength - parameter.signatureSize
+				
+				hashMessage, 0, QTESLAParameter.MESSAGE,
+				signature, parameter.signatureSize, signatureLength - parameter.signatureSize
+			
 			);
 			
 		}
@@ -1185,7 +1361,10 @@ public class QTESLA {
 		if (parameter.securityCategory == "qTESLA-P-III") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				hashMessage, 0, QTESLAParameter.MESSAGE, signature, parameter.signatureSize, signatureLength - parameter.signatureSize
+				
+				hashMessage, 0, QTESLAParameter.MESSAGE,
+				signature, parameter.signatureSize, signatureLength - parameter.signatureSize
+			
 			);
 			
 		}
@@ -1202,7 +1381,11 @@ public class QTESLA {
 		
 		messageLength[0] = signatureLength - parameter.signatureSize;
 		
-		System.arraycopy (signature, signatureOffset + parameter.signatureSize, message, messageOffset, messageLength[0]);
+		System.arraycopy (
+				
+			signature, signatureOffset + parameter.signatureSize, message, messageOffset, messageLength[0]
+					
+		);
 		
 		return 0;
 

@@ -1,3 +1,11 @@
+/***********************************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* qTESLA Signature Generation and Verification Implementing Signature Service Provider Interface
+* 
+* @author Yinhua Xu
+************************************************************************************************/
+
 package qTESLA;
 
 import java.nio.ByteBuffer;
@@ -48,24 +56,44 @@ public final class QTESLASignature extends SignatureSpi {
 	
 	private QTESLA qTESLA;
 	
+	/*************************************
+	 * Getter of Security Category
+	 * 
+	 * @return	none
+	 *************************************/
 	public String getSecurityCategory () {
 		
 		return this.securityCategory;
 		
 	}
 	
+	/***************************************
+	 * Getter of Secure Random Object
+	 * 
+	 * @return	none
+	 ***************************************/
 	public SecureRandom getSecureRandom () {
 		
 		return random;
 	
 	}
 
+	/**************************************************
+	 * Setter of Secure Random Object
+	 * 
+	 * @return	none
+	 **************************************************/
 	public void setSecureRandom (SecureRandom random) {
 		
 		this.random = random;
 	
 	}
 	
+	/**************************************
+	 * Setter of QTESLA Object
+	 * 
+	 * @return	none
+	 **************************************/
 	public void setQTESLA (QTESLA qTESLA) {
 		
 		this.qTESLA = qTESLA;

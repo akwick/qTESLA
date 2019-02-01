@@ -1,3 +1,11 @@
+/******************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* Generated qTESLA Private Key
+* 
+* @author Yinhua Xu
+*******************************************************************************/
+
 package qTESLA;
 
 import java.security.PrivateKey;

@@ -1,8 +1,16 @@
+/******************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* Zeta and Inverse Zeta Arrays for Provably Secure qTESLA
+* 
+* @author Yinhua Xu
+*******************************************************************************/
+
 package qTESLA;
 
 public final class PolynomialProvablySecure {
 	
-/* Provably-Secure qTESLA Security Category-1 */
+	/* Provably Secure qTESLA Security Category 1 */
 	
 	public static final long[] ZETA_P_I = {					/* 1024-Entry */
 			
@@ -270,7 +278,7 @@ public final class PolynomialProvablySecure {
 			
 	};
 	
-	/* Provably-Secure qTESLA Security Category-3 */
+	/* Provably Secure qTESLA Security Category 3 */
 	
 	public static final long[] ZETA_P_III = {				/* 2048-Entry */
 			

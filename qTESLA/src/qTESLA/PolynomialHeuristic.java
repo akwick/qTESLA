@@ -1,3 +1,11 @@
+/******************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* Zeta and Inverse Zeta Arrays for Heuristic qTESLA
+* 
+* @author Yinhua Xu
+*******************************************************************************/
+
 package qTESLA;
 
 public final class PolynomialHeuristic {

@@ -1,9 +1,9 @@
 /******************************************************************************
 * qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
 *
-* Abstract: Packing Functions
+* Packing Functions
 * 
-* @author Yinhua Xu (Java Version)
+* @author Yinhua Xu
 *******************************************************************************/
 
 package qTESLA;
@@ -12,19 +12,29 @@ public class Pack {
 	
 	private static QTESLAParameter parameter;
 	
+	/*******************************************************
+	 * Pack Constructor
+	 * 
+	 * @param securityCategory		qTESLA Security Category
+	 *******************************************************/
 	public Pack (String securityCategory) {
 		
 		parameter = new QTESLAParameter (securityCategory);
 		
 	}
 	
+	/*********************************************
+	 * Getter of qTESLA Parameter Object
+	 * 
+	 * @return	none
+	 *********************************************/
 	public QTESLAParameter getQTESLAParameter () {
 		
 		return parameter;
 		
 	}
 	
-	/***********************************************************************************************************************************************
+	/*****************************************************************************************************************
 	 * Description:	Encode Private Key for Heuristic qTESLA
 	 * 
 	 * @param		privateKey				Private Key
@@ -34,8 +44,13 @@ public class Pack {
 	 * @param		seedOffset				Starting Point of the Kappa-Bit Seed
 	 * 
 	 * @return		none
-	 ***********************************************************************************************************************************************/
-	public void encodePrivateKey (byte[] privateKey, final int[] secretPolynomial, final int[] errorPolynomial, final byte[] seed, int seedOffset) {
+	 *****************************************************************************************************************/
+	public void encodePrivateKey (
+			
+		byte[] privateKey, final int[] secretPolynomial, final int[] errorPolynomial,
+		final byte[] seed, int seedOffset
+		
+	) {
 		
 		int j = 0;
 		
@@ -119,7 +134,11 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (seed, seedOffset, privateKey, parameter.n * parameter.sBit * 2 / Byte.SIZE, QTESLAParameter.SEED * 2);
+		System.arraycopy (
+				
+			seed, seedOffset, privateKey, parameter.n * parameter.sBit * 2 / Byte.SIZE, QTESLAParameter.SEED * 2
+			
+		);
 		
 	}
 	
@@ -350,11 +369,15 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (privateKey, parameter.n * parameter.sBit * 2 / Byte.SIZE, seed, 0, QTESLAParameter.SEED * 2);
+		System.arraycopy (
+				
+			privateKey, parameter.n * parameter.sBit * 2 / Byte.SIZE, seed, 0, QTESLAParameter.SEED * 2
+		
+		);
 		
 	}
 	
-	/***********************************************************************************************************************************************
+	/********************************************************************************************************
 	 * Description:	Pack Private Key for Provably Secure qTESLA Security
 	 * 
 	 * @param		privateKey				Private Key
@@ -364,8 +387,13 @@ public class Pack {
 	 * @param		seedOffset				Starting Point of the Kappa-Bit Seed
 	 * 
 	 * @return		none
-	 ***********************************************************************************************************************************************/
-	public void packPrivateKey (byte[] privateKey, final long[] secretPolynomial, final long[] errorPolynomial, final byte[] seed, int seedOffset) {
+	 ********************************************************************************************************/
+	public void packPrivateKey (
+			
+		byte[] privateKey, final long[] secretPolynomial, final long[] errorPolynomial,
+		final byte[] seed, int seedOffset
+	
+	) {
 		
 		for (int i = 0; i < parameter.n; i++) {
 			
@@ -383,7 +411,11 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (seed, seedOffset, privateKey, parameter.n + parameter.k * parameter.n, QTESLAParameter.SEED * 2);
+		System.arraycopy (
+				
+			seed, seedOffset, privateKey, parameter.n + parameter.k * parameter.n, QTESLAParameter.SEED * 2
+			
+		);
 		
 	}
 	
@@ -405,29 +437,166 @@ public class Pack {
 			
 			for (int i = 0; i < parameter.n * parameter.qLogarithm / Integer.SIZE; i += parameter.qLogarithm) {
 				
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  0), (int) ( T[j +  0]        | (T[j +  1] << 23)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  1), (int) ((T[j +  1] >>  9) | (T[j +  2] << 14)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  2), (int) ((T[j +  2] >> 18) | (T[j +  3] <<  5) | (T[j +  4] << 28)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  3), (int) ((T[j +  4] >>  4) | (T[j +  5] << 19)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  4), (int) ((T[j +  5] >> 13) | (T[j +  6] << 10)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  5), (int) ((T[j +  6] >> 22) | (T[j +  7] <<  1) | (T[j +  8] << 24)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  6), (int) ((T[j +  8] >>  8) | (T[j +  9] << 15)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  7), (int) ((T[j +  9] >> 17) | (T[j + 10] <<  6) | (T[j + 11] << 29)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  8), (int) ((T[j + 11] >>  3) | (T[j + 12] << 20)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  9), (int) ((T[j + 12] >> 12) | (T[j + 13] << 11)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 10), (int) ((T[j + 13] >> 21) | (T[j + 14] <<  2) | (T[j + 15] << 25)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 11), (int) ((T[j + 15] >>  7) | (T[j + 16] << 16)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 12), (int) ((T[j + 16] >> 16) | (T[j + 17] <<  7) | (T[j + 18] << 30)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 13), (int) ((T[j + 18] >>  2) | (T[j + 19] << 21)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 14), (int) ((T[j + 19] >> 11) | (T[j + 20] << 12)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 15), (int) ((T[j + 20] >> 20) | (T[j + 21] <<  3) | (T[j + 22] << 26)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 16), (int) ((T[j + 22] >>  6) | (T[j + 23] << 17)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 17), (int) ((T[j + 23] >> 15) | (T[j + 24] <<  8) | (T[j + 25] << 31)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 18), (int) ((T[j + 25] >>  1) | (T[j + 26] << 22)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 19), (int) ((T[j + 26] >> 10) | (T[j + 27] << 13)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 20), (int) ((T[j + 27] >> 19) | (T[j + 28] <<  4) | (T[j + 29] << 27)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 21), (int) ((T[j + 29] >>  5) | (T[j + 30] << 18)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 22), (int) ((T[j + 30] >> 14) | (T[j + 31] <<  9)));
+				Common.store32 (
+					
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  0),
+					(int) ( T[j +  0]        | (T[j +  1] << 23))
+				
+				);
+				
+				Common.store32 (
+					
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  1),
+					(int) ((T[j +  1] >>  9) | (T[j +  2] << 14))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  2),
+					(int) ((T[j +  2] >> 18) | (T[j +  3] <<  5) | (T[j +  4] << 28))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  3),
+					(int) ((T[j +  4] >>  4) | (T[j +  5] << 19))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  4),
+					(int) ((T[j +  5] >> 13) | (T[j +  6] << 10))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  5),
+					(int) ((T[j +  6] >> 22) | (T[j +  7] <<  1) | (T[j +  8] << 24))
+				
+				);
+				
+				Common.store32 (
+					
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  6),
+					(int) ((T[j +  8] >>  8) | (T[j +  9] << 15))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  7),
+					(int) ((T[j +  9] >> 17) | (T[j + 10] <<  6) | (T[j + 11] << 29))
+				
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  8),
+					(int) ((T[j + 11] >>  3) | (T[j + 12] << 20))
+					
+				);
+				
+				Common.store32 (
+					
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  9),
+					(int) ((T[j + 12] >> 12) | (T[j + 13] << 11))
+					
+				);
+				
+				Common.store32 (
+					
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 10),
+					(int) ((T[j + 13] >> 21) | (T[j + 14] <<  2) | (T[j + 15] << 25))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 11),
+					(int) ((T[j + 15] >>  7) | (T[j + 16] << 16))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 12),
+					(int) ((T[j + 16] >> 16) | (T[j + 17] <<  7) | (T[j + 18] << 30))
+				
+				);
+				
+				Common.store32 (
+					
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 13),
+					(int) ((T[j + 18] >>  2) | (T[j + 19] << 21))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 14),
+					(int) ((T[j + 19] >> 11) | (T[j + 20] << 12))
+				
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 15),
+					(int) ((T[j + 20] >> 20) | (T[j + 21] <<  3) | (T[j + 22] << 26))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 16),
+					(int) ((T[j + 22] >>  6) | (T[j + 23] << 17))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 17),
+					(int) ((T[j + 23] >> 15) | (T[j + 24] <<  8) | (T[j + 25] << 31))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 18),
+					(int) ((T[j + 25] >>  1) | (T[j + 26] << 22))
+				
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 19),
+					(int) ((T[j + 26] >> 10) | (T[j + 27] << 13))
+				
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 20),
+					(int) ((T[j + 27] >> 19) | (T[j + 28] <<  4) | (T[j + 29] << 27))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 21),
+					(int) ((T[j + 29] >>  5) | (T[j + 30] << 18))
+					
+				);
+				
+				Common.store32 (
+					
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 22),
+					(int) ((T[j + 30] >> 14) | (T[j + 31] <<  9))
+					
+				);
 				
 				j += Integer.SIZE;
 				
@@ -439,9 +608,26 @@ public class Pack {
 			
 			for (int i = 0; i < parameter.n * parameter.qLogarithm / Integer.SIZE; i += (parameter.qLogarithm / Byte.SIZE)) {
 				
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 0), (int) ( T[j + 0]        | (T[j + 1] << 24)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 1), (int) ((T[j + 1] >>  8) | (T[j + 2] << 16)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 2), (int) ((T[j + 2] >> 16) | (T[j + 3] <<  8)));
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 0),
+					(int) ( T[j + 0]        | (T[j + 1] << 24))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 1),
+					(int) ((T[j + 1] >>  8) | (T[j + 2] << 16))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 2),
+					(int) ((T[j + 2] >> 16) | (T[j + 3] <<  8))
+					
+				);
 				
 				j += Integer.SIZE / Byte.SIZE;
 				
@@ -449,11 +635,15 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (seedA, seedAOffset, publicKey, parameter.n * parameter.qLogarithm / Byte.SIZE, QTESLAParameter.SEED);
+		System.arraycopy (
+				
+			seedA, seedAOffset, publicKey, parameter.n * parameter.qLogarithm / Byte.SIZE, QTESLAParameter.SEED
+			
+		);
 		
 	}
 		
-	/*************************************************************************************************************************************************************************
+	/*************************************************************************************************************************
 	 * Description:	Encode Public Key for Provably Secure qTESLA
 	 * 
 	 * @param		publicKey			Public Key
@@ -462,7 +652,7 @@ public class Pack {
 	 * @param		seedAOffset			Starting Point of the Seed A
 	 * 
 	 * @return		none
-	 *************************************************************************************************************************************************************************/
+	 *************************************************************************************************************************/
 	public void encodePublicKey (byte[] publicKey, final long[] T, final byte[] seedA, int seedAOffset) {
 		
 		int j = 0;
@@ -471,35 +661,208 @@ public class Pack {
 			
 			for (int i = 0; i < parameter.n * parameter.k * parameter.qLogarithm / Integer.SIZE; i += parameter.qLogarithm) {
 				
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  0), (int) ( T[j +  0]        | (T[j +  1] << 29)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  1), (int) ((T[j +  1] >>  3) | (T[j +  2] << 26)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  2), (int) ((T[j +  2] >>  6) | (T[j +  3] << 23)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  3), (int) ((T[j +  3] >>  9) | (T[j +  4] << 20)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  4), (int) ((T[j +  4] >> 12) | (T[j +  5] << 17)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  5), (int) ((T[j +  5] >> 15) | (T[j +  6] << 14)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  6), (int) ((T[j +  6] >> 18) | (T[j +  7] << 11)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  7), (int) ((T[j +  7] >> 21) | (T[j +  8] <<  8)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  8), (int) ((T[j +  8] >> 24) | (T[j +  9] <<  5)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i +  9), (int) ((T[j +  9] >> 27) | (T[j + 10] <<  2) | (T[j + 11] << 31)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 10), (int) ((T[j + 11] >>  1) | (T[j + 12] << 28)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 11), (int) ((T[j + 12] >>  4) | (T[j + 13] << 25)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 12), (int) ((T[j + 13] >>  7) | (T[j + 14] << 22)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 13), (int) ((T[j + 14] >> 10) | (T[j + 15] << 19)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 14), (int) ((T[j + 15] >> 13) | (T[j + 16] << 16)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 15), (int) ((T[j + 16] >> 16) | (T[j + 17] << 13)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 16), (int) ((T[j + 17] >> 19) | (T[j + 18] << 10)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 17), (int) ((T[j + 18] >> 22) | (T[j + 19] <<  7)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 18), (int) ((T[j + 19] >> 25) | (T[j + 20] <<  4)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 19), (int) ((T[j + 20] >> 28) | (T[j + 21] <<  1) | (T[j + 22] << 30)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 20), (int) ((T[j + 22] >>  2) | (T[j + 23] << 27)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 21), (int) ((T[j + 23] >>  5) | (T[j + 24] << 24)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 22), (int) ((T[j + 24] >>  8) | (T[j + 25] << 21)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 23), (int) ((T[j + 25] >> 11) | (T[j + 26] << 18)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 24), (int) ((T[j + 26] >> 14) | (T[j + 27] << 15)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 25), (int) ((T[j + 27] >> 17) | (T[j + 28] << 12)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 26), (int) ((T[j + 28] >> 20) | (T[j + 29] <<  9)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 27), (int) ((T[j + 29] >> 23) | (T[j + 30] <<  6)));
-				Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + 28), (int) ((T[j + 30] >> 26) | (T[j + 31] <<  3)));
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  0),
+					(int) ( T[j +  0]        | (T[j +  1] << 29))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  1),
+					(int) ((T[j +  1] >>  3) | (T[j +  2] << 26))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  2),
+					(int) ((T[j +  2] >>  6) | (T[j +  3] << 23))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  3),
+					(int) ((T[j +  3] >>  9) | (T[j +  4] << 20))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  4),
+					(int) ((T[j +  4] >> 12) | (T[j +  5] << 17))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  5),
+					(int) ((T[j +  5] >> 15) | (T[j +  6] << 14))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  6),
+					(int) ((T[j +  6] >> 18) | (T[j +  7] << 11))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  7),
+					(int) ((T[j +  7] >> 21) | (T[j +  8] <<  8))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  8),
+					(int) ((T[j +  8] >> 24) | (T[j +  9] <<  5))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i +  9),
+					(int) ((T[j +  9] >> 27) | (T[j + 10] <<  2) | (T[j + 11] << 31))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 10),
+					(int) ((T[j + 11] >>  1) | (T[j + 12] << 28))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 11),
+					(int) ((T[j + 12] >>  4) | (T[j + 13] << 25))
+					
+				);
+				
+				Common.store32 (
+					
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 12),
+					(int) ((T[j + 13] >>  7) | (T[j + 14] << 22))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 13),
+					(int) ((T[j + 14] >> 10) | (T[j + 15] << 19))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 14),
+					(int) ((T[j + 15] >> 13) | (T[j + 16] << 16))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 15),
+					(int) ((T[j + 16] >> 16) | (T[j + 17] << 13))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 16),
+					(int) ((T[j + 17] >> 19) | (T[j + 18] << 10))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 17),
+					(int) ((T[j + 18] >> 22) | (T[j + 19] <<  7))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 18),
+					(int) ((T[j + 19] >> 25) | (T[j + 20] <<  4))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 19),
+					(int) ((T[j + 20] >> 28) | (T[j + 21] <<  1) | (T[j + 22] << 30))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 20),
+					(int) ((T[j + 22] >>  2) | (T[j + 23] << 27))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 21),
+					(int) ((T[j + 23] >>  5) | (T[j + 24] << 24))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 22),
+					(int) ((T[j + 24] >>  8) | (T[j + 25] << 21))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 23),
+					(int) ((T[j + 25] >> 11) | (T[j + 26] << 18))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 24),
+					(int) ((T[j + 26] >> 14) | (T[j + 27] << 15))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 25),
+					(int) ((T[j + 27] >> 17) | (T[j + 28] << 12))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 26),
+					(int) ((T[j + 28] >> 20) | (T[j + 29] <<  9))
+					
+				);
+				
+				Common.store32 (
+					
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 27),
+					(int) ((T[j + 29] >> 23) | (T[j + 30] <<  6))
+					
+				);
+				
+				Common.store32 (
+						
+					publicKey, Integer.SIZE / Byte.SIZE * (i + 28),
+					(int) ((T[j + 30] >> 26) | (T[j + 31] <<  3))
+				
+				);
 				
 				j += Integer.SIZE;
 				
@@ -513,7 +876,12 @@ public class Pack {
 				
 				for (int index = 0; index < parameter.qLogarithm; index++) {
 					
-					Common.store32 (publicKey, Integer.SIZE / Byte.SIZE * (i + index), (int) ((T[j + index] >> index) | (T[j + index + 1] << (parameter.qLogarithm - index))));
+					Common.store32 (
+							
+						publicKey, Integer.SIZE / Byte.SIZE * (i + index),
+						(int) ((T[j + index] >> index) | (T[j + index + 1] << (parameter.qLogarithm - index)))
+						
+					);
 					
 				}
 				
@@ -523,11 +891,15 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (seedA, seedAOffset, publicKey, parameter.n * parameter.k * parameter.qLogarithm / Byte.SIZE, QTESLAParameter.SEED);
+		System.arraycopy (
+			
+			seedA, seedAOffset, publicKey, parameter.n * parameter.k * parameter.qLogarithm / Byte.SIZE, QTESLAParameter.SEED
+			
+		);
 		
 	}
 	
-	/*********************************************************************************************************************************************************
+	/**************************************************************************************************************************************
 	 * Description:	Decode Public Key
 	 * 
 	 * @param		publicKey			Decoded Public Key
@@ -536,7 +908,7 @@ public class Pack {
 	 * @param		publicKeyInput		Public Key to be Decoded
 	 *
 	 * @return		none
-	 *********************************************************************************************************************************************************/
+	 **************************************************************************************************************************************/
 	public void decodePublicKey (int[] publicKey, byte[] seedA, int seedAOffset, final byte[] publicKeyInput) {
 		
 		int j = 0;
@@ -769,12 +1141,16 @@ public class Pack {
 				
 				for (int index = 1; index < parameter.qLogarithm; index++) {
 					
-					publicKey[i + index] = ((Common.load32 (publicKeyInput, Integer.SIZE / Byte.SIZE * (j + index - 1))	>>> (Integer.SIZE - index))  |
-							 			 	(Common.load32 (publicKeyInput, Integer.SIZE / Byte.SIZE * (j + index    ))	<<  index				 ))  & mask;
+					publicKey[i + index] =
+							
+						((Common.load32 (publicKeyInput, Integer.SIZE / Byte.SIZE * (j + index - 1))	>>> (Integer.SIZE - index))  |
+						 (Common.load32 (publicKeyInput, Integer.SIZE / Byte.SIZE * (j + index    ))	<<  index				 ))  & mask;
 					
 				}
 				
-				publicKey[i + parameter.qLogarithm] = Common.load32 (publicKeyInput, Integer.SIZE / Byte.SIZE * (j + parameter.qLogarithm - 1)) >>> 1;
+				publicKey[i + parameter.qLogarithm] =
+						
+						Common.load32 (publicKeyInput, Integer.SIZE / Byte.SIZE * (j + parameter.qLogarithm - 1)) >>> 1;
 							 			 	
 				j += parameter.qLogarithm;
 			
@@ -782,11 +1158,15 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (publicKeyInput, parameter.n * parameter.k * parameter.qLogarithm / Byte.SIZE, seedA, seedAOffset, QTESLAParameter.SEED);
+		System.arraycopy (
+				
+			publicKeyInput, parameter.n * parameter.k * parameter.qLogarithm / Byte.SIZE, seedA, seedAOffset, QTESLAParameter.SEED
+			
+		);
 		
 	}
 	
-	/***************************************************************************************************************************************************************************************************************
+	/***************************************************************************************************************************
 	 * Description:	Encode Signature for Heuristic qTESLA
 	 * 
 	 * @param		signature			Output Package Containing Signature
@@ -796,7 +1176,7 @@ public class Pack {
 	 * @param		Z
 	 * 
 	 * @return		none
-	 ***************************************************************************************************************************************************************************************************************/
+	 ***************************************************************************************************************************/
 	public void encodeSignature (byte[] signature, int signatureOffset, byte[] C, int cOffset, int[] Z) {
 		
 		int j = 0;
@@ -805,27 +1185,152 @@ public class Pack {
 			
 			for (int i = 0; i < (parameter.n * parameter.d / Integer.SIZE); i += parameter.d) {
 				
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  0), (int)  (((Z[j +  0]         & ((1 << 21) - 1))) |  (Z[j +  1] << 21)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  1), (int)  (((Z[j +  1] >>> 11) & ((1 << 10) - 1))  | ((Z[j +  2] & ((1 << 21) - 1)) << 10) | (Z[j +  3] << 31)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  2), (int) ((((Z[j +  3] >>>  1) & ((1 << 20) - 1))) |  (Z[j +  4] << 20)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  3), (int)  (((Z[j +  4] >>> 12) & ((1 <<  9) - 1))  | ((Z[j +  5] & ((1 << 21) - 1)) <<  9) | (Z[j +  6] << 30)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  4), (int) ((((Z[j +  6] >>>  2) & ((1 << 19) - 1))) |  (Z[j +  7] << 19)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  5), (int)  (((Z[j +  7] >>> 13) & ((1 <<  8) - 1))  | ((Z[j +  8] & ((1 << 21) - 1)) <<  8) | (Z[j +  9] << 29)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  6), (int) ((((Z[j +  9] >>>  3) & ((1 << 18) - 1))) |  (Z[j + 10] << 18)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  7), (int)  (((Z[j + 10] >>> 14) & ((1 <<  7) - 1))  | ((Z[j + 11] & ((1 << 21) - 1)) <<  7) | (Z[j + 12] << 28)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  8), (int) ((((Z[j + 12] >>>  4) & ((1 << 17) - 1))) |  (Z[j + 13] << 17)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  9), (int)  (((Z[j + 13] >>> 15) & ((1 <<  6) - 1))  | ((Z[j + 14] & ((1 << 21) - 1)) <<  6) | (Z[j + 15] << 27)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 10), (int) ((((Z[j + 15] >>>  5) & ((1 << 16) - 1))) |  (Z[j + 16] << 16)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 11), (int)  (((Z[j + 16] >>> 16) & ((1 <<  5) - 1))  | ((Z[j + 17] & ((1 << 21) - 1)) <<  5) | (Z[j + 18] << 26)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 12), (int) ((((Z[j + 18] >>>  6) & ((1 << 15) - 1))) |  (Z[j + 19] << 15)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 13), (int)  (((Z[j + 19] >>> 17) & ((1 <<  4) - 1))  | ((Z[j + 20] & ((1 << 21) - 1)) <<  4) | (Z[j + 21] << 25)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 14), (int) ((((Z[j + 21] >>>  7) & ((1 << 14) - 1))) |  (Z[j + 22] << 14)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 15), (int)  (((Z[j + 22] >>> 18) & ((1 <<  3) - 1))  | ((Z[j + 23] & ((1 << 21) - 1)) <<  3) | (Z[j + 24] << 24)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 16), (int) ((((Z[j + 24] >>>  8) & ((1 << 13) - 1))) |  (Z[j + 25] << 13)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 17), (int)  (((Z[j + 25] >>> 19) & ((1 <<  2) - 1))  | ((Z[j + 26] & ((1 << 21) - 1)) <<  2) | (Z[j + 27] << 23)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 18), (int) ((((Z[j + 27] >>>  9) & ((1 << 12) - 1))) |  (Z[j + 28] << 12)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 19), (int)  (((Z[j + 28] >>> 20) & ((1 <<  1) - 1))  | ((Z[j + 29] & ((1 << 21) - 1)) <<  1) | (Z[j + 30] << 22)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 20), (int) ((((Z[j + 30] >>> 10) & ((1 << 11) - 1))) |  (Z[j + 31] << 11)));
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  0),
+					(int)  (((Z[j +  0]         & ((1 << 21) - 1))) |  (Z[j +  1] << 21))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  1),
+					(int)  (((Z[j +  1] >>> 11) & ((1 << 10) - 1))  | ((Z[j +  2] & ((1 << 21) - 1)) << 10) | (Z[j +  3] << 31))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  2),
+					(int) ((((Z[j +  3] >>>  1) & ((1 << 20) - 1))) |  (Z[j +  4] << 20))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  3),
+					(int)  (((Z[j +  4] >>> 12) & ((1 <<  9) - 1))  | ((Z[j +  5] & ((1 << 21) - 1)) <<  9) | (Z[j +  6] << 30))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  4), 
+					(int) ((((Z[j +  6] >>>  2) & ((1 << 19) - 1))) |  (Z[j +  7] << 19))
+					
+				);
+				
+				Common.store32 (
+					
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  5),
+					(int)  (((Z[j +  7] >>> 13) & ((1 <<  8) - 1))  | ((Z[j +  8] & ((1 << 21) - 1)) <<  8) | (Z[j +  9] << 29))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  6),
+					(int) ((((Z[j +  9] >>>  3) & ((1 << 18) - 1))) |  (Z[j + 10] << 18))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  7),
+					(int)  (((Z[j + 10] >>> 14) & ((1 <<  7) - 1))  | ((Z[j + 11] & ((1 << 21) - 1)) <<  7) | (Z[j + 12] << 28))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  8),
+					(int) ((((Z[j + 12] >>>  4) & ((1 << 17) - 1))) |  (Z[j + 13] << 17))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  9),
+					(int)  (((Z[j + 13] >>> 15) & ((1 <<  6) - 1))  | ((Z[j + 14] & ((1 << 21) - 1)) <<  6) | (Z[j + 15] << 27))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 10),
+					(int) ((((Z[j + 15] >>>  5) & ((1 << 16) - 1))) |  (Z[j + 16] << 16))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 11),
+					(int)  (((Z[j + 16] >>> 16) & ((1 <<  5) - 1))  | ((Z[j + 17] & ((1 << 21) - 1)) <<  5) | (Z[j + 18] << 26))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 12),
+					(int) ((((Z[j + 18] >>>  6) & ((1 << 15) - 1))) |  (Z[j + 19] << 15))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 13),
+					(int)  (((Z[j + 19] >>> 17) & ((1 <<  4) - 1))  | ((Z[j + 20] & ((1 << 21) - 1)) <<  4) | (Z[j + 21] << 25))
+					
+				);
+				
+				Common.store32 (
+					
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 14),
+					(int) ((((Z[j + 21] >>>  7) & ((1 << 14) - 1))) |  (Z[j + 22] << 14))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 15),
+					(int)  (((Z[j + 22] >>> 18) & ((1 <<  3) - 1))  | ((Z[j + 23] & ((1 << 21) - 1)) <<  3) | (Z[j + 24] << 24))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 16),
+					(int) ((((Z[j + 24] >>>  8) & ((1 << 13) - 1))) |  (Z[j + 25] << 13))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 17),
+					(int)  (((Z[j + 25] >>> 19) & ((1 <<  2) - 1))  | ((Z[j + 26] & ((1 << 21) - 1)) <<  2) | (Z[j + 27] << 23))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 18),
+					(int) ((((Z[j + 27] >>>  9) & ((1 << 12) - 1))) |  (Z[j + 28] << 12))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 19),
+					(int)  (((Z[j + 28] >>> 20) & ((1 <<  1) - 1))  | ((Z[j + 29] & ((1 << 21) - 1)) <<  1) | (Z[j + 30] << 22))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 20),
+					(int) ((((Z[j + 30] >>> 10) & ((1 << 11) - 1))) |  (Z[j + 31] << 11))
+					
+				);
 				
 				j += Integer.SIZE;
 				
@@ -837,17 +1342,82 @@ public class Pack {
 			
 			for (int i = 0; i < (parameter.n * parameter.d / Integer.SIZE); i += parameter.d / 2) {
 				
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  0), (int)  (((Z[j +  0]         & ((1 << 22) - 1))) |  (Z[j +  1] << 22)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  1), (int) ((((Z[j +  1] >>> 10) & ((1 << 12) - 1))) |  (Z[j +  2] << 12)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  2), (int)  (((Z[j +  2] >>> 20) & ((1 <<  2) - 1))  | ((Z[j +  3] & ((1 << 22) - 1)) << 2) | (Z[j +  4] << 24)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  3), (int) ((((Z[j +  4] >>>  8) & ((1 << 14) - 1))) |  (Z[j +  5] << 14)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  4), (int)  (((Z[j +  5] >>> 18) & ((1 <<  4) - 1))  | ((Z[j +  6] & ((1 << 22) - 1)) << 4) | (Z[j +  7] << 26)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  5), (int) ((((Z[j +  7] >>>  6) & ((1 << 16) - 1))) |  (Z[j +  8] << 16)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  6), (int)  (((Z[j +  8] >>> 16) & ((1 <<  6) - 1))  | ((Z[j +  9] & ((1 << 22) - 1)) << 6) | (Z[j + 10] << 28)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  7), (int) ((((Z[j + 10] >>>  4) & ((1 << 18) - 1))) |  (Z[j + 11] << 18)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  8), (int)  (((Z[j + 11] >>> 14) & ((1 <<  8) - 1))  | ((Z[j + 12] & ((1 << 22) - 1)) << 8) | (Z[j + 13] << 30)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  9), (int) ((((Z[j + 13] >>>  2) & ((1 << 20) - 1))) |  (Z[j + 14] << 20)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 10), (int) ((((Z[j + 14] >>> 12) & ((1 << 10) - 1))) |  (Z[j + 15] << 10)));
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  0),
+					(int)  (((Z[j +  0]         & ((1 << 22) - 1))) |  (Z[j +  1] << 22))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  1),
+					(int) ((((Z[j +  1] >>> 10) & ((1 << 12) - 1))) |  (Z[j +  2] << 12))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  2),
+					(int)  (((Z[j +  2] >>> 20) & ((1 <<  2) - 1))  | ((Z[j +  3] & ((1 << 22) - 1)) << 2) | (Z[j +  4] << 24))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  3),
+					(int) ((((Z[j +  4] >>>  8) & ((1 << 14) - 1))) |  (Z[j +  5] << 14))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  4),
+					(int)  (((Z[j +  5] >>> 18) & ((1 <<  4) - 1))  | ((Z[j +  6] & ((1 << 22) - 1)) << 4) | (Z[j +  7] << 26))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  5),
+					(int) ((((Z[j +  7] >>>  6) & ((1 << 16) - 1))) |  (Z[j +  8] << 16))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  6),
+					(int)  (((Z[j +  8] >>> 16) & ((1 <<  6) - 1))  | ((Z[j +  9] & ((1 << 22) - 1)) << 6) | (Z[j + 10] << 28))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  7),
+					(int) ((((Z[j + 10] >>>  4) & ((1 << 18) - 1))) |  (Z[j + 11] << 18))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  8),
+					(int)  (((Z[j + 11] >>> 14) & ((1 <<  8) - 1))  | ((Z[j + 12] & ((1 << 22) - 1)) << 8) | (Z[j + 13] << 30))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  9),
+					(int) ((((Z[j + 13] >>>  2) & ((1 << 20) - 1))) |  (Z[j + 14] << 20))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 10),
+					(int) ((((Z[j + 14] >>> 12) & ((1 << 10) - 1))) |  (Z[j + 15] << 10))
+					
+				);
 				
 				j += Integer.SIZE / 2;
 				
@@ -855,11 +1425,15 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (C, cOffset, signature, signatureOffset + parameter.n * parameter.d / Byte.SIZE, QTESLAParameter.HASH);
+		System.arraycopy (
+				
+			C, cOffset, signature, signatureOffset + parameter.n * parameter.d / Byte.SIZE, QTESLAParameter.HASH
+			
+		);
 		
 	}
 	
-	/*********************************************************************************************************************************************************************************************************
+	/*************************************************************************************************************************
 	 * Description:	Encode Signature for Provably Secure qTESLA
 	 * 
 	 * @param		signature			Output Package Containing Signature
@@ -869,7 +1443,7 @@ public class Pack {
 	 * @param		Z
 	 * 
 	 * @return		none
-	 *********************************************************************************************************************************************************************************************************/
+	 *************************************************************************************************************************/
 	public void encodeSignature (byte[] signature, int signatureOffset, byte[] C, int cOffset, long[] Z) {
 		
 		int j = 0;
@@ -878,17 +1452,82 @@ public class Pack {
 			
 			for (int i = 0; i < (parameter.n * parameter.d / Integer.SIZE); i += parameter.d / 2) {
 				
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  0), (int)  (((Z[j +  0]         & ((1 << 22) - 1))) |  (Z[j +  1] << 22)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  1), (int) ((((Z[j +  1] >>> 10) & ((1 << 12) - 1))) |  (Z[j +  2] << 12)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  2), (int)  (((Z[j +  2] >>> 20) & ((1 <<  2) - 1))  | ((Z[j +  3] & ((1 << 22) - 1)) << 2) | (Z[j +  4] << 24)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  3), (int) ((((Z[j +  4] >>>  8) & ((1 << 14) - 1))) |  (Z[j +  5] << 14)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  4), (int)  (((Z[j +  5] >>> 18) & ((1 <<  4) - 1))  | ((Z[j +  6] & ((1 << 22) - 1)) << 4) | (Z[j +  7] << 26)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  5), (int) ((((Z[j +  7] >>>  6) & ((1 << 16) - 1))) |  (Z[j +  8] << 16)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  6), (int)  (((Z[j +  8] >>> 16) & ((1 <<  6) - 1))  | ((Z[j +  9] & ((1 << 22) - 1)) << 6) | (Z[j + 10] << 28)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  7), (int) ((((Z[j + 10] >>>  4) & ((1 << 18) - 1))) |  (Z[j + 11] << 18)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  8), (int)  (((Z[j + 11] >>> 14) & ((1 <<  8) - 1))  | ((Z[j + 12] & ((1 << 22) - 1)) << 8) | (Z[j + 13] << 30)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  9), (int) ((((Z[j + 13] >>>  2) & ((1 << 20) - 1))) |  (Z[j + 14] << 20)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 10), (int) ((((Z[j + 14] >>> 12) & ((1 << 10) - 1))) |  (Z[j + 15] << 10)));
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  0),
+					(int)  (((Z[j +  0]         & ((1 << 22) - 1))) |  (Z[j +  1] << 22))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  1),
+					(int) ((((Z[j +  1] >>> 10) & ((1 << 12) - 1))) |  (Z[j +  2] << 12))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  2),
+					(int)  (((Z[j +  2] >>> 20) & ((1 <<  2) - 1))  | ((Z[j +  3] & ((1 << 22) - 1)) << 2) | (Z[j +  4] << 24))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  3),
+					(int) ((((Z[j +  4] >>>  8) & ((1 << 14) - 1))) |  (Z[j +  5] << 14))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  4),
+					(int)  (((Z[j +  5] >>> 18) & ((1 <<  4) - 1))  | ((Z[j +  6] & ((1 << 22) - 1)) << 4) | (Z[j +  7] << 26))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  5),
+					(int) ((((Z[j +  7] >>>  6) & ((1 << 16) - 1))) |  (Z[j +  8] << 16))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  6),
+					(int)  (((Z[j +  8] >>> 16) & ((1 <<  6) - 1))  | ((Z[j +  9] & ((1 << 22) - 1)) << 6) | (Z[j + 10] << 28))
+					
+				);
+				
+				Common.store32 (
+					
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  7),
+					(int) ((((Z[j + 10] >>>  4) & ((1 << 18) - 1))) |  (Z[j + 11] << 18))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  8),
+					(int)  (((Z[j + 11] >>> 14) & ((1 <<  8) - 1))  | ((Z[j + 12] & ((1 << 22) - 1)) << 8) | (Z[j + 13] << 30))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i +  9),
+					(int) ((((Z[j + 13] >>>  2) & ((1 << 20) - 1))) |  (Z[j + 14] << 20))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 10),
+					(int) ((((Z[j + 14] >>> 12) & ((1 << 10) - 1))) |  (Z[j + 15] << 10))
+					
+				);
 				
 				j += Integer.SIZE / 2;
 				
@@ -900,9 +1539,26 @@ public class Pack {
 			
 			for (int i = 0; i < (parameter.n * parameter.d / Integer.SIZE); i += parameter.d / Byte.SIZE) {
 				
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 0), (int)  (((Z[j + 0]         & ((1 << 24) - 1))) |  (Z[j + 1] << 24)));
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 1), (int) ((((Z[j + 1] >>>  8) & ((1 << 16) - 1))) |  (Z[j + 2] << 16)));	
-				Common.store32 (signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 2), (int) ((((Z[j + 2] >>> 16) & ((1 <<  8) - 1))) |  (Z[j + 3] <<  8)));
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 0),
+					(int)  (((Z[j + 0]         & ((1 << 24) - 1))) |  (Z[j + 1] << 24))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 1),
+					(int) ((((Z[j + 1] >>>  8) & ((1 << 16) - 1))) |  (Z[j + 2] << 16))
+					
+				);
+				
+				Common.store32 (
+						
+					signature, signatureOffset + Integer.SIZE / Byte.SIZE * (i + 2),
+					(int) ((((Z[j + 2] >>> 16) & ((1 <<  8) - 1))) |  (Z[j + 3] <<  8))
+					
+				);
 				
 				j += Byte.SIZE / 2;
 				
@@ -910,7 +1566,11 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (C, cOffset, signature, signatureOffset + parameter.n * parameter.d / Byte.SIZE, QTESLAParameter.HASH);
+		System.arraycopy (
+				
+			C, cOffset, signature, signatureOffset + parameter.n * parameter.d / Byte.SIZE, QTESLAParameter.HASH
+			
+		);
 		
 	}
 	
@@ -1078,7 +1738,7 @@ public class Pack {
 		
 	}
 	
-	/***********************************************************************************************************************
+	/************************************************************************************************************************************
 	 * Description:	Decode Signature for Provably Secure qTESLA
 	 * 
 	 * @param	C
@@ -1087,7 +1747,7 @@ public class Pack {
 	 * @param	signatureOffset		Starting Point of the Output Package Containing Signature
 	 * 
 	 * @return	none
-	 ***********************************************************************************************************************/
+	 ************************************************************************************************************************************/
 	public void decodeSignature (byte[] C, long[] Z, final byte[] signature, int signatureOffset) {
 		
 		int j = 0;
@@ -1164,7 +1824,11 @@ public class Pack {
 			
 		}
 		
-		System.arraycopy (signature, signatureOffset + parameter.n * parameter.d / Byte.SIZE, C, 0, QTESLAParameter.HASH);
+		System.arraycopy (
+				
+			signature, signatureOffset + parameter.n * parameter.d / Byte.SIZE, C, 0, QTESLAParameter.HASH
+			
+		);
 		
 	}
 	

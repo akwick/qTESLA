@@ -1,22 +1,40 @@
+/******************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* Y Sampler
+* 
+* @author Yinhua Xu
+*******************************************************************************/
+
 package qTESLA;
 
 public class Sample {
 	
 	private static QTESLAParameter parameter;
 	
+	/*******************************************************
+	 * Y Sampler Constructor
+	 * 
+	 * @param securityCategory		qTESLA Security Category
+	 *******************************************************/
 	public Sample (String securityCategory) {
 		
 		parameter = new QTESLAParameter (securityCategory);
 		
 	}
 	
+	/*********************************************
+	 * Getter of qTESLA Parameter Object
+	 * 
+	 * @return	none
+	 *********************************************/
 	public QTESLAParameter getQTESLAParameter () {
 		
 		return parameter;
 		
 	}
 	
-	/**************************************************************************************************************************
+	/**************************************************************************************************************
 	 * Description:	Samples Polynomial Y, Such That Each Coefficient is in the Range [-B, B] for Heuristic qTESLA
 	 * 
 	 * @param		Y				Polynomial Y
@@ -25,7 +43,7 @@ public class Sample {
 	 * @param		nonce			Domain Separator for Error Polynomial and Secret Polynomial
 	 * 
 	 * @return		none		
-	 **************************************************************************************************************************/
+	 **************************************************************************************************************/
 	public void sampleY (int[] Y, final byte[] seed, int seedOffset, int nonce) {
 		
 		int i = 0;
@@ -40,7 +58,9 @@ public class Sample {
 		if (parameter.securityCategory == "qTESLA-I") {
 		
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
+				
 				buffer, 0, parameter.n * numberOfByte, dualModeSampler++, seed, seedOffset, QTESLAParameter.RANDOM
+		
 			);
 		
 		}
@@ -48,7 +68,9 @@ public class Sample {
 		if (parameter.securityCategory == "qTESLA-III-Speed" || parameter.securityCategory == "qTESLA-III-Size") {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
+				
 				buffer, 0, parameter.n * numberOfByte, dualModeSampler++, seed, seedOffset, QTESLAParameter.RANDOM
+			
 			);
 			
 		}
@@ -64,9 +86,11 @@ public class Sample {
 							((parameter.bBit + 1 + 7) / 8);
 					
 					FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
+						
 						buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE,
 						dualModeSampler++,
 						seed, seedOffset, QTESLAParameter.RANDOM
+					
 					);
 					
 				}
@@ -78,9 +102,11 @@ public class Sample {
 							((parameter.bBit + 1 + 7) / 8);
 					
 					FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
+						
 						buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_256_RATE,
 						dualModeSampler++,
 						seed, seedOffset, QTESLAParameter.RANDOM
+					
 					);
 					
 				}
@@ -89,10 +115,17 @@ public class Sample {
 				
 			}
 			
-			y[0]  = (Common.load32 (buffer, position)						& ((1 << (parameter.bBit + 1)) - 1)) - parameter.b;
-			y[1]  = (Common.load32 (buffer, position + numberOfByte)		& ((1 << (parameter.bBit + 1)) - 1)) - parameter.b;
-			y[2]  = (Common.load32 (buffer, position + numberOfByte * 2)	& ((1 << (parameter.bBit + 1)) - 1)) - parameter.b;
-			y[3]  = (Common.load32 (buffer, position + numberOfByte * 3)	& ((1 << (parameter.bBit + 1)) - 1)) - parameter.b;
+			y[0]  = (Common.load32 (buffer, position)						& ((1 << (parameter.bBit + 1)) - 1))
+					- parameter.b;
+			
+			y[1]  = (Common.load32 (buffer, position + numberOfByte)		& ((1 << (parameter.bBit + 1)) - 1))
+					- parameter.b;
+			
+			y[2]  = (Common.load32 (buffer, position + numberOfByte * 2)	& ((1 << (parameter.bBit + 1)) - 1))
+					- parameter.b;
+			
+			y[3]  = (Common.load32 (buffer, position + numberOfByte * 3)	& ((1 << (parameter.bBit + 1)) - 1))
+					- parameter.b;
 			
 			if (i < parameter.n && y[0] != (1 << parameter.bBit)) {
 				
@@ -124,8 +157,9 @@ public class Sample {
 		
 	}
 	
-	/*******************************************************************************************************************
-	 * Description:	Samples Polynomial Y, Such That Each Coefficient is in the Range [-B, B], for Provably Secure qTESLA
+	/*************************************************************************************************************
+	 * Description:	Samples Polynomial Y, Such That Each Coefficient is in the Range [-B, B], for Provably Secure
+	 *				qTESLA
 	 * 
 	 * @param		Y				Polynomial Y
 	 * @param		seed			Kappa-Bit Seed
@@ -133,7 +167,7 @@ public class Sample {
 	 * @param		nonce			Domain Separator for Error Polynomial and Secret Polynomial
 	 * 
 	 * @return		none		
-	 *******************************************************************************************************************/
+	 *************************************************************************************************************/
 	public void sampleY (long[] Y, final byte[] seed, int seedOffset, int nonce) {
 		
 		int i = 0;
@@ -147,7 +181,9 @@ public class Sample {
 		if (parameter.securityCategory == "qTESLA-P-I") {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
+				
 				buffer, 0, parameter.n * numberOfByte, dualModeSampler++, seed, seedOffset, QTESLAParameter.RANDOM
+			
 			);
 		
 		}
@@ -155,7 +191,9 @@ public class Sample {
 		if (parameter.securityCategory == "qTESLA-P-III") {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
+				
 				buffer, 0, parameter.n * numberOfByte, dualModeSampler++, seed, seedOffset, QTESLAParameter.RANDOM
+			
 			);
 			
 		}
@@ -171,9 +209,11 @@ public class Sample {
 							((parameter.bBit + 1 + 7) / 8);
 					
 					FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
+						
 						buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE,
 						dualModeSampler++,
 						seed, seedOffset, QTESLAParameter.RANDOM
+					
 					);
 					
 				}
@@ -185,9 +225,11 @@ public class Sample {
 							((parameter.bBit + 1 + 7) / 8);
 					
 					FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
+						
 						buffer, 0, FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_256_RATE,
 						dualModeSampler++,
 						seed, seedOffset, QTESLAParameter.RANDOM
+					
 					);
 					
 				}

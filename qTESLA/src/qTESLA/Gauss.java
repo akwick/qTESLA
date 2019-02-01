@@ -1,3 +1,11 @@
+/******************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* Portable and Constant-Time Gaussian Sampler
+* 
+* @author Yinhua Xu
+*******************************************************************************/
+
 package qTESLA;
 
 public class Gauss {
@@ -22,6 +30,9 @@ public class Gauss {
 	 */
 	private static int column;
 	
+	/**
+	 * Cumulative Distributed Table
+	 */
 	private static long[] cumulativeDistributedTable;
 	
 	public int getN () {
@@ -30,6 +41,11 @@ public class Gauss {
 		
 	}
 	
+	/*****************************************************************************************************
+	 * Gaussian Sampler Constructor
+	 * 
+	 * @param securityCategory		qTESLA Security Category
+	 *****************************************************************************************************/
 	public Gauss (String securityCategory) {
 		
 		if (securityCategory == "qTESLA-I") {
@@ -312,7 +328,7 @@ public class Gauss {
 		
 	}
 	
-	/***************************************************************************************************************************************
+	/**********************************************************************************************************
 	 * Description: Generate CHUNK Samples from the Normal Distribution in Constant Time for Heuristic qTESLA
 	 * 
 	 * @param		data							Data to be Sampled
@@ -322,8 +338,12 @@ public class Gauss {
 	 * @param		nonce							Domain Separator for Error Polynomial and Secret Polynomial	
 	 * 
 	 * @return
-	 ***************************************************************************************************************************************/
-	private static void donaldErvinKnuthMergeExchangeGauss (int[] data, int dataOffset, byte[] seed, int seedOffset, int nonce) {
+	 **********************************************************************************************************/
+	private static void donaldErvinKnuthMergeExchangeGauss (
+			
+		int[] data, int dataOffset, byte[] seed, int seedOffset, int nonce
+	
+	) {
 		
 		long[] samplingKeyArray		= new long[(CHUNK + row) * column];
 		byte[] samplingKeyByteArray	= new byte[(CHUNK + row) * column * Byte.SIZE];
@@ -332,13 +352,21 @@ public class Gauss {
 		if (column == 1) {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (		
-					samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE, (short) nonce, seed, seedOffset, QTESLAParameter.RANDOM					
+				
+				samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE,
+				(short) nonce,
+				seed, seedOffset, QTESLAParameter.RANDOM					
+			
 			);
 			
 		} else {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (		
-					samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE, (short) nonce, seed, seedOffset, QTESLAParameter.RANDOM					
+				
+				samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE,
+				(short) nonce,
+				seed, seedOffset, QTESLAParameter.RANDOM					
+			
 			);
 			
 		}
@@ -392,7 +420,7 @@ public class Gauss {
 		
 	}
 	
-	/***************************************************************************************************************************************
+	/**************************************************************************************************************
 	 * Description: Generate CHUNK Samples from the Normal Distribution in Constant Time for Provably Secure qTESLA
 	 * 
 	 * @param		data							Data to be Sampled
@@ -402,8 +430,12 @@ public class Gauss {
 	 * @param		nonce							Domain Separator for Error Polynomial and Secret Polynomial		
 	 * 
 	 * @return
-	 ***************************************************************************************************************************************/
-	private static void donaldErvinKnuthMergeExchangeGauss (long[] data, int dataOffset, byte[] seed, int seedOffset, int nonce) {
+	 ***************************************************************************************************************/
+	private static void donaldErvinKnuthMergeExchangeGauss (
+			
+		long[] data, int dataOffset, byte[] seed, int seedOffset, int nonce
+	
+	) {
 		
 		long[] samplingKeyArray		= new long[(CHUNK + row) * column];
 		byte[] samplingKeyByteArray	= new byte[(CHUNK + row) * column * Byte.SIZE];
@@ -412,13 +444,21 @@ public class Gauss {
 		if (column == 1) {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (		
-					samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE, (short) nonce, seed, seedOffset, QTESLAParameter.RANDOM					
+				
+				samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE,
+				(short) nonce,
+				seed, seedOffset, QTESLAParameter.RANDOM					
+			
 			);
 			
 		} else {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (		
-					samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE, (short) nonce, seed, seedOffset, QTESLAParameter.RANDOM					
+				
+				samplingKeyByteArray, 0, CHUNK * column * Long.SIZE / Byte.SIZE,
+				(short) nonce,
+				seed, seedOffset, QTESLAParameter.RANDOM					
+			
 			);
 			
 		}
@@ -495,7 +535,7 @@ public class Gauss {
 		
 	}
 	
-	/***************************************************************************************************************
+	/******************************************************************************************************************
 	 * Description:	Gaussian Sampler for for Provably Secure qTESLA
 	 * 
 	 * @param		data						Data to be Sampled

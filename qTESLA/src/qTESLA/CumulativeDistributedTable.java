@@ -1,3 +1,11 @@
+/******************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* Constant Cumulative Distributed Table for the Gaussian Sampler (64-Bit)
+* 
+* @author Yinhua Xu
+*******************************************************************************/
+
 package qTESLA;
 
 public class CumulativeDistributedTable {

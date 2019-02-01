@@ -1,3 +1,11 @@
+/*************************************************************************************
+* qTESLA: An Efficient Post-Quantum Signature Scheme Based on the R-LWE Problem
+*
+* qTESLA Key Pair Generator Implementing Key Pair Generator Service Provider Interface
+* 
+* @author Yinhua Xu
+**************************************************************************************/
+
 package qTESLA;
 
 import java.security.InvalidAlgorithmParameterException;
@@ -27,6 +35,11 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 	
 	private QTESLA qTESLA;
 	
+	/**************************************
+	 * Setter of Security Category
+	 * 
+	 * @return	none
+	 **************************************/
 	public void setQTESLA (QTESLA qTESLA) {
 		
 		this.qTESLA = qTESLA;
@@ -43,14 +56,27 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 		byte[] publicKey 	= qTESLAPublicKey.getEncoded();
 		this.random			= new SecureRandom();
 		
-		if (this.securityCategory == "qTESLA-I" || this.securityCategory == "qTESLA-III-Speed" || this.securityCategory == "qTESLA-III-Size") {
+		if (
+				this.securityCategory == "qTESLA-I" ||
+				this.securityCategory == "qTESLA-III-Speed" ||
+				this.securityCategory == "qTESLA-III-Size"
+		
+		) {
 				
 			try {
 				
 				qTESLA.generateKeyPair (publicKey, privateKey, random);
 			
-			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException exception) {
+			} catch (
+				
+				BadPaddingException |
+				IllegalBlockSizeException |
+				InvalidKeyException |
+				NoSuchAlgorithmException |
+				NoSuchPaddingException |
+				ShortBufferException exception
+			
+			) {
 				
 				exception.printStackTrace();
 			
@@ -64,8 +90,16 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 				
 				qTESLA.generateKeyPairP (publicKey, privateKey, random);
 			
-			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
-					| NoSuchPaddingException | ShortBufferException exception) {
+			} catch (
+					
+				BadPaddingException |
+				IllegalBlockSizeException |
+				InvalidKeyException |
+				NoSuchAlgorithmException |
+				NoSuchPaddingException |
+				ShortBufferException exception
+			
+			) {
 				
 				exception.printStackTrace();
 			}
@@ -96,7 +130,9 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 	}
 	
 	@Override
-	public void initialize (AlgorithmParameterSpec specification, SecureRandom random) throws InvalidAlgorithmParameterException {
+	public void initialize (AlgorithmParameterSpec specification, SecureRandom random) 
+			
+		throws InvalidAlgorithmParameterException {
 		
 		if (! (specification instanceof QTESLAParameterSpecification)) {
 			
