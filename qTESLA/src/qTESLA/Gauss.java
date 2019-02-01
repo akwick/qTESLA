@@ -543,7 +543,6 @@ public class Gauss {
 	 * @param		seed						Kappa-Bit Seed
 	 * @param		seedOffset					Starting Point of the Kappa-Bit Seed
 	 * @param		nonce						Domain Separator for Error Polynomial and Secret Polynomial
-	 * @param		n							Polynomial Dimension
 	 * 
 	 * @return		none
 	 ******************************************************************************************************************/
