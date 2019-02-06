@@ -223,12 +223,6 @@ public class Gauss {
 	 **********************************************************************************************/
 	private static void donaldErvinKnuthMergeExchangeKeyOrder (long[] key, int[] order, int size) {
 		
-		if (size <= 1) {
-			
-			return;
-			
-		}
-		
 		int counter = 1;
 		
 		while (counter < size - counter) {
@@ -283,12 +277,6 @@ public class Gauss {
 	 * @return
 	 *******************************************************************************/
 	private static void donaldErvinKnuthMergeExchangeOrder (int[] order, int size) {
-		
-		if (size <= 1) {
-			
-			return;
-			
-		}
 		
 		int counter = 1;
 		
