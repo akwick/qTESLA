@@ -134,15 +134,15 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 			
 		throws InvalidAlgorithmParameterException {
 		
-		if (! (specification instanceof QTESLAParameterSpecification)) {
+		if (! (specification instanceof QTESLASpecificParameters)) {
 			
 			throw new InvalidAlgorithmParameterException ("Parameters Do Not Belong To qTESLA");
 			
 		}
 		
-		QTESLAParameterSpecification qTESLAParameterSpecification = (QTESLAParameterSpecification) specification;
+		QTESLASpecificParameters qTESLASpecificParameters = (QTESLASpecificParameters) specification;
 		
-		this.securityCategory = qTESLAParameterSpecification.getSecurityCategory();
+		this.securityCategory = qTESLASpecificParameters.getSecurityCategory();
 		this.random = random;
 		this.qTESLA = new QTESLA (this.securityCategory);
 		
