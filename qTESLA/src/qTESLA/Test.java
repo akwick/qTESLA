@@ -4077,7 +4077,7 @@ public class Test {
 		}
 		
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance ("QTESLAKeyPairGenerator", "qTESLAProvider");
-		QTESLASpecificParameters specification = new QTESLASpecificParameters ("qTESLA-I");
+		QTESLAParameterSpec specification = new QTESLAParameterSpec ("qTESLA-I");
 		keyPairGenerator.initialize (specification, secureRandom);
 		KeyPair keyPair = keyPairGenerator.generateKeyPair();
 		QTESLAPrivateKey qTESLAPrivateKey = (QTESLAPrivateKey) keyPair.getPrivate();
@@ -4201,7 +4201,7 @@ public class Test {
 		}
 		
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance ("QTESLAKeyPairGenerator", "qTESLAProvider");
-		QTESLASpecificParameters specification = new QTESLASpecificParameters ("qTESLA-P-I");
+		QTESLAParameterSpec specification = new QTESLAParameterSpec ("qTESLA-P-I");
 		keyPairGenerator.initialize (specification, secureRandom);
 		KeyPair keyPair = keyPairGenerator.generateKeyPair();
 		QTESLAPrivateKey qTESLAPrivateKey = (QTESLAPrivateKey) keyPair.getPrivate();

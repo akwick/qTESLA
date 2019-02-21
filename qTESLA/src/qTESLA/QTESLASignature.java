@@ -275,9 +275,9 @@ public final class QTESLASignature extends SignatureSpi {
 	@Override
 	protected void engineSetParameter (AlgorithmParameterSpec specification) throws InvalidAlgorithmParameterException {
 		
-		QTESLASpecificParameters qTESLASpecificParameters = (QTESLASpecificParameters) specification;
+		QTESLAParameterSpec qTESLAParameterSpec = (QTESLAParameterSpec) specification;
 		
-		this.securityCategory = qTESLASpecificParameters.getSecurityCategory();
+		this.securityCategory = qTESLAParameterSpec.getSecurityCategory();
 		
 	}
 

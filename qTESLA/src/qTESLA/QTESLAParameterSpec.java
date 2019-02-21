@@ -11,7 +11,7 @@ package qTESLA;
 
 import java.security.spec.AlgorithmParameterSpec;
 
-public final class QTESLASpecificParameters implements AlgorithmParameterSpec {
+public final class QTESLAParameterSpec implements AlgorithmParameterSpec {
 	
 	/**
 	 * qTESLA Security Category
@@ -23,7 +23,7 @@ public final class QTESLASpecificParameters implements AlgorithmParameterSpec {
 	 * 
 	 * @param securityCategory		qTESLA Security Category
 	 **************************************************************/
-	public QTESLASpecificParameters (String securityCategory) {
+	public QTESLAParameterSpec (String securityCategory) {
 		
 		this.securityCategory = securityCategory;
 		
