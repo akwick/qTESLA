@@ -668,15 +668,15 @@ public class Test {
 	
 	public static void testSampleYI () {
 		
-		Sample sample = new Sample ("qTESLA-I");
+		QTESLAYSampler qTESLAYSampler = new QTESLAYSampler ("qTESLA-I");
 		
-		int[] Y= new int[sample.getQTESLAParameter().n];
+		int[] Y= new int[qTESLAYSampler.getQTESLAParameter().n];
 		
 		System.out.println ("Test for Sampling Y in Sample for Heuristic qTESLA Security Category 1\n");
 		
-		sample.sampleY (Y, seed, 0, 16);
+		qTESLAYSampler.sampleY (Y, seed, 0, 16);
 		
-		for (int i = 0; i < sample.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAYSampler.getQTESLAParameter().n; i++) {
 			
 			if (i % 8 == 0) {
 				
@@ -702,14 +702,14 @@ public class Test {
 	
 	public static void testSampleYIIISize () {
 		
-		Sample sample = new Sample ("qTESLA-III-Size");
-		int[] Y = new int[sample.getQTESLAParameter().n];
+		QTESLAYSampler qTESLAYSampler = new QTESLAYSampler ("qTESLA-III-Size");
+		int[] Y = new int[qTESLAYSampler.getQTESLAParameter().n];
 		
 		System.out.println ("Test for Sampling Y in Sample for Heuristic qTESLA Security Category 3 (Option for Size)\n");
 		
-		sample.sampleY (Y, seed, 0, 16);
+		qTESLAYSampler.sampleY (Y, seed, 0, 16);
 		
-		for (int i = 0; i < sample.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAYSampler.getQTESLAParameter().n; i++) {
 			
 			if (i % 8 == 0) {
 				
@@ -735,14 +735,14 @@ public class Test {
 	
 	public static void testSampleYPIII () {
 		
-		Sample sample = new Sample ("qTESLA-P-III");
-		long[] Y = new long[sample.getQTESLAParameter().n];
+		QTESLAYSampler qTESLAYSampler = new QTESLAYSampler ("qTESLA-P-III");
+		long[] Y = new long[qTESLAYSampler.getQTESLAParameter().n];
 		
 		System.out.println ("Test for Sampling Y in Sample for Provably-Secure qTESLA Security Category-3\n");
 		
-		sample.sampleY (Y, seed, 0, 16);
+		qTESLAYSampler.sampleY (Y, seed, 0, 16);
 		
-		for (int i = 0; i < sample.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAYSampler.getQTESLAParameter().n; i++) {
 			
 			if (i % 4 == 0) {
 				
@@ -768,15 +768,15 @@ public class Test {
 	
 	public static void testPolynomialGaussianSamplerI () {
 		
-		Gauss gauss = new Gauss ("qTESLA-I");
+		QTESLAGaussianSampler qTESLAGaussianSampler = new QTESLAGaussianSampler ("qTESLA-I");
 		
 		System.out.println ("Test for Polynomial Gaussian Sampler in Sample for Heuristic qTESLA Security Category 1\n");
 		
-		int[] data = new int[gauss.getN()];
+		int[] data = new int[qTESLAGaussianSampler.getN()];
 		
-		gauss.polynomialGaussianSampler (data, 0, seed, 0, 128);
+		qTESLAGaussianSampler.polynomialGaussianSampler (data, 0, seed, 0, 128);
 		
-		for (int i = 0; i < gauss.getN(); i++) {
+		for (int i = 0; i < qTESLAGaussianSampler.getN(); i++) {
 			
 			if (i % 8 == 0) {
 				
@@ -802,15 +802,15 @@ public class Test {
 	
 	public static void testPolynomialGaussianSamplerPI () {
 		
-		Gauss gauss = new Gauss ("qTESLA-P-I");
+		QTESLAGaussianSampler qTESLAGaussianSampler = new QTESLAGaussianSampler ("qTESLA-P-I");
 		
 		System.out.println ("Test for Polynomial Gaussian Sampler in Sample for Provably Secure qTESLA Security Category 1\n");
 		
-		long[] data	= new long[gauss.getN()];
+		long[] data	= new long[qTESLAGaussianSampler.getN()];
 		
-		gauss.polynomialGaussianSampler (data, 0, seed, 0, 128);
+		qTESLAGaussianSampler.polynomialGaussianSampler (data, 0, seed, 0, 128);
 		
-		for (int i = 0; i < gauss.getN(); i++) {
+		for (int i = 0; i < qTESLAGaussianSampler.getN(); i++) {
 			
 			if (i % 4 == 0) {
 				
@@ -836,11 +836,11 @@ public class Test {
 	
 	public static void testPolynomialGaussianSamplerIIISize () {
 		
-		Gauss gauss = new Gauss ("qTESLA-III-Size");
+		QTESLAGaussianSampler qTESLAGaussianSampler = new QTESLAGaussianSampler ("qTESLA-III-Size");
 		
 		System.out.println ("Test for Polynomial Gaussian Sampler in Sample for Heuristic qTESLA Security Category 3 (Option for Size)\n");
 		
-		int[] data = new int[gauss.getN()];
+		int[] data = new int[qTESLAGaussianSampler.getN()];
 		
 		byte[] seedExtended	= {
 				
@@ -863,9 +863,9 @@ public class Test {
 				
 		};
 		
-		gauss.polynomialGaussianSampler (data, 0, seedExtended, 0, 128);
+		qTESLAGaussianSampler.polynomialGaussianSampler (data, 0, seedExtended, 0, 128);
 		
-		for (int i = 0; i < gauss.getN(); i++) {
+		for (int i = 0; i < qTESLAGaussianSampler.getN(); i++) {
 			
 			if (i % 8 == 0) {
 				
@@ -891,15 +891,15 @@ public class Test {
 	
 	public static void testPolynomialGaussianSamplerPIII () {
 		
-		Gauss gauss = new Gauss ("qTESLA-P-III");
+		QTESLAGaussianSampler qTESLAGaussianSampler = new QTESLAGaussianSampler ("qTESLA-P-III");
 		
 		System.out.println ("Test for Polynomial Gaussian Sampler in Sample for Provably Secure qTESLA Security Category 3\n");
 		
-		long[] data	= new long[gauss.getN()];
+		long[] data	= new long[qTESLAGaussianSampler.getN()];
 		
-		gauss.polynomialGaussianSampler (data, 0, seed, 0, 256);
+		qTESLAGaussianSampler.polynomialGaussianSampler (data, 0, seed, 0, 256);
 		
-		for (int i = 0; i < gauss.getN(); i++) {
+		for (int i = 0; i < qTESLAGaussianSampler.getN(); i++) {
 			
 			if (i % 4 == 0) {
 				
@@ -1954,21 +1954,21 @@ public class Test {
 	
 	public static void testEncodePrivateKeyI() {
 		
-		Pack pack						= new Pack ("qTESLA-I");
+		QTESLAPack qTESLAPack						= new QTESLAPack ("qTESLA-I");
 		
-		byte[] privateKey				= new byte[pack.getQTESLAParameter().privateKeySize];
-		int[] secretPolynomial			= new int[pack.getQTESLAParameter().n];
-		int[] errorPolynomial			= new int[pack.getQTESLAParameter().n];
+		byte[] privateKey				= new byte[qTESLAPack.getQTESLAParameter().privateKeySize];
+		int[] secretPolynomial			= new int[qTESLAPack.getQTESLAParameter().n];
+		int[] errorPolynomial			= new int[qTESLAPack.getQTESLAParameter().n];
 		
 		System.out.println ("Test for Encoding Private Key in Polynomial for Heuristic qTESLA Security Category 1\n");
 		
-		System.arraycopy (PolynomialHeuristic.ZETA_I, 0, secretPolynomial, 0, pack.getQTESLAParameter().n);
+		System.arraycopy (PolynomialHeuristic.ZETA_I, 0, secretPolynomial, 0, qTESLAPack.getQTESLAParameter().n);
 		
-		System.arraycopy (PolynomialHeuristic.ZETA_INVERSE_I, 0, errorPolynomial, 0, pack.getQTESLAParameter().n);
+		System.arraycopy (PolynomialHeuristic.ZETA_INVERSE_I, 0, errorPolynomial, 0, qTESLAPack.getQTESLAParameter().n);
 		
-		pack.encodePrivateKey (privateKey, secretPolynomial, errorPolynomial, seed, 0);
+		qTESLAPack.encodePrivateKey (privateKey, secretPolynomial, errorPolynomial, seed, 0);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().privateKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().privateKeySize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -1994,21 +1994,21 @@ public class Test {
 	
 	public static void testEncodePrivateKeyIIISize() {
 		
-		Pack pack						= new Pack ("qTESLA-III-Size");
+		QTESLAPack qTESLAPack						= new QTESLAPack ("qTESLA-III-Size");
 		
-		byte[] privateKey				= new byte[pack.getQTESLAParameter().privateKeySize];
-		int[] secretPolynomial			= new int[pack.getQTESLAParameter().n];
-		int[] errorPolynomial			= new int[pack.getQTESLAParameter().n];
+		byte[] privateKey				= new byte[qTESLAPack.getQTESLAParameter().privateKeySize];
+		int[] secretPolynomial			= new int[qTESLAPack.getQTESLAParameter().n];
+		int[] errorPolynomial			= new int[qTESLAPack.getQTESLAParameter().n];
 		
 		System.out.println ("Test for Encoding Private Key in Polynomial for Heuristic qTESLA Security Category 3 (Option for Size)\n");
 		
-		System.arraycopy (PolynomialHeuristic.ZETA_III_SIZE, 0, secretPolynomial, 0, pack.getQTESLAParameter().n);
+		System.arraycopy (PolynomialHeuristic.ZETA_III_SIZE, 0, secretPolynomial, 0, qTESLAPack.getQTESLAParameter().n);
 		
-		System.arraycopy (PolynomialHeuristic.ZETA_INVERSE_III_SIZE, 0, errorPolynomial, 0, pack.getQTESLAParameter().n);
+		System.arraycopy (PolynomialHeuristic.ZETA_INVERSE_III_SIZE, 0, errorPolynomial, 0, qTESLAPack.getQTESLAParameter().n);
 		
-		pack.encodePrivateKey (privateKey, secretPolynomial, errorPolynomial, seed, 0);
+		qTESLAPack.encodePrivateKey (privateKey, secretPolynomial, errorPolynomial, seed, 0);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().privateKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().privateKeySize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2034,21 +2034,21 @@ public class Test {
 	
 	public static void testEncodePrivateKeyIIISpeed() {
 		
-		Pack pack						= new Pack ("qTESLA-III-Speed");
+		QTESLAPack qTESLAPack						= new QTESLAPack ("qTESLA-III-Speed");
 		
-		byte[] privateKey				= new byte[pack.getQTESLAParameter().privateKeySize];
-		int[] secretPolynomial			= new int[pack.getQTESLAParameter().n];
-		int[] errorPolynomial			= new int[pack.getQTESLAParameter().n];
+		byte[] privateKey				= new byte[qTESLAPack.getQTESLAParameter().privateKeySize];
+		int[] secretPolynomial			= new int[qTESLAPack.getQTESLAParameter().n];
+		int[] errorPolynomial			= new int[qTESLAPack.getQTESLAParameter().n];
 		
 		System.out.println ("Test for Encoding Private Key in Polynomial for Heuristic qTESLA Security Category 3 (Option for Speed)\n");
 		
-		System.arraycopy (PolynomialHeuristic.ZETA_III_SPEED, 0, secretPolynomial, 0, pack.getQTESLAParameter().n);
+		System.arraycopy (PolynomialHeuristic.ZETA_III_SPEED, 0, secretPolynomial, 0, qTESLAPack.getQTESLAParameter().n);
 		
-		System.arraycopy (PolynomialHeuristic.ZETA_INVERSE_III_SPEED, 0, errorPolynomial, 0, pack.getQTESLAParameter().n);
+		System.arraycopy (PolynomialHeuristic.ZETA_INVERSE_III_SPEED, 0, errorPolynomial, 0, qTESLAPack.getQTESLAParameter().n);
 		
-		pack.encodePrivateKey (privateKey, secretPolynomial, errorPolynomial, seed, 0);
+		qTESLAPack.encodePrivateKey (privateKey, secretPolynomial, errorPolynomial, seed, 0);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().privateKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().privateKeySize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2074,22 +2074,22 @@ public class Test {
 	
 	public static void testDecodePrivateKeyI() {
 		
-		Pack pack						= new Pack ("qTESLA-I");
+		QTESLAPack qTESLAPack						= new QTESLAPack ("qTESLA-I");
 		
-		byte[] privateKey				= new byte[pack.getQTESLAParameter().privateKeySize];
-		short[] secretPolynomial		= new short[pack.getQTESLAParameter().n];
-		short[] errorPolynomial			= new short[pack.getQTESLAParameter().n];
+		byte[] privateKey				= new byte[qTESLAPack.getQTESLAParameter().privateKeySize];
+		short[] secretPolynomial		= new short[qTESLAPack.getQTESLAParameter().n];
+		short[] errorPolynomial			= new short[qTESLAPack.getQTESLAParameter().n];
 		byte[] hashValue				= new byte[QTESLAParameter.SEED * 2];
 		
 		System.out.println ("Test for Decoding Private Key in Polynomial for Heuristic qTESLA Security Category 1\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().privateKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().privateKeySize; i++) {
 			
-			privateKey[i]		= (byte) PolynomialHeuristic.ZETA_I[i % pack.getQTESLAParameter().n];
+			privateKey[i]		= (byte) PolynomialHeuristic.ZETA_I[i % qTESLAPack.getQTESLAParameter().n];
 			
 		}
 		
-		pack.decodePrivateKey (hashValue, secretPolynomial, errorPolynomial, privateKey);
+		qTESLAPack.decodePrivateKey (hashValue, secretPolynomial, errorPolynomial, privateKey);
 		
 		System.out.println ("Seed\n");
 		
@@ -2113,7 +2113,7 @@ public class Test {
 		
 		System.out.println ("\nSecret Polynomial\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n; i++) {
 			
 			if (i % 16 == 0) {
 				
@@ -2133,7 +2133,7 @@ public class Test {
 		
 		System.out.println ("\nError Polynomial\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n; i++) {
 			
 			if (i % 16 == 0) {
 				
@@ -2157,21 +2157,21 @@ public class Test {
 	
 	public static void testDecodePrivateKeyIIISize() {
 		
-		Pack pack						= new Pack ("qTESLA-III-Size");
-		byte[] privateKey				= new byte[pack.getQTESLAParameter().privateKeySize];
-		short[] secretPolynomial		= new short[pack.getQTESLAParameter().n];
-		short[] errorPolynomial			= new short[pack.getQTESLAParameter().n];
+		QTESLAPack qTESLAPack						= new QTESLAPack ("qTESLA-III-Size");
+		byte[] privateKey				= new byte[qTESLAPack.getQTESLAParameter().privateKeySize];
+		short[] secretPolynomial		= new short[qTESLAPack.getQTESLAParameter().n];
+		short[] errorPolynomial			= new short[qTESLAPack.getQTESLAParameter().n];
 		byte[] hashValue				= new byte[QTESLAParameter.SEED * 2];
 		
 		System.out.println ("Test for Decoding Private Key in Polynomial for Heuristic qTESLA Security Category 3 (Option for Size)\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().privateKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().privateKeySize; i++) {
 			
-			privateKey[i]		= (byte) PolynomialHeuristic.ZETA_III_SIZE[i % pack.getQTESLAParameter().n];
+			privateKey[i]		= (byte) PolynomialHeuristic.ZETA_III_SIZE[i % qTESLAPack.getQTESLAParameter().n];
 			
 		}
 		
-		pack.decodePrivateKey (hashValue, secretPolynomial, errorPolynomial, privateKey);
+		qTESLAPack.decodePrivateKey (hashValue, secretPolynomial, errorPolynomial, privateKey);
 		
 		System.out.println ("Seed\n");
 		
@@ -2195,7 +2195,7 @@ public class Test {
 		
 		System.out.println ("\nSecret Polynomial\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n; i++) {
 			
 			if (i % 16 == 0) {
 				
@@ -2215,7 +2215,7 @@ public class Test {
 		
 		System.out.println ("\nError Polynomial\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n; i++) {
 			
 			if (i % 16 == 0) {
 				
@@ -2239,21 +2239,21 @@ public class Test {
 	
 	public static void testDecodePrivateKeyIIISpeed() {
 		
-		Pack pack						= new Pack ("qTESLA-III-Speed");
-		byte[] privateKey				= new byte[pack.getQTESLAParameter().privateKeySize];
-		short[] secretPolynomial		= new short[pack.getQTESLAParameter().n];
-		short[] errorPolynomial			= new short[pack.getQTESLAParameter().n];
+		QTESLAPack qTESLAPack						= new QTESLAPack ("qTESLA-III-Speed");
+		byte[] privateKey				= new byte[qTESLAPack.getQTESLAParameter().privateKeySize];
+		short[] secretPolynomial		= new short[qTESLAPack.getQTESLAParameter().n];
+		short[] errorPolynomial			= new short[qTESLAPack.getQTESLAParameter().n];
 		byte[] hashValue				= new byte[QTESLAParameter.SEED * 2];
 		
 		System.out.println ("Test for Decoding Private Key in Polynomial for Heuristic qTESLA Security Category 3 (Option for Speed)\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().privateKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().privateKeySize; i++) {
 			
-			privateKey[i]		= (byte) PolynomialHeuristic.ZETA_III_SPEED[i % pack.getQTESLAParameter().n];
+			privateKey[i]		= (byte) PolynomialHeuristic.ZETA_III_SPEED[i % qTESLAPack.getQTESLAParameter().n];
 			
 		}
 		
-		pack.decodePrivateKey (hashValue, secretPolynomial, errorPolynomial, privateKey);
+		qTESLAPack.decodePrivateKey (hashValue, secretPolynomial, errorPolynomial, privateKey);
 		
 		System.out.println ("Seed\n");
 		
@@ -2277,7 +2277,7 @@ public class Test {
 		
 		System.out.println ("\nSecret Polynomial\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n; i++) {
 			
 			if (i % 16 == 0) {
 				
@@ -2297,7 +2297,7 @@ public class Test {
 		
 		System.out.println ("\nError Polynomial\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n; i++) {
 			
 			if (i % 16 == 0) {
 				
@@ -2321,25 +2321,25 @@ public class Test {
 	
 	public static void testPackPrivateKeyIIIP() {
 		
-		Pack pack						= new Pack ("qTESLA-P-III");
+		QTESLAPack qTESLAPack						= new QTESLAPack ("qTESLA-P-III");
 		
-		byte[] privateKey				= new byte[pack.getQTESLAParameter().privateKeySize];
-		long[] secretPolynomial			= new long[pack.getQTESLAParameter().n];
-		long[] errorPolynomial			= new long[pack.getQTESLAParameter().n * pack.getQTESLAParameter().k];
+		byte[] privateKey				= new byte[qTESLAPack.getQTESLAParameter().privateKeySize];
+		long[] secretPolynomial			= new long[qTESLAPack.getQTESLAParameter().n];
+		long[] errorPolynomial			= new long[qTESLAPack.getQTESLAParameter().n * qTESLAPack.getQTESLAParameter().k];
 		
 		System.out.println ("Test for Packing Private Key in Polynomial for Provably-Secure qTESLA Security Category 3\n");
 		
-		System.arraycopy (PolynomialProvablySecure.ZETA_P_III, 0, secretPolynomial, 0, pack.getQTESLAParameter().n);
+		System.arraycopy (PolynomialProvablySecure.ZETA_P_III, 0, secretPolynomial, 0, qTESLAPack.getQTESLAParameter().n);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().k; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().k; i++) {
 			
-			System.arraycopy (PolynomialProvablySecure.ZETA_INVERSE_P_III, 0, errorPolynomial, pack.getQTESLAParameter().n * i, pack.getQTESLAParameter().n);
+			System.arraycopy (PolynomialProvablySecure.ZETA_INVERSE_P_III, 0, errorPolynomial, qTESLAPack.getQTESLAParameter().n * i, qTESLAPack.getQTESLAParameter().n);
 			
 		}
 		
-		pack.packPrivateKey (privateKey, secretPolynomial, errorPolynomial, seed, 0);
+		qTESLAPack.packPrivateKey (privateKey, secretPolynomial, errorPolynomial, seed, 0);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().privateKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().privateKeySize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2367,12 +2367,12 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Public Key in QTESLA for Heuristic qTESLA Security Category 3 (Option for Size)\n");
 		
-		Pack pack					= new Pack ("qTESLA-III-Size");
-		byte[] publicKey			= new byte[pack.getQTESLAParameter().publicKeySize];
+		QTESLAPack qTESLAPack					= new QTESLAPack ("qTESLA-III-Size");
+		byte[] publicKey			= new byte[qTESLAPack.getQTESLAParameter().publicKeySize];
 		
-		pack.encodePublicKey (publicKey, PolynomialHeuristic.ZETA_III_SIZE, seed, 0);
+		qTESLAPack.encodePublicKey (publicKey, PolynomialHeuristic.ZETA_III_SIZE, seed, 0);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().publicKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().publicKeySize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2400,12 +2400,12 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Public Key in QTESLA for Heuristic qTESLA Security Category 3 (Option for Speed)\n");
 		
-		Pack pack					= new Pack ("qTESLA-III-Speed");
-		byte[] publicKey 			= new byte[pack.getQTESLAParameter().publicKeySize];
+		QTESLAPack qTESLAPack					= new QTESLAPack ("qTESLA-III-Speed");
+		byte[] publicKey 			= new byte[qTESLAPack.getQTESLAParameter().publicKeySize];
 		
-		pack.encodePublicKey (publicKey, PolynomialHeuristic.ZETA_III_SPEED, seed, 0);
+		qTESLAPack.encodePublicKey (publicKey, PolynomialHeuristic.ZETA_III_SPEED, seed, 0);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().publicKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().publicKeySize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2433,19 +2433,19 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Public Key in QTESLA for Provably-Secure qTESLA Security Category 1\n");
 		
-		Pack pack					= new Pack ("qTESLA-P-I");
-		long[] T					= new long[pack.getQTESLAParameter().n * pack.getQTESLAParameter().k];
-		byte[] publicKey			= new byte[pack.getQTESLAParameter().publicKeySize];
+		QTESLAPack qTESLAPack					= new QTESLAPack ("qTESLA-P-I");
+		long[] T					= new long[qTESLAPack.getQTESLAParameter().n * qTESLAPack.getQTESLAParameter().k];
+		byte[] publicKey			= new byte[qTESLAPack.getQTESLAParameter().publicKeySize];
 		
-		for (int k = 0; k < pack.getQTESLAParameter().k; k++) {
+		for (int k = 0; k < qTESLAPack.getQTESLAParameter().k; k++) {
 		
-			System.arraycopy (PolynomialProvablySecure.ZETA_P_I, 0, T, pack.getQTESLAParameter().n * k, pack.getQTESLAParameter().n);
+			System.arraycopy (PolynomialProvablySecure.ZETA_P_I, 0, T, qTESLAPack.getQTESLAParameter().n * k, qTESLAPack.getQTESLAParameter().n);
 		
 		}
 		
-		pack.encodePublicKey (publicKey, T, seed, 0);
+		qTESLAPack.encodePublicKey (publicKey, T, seed, 0);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().publicKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().publicKeySize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2473,19 +2473,19 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Public Key in QTESLA for Provably-Secure qTESLA Security Category 3\n");
 		
-		Pack pack					= new Pack ("qTESLA-P-III");
-		long[] T					= new long[pack.getQTESLAParameter().n * pack.getQTESLAParameter().k];
-		byte[] publicKey			= new byte[pack.getQTESLAParameter().publicKeySize];
+		QTESLAPack qTESLAPack					= new QTESLAPack ("qTESLA-P-III");
+		long[] T					= new long[qTESLAPack.getQTESLAParameter().n * qTESLAPack.getQTESLAParameter().k];
+		byte[] publicKey			= new byte[qTESLAPack.getQTESLAParameter().publicKeySize];
 		
-		for (int k = 0; k < pack.getQTESLAParameter().k; k++) {
+		for (int k = 0; k < qTESLAPack.getQTESLAParameter().k; k++) {
 		
-			System.arraycopy (PolynomialProvablySecure.ZETA_P_III, 0, T, pack.getQTESLAParameter().n * k, pack.getQTESLAParameter().n);
+			System.arraycopy (PolynomialProvablySecure.ZETA_P_III, 0, T, qTESLAPack.getQTESLAParameter().n * k, qTESLAPack.getQTESLAParameter().n);
 		
 		}
 		
-		pack.encodePublicKey (publicKey, T, seed, 0);
+		qTESLAPack.encodePublicKey (publicKey, T, seed, 0);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().publicKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().publicKeySize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2513,23 +2513,23 @@ public class Test {
 		
 		System.out.println ("Test for Decoding Public Key in QTESLA for Heuristic qTESLA Security Category 3 (Option for Size)\n");
 		
-		Pack pack				= new Pack ("qTESLA-III-Size");
+		QTESLAPack qTESLAPack				= new QTESLAPack ("qTESLA-III-Size");
 		
-		byte[] publicKeyInput	= new byte[pack.getQTESLAParameter().publicKeySize];
-		int[] publicKey			= new int[pack.getQTESLAParameter().n];
+		byte[] publicKeyInput	= new byte[qTESLAPack.getQTESLAParameter().publicKeySize];
+		int[] publicKey			= new int[qTESLAPack.getQTESLAParameter().n];
 		byte[] seedA			= new byte[QTESLAParameter.SEED];
 		
-		for (int i = 0; i < pack.getQTESLAParameter().publicKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().publicKeySize; i++) {
 			
-			publicKeyInput[i] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i % pack.getQTESLAParameter().n] & 0xFFL);
+			publicKeyInput[i] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i % qTESLAPack.getQTESLAParameter().n] & 0xFFL);
 		
 		}
 		
-		pack.decodePublicKey (publicKey, seedA, 0, publicKeyInput);
+		qTESLAPack.decodePublicKey (publicKey, seedA, 0, publicKeyInput);
 
 		System.out.println ("Public Key in Integer\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n; i++) {
 			
 			if (i % 16 == 0) {
 				
@@ -2563,23 +2563,23 @@ public class Test {
 		
 		System.out.println ("Test for Decoding Public Key in QTESLA for Heuristic qTESLA Security Category 3 (Option for Speed)\n");
 		
-		Pack pack				= new Pack ("qTESLA-III-Speed");
+		QTESLAPack qTESLAPack				= new QTESLAPack ("qTESLA-III-Speed");
 		
-		byte[] publicKeyInput	= new byte[pack.getQTESLAParameter().publicKeySize];
-		int[] publicKey			= new int[pack.getQTESLAParameter().n];
+		byte[] publicKeyInput	= new byte[qTESLAPack.getQTESLAParameter().publicKeySize];
+		int[] publicKey			= new int[qTESLAPack.getQTESLAParameter().n];
 		byte[] seedA			= new byte[QTESLAParameter.SEED];
 		
-		for (int i = 0; i < pack.getQTESLAParameter().publicKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().publicKeySize; i++) {
 		
-			publicKeyInput[i] = (byte) (PolynomialHeuristic.ZETA_III_SPEED[i % pack.getQTESLAParameter().n] & 0xFFL);
+			publicKeyInput[i] = (byte) (PolynomialHeuristic.ZETA_III_SPEED[i % qTESLAPack.getQTESLAParameter().n] & 0xFFL);
 			
 		}
 		
-		pack.decodePublicKey (publicKey, seedA, 0, publicKeyInput);
+		qTESLAPack.decodePublicKey (publicKey, seedA, 0, publicKeyInput);
 
 		System.out.println ("Public Key in Integer\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n; i++) {
 			
 			if (i % 16 == 0) {
 				
@@ -2613,23 +2613,23 @@ public class Test {
 		
 		System.out.println ("Test for Decoding Public Key in QTESLA for Provably-Secure qTESLA Security Category 1\n");
 		
-		Pack pack				= new Pack ("qTESLA-P-I");
+		QTESLAPack qTESLAPack				= new QTESLAPack ("qTESLA-P-I");
 		
-		byte[] publicKeyInput	= new byte[pack.getQTESLAParameter().publicKeySize];
-		int[] publicKey			= new int[pack.getQTESLAParameter().n * pack.getQTESLAParameter().k];
+		byte[] publicKeyInput	= new byte[qTESLAPack.getQTESLAParameter().publicKeySize];
+		int[] publicKey			= new int[qTESLAPack.getQTESLAParameter().n * qTESLAPack.getQTESLAParameter().k];
 		byte[] seedA			= new byte[QTESLAParameter.SEED];
 		
-		for (int i = 0; i < pack.getQTESLAParameter().publicKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().publicKeySize; i++) {
 			
-			publicKeyInput[i] = (byte) (PolynomialProvablySecure.ZETA_P_I[i % pack.getQTESLAParameter().n] & 0xFFL);
+			publicKeyInput[i] = (byte) (PolynomialProvablySecure.ZETA_P_I[i % qTESLAPack.getQTESLAParameter().n] & 0xFFL);
 		
 		}
 		
-		pack.decodePublicKey (publicKey, seedA, 0, publicKeyInput);
+		qTESLAPack.decodePublicKey (publicKey, seedA, 0, publicKeyInput);
 		
 		System.out.println ("Public Key in Integer\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n * pack.getQTESLAParameter().k; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n * qTESLAPack.getQTESLAParameter().k; i++) {
 			
 			if (i % 8 == 0) {
 				
@@ -2663,21 +2663,21 @@ public class Test {
 		
 		System.out.println ("Test for Decoding Public Key in QTESLA for Provably Secure qTESLA Security Category 3\n");
 		
-		Pack pack				= new Pack ("qTESLA-P-III");
+		QTESLAPack qTESLAPack				= new QTESLAPack ("qTESLA-P-III");
 		
-		byte[] publicKeyInput	= new byte[pack.getQTESLAParameter().publicKeySize];
-		int[] publicKey			= new int[pack.getQTESLAParameter().n * pack.getQTESLAParameter().k];
+		byte[] publicKeyInput	= new byte[qTESLAPack.getQTESLAParameter().publicKeySize];
+		int[] publicKey			= new int[qTESLAPack.getQTESLAParameter().n * qTESLAPack.getQTESLAParameter().k];
 		byte[] seedA			= new byte[QTESLAParameter.SEED];
 		
-		for (int i = 0; i < pack.getQTESLAParameter().publicKeySize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().publicKeySize; i++) {
 		
-			publicKeyInput[i] = (byte) (PolynomialProvablySecure.ZETA_P_III[i % pack.getQTESLAParameter().n] & 0xFFL);
+			publicKeyInput[i] = (byte) (PolynomialProvablySecure.ZETA_P_III[i % qTESLAPack.getQTESLAParameter().n] & 0xFFL);
 			
 		}
 		
-		pack.decodePublicKey (publicKey, seedA, 0, publicKeyInput);
+		qTESLAPack.decodePublicKey (publicKey, seedA, 0, publicKeyInput);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n * pack.getQTESLAParameter().k; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n * qTESLAPack.getQTESLAParameter().k; i++) {
 			
 			if (i % 8 == 0) {
 				
@@ -2711,12 +2711,12 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Signature in QTESLA for Heuristic qTESLA Security Category 1\n");
 		
-		Pack pack			= new Pack ("qTESLA-I");
-		byte[] signature	= new byte[pack.getQTESLAParameter().signatureSize];
+		QTESLAPack qTESLAPack			= new QTESLAPack ("qTESLA-I");
+		byte[] signature	= new byte[qTESLAPack.getQTESLAParameter().signatureSize];
 		
-		pack.encodeSignature (signature, 0, seed, 0, PolynomialHeuristic.ZETA_I);
+		qTESLAPack.encodeSignature (signature, 0, seed, 0, PolynomialHeuristic.ZETA_I);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().signatureSize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().signatureSize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2744,12 +2744,12 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Signature in QTESLA for Heuristic qTESLA Security Category 3 (Option for Size)\n");
 		
-		Pack pack			= new Pack ("qTESLA-III-Size");
-		byte[] signature	= new byte[pack.getQTESLAParameter().signatureSize];
+		QTESLAPack qTESLAPack			= new QTESLAPack ("qTESLA-III-Size");
+		byte[] signature	= new byte[qTESLAPack.getQTESLAParameter().signatureSize];
 		
-		pack.encodeSignature (signature, 0, seed, 0, PolynomialHeuristic.ZETA_III_SIZE);
+		qTESLAPack.encodeSignature (signature, 0, seed, 0, PolynomialHeuristic.ZETA_III_SIZE);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().signatureSize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().signatureSize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2777,12 +2777,12 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Signature in QTESLA for Heuristic qTESLA Security Category 3 (Option for Speed)\n");
 		
-		Pack pack			= new Pack ("qTESLA-III-Speed");
-		byte[] signature	= new byte[pack.getQTESLAParameter().signatureSize];
+		QTESLAPack qTESLAPack			= new QTESLAPack ("qTESLA-III-Speed");
+		byte[] signature	= new byte[qTESLAPack.getQTESLAParameter().signatureSize];
 		
-		pack.encodeSignature (signature, 0, seed, 0, PolynomialHeuristic.ZETA_III_SPEED);
+		qTESLAPack.encodeSignature (signature, 0, seed, 0, PolynomialHeuristic.ZETA_III_SPEED);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().signatureSize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().signatureSize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2810,12 +2810,12 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Signature in Polynomial for Provably Secure qTESLA Security Category 1\n");
 		
-		Pack pack			= new Pack ("qTESLA-P-I");
-		byte[] signature	= new byte[pack.getQTESLAParameter().signatureSize];
+		QTESLAPack qTESLAPack			= new QTESLAPack ("qTESLA-P-I");
+		byte[] signature	= new byte[qTESLAPack.getQTESLAParameter().signatureSize];
 		
-		pack.encodeSignature (signature, 0, seed, 0, PolynomialProvablySecure.ZETA_P_I);
+		qTESLAPack.encodeSignature (signature, 0, seed, 0, PolynomialProvablySecure.ZETA_P_I);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().signatureSize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().signatureSize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2843,12 +2843,12 @@ public class Test {
 		
 		System.out.println ("Test for Encoding Signature in Polynomial for Provably Secure qTESLA Security Category 3\n");
 		
-		Pack pack			= new Pack ("qTESLA-P-III");
-		byte[] signature	= new byte[pack.getQTESLAParameter().signatureSize];
+		QTESLAPack qTESLAPack			= new QTESLAPack ("qTESLA-P-III");
+		byte[] signature	= new byte[qTESLAPack.getQTESLAParameter().signatureSize];
 		
-		pack.encodeSignature (signature, 0, seed, 0, PolynomialProvablySecure.ZETA_P_III);
+		qTESLAPack.encodeSignature (signature, 0, seed, 0, PolynomialProvablySecure.ZETA_P_III);
 		
-		for (int i = 0; i < pack.getQTESLAParameter().signatureSize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().signatureSize; i++) {
 			
 			if (i % 32 == 0) {
 				
@@ -2876,18 +2876,18 @@ public class Test {
 		
 		System.out.println ("Test for Decoding Signature in Polynomial for Heuristic qTESLA Security Category 3 (Option for Size)\n");
 		
-		Pack pack			= new Pack ("qTESLA-III-Size");
-		int[] Z				= new int[pack.getQTESLAParameter().n];
+		QTESLAPack qTESLAPack			= new QTESLAPack ("qTESLA-III-Size");
+		int[] Z				= new int[qTESLAPack.getQTESLAParameter().n];
 		byte[] C			= new byte[QTESLAParameter.HASH];
-		byte[] signature	= new byte[pack.getQTESLAParameter().signatureSize];
+		byte[] signature	= new byte[qTESLAPack.getQTESLAParameter().signatureSize];
 		
-		for (int i = 0; i < pack.getQTESLAParameter().signatureSize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().signatureSize; i++) {
 				
-			signature[i] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i % pack.getQTESLAParameter().n] & 0xFFL);
+			signature[i] = (byte) (PolynomialHeuristic.ZETA_III_SIZE[i % qTESLAPack.getQTESLAParameter().n] & 0xFFL);
 			
 		}
 		
-		pack.decodeSignature (C, Z, signature, 0);
+		qTESLAPack.decodeSignature (C, Z, signature, 0);
 		
 		System.out.println ("\nDisplay C\n");
 		
@@ -2899,7 +2899,7 @@ public class Test {
 		
 		System.out.println ("\n\nDisplay Z\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n; i++) {
 			
 			if (i % 8 == 0) {
 				
@@ -2927,18 +2927,18 @@ public class Test {
 		
 		System.out.println ("Test for Decoding Signature in Polynomial for Heuristic qTESLA Security Category 3 (Option for Speed)\n");
 		
-		Pack pack			= new Pack ("qTESLA-III-Speed");
-		int[] Z				= new int[pack.getQTESLAParameter().n];
+		QTESLAPack qTESLAPack			= new QTESLAPack ("qTESLA-III-Speed");
+		int[] Z				= new int[qTESLAPack.getQTESLAParameter().n];
 		byte[] C			= new byte[QTESLAParameter.HASH];
-		byte[] signature	= new byte[pack.getQTESLAParameter().signatureSize];
+		byte[] signature	= new byte[qTESLAPack.getQTESLAParameter().signatureSize];
 		
-		for (int i = 0; i < pack.getQTESLAParameter().signatureSize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().signatureSize; i++) {
 
-			signature[i] = (byte) (PolynomialHeuristic.ZETA_III_SPEED[i % pack.getQTESLAParameter().n] & 0xFFL);
+			signature[i] = (byte) (PolynomialHeuristic.ZETA_III_SPEED[i % qTESLAPack.getQTESLAParameter().n] & 0xFFL);
 			
 		}
 		
-		pack.decodeSignature (C, Z, signature, 0);
+		qTESLAPack.decodeSignature (C, Z, signature, 0);
 		
 		System.out.println ("\nDisplay C\n");
 		
@@ -2950,7 +2950,7 @@ public class Test {
 		
 		System.out.println ("\n\nDisplay Z\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n; i++) {
 		
 			if (i % 8 == 0) {
 			
@@ -2978,18 +2978,18 @@ public class Test {
 		
 		System.out.println ("Test for Decoding Signature in Polynomial for Provably Secure qTESLA Security Category 1\n");
 		
-		Pack pack			= new Pack ("qTESLA-P-I");
-		long[] Z			= new long[pack.getQTESLAParameter().n];
+		QTESLAPack qTESLAPack			= new QTESLAPack ("qTESLA-P-I");
+		long[] Z			= new long[qTESLAPack.getQTESLAParameter().n];
 		byte[] C			= new byte[QTESLAParameter.HASH];
-		byte[] signature	= new byte[pack.getQTESLAParameter().signatureSize];
+		byte[] signature	= new byte[qTESLAPack.getQTESLAParameter().signatureSize];
 		
-		for (int i = 0; i < pack.getQTESLAParameter().signatureSize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().signatureSize; i++) {
 
-			signature[i] = (byte) (PolynomialProvablySecure.ZETA_P_I[i % pack.getQTESLAParameter().n] & 0xFFL);
+			signature[i] = (byte) (PolynomialProvablySecure.ZETA_P_I[i % qTESLAPack.getQTESLAParameter().n] & 0xFFL);
 			
 		}
 		
-		pack.decodeSignature (C, Z, signature, 0);
+		qTESLAPack.decodeSignature (C, Z, signature, 0);
 		
 		System.out.println ("\nDisplay C\n");
 		
@@ -3001,7 +3001,7 @@ public class Test {
 		
 		System.out.println ("\n\nDisplay Z\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n; i++) {
 		
 			if (i % 4 == 0) {
 			
@@ -3029,18 +3029,18 @@ public class Test {
 		
 		System.out.println ("Test for Decoding Signature in Polynomial for Provably Secure qTESLA Security Category 3\n");
 		
-		Pack pack			= new Pack ("qTESLA-P-III");
-		long[] Z			= new long[pack.getQTESLAParameter().n];
+		QTESLAPack qTESLAPack			= new QTESLAPack ("qTESLA-P-III");
+		long[] Z			= new long[qTESLAPack.getQTESLAParameter().n];
 		byte[] C			= new byte[QTESLAParameter.HASH];
-		byte[] signature	= new byte[pack.getQTESLAParameter().signatureSize];
+		byte[] signature	= new byte[qTESLAPack.getQTESLAParameter().signatureSize];
 		
-		for (int i = 0; i < pack.getQTESLAParameter().signatureSize; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().signatureSize; i++) {
 		
-			signature[i] = (byte) (PolynomialProvablySecure.ZETA_P_III[i % pack.getQTESLAParameter().n] & 0xFFL);
+			signature[i] = (byte) (PolynomialProvablySecure.ZETA_P_III[i % qTESLAPack.getQTESLAParameter().n] & 0xFFL);
 			
 		}
 		
-		pack.decodeSignature (C, Z, signature, 0);
+		qTESLAPack.decodeSignature (C, Z, signature, 0);
 		
 		System.out.println ("\nDisplay C\n");
 		
@@ -3052,7 +3052,7 @@ public class Test {
 		
 		System.out.println ("\n\nDisplay Z\n");
 		
-		for (int i = 0; i < pack.getQTESLAParameter().n; i++) {
+		for (int i = 0; i < qTESLAPack.getQTESLAParameter().n; i++) {
 			
 			if (i % 4 == 0) {
 				

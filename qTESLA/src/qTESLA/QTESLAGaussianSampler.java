@@ -8,7 +8,7 @@
 
 package qTESLA;
 
-public class Gauss {
+public class QTESLAGaussianSampler {
 	
 	/**
 	 * Chunk Size for Sampling
@@ -46,7 +46,7 @@ public class Gauss {
 	 * 
 	 * @param securityCategory		qTESLA Security Category
 	 *****************************************************************************************************/
-	public Gauss (String securityCategory) {
+	public QTESLAGaussianSampler (String securityCategory) {
 		
 		if (securityCategory == "qTESLA-I") {
 			

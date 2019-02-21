@@ -8,7 +8,7 @@
 
 package qTESLA;
 
-public class Pack {
+public class QTESLAPack {
 	
 	private static QTESLAParameter parameter;
 	
@@ -17,7 +17,7 @@ public class Pack {
 	 * 
 	 * @param securityCategory		qTESLA Security Category
 	 *******************************************************/
-	public Pack (String securityCategory) {
+	public QTESLAPack (String securityCategory) {
 		
 		parameter = new QTESLAParameter (securityCategory);
 		

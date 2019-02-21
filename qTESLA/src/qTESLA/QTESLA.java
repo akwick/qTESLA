@@ -22,13 +22,13 @@ public class QTESLA {
 	
 	private static QTESLAParameter parameter;
 	
-	private static Pack pack;
+	private static QTESLAPack qTESLAPack;
 	
 	private static Polynomial polynomial;
 	
-	private static Sample sample;
+	private static QTESLAYSampler qTESLAYSampler;
 	
-	private static Gauss gauss;
+	private static QTESLAGaussianSampler qTESLAGaussianSampler;
 	
 	private static RandomNumberGenerator randomNumberGenerator;
 	
@@ -40,10 +40,10 @@ public class QTESLA {
 	public QTESLA (String securityCategory) {
 		
 		parameter = new QTESLAParameter (securityCategory);
-		pack = new Pack (securityCategory);
+		qTESLAPack = new QTESLAPack (securityCategory);
 		polynomial = new Polynomial (securityCategory);
-		sample = new Sample (securityCategory);
-		gauss = new Gauss (securityCategory);
+		qTESLAYSampler = new QTESLAYSampler (securityCategory);
+		qTESLAGaussianSampler = new QTESLAGaussianSampler (securityCategory);
 		randomNumberGenerator = new RandomNumberGenerator ();
 		
 	}
@@ -635,7 +635,7 @@ public class QTESLA {
 		 */
 		do {
 			
-			gauss.polynomialGaussianSampler (errorPolynomial, 0, randomnessExtended, 0, ++nonce);
+			qTESLAGaussianSampler.polynomialGaussianSampler (errorPolynomial, 0, randomnessExtended, 0, ++nonce);
 			
 		} while (checkPolynomial (errorPolynomial, parameter.boundE) == true);
 		
@@ -646,7 +646,7 @@ public class QTESLA {
 		 */
 		do {
 			
-			gauss.polynomialGaussianSampler (secretPolynomial, 0, randomnessExtended, QTESLAParameter.SEED, ++nonce);
+			qTESLAGaussianSampler.polynomialGaussianSampler (secretPolynomial, 0, randomnessExtended, QTESLAParameter.SEED, ++nonce);
 				
 		} while (checkPolynomial (secretPolynomial, parameter.boundS) == true);
 		
@@ -658,8 +658,8 @@ public class QTESLA {
 		polynomial.polynomialAdditionCorrection (T, T, errorPolynomial);
 		
 		/* Pack Public and Private Keys */
-		pack.encodePrivateKey (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, QTESLAParameter.SEED * 2);
-		pack.encodePublicKey (publicKey, T, randomnessExtended, QTESLAParameter.SEED * 2);
+		qTESLAPack.encodePrivateKey (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, QTESLAParameter.SEED * 2);
+		qTESLAPack.encodePublicKey (publicKey, T, randomnessExtended, QTESLAParameter.SEED * 2);
 		
 		return 0;
 		
@@ -739,7 +739,7 @@ public class QTESLA {
 			
 			do {
 				
-				gauss.polynomialGaussianSampler (
+				qTESLAGaussianSampler.polynomialGaussianSampler (
 						
 					errorPolynomial, parameter.n * i, randomnessExtended, QTESLAParameter.SEED * i, ++nonce
 					
@@ -756,7 +756,7 @@ public class QTESLA {
 		 */
 		do {
 			
-			gauss.polynomialGaussianSampler (
+			qTESLAGaussianSampler.polynomialGaussianSampler (
 					
 				secretPolynomial, 0, randomnessExtended, QTESLAParameter.SEED * parameter.k, ++nonce
 				
@@ -787,13 +787,13 @@ public class QTESLA {
 		}
 		
 		/* Pack Public and Private Keys */
-		pack.packPrivateKey (
+		qTESLAPack.packPrivateKey (
 				
 			privateKey, secretPolynomial, errorPolynomial, randomnessExtended, QTESLAParameter.SEED * (parameter.k + 1)
 			
 		);
 		
-		pack.encodePublicKey (publicKey, T, randomnessExtended, QTESLAParameter.SEED * (parameter.k + 1));
+		qTESLAPack.encodePublicKey (publicKey, T, randomnessExtended, QTESLAParameter.SEED * (parameter.k + 1));
 		
 		return 0;
 		
@@ -859,7 +859,7 @@ public class QTESLA {
 		/* Domain Separator for Sampling Y */
 		int nonce = 0;
 		
-		pack.decodePrivateKey (seed, secretPolynomial, errorPolynomial, privateKey);
+		qTESLAPack.decodePrivateKey (seed, secretPolynomial, errorPolynomial, privateKey);
 		
 		randomNumberGenerator.randomByte (randomnessInput, QTESLAParameter.RANDOM, QTESLAParameter.RANDOM);
 		// secureRandom.nextBytes (temporaryRandomnessInput);
@@ -909,7 +909,7 @@ public class QTESLA {
 		while (true) {
 			
 			/* Sample Y Uniformly Random from -B to B */
-			sample.sampleY (Y, randomness, 0, ++nonce);
+			qTESLAYSampler.sampleY (Y, randomness, 0, ++nonce);
 			
 			/* V = A * Y Modulo Q */
 			polynomial.polynomialMultiplication (V, A, Y);
@@ -953,7 +953,7 @@ public class QTESLA {
 			signatureLength[0] = parameter.signatureSize + messageLength;
 				
 			/* Pack Signature */
-			pack.encodeSignature (signature, 0, C, 0, Z);
+			qTESLAPack.encodeSignature (signature, 0, C, 0, Z);
 			
 			return 0;
 			
@@ -1074,7 +1074,7 @@ public class QTESLA {
 		while (true) {
 			
 			/* Sample Y Uniformly Random from -B to B */
-			sample.sampleY (Y, randomness, 0, ++nonce);
+			qTESLAYSampler.sampleY (Y, randomness, 0, ++nonce);
 			
 			polynomial.polynomialNumberTheoreticTransform (numberTheoreticTransformY, Y);
 			
@@ -1144,7 +1144,7 @@ public class QTESLA {
 			signatureLength[0] = messageLength + parameter.signatureSize;
 				
 			/* Pack Signature */
-			pack.encodeSignature (signature, 0, C, 0, Z);
+			qTESLAPack.encodeSignature (signature, 0, C, 0, Z);
 			
 			return 0;
 			
@@ -1195,7 +1195,7 @@ public class QTESLA {
 			
 		}
 		
-		pack.decodeSignature (C, Z, signature, signatureOffset);
+		qTESLAPack.decodeSignature (C, Z, signature, signatureOffset);
 		
 		/* Check Norm of Z */
 		if (testZ (Z) == true) {
@@ -1204,7 +1204,7 @@ public class QTESLA {
 			
 		}
 		
-		pack.decodePublicKey (newPublicKey, seed, 0, publicKey);
+		qTESLAPack.decodePublicKey (newPublicKey, seed, 0, publicKey);
 		
 		/* Generate A Polynomial */
 		polynomial.polynomialUniform (A, seed, 0);
@@ -1310,7 +1310,7 @@ public class QTESLA {
 			
 		}
 		
-		pack.decodeSignature (C, Z, signature, signatureOffset);
+		qTESLAPack.decodeSignature (C, Z, signature, signatureOffset);
 		
 		/* Check Norm of Z */
 		if (testZ (Z) == true) {
@@ -1319,7 +1319,7 @@ public class QTESLA {
 			
 		}
 		
-		pack.decodePublicKey (newPublicKey, seed, 0, publicKey);
+		qTESLAPack.decodePublicKey (newPublicKey, seed, 0, publicKey);
 		
 		/* Generate A Polynomial */
 		polynomial.polynomialUniform (A, seed, 0);
