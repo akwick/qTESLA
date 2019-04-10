@@ -32,18 +32,18 @@ public class QTESLA {
 	
 	private static RandomNumberGenerator randomNumberGenerator;
 	
-	/********************************************************
+	/*******************************************************************
 	 * qTESLA Constructor
 	 * 
-	 * @param securityCategory		qTESLA Security Category
-	 ********************************************************/
-	public QTESLA (String securityCategory) {
+	 * @param parameterSet		qTESLA Parameter Set
+	 *******************************************************************/
+	public QTESLA (String parameterSet) {
 		
-		parameter = new QTESLAParameter (securityCategory);
-		qTESLAPack = new QTESLAPack (securityCategory);
-		polynomial = new Polynomial (securityCategory);
-		qTESLAYSampler = new QTESLAYSampler (securityCategory);
-		qTESLAGaussianSampler = new QTESLAGaussianSampler (securityCategory);
+		parameter = new QTESLAParameter (parameterSet);
+		qTESLAPack = new QTESLAPack (parameterSet);
+		polynomial = new Polynomial (parameterSet);
+		qTESLAYSampler = new QTESLAYSampler (parameterSet);
+		qTESLAGaussianSampler = new QTESLAGaussianSampler (parameterSet);
 		randomNumberGenerator = new RandomNumberGenerator ();
 		
 	}
@@ -105,7 +105,7 @@ public class QTESLA {
 		
 		System.arraycopy (message, messageOffset, T, parameter.n, QTESLAParameter.MESSAGE);
 		
-		if (parameter.securityCategory == "qTESLA-I") {
+		if (parameter.parameterSet == "qTESLA-I") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
 				
@@ -115,7 +115,7 @@ public class QTESLA {
 		
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Speed" || parameter.securityCategory == "qTESLA-III-Size") {
+		if (parameter.parameterSet == "qTESLA-III-Speed" || parameter.parameterSet == "qTESLA-III-Size") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
 				
@@ -161,7 +161,7 @@ public class QTESLA {
 		
 		System.arraycopy (message, messageOffset, T, parameter.n * parameter.k, QTESLAParameter.MESSAGE);
 		
-		if (parameter.securityCategory == "qTESLA-P-I") {
+		if (parameter.parameterSet == "qTESLA-P-I") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
 				
@@ -171,7 +171,7 @@ public class QTESLA {
 		
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-III") {
+		if (parameter.parameterSet == "qTESLA-P-III") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
 				
@@ -608,7 +608,7 @@ public class QTESLA {
 		randomNumberGenerator.randomByte (randomness, 0, QTESLAParameter.RANDOM);
 		// secureRandom.nextBytes (randomness);
 		
-		if (parameter.securityCategory == "qTESLA-I") { 
+		if (parameter.parameterSet == "qTESLA-I") { 
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
 				
@@ -618,7 +618,7 @@ public class QTESLA {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Speed" || parameter.securityCategory == "qTESLA-III-Size") {
+		if (parameter.parameterSet == "qTESLA-III-Speed" || parameter.parameterSet == "qTESLA-III-Size") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
 				
@@ -710,7 +710,7 @@ public class QTESLA {
 		randomNumberGenerator.randomByte (randomness, 0, QTESLAParameter.RANDOM);
 		// secureRandom.nextBytes (randomness);
 		
-		if (parameter.securityCategory == "qTESLA-P-I") {
+		if (parameter.parameterSet == "qTESLA-P-I") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
 				
@@ -720,7 +720,7 @@ public class QTESLA {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-III") {
+		if (parameter.parameterSet == "qTESLA-P-III") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
 				
@@ -867,7 +867,7 @@ public class QTESLA {
 		
 		System.arraycopy (seed, QTESLAParameter.SEED, randomnessInput, 0, QTESLAParameter.SEED);
 		
-		if (parameter.securityCategory == "qTESLA-I") {
+		if (parameter.parameterSet == "qTESLA-I") {
 		
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
 				
@@ -885,7 +885,7 @@ public class QTESLA {
 		
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Speed" || parameter.securityCategory == "qTESLA-III-Size") {
+		if (parameter.parameterSet == "qTESLA-III-Speed" || parameter.parameterSet == "qTESLA-III-Size") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
 				
@@ -1030,7 +1030,7 @@ public class QTESLA {
 			
 		);
 		
-		if (parameter.securityCategory == "qTESLA-P-I") {
+		if (parameter.parameterSet == "qTESLA-P-I") {
 		
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
 				
@@ -1049,7 +1049,7 @@ public class QTESLA {
 		
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-III") {
+		if (parameter.parameterSet == "qTESLA-P-III") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
 				
@@ -1218,7 +1218,7 @@ public class QTESLA {
 		
 		polynomial.polynomialSubtractionReduction (W, W, TC);
 		
-		if (parameter.securityCategory == "qTESLA-I") {
+		if (parameter.parameterSet == "qTESLA-I") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
 				
@@ -1230,8 +1230,8 @@ public class QTESLA {
 		}
 		
 		if (
-				parameter.securityCategory == "qTESLA-III-Speed" ||
-				parameter.securityCategory == "qTESLA-III-Size"
+				parameter.parameterSet == "qTESLA-III-Speed" ||
+				parameter.parameterSet == "qTESLA-III-Size"
 				
 		) {
 			
@@ -1347,7 +1347,7 @@ public class QTESLA {
 		
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-I") {
+		if (parameter.parameterSet == "qTESLA-P-I") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
 				
@@ -1358,7 +1358,7 @@ public class QTESLA {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-III") {
+		if (parameter.parameterSet == "qTESLA-P-III") {
 			
 			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
 				

@@ -12,14 +12,14 @@ public class QTESLAPack {
 	
 	private static QTESLAParameter parameter;
 	
-	/*******************************************************
+	/**************************************************
 	 * Pack Constructor
 	 * 
-	 * @param securityCategory		qTESLA Security Category
-	 *******************************************************/
-	public QTESLAPack (String securityCategory) {
+	 * @param parameterSet		qTESLA Parameter Set
+	 **************************************************/
+	public QTESLAPack (String parameterSet) {
 		
-		parameter = new QTESLAParameter (securityCategory);
+		parameter = new QTESLAParameter (parameterSet);
 		
 	}
 	
@@ -54,7 +54,7 @@ public class QTESLAPack {
 		
 		int j = 0;
 		
-		if (parameter.securityCategory == "qTESLA-I") {
+		if (parameter.parameterSet == "qTESLA-I") {
 		
 			for (int i = 0; i < parameter.n; i += 4) {
 			
@@ -82,7 +82,7 @@ public class QTESLAPack {
 		
 		}
 
-		if (parameter.securityCategory == "qTESLA-III-Speed") {
+		if (parameter.parameterSet == "qTESLA-III-Speed") {
 			
 			for (int i = 0; i < parameter.n; i += 8) {
 				
@@ -118,7 +118,7 @@ public class QTESLAPack {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Size") {
+		if (parameter.parameterSet == "qTESLA-III-Size") {
 			
 			for (int i = 0; i < parameter.n; i++) {
 				
@@ -157,7 +157,7 @@ public class QTESLAPack {
 		int j = 0;
 		int temporary = 0;
 		
-		if (parameter.securityCategory == "qTESLA-I") {
+		if (parameter.parameterSet == "qTESLA-I") {
 		
 			for (int i = 0; i < parameter.n; i += 4) {
 			
@@ -227,7 +227,7 @@ public class QTESLAPack {
 		
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Speed") {
+		if (parameter.parameterSet == "qTESLA-III-Speed") {
 			
 			for (int i = 0; i < parameter.n; i += 8) {
 				
@@ -353,7 +353,7 @@ public class QTESLAPack {
 		
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Size") {
+		if (parameter.parameterSet == "qTESLA-III-Size") {
 			
 			for (int i = 0; i < parameter.n; i++) {
 				
@@ -433,7 +433,7 @@ public class QTESLAPack {
 		
 		int j = 0;
 		
-		if (parameter.securityCategory == "qTESLA-I" || parameter.securityCategory == "qTESLA-III-Size") {
+		if (parameter.parameterSet == "qTESLA-I" || parameter.parameterSet == "qTESLA-III-Size") {
 			
 			for (int i = 0; i < parameter.n * parameter.qLogarithm / Integer.SIZE; i += parameter.qLogarithm) {
 				
@@ -604,7 +604,7 @@ public class QTESLAPack {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Speed") {
+		if (parameter.parameterSet == "qTESLA-III-Speed") {
 			
 			for (int i = 0; i < parameter.n * parameter.qLogarithm / Integer.SIZE; i += (parameter.qLogarithm / Byte.SIZE)) {
 				
@@ -657,7 +657,7 @@ public class QTESLAPack {
 		
 		int j = 0;
 		
-		if (parameter.securityCategory == "qTESLA-P-I") {
+		if (parameter.parameterSet == "qTESLA-P-I") {
 			
 			for (int i = 0; i < parameter.n * parameter.k * parameter.qLogarithm / Integer.SIZE; i += parameter.qLogarithm) {
 				
@@ -870,7 +870,7 @@ public class QTESLAPack {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-III") {
+		if (parameter.parameterSet == "qTESLA-P-III") {
 			
 			for (int i = 0; i < parameter.n * parameter.k * parameter.qLogarithm / Integer.SIZE; i += parameter.qLogarithm) {
 				
@@ -915,7 +915,7 @@ public class QTESLAPack {
 		
 		int mask = (1 << parameter.qLogarithm) - 1;
 		
-		if (parameter.securityCategory == "qTESLA-I" || parameter.securityCategory == "qTESLA-III-Size") {
+		if (parameter.parameterSet == "qTESLA-I" || parameter.parameterSet == "qTESLA-III-Size") {
 			
 			for (int i = 0; i < parameter.n; i += Integer.SIZE) {
 				
@@ -1011,7 +1011,7 @@ public class QTESLAPack {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Speed") {
+		if (parameter.parameterSet == "qTESLA-III-Speed") {
 			
 			for (int i = 0; i < parameter.n; i += Integer.SIZE / Byte.SIZE) {
 				
@@ -1031,7 +1031,7 @@ public class QTESLAPack {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-I") {
+		if (parameter.parameterSet == "qTESLA-P-I") {
 			
 			for (int i = 0; i < parameter.n * parameter.k; i += Integer.SIZE) {
 				
@@ -1133,7 +1133,7 @@ public class QTESLAPack {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-III") {
+		if (parameter.parameterSet == "qTESLA-P-III") {
 			
 			for (int i = 0; i < parameter.n * parameter.k; i += Integer.SIZE) {
 				
@@ -1181,7 +1181,7 @@ public class QTESLAPack {
 		
 		int j = 0;
 		
-		if (parameter.securityCategory == "qTESLA-I" || parameter.securityCategory == "qTESLA-III-Size") {
+		if (parameter.parameterSet == "qTESLA-I" || parameter.parameterSet == "qTESLA-III-Size") {
 			
 			for (int i = 0; i < (parameter.n * parameter.d / Integer.SIZE); i += parameter.d) {
 				
@@ -1338,7 +1338,7 @@ public class QTESLAPack {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Speed") {
+		if (parameter.parameterSet == "qTESLA-III-Speed") {
 			
 			for (int i = 0; i < (parameter.n * parameter.d / Integer.SIZE); i += parameter.d / 2) {
 				
@@ -1448,7 +1448,7 @@ public class QTESLAPack {
 		
 		int j = 0;
 		
-		if (parameter.securityCategory == "qTESLA-P-I") {
+		if (parameter.parameterSet == "qTESLA-P-I") {
 			
 			for (int i = 0; i < (parameter.n * parameter.d / Integer.SIZE); i += parameter.d / 2) {
 				
@@ -1535,7 +1535,7 @@ public class QTESLAPack {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-III") {
+		if (parameter.parameterSet == "qTESLA-P-III") {
 			
 			for (int i = 0; i < (parameter.n * parameter.d / Integer.SIZE); i += parameter.d / Byte.SIZE) {
 				
@@ -1588,7 +1588,7 @@ public class QTESLAPack {
 		
 		int j = 0;
 		
-		if (parameter.securityCategory == "qTESLA-I" || parameter.securityCategory == "qTESLA-III-Size") {
+		if (parameter.parameterSet == "qTESLA-I" || parameter.parameterSet == "qTESLA-III-Size") {
 			
 			for (int i = 0; i < parameter.n; i += Integer.SIZE) {
 				
@@ -1682,7 +1682,7 @@ public class QTESLAPack {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Speed") {
+		if (parameter.parameterSet == "qTESLA-III-Speed") {
 			
 			for (int i = 0; i < parameter.n; i += Integer.SIZE / 2) {
 				
@@ -1752,7 +1752,7 @@ public class QTESLAPack {
 		
 		int j = 0;
 		
-		if (parameter.securityCategory == "qTESLA-P-I") {
+		if (parameter.parameterSet == "qTESLA-P-I") {
 			
 			for (int i = 0; i < parameter.n; i += Integer.SIZE / 2) {
 				
@@ -1804,7 +1804,7 @@ public class QTESLAPack {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-III") {
+		if (parameter.parameterSet == "qTESLA-P-III") {
 			
 			for (int i = 0; i < parameter.n; i += Byte.SIZE / 2) {
 				

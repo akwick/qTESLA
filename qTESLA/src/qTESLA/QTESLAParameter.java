@@ -33,7 +33,7 @@ public final class QTESLAParameter {
 	/**
 	 * One of Five Heuristic and Provably Secure Security Categories
 	 */
-	public String securityCategory;
+	public String parameterSet;
 	
 	/** 
 	 * Dimension, (Dimension - 1) is the Polynomial Degree
@@ -126,13 +126,13 @@ public final class QTESLAParameter {
 	/*******************************************************
 	 * qTESLA Parameter Constructor
 	 * 
-	 * @param securityCategory		qTESLA Security Category
+	 * @param parameterSet		qTESLA Parameter Set
 	 *******************************************************/
-	public QTESLAParameter (String securityCategory) {
+	public QTESLAParameter (String parameterSet) {
 		
-		this.securityCategory = securityCategory;
+		this.parameterSet = parameterSet;
 		
-		if (securityCategory == "qTESLA-I") {
+		if (parameterSet == "qTESLA-I") {
 			
 			this.n = 512;
 			this.nLogarithm = 9;
@@ -154,7 +154,7 @@ public final class QTESLAParameter {
 			this.r = 1081347;
 			this.privateKeySize = this.n * this.sBit / Byte.SIZE * 2 + SEED * 2;
 			
-		} else if (securityCategory == "qTESLA-III-Speed") {
+		} else if (parameterSet == "qTESLA-III-Speed") {
 			
 			this.n = 1024;
 			this.nLogarithm = 10;
@@ -176,7 +176,7 @@ public final class QTESLAParameter {
 			this.r = 15873;
 			this.privateKeySize = this.n * this.sBit / Byte.SIZE * 2 + SEED * 2;
 			
-		} else if (securityCategory == "qTESLA-III-Size") {
+		} else if (parameterSet == "qTESLA-III-Size") {
 			
 			this.n = 1024;
 			this.nLogarithm = 10;
@@ -198,7 +198,7 @@ public final class QTESLAParameter {
 			this.r = 35843;
 			this.privateKeySize = this.n * this.sBit / Byte.SIZE * 2 + SEED * 2;
 			
-		} else if (securityCategory == "qTESLA-P-I") {
+		} else if (parameterSet == "qTESLA-P-I") {
 			
 			this.n = 1024;
 			this.nLogarithm = 10;
@@ -220,7 +220,7 @@ public final class QTESLAParameter {
 			this.r = 0;
 			privateKeySize = this.n + this.n * this.k + SEED * 2;
 			
-		} else if (securityCategory == "qTESLA-P-III") {
+		} else if (parameterSet == "qTESLA-P-III") {
 			
 			this.n = 2048;
 			this.nLogarithm = 11;
@@ -244,7 +244,7 @@ public final class QTESLAParameter {
 			
 		} else {
 			
-			this.securityCategory = null;
+			this.parameterSet = null;
 			this.n = 1;
 			this.q = 2;
 			this.qLogarithm = 0;

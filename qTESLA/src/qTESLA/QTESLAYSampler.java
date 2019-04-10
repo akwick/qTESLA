@@ -12,14 +12,14 @@ public class QTESLAYSampler {
 	
 	private static QTESLAParameter parameter;
 	
-	/*******************************************************
+	/**************************************************
 	 * Y Sampler Constructor
 	 * 
-	 * @param securityCategory		qTESLA Security Category
-	 *******************************************************/
-	public QTESLAYSampler (String securityCategory) {
+	 * @param parameterSet		qTESLA Parameter Set
+	 **************************************************/
+	public QTESLAYSampler (String parameterSet) {
 		
-		parameter = new QTESLAParameter (securityCategory);
+		parameter = new QTESLAParameter (parameterSet);
 		
 	}
 	
@@ -55,7 +55,7 @@ public class QTESLAYSampler {
 		
 		short dualModeSampler = (short) (nonce << 8);
 		
-		if (parameter.securityCategory == "qTESLA-I") {
+		if (parameter.parameterSet == "qTESLA-I") {
 		
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
 				
@@ -65,7 +65,7 @@ public class QTESLAYSampler {
 		
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Speed" || parameter.securityCategory == "qTESLA-III-Size") {
+		if (parameter.parameterSet == "qTESLA-III-Speed" || parameter.parameterSet == "qTESLA-III-Size") {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
 				
@@ -79,7 +79,7 @@ public class QTESLAYSampler {
 			
 			if (position > numberOfBlock * numberOfByte * 4) {
 				
-				if (parameter.securityCategory == "qTESLA-I") {
+				if (parameter.parameterSet == "qTESLA-I") {
 					
 					numberOfBlock =
 						FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE /
@@ -95,7 +95,7 @@ public class QTESLAYSampler {
 					
 				}
 				
-				if (parameter.securityCategory == "qTESLA-III-Speed" || parameter.securityCategory == "qTESLA-III-Size") {
+				if (parameter.parameterSet == "qTESLA-III-Speed" || parameter.parameterSet == "qTESLA-III-Size") {
 					
 					numberOfBlock =
 						FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_256_RATE /
@@ -178,7 +178,7 @@ public class QTESLAYSampler {
 		
 		short dualModeSampler = (short) (nonce << 8);
 		
-		if (parameter.securityCategory == "qTESLA-P-I") {
+		if (parameter.parameterSet == "qTESLA-P-I") {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK128Simple (
 				
@@ -188,7 +188,7 @@ public class QTESLAYSampler {
 		
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-III") {
+		if (parameter.parameterSet == "qTESLA-P-III") {
 			
 			FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (
 				
@@ -202,7 +202,7 @@ public class QTESLAYSampler {
 			
 			if (position > numberOfBlock * numberOfByte) {
 				
-				if (parameter.securityCategory == "qTESLA-P-I") {
+				if (parameter.parameterSet == "qTESLA-P-I") {
 					
 					numberOfBlock =
 						FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_128_RATE /
@@ -218,7 +218,7 @@ public class QTESLAYSampler {
 					
 				}
 				
-				if (parameter.securityCategory == "qTESLA-P-III") {
+				if (parameter.parameterSet == "qTESLA-P-III") {
 					
 					numberOfBlock =
 						FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_256_RATE /

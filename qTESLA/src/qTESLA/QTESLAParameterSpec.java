@@ -14,29 +14,29 @@ import java.security.spec.AlgorithmParameterSpec;
 public final class QTESLAParameterSpec implements AlgorithmParameterSpec {
 	
 	/**
-	 * qTESLA Security Category
+	 * qTESLA Parameter Set
 	 */
-	private String securityCategory;
+	private String parameterSet;
 	
-	/**************************************************************
+	/*************************************************
 	 * qTESLA Parameter Specification Constructor
 	 * 
-	 * @param securityCategory		qTESLA Security Category
-	 **************************************************************/
-	public QTESLAParameterSpec (String securityCategory) {
+	 * @param parameterSet		qTESLA Parameter Set
+	 *************************************************/
+	public QTESLAParameterSpec (String parameterSet) {
 		
-		this.securityCategory = securityCategory;
+		this.parameterSet = parameterSet;
 		
 	}
 	
 	/*************************************
-	 * Getter of Security Category
+	 * Getter of Parameter Set
 	 * 
 	 * @return	none
 	 *************************************/
-	public String getSecurityCategory () {
+	public String getParameterSet () {
 		
-		return this.securityCategory;
+		return this.parameterSet;
 		
 	}
 	

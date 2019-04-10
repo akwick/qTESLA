@@ -20,34 +20,34 @@ public final class QTESLAPrivateKey implements PrivateKey {
 	private static final long serialVersionUID = 7972867974716612313L;
 	
 	/**
-	 * qTESLA Security Category
+	 * qTESLA Parameter Set
 	 */
-	private String securityCategory;
+	private String parameterSet;
 	
 	/**
 	 * Text of the qTESLA Private Key
 	 */
 	private byte[] privateKey;
 	
-	public QTESLAPrivateKey (String securityCategory) {
+	public QTESLAPrivateKey (String parameterSet) {
 		
-		this.securityCategory = securityCategory;
-		QTESLAParameter parameter = new QTESLAParameter (securityCategory);
+		this.parameterSet = parameterSet;
+		QTESLAParameter parameter = new QTESLAParameter (parameterSet);
 		privateKey = new byte[parameter.privateKeySize];
 		Arrays.fill (privateKey, (byte) 0);
 		
 	}
 	
-	public void setSecurityCategory (String securityCategory) {
+	public void setParameterSet (String parameterSet) {
 		
-		this.securityCategory = securityCategory;
+		this.parameterSet = parameterSet;
 		
 	}
 	
 	@Override
 	public String getAlgorithm () {
 		
-		return this.securityCategory;
+		return this.parameterSet;
 		
 	}
 

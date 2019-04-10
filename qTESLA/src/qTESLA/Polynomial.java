@@ -17,11 +17,11 @@ public class Polynomial {
 	/*******************************************************
 	 * Constructor of Manipulation in Polynomials
 	 * 
-	 * @param securityCategory		qTESLA Security Category
+	 * @param parameterSet		qTESLA Parameter Set
 	 *******************************************************/
-	public Polynomial (String securityCategory) {
+	public Polynomial (String parameterSet) {
 		
-		parameter = new QTESLAParameter (securityCategory);
+		parameter = new QTESLAParameter (parameterSet);
 		
 	}
 	
@@ -141,7 +141,7 @@ public class Polynomial {
 			
 			int j = 0;
 			
-			if (parameter.securityCategory == "qTESLA-P-I") {
+			if (parameter.parameterSet == "qTESLA-P-I") {
 			
 				for (int jFirst = 0; jFirst < parameter.n; jFirst = j + numberOfProblem) {
 				
@@ -160,7 +160,7 @@ public class Polynomial {
 			
 			}
 			
-			if (parameter.securityCategory == "qTESLA-P-III") {
+			if (parameter.parameterSet == "qTESLA-P-III") {
 				
 				for (int jFirst = 0; jFirst < parameter.n; jFirst = j + numberOfProblem) {
 					
@@ -216,15 +216,15 @@ public class Polynomial {
 					
 					int temporary = destination[j];
 					
-					if (parameter.securityCategory == "qTESLA-I") {
+					if (parameter.parameterSet == "qTESLA-I") {
 					
 						destination[j] = temporary + destination[j + numberOfProblem];
 					
 					}
 					
 					if (
-							parameter.securityCategory == "qTESLA-III-Speed" ||
-							parameter.securityCategory == "qTESLA-III-Size"
+							parameter.parameterSet == "qTESLA-III-Speed" ||
+							parameter.parameterSet == "qTESLA-III-Size"
 							
 					) {
 						
@@ -282,7 +282,7 @@ public class Polynomial {
 			
 			int j = 0;
 			
-			if (parameter.securityCategory == "qTESLA-P-I") {
+			if (parameter.parameterSet == "qTESLA-P-I") {
 			
 				for (int jFirst = 0; jFirst < parameter.n; jFirst = j + numberOfProblem) {
 				
@@ -334,7 +334,7 @@ public class Polynomial {
 			
 			}
 			
-			if (parameter.securityCategory == "qTESLA-P-III") {
+			if (parameter.parameterSet == "qTESLA-P-III") {
 				
 				for (int jFirst = 0; jFirst < parameter.n; jFirst = j + numberOfProblem) {
 					
@@ -437,13 +437,13 @@ public class Polynomial {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-I") {
+		if (parameter.parameterSet == "qTESLA-P-I") {
 			
 			numberTheoreticTransform (arrayNumberTheoreticTransform, PolynomialProvablySecure.ZETA_P_I);
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-III") {
+		if (parameter.parameterSet == "qTESLA-P-III") {
 		
 			numberTheoreticTransform (arrayNumberTheoreticTransform, PolynomialProvablySecure.ZETA_P_III);
 		
@@ -470,7 +470,7 @@ public class Polynomial {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-I") {
+		if (parameter.parameterSet == "qTESLA-I") {
 			
 			numberTheoreticTransform (multiplierNumberTheoreticTransform, PolynomialHeuristic.ZETA_I);
 			componentWisePolynomialMultiplication (product, multiplicand, multiplierNumberTheoreticTransform);
@@ -478,7 +478,7 @@ public class Polynomial {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Speed") {
+		if (parameter.parameterSet == "qTESLA-III-Speed") {
 		
 			numberTheoreticTransform (multiplierNumberTheoreticTransform, PolynomialHeuristic.ZETA_III_SPEED);
 			componentWisePolynomialMultiplication (product, multiplicand, multiplierNumberTheoreticTransform);
@@ -486,7 +486,7 @@ public class Polynomial {
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-III-Size") {
+		if (parameter.parameterSet == "qTESLA-III-Size") {
 			
 			numberTheoreticTransform (multiplierNumberTheoreticTransform, PolynomialHeuristic.ZETA_III_SIZE);
 			componentWisePolynomialMultiplication (product, multiplicand, multiplierNumberTheoreticTransform);
@@ -522,13 +522,13 @@ public class Polynomial {
 		
 		);
 		
-		if (parameter.securityCategory == "qTESLA-P-I") {
+		if (parameter.parameterSet == "qTESLA-P-I") {
 			
 			inverseNumberTheoreticTransform (product, productOffset, PolynomialProvablySecure.ZETA_INVERSE_P_I, 0);
 			
 		}
 		
-		if (parameter.securityCategory == "qTESLA-P-III") {
+		if (parameter.parameterSet == "qTESLA-P-III") {
 			
 			inverseNumberTheoreticTransform (product, productOffset, PolynomialProvablySecure.ZETA_INVERSE_P_III, 0);
 			

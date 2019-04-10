@@ -44,39 +44,39 @@ public class QTESLAGaussianSampler {
 	/*****************************************************************************************************
 	 * Gaussian Sampler Constructor
 	 * 
-	 * @param securityCategory		qTESLA Security Category
+	 * @param parameterSet		qTESLA Parameter Set
 	 *****************************************************************************************************/
-	public QTESLAGaussianSampler (String securityCategory) {
+	public QTESLAGaussianSampler (String parameterSet) {
 		
-		if (securityCategory == "qTESLA-I") {
+		if (parameterSet == "qTESLA-I") {
 			
 			n = 512;
 			row = 209;
 			column = 1;
 			cumulativeDistributedTable = CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_I;
 			
-		} else if (securityCategory == "qTESLA-III-Speed") {
+		} else if (parameterSet == "qTESLA-III-Speed") {
 			
 			n = 1024;
 			row = 135;
 			column = 2;
 			cumulativeDistributedTable = CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_III_SPEED;
 			
-		} else if (securityCategory == "qTESLA-III-Size") {
+		} else if (parameterSet == "qTESLA-III-Size") {
 			
 			n = 1024;
 			row = 101;
 			column = 2;
 			cumulativeDistributedTable = CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_III_SIZE;
 			
-		} else if (securityCategory == "qTESLA-P-I") {
+		} else if (parameterSet == "qTESLA-P-I") {
 			
 			n = 1024;
 			row = 79;
 			column = 1;
 			cumulativeDistributedTable = CumulativeDistributedTable.CUMULATIVE_DISTRIBUTED_TABLE_P_I;
 			
-		} else if (securityCategory == "qTESLA-P-III") {
+		} else if (parameterSet == "qTESLA-P-III") {
 			
 			n = 2048;
 			row = 112;

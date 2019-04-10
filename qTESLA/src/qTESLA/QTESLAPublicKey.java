@@ -20,34 +20,34 @@ public final class QTESLAPublicKey implements PublicKey {
 	private static final long serialVersionUID = -8146247554834846930L;
 	
 	/**
-	 * qTESLA Security Category
+	 * qTESLA Parameter Set
 	 */
-	private String securityCategory;
+	private String parameterSet;
 	
 	/**
 	 * Text of the qTESLA Public Key
 	 */
 	private byte[] publicKey;
 	
-	public QTESLAPublicKey (String securityCategory) {
+	public QTESLAPublicKey (String parameterSet) {
 		
-		this.securityCategory = securityCategory;
-		QTESLAParameter parameter = new QTESLAParameter (securityCategory);
+		this.parameterSet = parameterSet;
+		QTESLAParameter parameter = new QTESLAParameter (parameterSet);
 		publicKey = new byte[parameter.publicKeySize];
 		Arrays.fill (publicKey, (byte) 0);
 		
 	}
 	
-	public void setSecurityCategory (String securityCategory) {
+	public void setparameterSet (String parameterSet) {
 		
-		this.securityCategory = securityCategory;
+		this.parameterSet = parameterSet;
 		
 	}
 	
 	@Override
 	public String getAlgorithm () {
 
-		return this.securityCategory;
+		return this.parameterSet;
 		
 	}
 

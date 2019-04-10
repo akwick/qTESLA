@@ -24,9 +24,9 @@ import javax.crypto.ShortBufferException;
 public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 
 	/**
-	 * qTESLA Security Category
+	 * qTESLA Parameter Set
 	 */
-	private String securityCategory;
+	private String parameterSet;
 	
 	/**
 	 * The Source of Randomness
@@ -36,7 +36,7 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 	private QTESLA qTESLA;
 	
 	/**************************************
-	 * Setter of Security Category
+	 * Setter of Parameter Set
 	 * 
 	 * @return	none
 	 **************************************/
@@ -49,17 +49,17 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 	@Override
 	public KeyPair generateKeyPair() {
 		
-		QTESLAPrivateKey qTESLAPrivateKey	= new QTESLAPrivateKey (this.securityCategory);
-		QTESLAPublicKey qTESLAPublicKey		= new QTESLAPublicKey (this.securityCategory);
+		QTESLAPrivateKey qTESLAPrivateKey	= new QTESLAPrivateKey (this.parameterSet);
+		QTESLAPublicKey qTESLAPublicKey		= new QTESLAPublicKey (this.parameterSet);
 		
 		byte[] privateKey	= qTESLAPrivateKey.getEncoded();
 		byte[] publicKey 	= qTESLAPublicKey.getEncoded();
 		this.random			= new SecureRandom();
 		
 		if (
-				this.securityCategory == "qTESLA-I" ||
-				this.securityCategory == "qTESLA-III-Speed" ||
-				this.securityCategory == "qTESLA-III-Size"
+				this.parameterSet == "qTESLA-I" ||
+				this.parameterSet == "qTESLA-III-Speed" ||
+				this.parameterSet == "qTESLA-III-Size"
 		
 		) {
 				
@@ -84,7 +84,7 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 			
 		}
 		
-		if (this.securityCategory == "qTESLA-P-I" || this.securityCategory == "qTESLA-P-III") {
+		if (this.parameterSet == "qTESLA-P-I" || this.parameterSet == "qTESLA-P-III") {
 			
 			try {
 				
@@ -142,9 +142,9 @@ public final class QTESLAKeyPairGenerator extends KeyPairGeneratorSpi {
 		
 		QTESLAParameterSpec qTESLAParameterSpec = (QTESLAParameterSpec) specification;
 		
-		this.securityCategory = qTESLAParameterSpec.getSecurityCategory();
+		this.parameterSet = qTESLAParameterSpec.getParameterSet();
 		this.random = random;
-		this.qTESLA = new QTESLA (this.securityCategory);
+		this.qTESLA = new QTESLA (this.parameterSet);
 		
 	}
 	

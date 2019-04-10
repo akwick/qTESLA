@@ -29,9 +29,9 @@ import javax.crypto.ShortBufferException;
 public final class QTESLASignature extends SignatureSpi {
 	
 	/**
-	 * qTESLA Security Category
+	 * qTESLA Parameter Set
 	 */
-	private String securityCategory;
+	private String parameterSet;
 	
 	/**
 	 * The Public Key of the Identity Whose Signature Will be Generated
@@ -57,13 +57,13 @@ public final class QTESLASignature extends SignatureSpi {
 	private QTESLA qTESLA;
 	
 	/*************************************
-	 * Getter of Security Category
+	 * Getter of Parameter Set
 	 * 
 	 * @return	none
 	 *************************************/
-	public String getSecurityCategory () {
+	public String getParameterSet () {
 		
-		return this.securityCategory;
+		return this.parameterSet;
 		
 	}
 	
@@ -110,9 +110,9 @@ public final class QTESLASignature extends SignatureSpi {
 		}
 		
 		this.privateKey = (QTESLAPrivateKey) privateKey;
-		this.securityCategory = ((QTESLAPrivateKey) privateKey).getAlgorithm();
+		this.parameterSet = ((QTESLAPrivateKey) privateKey).getAlgorithm();
 		this.random = random;
-		this.qTESLA = new QTESLA (this.securityCategory);
+		this.qTESLA = new QTESLA (this.parameterSet);
 		
 	}
 	
@@ -133,9 +133,9 @@ public final class QTESLASignature extends SignatureSpi {
 		}
 		
 		this.publicKey = (QTESLAPublicKey) publicKey;
-		this.securityCategory = ((QTESLAPublicKey) publicKey).getAlgorithm();
+		this.parameterSet = ((QTESLAPublicKey) publicKey).getAlgorithm();
 		this.random = null;
-		this.qTESLA = new QTESLA (this.securityCategory);
+		this.qTESLA = new QTESLA (this.parameterSet);
 		
 	}
 	
@@ -145,7 +145,7 @@ public final class QTESLASignature extends SignatureSpi {
 		int[] lengthOfSignature	= new int[1];
 		lengthOfSignature[0]	= signatureLength;
 		
-		if (this.securityCategory == "qTESLA-I" || this.securityCategory == "qTESLA-Speed" || this.securityCategory == "qTESLA-Size") {
+		if (this.parameterSet == "qTESLA-I" || this.parameterSet == "qTESLA-Speed" || this.parameterSet == "qTESLA-Size") {
 			
 			try {
 				
@@ -160,7 +160,7 @@ public final class QTESLASignature extends SignatureSpi {
 			
 		}
 		
-		if (this.securityCategory == "qTESLA-P-I" || this.securityCategory == "qTESLA-P-III") {
+		if (this.parameterSet == "qTESLA-P-I" || this.parameterSet == "qTESLA-P-III") {
 			
 			try {
 				
@@ -197,13 +197,13 @@ public final class QTESLASignature extends SignatureSpi {
 		
 		int success = 0;
 		
-		if (this.securityCategory == "qTESLA-I" || this.securityCategory == "qTESLA-III-Speed" || this.securityCategory == "qTESLA-III-Size") {
+		if (this.parameterSet == "qTESLA-I" || this.parameterSet == "qTESLA-III-Speed" || this.parameterSet == "qTESLA-III-Size") {
 			
 			success = qTESLA.verify (this.message, this.messageOffset, this.messageLength, signature, signatureOffset, signatureLength, this.publicKey.getEncoded());
 			
 		}
 		
-		if (this.securityCategory == "qTESLA-P-I" || this.securityCategory == "qTESLA-P-III") {
+		if (this.parameterSet == "qTESLA-P-I" || this.parameterSet == "qTESLA-P-III") {
 			
 			success = qTESLA.verifyP (this.message, this.messageOffset, this.messageLength, signature, signatureOffset, signatureLength, this.publicKey.getEncoded());
 			
@@ -277,7 +277,7 @@ public final class QTESLASignature extends SignatureSpi {
 		
 		QTESLAParameterSpec qTESLAParameterSpec = (QTESLAParameterSpec) specification;
 		
-		this.securityCategory = qTESLAParameterSpec.getSecurityCategory();
+		this.parameterSet = qTESLAParameterSpec.getParameterSet();
 		
 	}
 
