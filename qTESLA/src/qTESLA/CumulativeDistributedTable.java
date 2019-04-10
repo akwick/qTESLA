@@ -8,7 +8,7 @@
 
 package qTESLA;
 
-public class CumulativeDistributedTable {
+public final class CumulativeDistributedTable {
 	
 	public static final long[] CUMULATIVE_DISTRIBUTED_TABLE_I = { // 209 * 1
 		    
