@@ -146,3 +146,7 @@
      boolean validity = qTESLASignature.verify(signature);
      ```
      if __validity__ is __true, then valid; otherwise, invalid.
+     
+ About the implentation methods of a provider in _Java Cryptography Architecture_, please read the documentation online [How to Implement a Provider in _Java Cryptography Architecture_](https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/HowToImplAProvider.html)
+ 
+ About the working principles of a provider in _Java Cryptography Architecture_, please read the documentation online [_Java Cryptography Architecture_(__JCA__) Reference Guide](https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html)
